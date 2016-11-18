@@ -9,7 +9,7 @@ def empreses_detail(request):
 	return HttpResponse("<h1>Detail</h1>")
 
 def home(request):
-	return HttpResponse("<h1>Home</h1>")
+	return render(request, "home.html", {})
 
 def empreses_update(request):
 	return HttpResponse("<h1>Update</h1>")

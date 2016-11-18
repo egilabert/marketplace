@@ -1,0 +1,9 @@
+.pillango_home {
+	position: absolute;
+   top: 50%;
+   left: 50%;
+   width: 231px;
+   height: 75px;
+   margin-top: -38px; /* Half the height */
+   margin-left: -115px; /* Half the width */
+}
