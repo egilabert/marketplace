@@ -32,7 +32,6 @@
   
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
   
-  
   {% block cdn_css %}
 
   {% endblock cdn_css %}
@@ -40,7 +39,7 @@
 
 
   {% compress css %}
-  <link rel="stylesheet" href="{% static 'css/app.css' %}">
+  <link rel="stylesheet" href="{% static 'css/main.css' %}">
   {% block css %}{% endblock %}
   {% endcompress %}
   <!-- More ideas for your <head> here: h5bp.com/d/head-Tips -->
@@ -67,22 +66,6 @@
 
   <div role="main">
     <div class="container">
-
-      <ol class='breadcrumb'>
-        <li><a href="{% url 'posts:list' %}">Home</a></li>
-        
-        {% block post_detail_link %}
-        {% endblock %}
-
-        {% if not request.user.is_authenticated %}
-        <li class='pull-right'><a href="{% url 'register' %}">Register</a></li>
-        <li class='pull-right'><a href="{% url 'login' %}">Login</a></li>
-        {% else %}
-        <li class='pull-right'><a href="{% url 'logout' %}">Logout</a></li>
-        <li class='pull-right'><a href="">{{ request.user.username}}</a></li>
-        {% endif %}
-      </ol>
-
       {% block content %}{% endblock %}
 
     </div>
@@ -92,7 +75,7 @@
     {% block footer %}
     <div class="container">
       <hr>
-      <p>&copy; Company 2014</p>
+      <p>&copy; Pillango 2014</p>
     </div>
     {% endblock footer %}
   </footer>
@@ -123,49 +106,6 @@
     (function(d,t){var g=d.createElement(t),s=d.getElementsByTagName(t)[0];
     g.src=('https:'==location.protocol?'//ssl':'//www')+'.google-analytics.com/ga.js';
     s.parentNode.insertBefore(g,s)}(document,'script'));
-  </script>
-  <script type="text/javascript">
-    $(document).ready(function(){
-      $(".content-markdown").each(function(){
-              var content = $(this).text()
-              var markedContent = marked(content)
-              $(this).html(markedContent)
-      })
-      $(".post-detail-item img").each(function(){
-            $(this).addClass("img-responsive");
-      })
-
-      var contentInput = $("#id_content");
-      function setContent(value){
-          var markedContent = marked(value)
-          $("#preview-content").html(markedContent)
-          $("#preview-content img").each(function(){
-              $(this).addClass("img-responsive")
-          })
-      }
-      setContent(contentInput.val())
-      contentInput.keyup(function(){
-          var newContent = $(this).val()
-          setContent(newContent)
-      })
-
-      var titleInput = $("#id_title");
-      function setTitle(value) {
-          $("#preview-title").text(value)
-      }
-      setTitle(titleInput.val())
-      titleInput.keyup(function(){
-          var newContent = $(this).val()
-          setTitle(newContent)
-      })
-
-      $(".comment-reply-btn").click(function(event){
-            event.preventDefault();
-            $(this).parent().next(".comment-reply").fadeToggle();
-      })
-
-    })
-      
   </script>
 {% endblock %}
 </body>
