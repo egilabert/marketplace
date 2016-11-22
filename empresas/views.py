@@ -7,7 +7,7 @@ from django.views.generic import View
 @method_decorator(login_required, name='dispatch')
 class HomeView(View):
 	def get(self, request, *args, **kwargs):
-		return render(request, "home.html", {})
+		return render(request, "empresas_home.html", {})
 
 	def post(self, request, *args, **kwargs):
 		return HttpResponse('<h1>Home POST page</h1>')

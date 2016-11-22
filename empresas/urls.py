@@ -5,7 +5,7 @@ from .views import HomeView, DetailView
 
 urlpatterns = [
     #url(r'^create/$', views.post_create, name='create'),
-    url(r'^$', HomeView.as_view(), name='list'),
+    url(r'^$', HomeView.as_view(), name='empresas_home'),
     url(r'^options/$', DetailView.as_view(), name='options'),
     
     #url(r'^(?P<id>[d]+)/$', DetailView.as_view(), name='detail'),

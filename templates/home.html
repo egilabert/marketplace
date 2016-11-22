@@ -3,6 +3,8 @@
 
 {% block content %}
 
+    <div class="container">
+	
 	<h1 class="header center light">What are you looking for? </h1>
 
 	<div class="row">
@@ -12,7 +14,7 @@
 		    </div>
 		    <div class="card-content">
 		      <span class="card-title activator grey-text text-darken-4">Network B2B<i class="material-icons right">more_vert</i></span>
-		      <p><a href="#">Go to the App</a></p>
+		      <p><a href="{% url 'empresas:empresas_home' %}">Go to the App</a></p>
 		    </div>
 		    <div class="card-reveal">
 		      <span class="card-title grey-text text-darken-4">Where business meets business<i class="material-icons right">close</i></span>
@@ -95,7 +97,7 @@
 
 	</div>
 
-	<div class="intro"></div>
+	</div>
 
 
 {% endblock %}

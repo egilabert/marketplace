@@ -29,7 +29,6 @@ urlpatterns = [
     url(r'^accounts/profile/', AppsView.as_view(), name='home'),
     url(r'^accounts/', include('allauth.urls')),
     url(r'^empresas/', include('empresas.urls', namespace='empresas')),
-    
 ]
 
 if settings.DEBUG:
