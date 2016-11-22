@@ -1,0 +1,17 @@
+{% load i18n %}
+
+{% block content %}
+<h3>{% trans "Sign Up" %}</h3>
+
+<p>{% blocktrans %}Already have an account? Then please <a href="#modal1">sign in</a>.{% endblocktrans %}</p>
+
+<form class="signup" id="signup_form" method="post" action="{% url 'account_signup' %}">
+  {% csrf_token %}
+  {{ form_signup.as_p }}
+  {% if redirect_field_value %}
+  <input type="hidden" name="{{ redirect_field_name }}" value="{{ redirect_field_value }}" />
+  {% endif %}
+  <!-- <button type="submit">{% trans "Sign Up" %} &raquo;</button>
+</form> -->
+
+{% endblock %}

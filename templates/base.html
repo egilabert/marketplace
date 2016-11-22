@@ -26,28 +26,21 @@
 
   {# use the CDN to get bootstrap css. can not be inside compress css block #}
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-    <!-- Latest compiled and minified CSS -->
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
-
-  <!-- Optional theme -->
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
   
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
   
-
   <!-- Compiled and minified CSS -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.8/css/materialize.min.css">
   {% block cdn_css %}
 
   {% endblock cdn_css %}
 
-
-
   {% compress css %}
   <link rel="stylesheet" href="{% static 'css/main.css' %}">
   <link href="{% static 'css/style.css'  %}" type="text/css" rel="stylesheet" media="screen,projection"/>
   {% block css %}{% endblock %}
   {% endcompress %}
+
   <!-- More ideas for your <head> here: h5bp.com/d/head-Tips -->
 
   <!-- All JavaScript at the bottom, except this Modernizr build.
@@ -57,6 +50,8 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/modernizr/2.8.3/modernizr.min.js"></script>
   {% endcompress %}
 </head>
+
+
 <body class="{% block body_class %}{% endblock %}" {% block body_attributes %}{% endblock %}>
 {% block body %}
   <!-- Prompt IE 6 users to install Chrome Frame. Remove this if you support IE 6.
@@ -65,28 +60,12 @@
     <p class="chromeframe">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> or <a href="http://www.google.com/chromeframe/?redirect=true">activate Google Chrome Frame</a> to improve your experience.</p>
   <![endif]-->
   <header>
-    <nav class="white" role="navigation">
-    <div class="nav-wrapper container">
-      <a id="logo-container" href="{% url 'home' %}" class="brand-logo">Logo</a>
-      <ul class="right hide-on-med-and-down">
-        {% if not request.user.is_authenticated %}
-          <li class='pull-right'><a href="{% url 'account_signup' %}">Register</a></li>
-          <li class='pull-right'><a href="{% url 'account_login' %}">Login</a></li>
-          {% else %}
-          <li class='pull-right'><a href="{% url 'account_logout' %}">Logout</a></li>
-          <li class='pull-right'><a href="">{{ request.user.username}}</a></li>
-          {% endif %}
-      </ul>
-
-      <ul id="nav-mobile" class="side-nav">
-        <li><a href="#">Navbar Link</a></li>
-      </ul>
-      <a href="#" data-activates="nav-mobile" class="button-collapse"><i class="material-icons">menu</i></a>
-    </div>
-  </nav>
+    {% load i18n %}
   </header>
 
-  {% include "messages_display.html" %}
+  {% include "navbar.html" %}
+
+  <!-- {% include "messages_display.html" %} -->
 
   <div role="main" class="data_img">
     <div class="wrapper">
@@ -98,14 +77,8 @@
     </div>
   </div>
 
-  <footer>
-    {% block footer %}
-    <div class="container">
-      <hr>
-      <p>&copy; Pillangodata 2016</p>
-    </div>
-    {% endblock footer %}
-  </footer>
+  {% include "footer.html" %}
+  {% include "modals.html" %}
 
 
   <!-- JavaScript at the bottom for fast page loading -->
@@ -116,14 +89,14 @@
   <script>window.jQuery || document.write('<script src="{{ STATIC_URL }}js/libs/jquery-2.1.1.min.js"><\/script>')</script>
   <!-- Compiled and minified JavaScript -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.8/js/materialize.min.js"></script>
-  <!-- Latest compiled and minified JavaScript -->
-  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+
   {% endblock cdn_js %}
   <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/marked/0.3.6/marked.min.js"></script>
   <!-- scripts concatenated and minified via django-compressor -->
   {% compress js %}
   {% block js %}
-  <script src="{% static 'js/main.js' %}"></script>
+    <script src="{% static 'js/main.js' %}"></script>
+    <script src="{% static 'js/init.js' %}"></script>
   {% endblock js %}
   {% endcompress %}
   <!-- end scripts -->

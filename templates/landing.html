@@ -1,11 +1,12 @@
 {% load static %}
+{% load i18n %}
 
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0, user-scalable=no"/>
-  <title>Parallax Template - Materialize</title>
+  <title>Pillango - Data&Analytics</title>
 
   <!-- CSS  -->
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
@@ -15,21 +16,8 @@
   <link href="{% static 'css/main.css'  %}" type="text/css" rel="stylesheet" media="screen,projection"/>
 </head>
 <body>
-  <nav class="white" role="navigation">
-    <div class="nav-wrapper container">
-      <a id="logo-container" href="#" class="brand-logo"><img src="{% static 'images/pillango_logo.png' %}" alt="Pillango data"></a>
-      <ul class="right hide-on-med-and-down">
-        {% if not request.user.is_authenticated %}
-          <li><a href="{% url 'account_signup' %}">Register</a></li>
-          <li><a href="#modal1" class='modal-trigger'>Login</a></li> <!-- {% url 'account_login' %} -->
-          {% else %}
-          <li><a href="{% url 'account_logout' %}">Logout</a></li>
-          <li><a href="">{{ request.user.username}}</a></li>
-        {% endif %}
-      </ul>
-      <a href="#" data-activates="nav-mobile" class="button-collapse"><i class="material-icons">menu</i></a>
-    </div>
-  </nav>
+
+  {% include "navbar.html" %}
 
   <div id="index-banner" class="parallax-container">
     <div class="section no-pad-bot">
@@ -41,7 +29,7 @@
           <h5 class="header col s12 light">The word pillangó means butterfly in Hungarian. The butterly is a symbol of color and transformation, an impressive process of metamorphosis</h5>
         </div>
         <div class="row center">
-          <a href="http://materializecss.com/getting-started.html" id="download-button" class="btn-large waves-effect waves-light light-blue darken-3">Get Started</a>
+          <a href="{% url 'home' %}" id="download-button" class="btn-large waves-effect waves-light light-blue darken-3">FinApp Store</a>
         </div>
         <br><br>
 
@@ -129,52 +117,9 @@
     <div class="parallax"><img src="{% static 'images/background3.jpg' %}" alt="Unsplashed background img 3"></div>
   </div>
 
-  <footer class="page-footer blue-grey lighten-2">
-    <div class="container">
-      <div class="row">
-        <div class="col l6 s12">
-          <h5 class="white-text">Company Bio</h5>
-          <p class="grey-text text-darken-4">Pillango transforms data and analytics into apps for the financial industry.
-          Making them simple. Easy. In a continuous process of change</p>
-        </div>
-        <div class="col l3 s12">
-          <h5 class="white-text">Settings</h5>
-          <ul>
-            <li><a class="white-text" href="#!">Link 1</a></li>
-            <li><a class="white-text" href="#!">Link 2</a></li>
-            <li><a class="white-text" href="#!">Link 3</a></li>
-            <li><a class="white-text" href="#!">Link 4</a></li>
-          </ul>
-        </div>
-        <div class="col l3 s12">
-          <h5 class="white-text">Connect</h5>
-          <ul>
-            <li><a class="white-text" href="#!">Link 1</a></li>
-            <li><a class="white-text" href="#!">Link 2</a></li>
-            <li><a class="white-text" href="#!">Link 3</a></li>
-            <li><a class="white-text" href="#!">Link 4</a></li>
-          </ul>
-        </div>
-      </div>
-    </div>
-    <div class="footer-copyright">
-      <div class="container">
-      &copy; Pillangodata 2016 Data & Analytics. All rights reserved
-      </div>
-    </div>
-  </footer>
+  {% include "footer.html" %}
 
-  <!-- Modal Structure -->
-  <div id="modal1" class="modal modal-fixed-footer">
-    <div class="modal-content">
-      <h3>Sign In</h3>
-      <p>If you have not created an account yet, then please <a href="{% url 'account_signup' %}">sign up</a> first.</p>
-      {{form}}
-    </div>
-    <div class="modal-footer">
-      <a href="#!" class="modal-action modal-close waves-effect waves-green btn-flat ">Agree</a>
-    </div>
-  </div>
+  {% include "modals.html" %}
 
 
   <!--  Scripts-->

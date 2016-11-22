@@ -1,0 +1,25 @@
+{% load static %}
+{% load i18n %}
+
+<!-- Dropdown Structure -->
+  <ul id="dropdown1" class="dropdown-content">
+    <li><a href="{% url 'home' %}">Home</a></li>
+    <li><a href="#!">Pills&GOs</a></li>
+    <li class="divider"></li>
+    <li><a href="#modal3">Logout</a></li>
+  </ul>
+  <nav class="white" role="navigation">
+    <div class="nav-wrapper container">
+      <a id="logo-container" href="{% url 'landing' %}" class="brand-logo"><img src="{% static 'images/pillango_logo.png' %}" alt="Pillango data"></a>
+      <ul class="right hide-on-med-and-down">
+        {% if not request.user.is_authenticated %}
+          <li><a href="#modal2" class='modal-trigger'>Register</a></li>
+          <li><a href="#modal1" class='modal-trigger'>Login</a></li> <!-- {% url 'account_login' %} -->
+          {% else %}
+          <!-- Dropdown Trigger -->
+          <li><a class="dropdown-button" href="#!" data-activates="dropdown1">{{ request.user.username}}<i class="material-icons right">arrow_drop_down</i></a></li>
+        {% endif %}
+      </ul>
+      <a href="#" data-activates="nav-mobile" class="button-collapse"><i class="material-icons">menu</i></a>
+    </div>
+  </nav>

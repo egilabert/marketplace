@@ -1,0 +1,47 @@
+{% load i18n %}
+
+<!-- Modal Structure -->
+  <div id="modal1" class="modal modal-fixed-footer">
+    <div class="modal-content">
+      <!-- <h3>Sign In</h3>
+      <p>If you have not created an account yet, then please <a href="{% url 'account_signup' %}">sign up</a> first.</p>
+      <form method="post" class="login-form" action="{% url 'account_login' %}">
+        {% csrf_token %}
+        {{form}} -->
+        {% include "login.html" %}
+    </div>
+    <div class="modal-footer">
+
+      <button type="submit" class="modal-action modal-close waves-effect waves-green btn-flat">{% trans "Log In" %}</button>
+    </div>
+    </form>
+  </div>
+
+  <!-- Modal Structure -->
+  <div id="modal2" class="modal modal-fixed-footer">
+    <div class="modal-content">
+      <!-- <h3>Sign Up</h3>
+      <p>Already have an account? Then please  <a href="{% url 'account_login' %}">sign in</a> .</p>
+      {{form_signup}} -->
+      {% include "signup.html" %}
+    </div>
+    <div class="modal-footer">
+
+      <button type="submit" class="modal-action modal-close waves-effect waves-green btn-flat">{% trans "Sign Up" %}</button>
+    </div>
+    </form>
+  </div>
+
+  <!-- Modal Structure -->
+  <div id="modal3" class="modal modal-fixed-footer">
+    <div class="modal-content">
+      <!-- <h3>Sign Up</h3>
+      <p>Already have an account? Then please  <a href="{% url 'account_login' %}">sign in</a> .</p>
+      {{form_signup}} -->
+      {% include "logout.html" %}
+    </div>
+    <div class="modal-footer">
+      <button type="submit" class="modal-action modal-close waves-effect waves-green btn-flat">{% trans 'Sign Out' %}</button>
+    </div>
+    </form>
+  </div>

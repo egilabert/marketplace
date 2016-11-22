@@ -2,53 +2,97 @@
 {% load staticfiles %}
 
 {% block content %}
-	<img src="{% static 'images/pillango_blue.png' %}" alt="Pillango"/ class='img-responsive pull-left'>
 
-	<div class="stretchedToMargin">
-		<section class="row profiles">
-			<div class="intro">
-				<!-- <h2>Meet The Team</h2>
-				<p class="lead">&ldquo;Individuals can and do make a difference, but it takes a team<br>to really mess things up.&rdquo;</p> -->
-			</div>
+	<h1 class="header center light">What are you looking for? </h1>
 
-			<article class="col-sm-6 profile">
-				<div class="profile-header">
-					<img src="{% static 'images/home.png' %}" alt="Marketplace" class="img-circle">
-				</div>
-				
-				<div class="profile-content">
-					<h3><a href="">Risk management</a></h3>
-					<p class="lead position">Risk managment for real estate</p>
-					We are able to display a complete solution for real time real estate portfolio valuation while our predictive models help optimizing portfolio and risk management
-				</div>
-				
-				<div class="profile-footer">
-					<a href="tel:<?php the_field('team_phone'); ?>"><i class="fa fa-phone" aria-hidden="true"></i></a>
-					<a href="mailto:<?php echo antispambot( get_field('team_email') ); ?>"><i class="fa fa-envelope" aria-hidden="true"></i></i></a>
-					<a href="<?php echo $twitter; ?>"><i class="fa fa-twitter" aria-hidden="true"></i></a>
-					<a href="<?php echo $linkedin; ?>"><i class="fa fa-linkedin" aria-hidden="true"></i></a>
-				</div>
-			</article><!-- /.profile -->
+	<div class="row">
+		<div class="card col s4">
+		    <div class="card-image waves-effect waves-block waves-light">
+		      <img class="activator" src="{% static 'images/dolphins.jpg' %}">
+		    </div>
+		    <div class="card-content">
+		      <span class="card-title activator grey-text text-darken-4">Network B2B<i class="material-icons right">more_vert</i></span>
+		      <p><a href="#">Go to the App</a></p>
+		    </div>
+		    <div class="card-reveal">
+		      <span class="card-title grey-text text-darken-4">Where business meets business<i class="material-icons right">close</i></span>
+		      <p>Impulsar el crecimiento de los clientes B2B a través de un marketplace inteligente que priorice las potenciales interacciones y anticipe posibilidades de financiación inhouse</p>
+		    </div>
+		</div>
 
-			<article class="col-sm-6 profile">
-				<div class="profile-header">
-					<img src="{% static 'images/network.png' %}" alt="Marketplace" class="img-circle">
-				</div>
-				
-				<div class="profile-content">
-					<h3><a href="{% url 'empresas:options' %}">Marketplace</a></h3>
-					<p class="lead position">Where business meets business</p>
-					Impulsar el crecimiento de los clientes B2B a través de un marketplace inteligente que priorice las potenciales interacciones y anticipe posibilidades de financiación inhouse
-				</div>
-				
-				<div class="profile-footer">
-					<a href="tel:<?php the_field('team_phone'); ?>"><i class="fa fa-phone" aria-hidden="true"></i></a>
-					<a href="mailto:<?php echo antispambot( get_field('team_email') ); ?>"><i class="fa fa-envelope" aria-hidden="true"></i></i></a>
-					<a href="<?php echo $twitter; ?>"><i class="fa fa-twitter" aria-hidden="true"></i></a>
-					<a href="<?php echo $linkedin; ?>"><i class="fa fa-linkedin" aria-hidden="true"></i></a>
-				</div>
-			</article><!-- /.profile -->
-		</section><!-- /.row -->
+		<div class="card col s4">
+		    <div class="card-image waves-effect waves-block waves-light">
+		      <img class="activator" src="{% static 'images/blackboard.jpg' %}">
+		    </div>
+		    <div class="card-content">
+		      <span class="card-title activator grey-text text-darken-4">Risk management<i class="material-icons right">more_vert</i></span>
+		      <p><a href="#">Go to the App</a></p>
+		    </div>
+		    <div class="card-reveal">
+		      <span class="card-title grey-text text-darken-4">Risk management<i class="material-icons right">close</i></span>
+		      <p>We are able to display a complete solution for real time real estate portfolio valuation while our predictive models help optimizing portfolio and risk management</p>
+		    </div>
+		</div>
+
+		<div class="card col s4">
+		    <div class="card-image waves-effect waves-block waves-light">
+		      <img class="activator" src="{% static 'images/menacing_face.png' %}">
+		    </div>
+		    <div class="card-content">
+		      <span class="card-title activator grey-text text-darken-4">No toquis res!<i class="material-icons right">more_vert</i></span>
+		      <p><a href="#">Go to the App</a></p>
+		    </div>
+		    <div class="card-reveal">
+		      <span class="card-title grey-text text-darken-4">Risk management<i class="material-icons right">close</i></span>
+		      <p>We are able to display a complete solution for real time real estate portfolio valuation while our predictive models help optimizing portfolio and risk management</p>
+		    </div>
+		</div>
+
+	</div>
+
+	<div class="row">
+		<div class="card col s4">
+		    <div class="card-image waves-effect waves-block waves-light">
+		      <img class="activator" src="{% static 'images/background1.jpg' %}">
+		    </div>
+		    <div class="card-content">
+		      <span class="card-title activator grey-text text-darken-4">Network B2B<i class="material-icons right">more_vert</i></span>
+		      <p><a href="#">Go to the App</a></p>
+		    </div>
+		    <div class="card-reveal">
+		      <span class="card-title grey-text text-darken-4">Where business meets business<i class="material-icons right">close</i></span>
+		      <p>Impulsar el crecimiento de los clientes B2B a través de un marketplace inteligente que priorice las potenciales interacciones y anticipe posibilidades de financiación inhouse</p>
+		    </div>
+		</div>
+
+		<div class="card col s4">
+		    <div class="card-image waves-effect waves-block waves-light">
+		      <img class="activator" src="{% static 'images/analytics.png' %}">
+		    </div>
+		    <div class="card-content">
+		      <span class="card-title activator grey-text text-darken-4">Risk management<i class="material-icons right">more_vert</i></span>
+		      <p><a href="#">Go to the App</a></p>
+		    </div>
+		    <div class="card-reveal">
+		      <span class="card-title grey-text text-darken-4">Risk management<i class="material-icons right">close</i></span>
+		      <p>We are able to display a complete solution for real time real estate portfolio valuation while our predictive models help optimizing portfolio and risk management</p>
+		    </div>
+		</div>
+
+		<div class="card col s4">
+		    <div class="card-image waves-effect waves-block waves-light">
+		      <img class="activator" src="{% static 'images/background2.jpg' %}">
+		    </div>
+		    <div class="card-content">
+		      <span class="card-title activator grey-text text-darken-4">No toquis res!<i class="material-icons right">more_vert</i></span>
+		      <p><a href="#">Go to the App</a></p>
+		    </div>
+		    <div class="card-reveal">
+		      <span class="card-title grey-text text-darken-4">Risk management<i class="material-icons right">close</i></span>
+		      <p>We are able to display a complete solution for real time real estate portfolio valuation while our predictive models help optimizing portfolio and risk management</p>
+		    </div>
+		</div>
+
 	</div>
 
 	<div class="intro"></div>
