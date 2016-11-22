@@ -1,0 +1,79 @@
+{% extends "base.html" %}
+{% load staticfiles %}
+{% block content %}
+
+	<div class="row">
+		<!-- primera carta de opciones -->
+		<div class="col-sm-4">
+		    <div class="thumbnail">
+		      	<img src={% static 'images/analytics.png' %} class='img-responsive'/>
+		      	<div class="caption">
+		        	<h3>
+		        		<p><a href='{{obj.get_absolute_url}}'>RECOMENDACIONES</a></p>
+		        		<small>para tu empresa...</small> 
+		        	</h3>
+		        	<div class="col-sm-12 post-detail-item">
+		        		<p>There are a lot of ways to do authentication in django. You can do social authentication and/or django.contrib.auth authentication. Generally they are separate, but with django-allauth you can combine them both into one package. It even gives you a great jumping off place with plenty of other features. In this video learn how to start using django-allauth.</p>
+		        	</div>
+		        	<small>
+		        			{% if user.get_full_name %}
+							<p>Author: {{ user.get_full_name }}</p>
+							{% else %}
+							<p>Author: {{ user }}</p>
+							{% endif %}
+		        	</small>
+		        	<p><a href="{{obj.get_absolute_url}}" class="btn btn-primary" role="button">View</a>
+		      	</div>
+		    </div>
+	  	</div>
+
+	  	<!-- segunda carta de opciones -->
+		<div class="col-sm-4">
+		    <div class="thumbnail">
+		      	<img src={% static 'images/analytics.png' %} class='img-responsive'/>
+		      	<div class="caption">
+		        	<h3>
+		        		<p><a href='{{obj.get_absolute_url}}'>CLIENTES</a></p>
+		        		<small>nuevas oportunidades...</small> 
+		        	</h3>
+		        	<div class="col-sm-12 post-detail-item">
+		        		<p>There are a lot of ways to do authentication in django. You can do social authentication and/or django.contrib.auth authentication. Generally they are separate, but with django-allauth you can combine them both into one package. It even gives you a great jumping off place with plenty of other features. In this video learn how to start using django-allauth.</p>
+		        	</div>
+		        	<small>
+		        			{% if user.get_full_name %}
+							<p>Author: {{ user.get_full_name }}</p>
+							{% else %}
+							<p>Author: {{ user }}</p>
+							{% endif %}
+		        	</small>
+		        	<p><a href="{{obj.get_absolute_url}}" class="btn btn-primary" role="button">View</a>
+		      	</div>
+		    </div>
+	  	</div>
+
+	  	<!-- tercera carta de opciones -->
+		<div class="col-sm-4">
+		    <div class="thumbnail">
+		      	<img src={% static 'images/analytics.png' %} class='img-responsive'/>
+		      	<div class="caption">
+		        	<h3>
+		        		<p><a href='{{obj.get_absolute_url}}'>PROVEEDORES</a></p>
+		        		<small>reduce tus gastos...</small> 
+		        	</h3>
+		        	<div class="col-sm-12 post-detail-item">
+		        		<p>There are a lot of ways to do authentication in django. You can do social authentication and/or django.contrib.auth authentication. Generally they are separate, but with django-allauth you can combine them both into one package. It even gives you a great jumping off place with plenty of other features. In this video learn how to start using django-allauth.</p>
+		        	</div>
+		        	<small>
+		        			{% if user.get_full_name %}
+							<p>Author: {{ user.get_full_name }}</p>
+							{% else %}
+							<p>Author: {{ user }}</p>
+							{% endif %}
+		        	</small>
+		        	<p><a href="{{obj.get_absolute_url}}" class="btn btn-primary" role="button">View</a>
+		      	</div>
+		    </div>
+	  	</div>
+	</div>
+
+{% endblock %}

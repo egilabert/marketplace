@@ -1,3 +1,23 @@
+.nav-wrapper .brand-logo img {
+    height: 64px;
+}
+
+.data_img {
+  display: block;
+  position:absolute;
+  height:auto;
+  bottom:0;
+  top:0;
+  left:0;
+  right:0;
+  background-image:url('../../static/images/background.jpg');
+  background-repeat:no-repeat;
+  background-size:100%;
+}
+
+.stretchedToMargin {
+}
+
 body {
   color: grey
 }

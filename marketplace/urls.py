@@ -19,11 +19,17 @@ from django.conf import settings
 from django.conf.urls.static import static
 
 from empresas import views
+from empresas.views import HomeView
+from business.views import LandingView
+from allauth.account.views import LoginView, SignupView
 
 urlpatterns = [
+    url(r'^$', LandingView.as_view(), name='landing'), #views.home
     url(r'^admin/', admin.site.urls),
-    url(r'^', views.home),
-    #url(r'^', include('empresas.urls', namespace='empresas')),
+    url(r'^accounts/profile/', HomeView.as_view(), name='home'),
+    url(r'^accounts/', include('allauth.urls')),
+    url(r'^empresas/', include('empresas.urls', namespace='empresas')),
+    
 ]
 
 if settings.DEBUG:

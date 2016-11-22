@@ -1,12 +1,12 @@
 from django.conf.urls import url
 from django.contrib import admin
 
-from .views import HomeView, DetailView
+from .views import LandingView
 
 urlpatterns = [
     #url(r'^create/$', views.post_create, name='create'),
-    url(r'^$', HomeView.as_view(), name='list'),
-    url(r'^options/$', DetailView.as_view(), name='options'),
+    url(r'^$', HomeView.as_view(), name='landing'),
+    #url(r'^options/$', DetailView.as_view(), name='options'),
     
     #url(r'^(?P<id>[d]+)/$', DetailView.as_view(), name='detail'),
     #url(r'^(?P<slug>[\w-]+)/edit/$', views.post_update, name='update'),
