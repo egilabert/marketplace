@@ -58,5 +58,17 @@ $(document).ready(function(){
   
   $('.carousel.carousel-slider').carousel({full_width: true});
 
-});
+  $('.slider').slider(
+    {
+      full_width: true, 
+      indicators: false
+    });
 
+  $('a').click(function(){
+      $('html, body').animate({
+          scrollTop: $( $(this).attr('href') ).offset().top
+      }, 1000);
+      return false;
+  });
+
+});

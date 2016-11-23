@@ -1,14 +1,54 @@
-{% extends "base.html" %}
+{% extends "app_base.html" %}
 {% load staticfiles %}
 
 {% block content %}
+	
+	
+	<div class="slider">
+	    <ul class="slides">
+	      <li>
+	        <img src="{% static 'images/b2b-networking.jpg' %}"> <!-- random image -->
+	        <div class="caption center-align grey-text text-darkent-3">
+	          <h3>Welcome to the MarketPlace</h3>
+	          <h5 class="light grey-text text-darkent-3">Let us grow your business</h5>
+	        </div>
+	      </li>
+	      <li>
+	        <img src="{% static 'images/personal_network.jpg' %}"> <!-- random image -->
+	        <div class="caption left-align">
+	          <h3>Looking for personal recommendations?</h3>
+	          <h5 class="light grey-text text-lighten-3">Receive our personalized indications!</h5>
+	        </div>
+	      </li>
+	      <li>
+	        <img src="{% static 'images/office.jpg' %}"> <!-- random image -->
+	        <div class="caption right-align grey-text text-darkent-3">
+	          <h3>Looking for new clients oportunities?</h3>
+	          <h5 class="light grey-text text-darkent-3">Find out what we have for you!</h5>
+	        </div>
+	      </li>
+	      <li>
+	        <img src="{% static 'images/supplier.jpg' %}"> <!-- random image -->
+	        <div class="caption center-align grey-text text-darkent-3">
+	          <h3>Looking for new supplier opportunities?</h3>
+	          <h5 class="light grey-text text-darkent-3">Find out what we have for you!</h5>
+	        </div>
+	      </li>
+	    </ul>
+	  </div>
 
-		<div class="carousel carousel-slider">
-		    <a class="carousel-item" href="#one!"><img src="http://lorempixel.com/800/400/food/1"></a>
-		    <a class="carousel-item" href="#two!"><img src="http://lorempixel.com/800/400/food/2"></a>
-		    <a class="carousel-item" href="#three!"><img src="http://lorempixel.com/800/400/food/3"></a>
-		    <a class="carousel-item" href="#four!"><img src="http://lorempixel.com/800/400/food/4"></a>
-		  </div>
+	  <div class="row container padding_spaces">
+	  	<div class="col s4 center">
+	  		<a href="#" class="myButton center">green</a>
+	  	</div>
+	  	<div class="col s4 center">
+	  		<a href="#" class="myButton center">green</a>
+	  	</div>
+	  	<div class="col s4 center">
+	  		<a href="#" class="myButton">green</a>
+	  	</div>
+
+	  </div>
 
 		<!-- <div class="carousel carousel-slider center" data-indicators="true">
     <div class="carousel-fixed-item center">
@@ -31,5 +71,5 @@
       <p class="white-text">This is your fourth panel</p>
     </div>
   </div> -->
-
+  <script src="{% static 'js/wow.js' %}"></script>
 {% endblock %}

@@ -1,5 +1,7 @@
 {% load i18n %}
 
+{% load account %}
+
 <!-- Modal Structure -->
   <div id="modal1" class="modal modal-fixed-footer">
     <div class="modal-content">
@@ -23,6 +25,7 @@
       <!-- <h3>Sign Up</h3>
       <p>Already have an account? Then please  <a href="{% url 'account_login' %}">sign in</a> .</p>
       {{form_signup}} -->
+      {{accounts.}}
       {% include "signup.html" %}
     </div>
     <div class="modal-footer">

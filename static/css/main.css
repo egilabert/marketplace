@@ -1,3 +1,24 @@
+.blur {
+  -webkit-filter: blur(5px);
+  -moz-filter: blur(5px);
+  -o-filter: blur(5px);
+  -ms-filter: blur(5px);
+  filter: blur(5px);
+}
+
+.italic {
+    font-style: italic;
+}
+
+.pad_top {
+  margin-top: 5rem;
+}
+
+.padding_landing {
+  padding-top: 3rem;
+  padding-bottom: 3rem;
+}
+
 .nav-wrapper .brand-logo img {
     height: 64px;
 }
@@ -102,4 +123,35 @@ body {
 .profile-footer i.icon-linkedin {
   font-size: 16px;
   top: -1px;
+}
+
+.padding_spaces {
+  padding-top: 2rem;
+  padding-bottom: 2rem;
+}
+
+/*************************************
+**** Button ********
+*************************************/
+
+.myButton {
+  background-color:transparent;
+  -moz-border-radius:20px;
+  -webkit-border-radius:20px;
+  border-radius:20px;
+  border:3px solid #18ab29;
+  display:inline-block;
+  cursor:pointer;
+  color:#635a63;
+  font-size:19px;
+  padding:20px 40px;
+  text-decoration:none;
+  text-shadow:0px 4px 13px #2f6627;
+}
+.myButton:hover {
+  background-color:transparent;
+}
+.myButton:active {
+  position:relative;
+  top:1px;
 }
