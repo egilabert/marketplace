@@ -1,0 +1,59 @@
+{% extends "app_base.html" %}
+{% load static %}
+{% block page_title %}
+{{ title }}
+{% endblock %}
+
+{% block content %}
+
+<div class="parallax-container">
+    <div class="parallax"><img src="{% static 'images/cambodia-1600374_1920.jpg' %}"></div>
+</div>
+
+<div class=container>
+
+	<h2>Latest transfers</h2>
+
+	{% if latest_tranfers_list %}
+
+		<div class="row">
+			<table class="highlight">
+				<thead>
+					<tr>
+						<th data-field="origin_id">Origin</th>
+						<th data-field="concept">Concept</th>
+						<th data-field="amount">Amount</th>
+						<th data-field="balance">Balance</th>
+						<th data-field="destination_id">Destination</th>
+						<th data-field="date">Date</th>
+						<th data-field="date">Detail</th>
+					</tr>
+				</thead>
+
+			
+				<tbody>
+		    		{% for transfer in latest_tranfers_list %}
+						<tr>
+							<td><a href="{% url 'empresas:empresa_detail' transfer.origin_reference.id %}">{{ transfer.origin_reference.name }}</a></td>
+							<td>{{ transfer.concept }}</td>
+							<td>{{ transfer.amount }}</td>
+							<td>{{ transfer.balance }}</td>
+							<td><a href="{% url 'empresas:empresa_detail' transfer.destination_reference.id %}">{{transfer.destination_reference.name }}</a></td>
+							<td>{{ transfer.operation_data|date }}</td>
+							<td><a href="{% url 'empresas:transfer_detail' transfer.id %}">Detail</a></td>
+
+						</tr>
+		    		{% endfor %}
+				</tbody>
+			</table>
+		</div>
+
+	{% else %}
+
+		<p>No transfers are available.</p>
+
+	{% endif %}
+
+</div>
+
+{% endblock %}
