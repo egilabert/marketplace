@@ -24,7 +24,10 @@ import numpy
 @method_decorator(login_required, name='dispatch')
 class HomeView(View):
 	def get(self, request, *args, **kwargs):
-		del request.session['company']
+		try:
+			del request.session['company']
+		except:
+			pass
 		request.session.modified = True
 		queryset = Empresa.objects.all()
 		if request.session.get('company') is None:
