@@ -46,8 +46,6 @@ INSTALLED_APPS = [
     #Personal apps
     'empresas',
     'compressor',
-
-    'csvimport.app.CSVImportConf',  # use AppConfig for django >=1.7 csvimport >=2.2
 ]
 
 SITE_ID = 1
