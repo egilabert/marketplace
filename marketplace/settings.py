@@ -45,6 +45,7 @@ INSTALLED_APPS = [
 
     #Personal apps
     'empresas',
+    'business',
     'compressor',
 ]
 

@@ -99,21 +99,17 @@ def TrasferCreateView(request, empresa_id):
 """				CLIENTS VIEWS 							  """
 """-------------------------------------------------------"""
 
-@method_decorator(login_required, name='dispatch')
-class ClientsView(View):
-	def get(self, request, *args, **kwargs):
-		today = timezone.now().date()
-		company = request.session.get('company')
-		context = {
-			"company": company, 
-			"title": "Recommended clients",
-			"today": today,
-		}
-		return render(request, "empresas/recommended_clients.html", context)
-
-	def post(self, request, *args, **kwargs):
-		return HttpResponse('<h1>Home POST page</h1>')
-
+@login_required
+def ClientView(request):
+	today = timezone.now().date()
+	company = request.session.get('company')
+	context = {
+		"company": company, 
+		"title": "Recommended clients",
+		"today": today,
+	}
+	
+	return render(request, "empresas/recommended_clients.html", context)
 
 """-------------------------------------------------------"""
 """				DATA GENERATOR 							  """
