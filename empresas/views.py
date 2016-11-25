@@ -32,7 +32,7 @@ class HomeView(View):
 			request.session['company'] = company
 		else:
 			company = request.session.get('company')
-		return render(request, "empresas/empresas_home.html", {'company': company})
+		return render(request, "empresas_home.html", {'company': company})
 
 	def post(self, request, *args, **kwargs):
 		return HttpResponse('<h1>Home POST page</h1>')
