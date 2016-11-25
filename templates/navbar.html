@@ -18,8 +18,8 @@
           <li><a href="#products_anchor" rel="" id="anchor2" class="anchorLink modal-trigger">Products</a></li>
           <li><a href="#about_anchor" rel="" id="anchor3" class="anchorLink modal-trigger">About</a></li>
           <li><a href="#contact_anchor" rel="" id="anchor4" class="anchorLink modal-trigger">Contact</a></li>
-          <li><a href="#modal2" class='modal-trigger'>Register</a></li>
-          <li><a href="#modal1" class='modal-trigger'>Login</a></li> <!-- {% url 'account_login' %} -->
+          <!-- <li><a href="#modal2" class='modal-trigger'>Register</a></li>
+          <li><a href="#modal1" class='modal-trigger'>Login</a></li> <!-- {% url 'account_login' %} --> -->
           {% else %}
           <!-- Dropdown Trigger -->
           <li><a href="#" class='modal-trigger'>Home</a></li>
@@ -27,7 +27,7 @@
           <li><a href="#" class='modal-trigger'>Products</a></li>
           <li><a href="#" class='modal-trigger'>About</a></li>
           <li><a href="#" class='modal-trigger'>Contact</a></li>
-          <li><a class="dropdown-button" href="#!" data-activates="dropdown1">{{ request.user.username}}<i class="material-icons right">arrow_drop_down</i></a></li>
+          <!-- <li><a class="dropdown-button" href="#!" data-activates="dropdown1">{{ request.user.username}}<i class="material-icons right">arrow_drop_down</i></a></li> -->
         {% endif %}
       </ul>
       <a href="#" data-activates="nav-mobile" class="button-collapse"><i class="material-icons">menu</i></a>

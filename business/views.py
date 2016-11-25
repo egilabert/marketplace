@@ -19,7 +19,8 @@ class LandingView(View):
 
 class AppsView(View):
 	def get(self, request, *args, **kwargs):
-		return render(request, "home.html", {})
+
+		return render(request, "home.html", {'title': "FinApp Store"})
 
 	def post(self, request, *args, **kwargs):
 		return HttpResponse('<h1>Home POST page</h1>')

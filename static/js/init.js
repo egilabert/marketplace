@@ -71,4 +71,18 @@ $(document).ready(function(){
       return false;
   });
 
+    // Initialize collapse button
+  $(".button-collapse").sideNav();
+  // Initialize collapsible (uncomment the line below if you use the dropdown variation)
+  //$('.collapsible').collapsible();
+
+  $( ".fadding" ).fadeIn( 1500, function() {
+    $( ".fadding_2" ).fadeIn( 700, function() {
+      $( ".fadding_3" ).fadeIn( "slow", function() {
+      });
+    });
+  });
+
+  $('select').material_select();
+
 });

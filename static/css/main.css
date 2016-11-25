@@ -1,3 +1,19 @@
+{% load staticfiles %}
+
+.background_grey {
+  background-color: rgb(237, 243, 249)
+}
+.wrap_register {
+  background: url("../images/register.jpg") no-repeat center center fixed; 
+        -webkit-background-size: cover;
+        -moz-background-size: cover;
+        -o-background-size: cover;
+        background-size: cover;
+    padding: 5em 0em 10em 3em;
+    min-height: 43em;
+    color: black;
+}
+
 .blur {
   -webkit-filter: blur(5px);
   -moz-filter: blur(5px);
@@ -6,14 +22,52 @@
   filter: blur(5px);
 }
 
+.carousel-slider {
+      height: 500px;
+}
+.parallax-container {
+      height: 500px;
+}
+
+.positioning {
+  position: fixed;
+  overflow: visible;
+  top: 10px;
+  right: 10px;
+}
+
+.top-left {
+  position: fixed;
+  overflow: visible;
+  top: 10px;
+  left: 10px;
+}
+
 .italic {
     font-style: italic;
+}
+
+.light_pers {
+  font-weight: 300;
 }
 
 .pad_top {
   margin-top: 5rem;
 }
 
+.padding_full {
+  padding-top: 4rem;
+  padding-bottom: 4rem;
+}
+
+.carousel {
+  height: auto;
+}
+
+.padding_title {
+  padding-top: 2rem;
+  padding-bottom: 2rem;
+}
 .padding_landing {
   padding-top: 3rem;
   padding-bottom: 3rem;
@@ -154,4 +208,63 @@ body {
 .myButton:active {
   position:relative;
   top:1px;
+}
+
+/************************
+ ---     Button     ---
+/***********************/
+
+.service-item {
+  text-align: center;
+  margin-top: 40px;
+  display:inline-block;
+}
+
+.service-item h4 {
+  font-family: 'Open Sans', sans-serif;
+  font-size: 16px;
+  font-weight: 700;
+  color: #333;
+  text-transform: uppercase;
+  margin-top: 25px;
+}
+
+.icon i {
+  border-radius: 50%;
+  border: 20px solid #f55858;
+  color: #f55858;
+  font-size: 28px;
+  line-height: 80px;
+  width: 120px;
+  height: 120px;
+}
+
+.icon i:hover {
+  border-radius: 50%;
+  border: 20px solid #52BF3F;
+  color: #52BF3F;
+  font-size: 28px;
+  line-height: 80px;
+  width: 120px;
+  height: 120px;
+}
+
+.icon_blanc i {
+  border-radius: 50%;
+  border: 20px solid #fff;
+  color: #fff;
+  font-size: 28px;
+  line-height: 80px;
+  width: 120px;
+  height: 120px;
+}
+
+.icon_blanc i:hover {
+  border-radius: 50%;
+  border: 20px solid #e1e1e1;
+  color: #e1e1e1;
+  font-size: 28px;
+  line-height: 80px;
+  width: 120px;
+  height: 120px;
 }

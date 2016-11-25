@@ -27,7 +27,6 @@ DEBUG = True
 
 ALLOWED_HOSTS = ['85.214.97.85','127.0.0.1','h2277182.stratoserver.net']
 
-
 # Application definition
 
 INSTALLED_APPS = [
@@ -47,6 +46,8 @@ INSTALLED_APPS = [
     #Personal apps
     'empresas',
     'compressor',
+
+    'csvimport.app.CSVImportConf',  # use AppConfig for django >=1.7 csvimport >=2.2
 ]
 
 SITE_ID = 1
@@ -133,6 +134,7 @@ USE_L10N = True
 
 USE_TZ = True
 
+SESSION_SERIALIZER = 'django.contrib.sessions.serializers.PickleSerializer'
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.10/howto/static-files/
