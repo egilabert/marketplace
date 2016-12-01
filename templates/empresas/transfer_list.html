@@ -34,7 +34,7 @@
 				<tbody>
 		    		{% for transfer in latest_tranfers_list %}
 						<tr>
-							<td><a href="{% url 'empresas:empresa_detail' transfer.origin_reference.id %}">{{ transfer.origin_reference.name }}</a></td>
+							<td><a href="{% url 'empresas:empresa_detail' transfer.transfers.id %}">{{ transfer.transfers.name }}</a></td>
 							<td>{{ transfer.concept }}</td>
 							<td>{{ transfer.amount }}</td>
 							<td>{{ transfer.balance }}</td>

@@ -24,3 +24,8 @@ class AppsView(View):
 
 	def post(self, request, *args, **kwargs):
 		return HttpResponse('<h1>Home POST page</h1>')
+
+def TestView(request):
+	context = {
+		'title': "Grid Composition"}
+	return render(request, 'test_cards.html', context)

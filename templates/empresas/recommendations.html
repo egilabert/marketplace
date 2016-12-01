@@ -1,0 +1,16 @@
+{% extends "app_base.html" %}
+{% load static %}
+{% block page_title %}
+{{ empresa.name }}
+{% endblock %}
+
+{% block content %}
+	<div id="myContainer"></div>
+	<h5>{{ empresa.name }}</h5>
+{% endblock %}
+
+{% block js%}
+	<script src="{% static 'js/p5.js' %}"></script>
+    <script src="{% static 'js/p5.dom.js' %}"></script>
+    <script src="{% static 'js/sketch2.js' %}"></script>
+{% endblock %}

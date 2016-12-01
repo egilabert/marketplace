@@ -6,6 +6,8 @@
 
 {% block content %}
 
+{% block body_class %}background_grey{% endblock %}
+
 <div class="parallax-container">
     <div class="parallax"><img src="{% static 'images/cambodia-1476378_1920.jpg' %}"></div>
 </div>
@@ -13,12 +15,33 @@
 <div class="container">
     <h2>{{ empresa.name }}</h2>
     <h5 class="light">CNAE: {{ empresa.cnae }}</h5>
-    <h6 class="light">{{ empresa.origin_reference.count }} transfers ({{ empresa.average_transfer | floatformat }} average transfer amount)</h6>
+    <h6 class="light">{{ empresa.transfers.count }} transfers ({{ empresa.average_transfer | floatformat }} average transfer amount)</h6>
     <h6 class="light">{{ empresa.empresa.count }} Recomendaciones</h6>
+
+    <!-- Graficos para el dashboard... vamos allà!!! vamonos!! -->
+    <div class="row">
+        <div class="col s12 m6">
+          <div class="card white">
+            <div class="card-content white-text">
+              <span class="card-title">El creador de gráficos</span>
+              <canvas id="barChart" width="400" height="400"></canvas>
+            </div>
+          </div>
+        </div>
+        <div class="col s12 m6">
+          <div class="card white">
+            <div class="card-content white-text">
+              <span class="card-title">El creador de gráficos</span>
+              <canvas id="lineChart" width="400" height="400"></canvas>
+            </div>
+          </div>
+        </div>
+    </div>
+    <!-- Graficos para el dashboard... vamos allà!!! vamonos!! -->
 
     <h3 class="light">Recommended for this client</h3>
 
-    {% if empresa.origin_reference.all %}
+    {% if empresa.transfers.all %}
     <div class="row">
             <table class="highlight">
                 <thead>
@@ -53,7 +76,7 @@
 
     <h3 class="light">Recent transfers</h3>
 
-    {% if empresa.origin_reference.all %}
+    {% if empresa.transfers.all %}
     <div class="row">
             <table class="highlight">
                 <thead>
@@ -70,9 +93,9 @@
 
             
                 <tbody>
-                    {% for transfer in empresa.origin_reference.all %}
+                    {% for transfer in empresa.transfers.all %}
                         <tr>
-                            <td><a href="{% url 'empresas:empresa_detail' transfer.origin_reference.id %}">{{ transfer.origin_reference.name }}</a></td>
+                            <td><a href="{% url 'empresas:empresa_detail' transfer.transfers.id %}">{{ transfer.transfers.name }}</a></td>
                             <td>{{ transfer.concept }}</td>
                             <td>{{ transfer.amount }}</td>
                             <td>{{ transfer.balance }}</td>
@@ -102,6 +125,88 @@
         <input type="submit" value="Add" />
     </form>
 </div>
+
+<!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/1.0.2/Chart.min.js"></script> -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.1.4/Chart.bundle.min.js"></script>
+
+<script>
+    var bar = document.getElementById("barChart");
+    var line = document.getElementById("lineChart");
+    var scatterChart = new Chart(line, {
+        type: 'line',
+        data: {
+            datasets: [{
+                label: 'Scatter Dataset',
+                data: [{
+                    x: -10,
+                    y: 0
+                }, {
+                    x: 0,
+                    y: 10
+                }, {
+                    x: 10,
+                    y: 5
+                }]
+            }]
+        },
+        options: {
+            scales: {
+                xAxes: [{
+                    type: 'linear',
+                    position: 'bottom'
+                }]
+            }
+        }
+    });
+
+    var myChart = new Chart(bar, {
+        type: 'bar',
+        data: {
+            labels: ["Red", "Blue", "Yellow", "Green", "Purple", "Orange"],
+            datasets: [{
+                label: '# of Votes',
+                data: [12, 19, 3, 5, 2, 3],
+                backgroundColor: [
+                    'rgba(255, 99, 132, 0.2)',
+                    'rgba(54, 162, 235, 0.2)',
+                    'rgba(255, 206, 86, 0.2)',
+                    'rgba(75, 192, 192, 0.2)',
+                    'rgba(153, 102, 255, 0.2)',
+                    'rgba(255, 159, 64, 0.2)'
+                ],
+                borderColor: [
+                    'rgba(255,99,132,1)',
+                    'rgba(54, 162, 235, 1)',
+                    'rgba(255, 206, 86, 1)',
+                    'rgba(75, 192, 192, 1)',
+                    'rgba(153, 102, 255, 1)',
+                    'rgba(255, 159, 64, 1)'
+                ],
+                borderWidth: 1
+            }]
+        },
+        options: {
+            legend: {
+                display: true,
+                labels: {
+                    fontColor: 'rgb(255, 99, 132)'
+                }
+            },
+            title: {
+                display: true,
+                text: 'Custom Chart Title'
+            },
+            responsive: true,
+            scales: {
+                yAxes: [{
+                    ticks: {
+                        beginAtZero:true
+                    }
+                }]
+            }
+        }
+    });
+</script>
 
 
 {% endblock %}

@@ -7,7 +7,7 @@ from django.contrib.admin.views.decorators import staff_member_required
 from django.contrib.staticfiles.templatetags.staticfiles import static
 import pandas as pd
 from django.core.urlresolvers import reverse
-from .models import Empresa, Transfer
+from .models import Empresa, Transfer, EstadosFinancieros, Productos
 import dateutil.parser
 from .forms import TransferForm
 import datetime
@@ -35,7 +35,7 @@ class HomeView(View):
 			request.session['company'] = company
 		else:
 			company = request.session.get('company')
-		return render(request, "empresas_home.html", {'company': company})
+		return render(request, "empresas/empresas_home.html", {'company': company})
 
 	def post(self, request, *args, **kwargs):
 		return HttpResponse('<h1>Home POST page</h1>')
@@ -49,12 +49,21 @@ def EmpresasListView(request):
 
 def EmpresaDetailView(request, empresa_id):
 	
+	print(empresa_id)
 	empresa = get_object_or_404(Empresa, pk=empresa_id)
 	form = TransferForm()
 	context = {
 		'empresa':empresa,
 		'form': form}
 	return render(request, 'empresas/empresa_detail.html', context)
+
+def RecommendationsView(request):
+	
+	empresa = request.session.get('company') #get_object_or_404(Empresa, pk=empresa_id)
+	context = {
+		'empresa':empresa
+		}
+	return render(request, 'empresas/recommendations.html', context)
 
 """-------------------------------------------------------"""
 """				TRANFERS VIEWS 							  """
@@ -115,6 +124,22 @@ def ClientView(request):
 	return render(request, "empresas/recommended_clients.html", context)
 
 """-------------------------------------------------------"""
+"""				PROVIDERS VIEWS 							  """
+"""-------------------------------------------------------"""
+
+@login_required
+def ProviderView(request):
+	today = timezone.now().date()
+	company = request.session.get('company')
+	context = {
+		"company": company, 
+		"title": "Recommended PROVIDERS",
+		"today": today,
+	}
+	
+	return render(request, "empresas/recommended_providers.html", context)
+
+"""-------------------------------------------------------"""
 """				DATA GENERATOR 							  """
 """-------------------------------------------------------"""
 
@@ -122,9 +147,99 @@ def ClientView(request):
 class DataGenerator(View):
 
 	def get(self, request, *args, **kwargs):
-		# fake = Factory.create('es_ES')
+		fake = Factory.create('es_ES')
+
+		# Importantdo datos financieros......
+		link = static('data/productos.csv')
+		productos = pd.read_csv("."+link, sep=';', decimal=',', thousands='.', encoding='latin1') # read empresas data
+		EstadosFinancieros.objects.all().delete()
+		print(productos.head())
+
+		for index, row in productos.iterrows():
+			print "%s: %s" %(index, str(row['ID_IDEFISC']))
+			producto = Productos()
+			try:
+				producto.empresa = Empresa.objects.get(fiscal_id=str(row['ID_IDEFISC']))
+			except Empresa.DoesNotExist:
+   				producto.empresa = None
+			try:
+				producto.fecha_datos = dateutil.parser.parse(row['ID_FCH_DATOS'])
+			except:
+				pass
+			producto.numero_persona = row['NUMPER']
+			producto.tipo_producto = row['ID_TIPO_PRODUCTO_2']
+			producto.producto = row['PRODUCTE']
+			producto.desc_producto = row['DESC_PR']
+			producto.id_contrato = row['ID_CONTRATO']
+			producto.concedido = row['CONCEDIDO']
+			producto.dispuesto = row['DISPUESTO']
+			producto.impagado = row['IMPAGADO']
+			producto.dias_impago = row['DIAS_IMPAGO']
+			producto.cuotas_impagadas = row['CUOTAS_IMPAGADAS']
+			try:
+				producto.fecha_formalizacion = dateutil.parser.parse(row['FECHA_FORMALIZACION'])
+			except:
+				pass
+			try:
+				producto.fecha_vencimiento = dateutil.parser.parse(row['FECHA_VENCIMIENTO'])
+			except:
+				pass
+			producto.concedido_inicial = row['CONCEDIDO_INI']
+			producto.capital_pdte = row['CAPITAL_PDTE']
+			producto.interes_revisado = row['INTERES_REV']
+			producto.cuotas_total = row['CUOTAS_TOTAL']
+			producto.cuota_anual = row['CUOTA_ANUAL_IMPPRXCUO']
+			producto.cuota = row['IMPPRXCUO']
+			producto.garantia_hip = row['HIPOTECARIO']
+			producto.sit_contable = row['TIP_DOT_RECALC_RECOD']
+			producto.segmento_gestion = row['SEGMENTO_GESTION']
+			if row['Refi']==1:
+				producto.refinanciado = True
+			else:
+				producto.refinanciado = False
+			producto.save()
+
+		# ===============================================================
+
+		# Importantdo datos financieros
+
+		# link = static('data/estados_financieros.csv')
+		# estados_financieros = pd.read_csv("."+link, sep=';', decimal=',', thousands='.', encoding='utf-8') # read empresas data
+		# EstadosFinancieros.objects.all().delete()
+		# print(estados_financieros.head())
+
+		# for index, row in estados_financieros.iterrows():
+		# 	print "%s: %s" %(index, str(row['ID_IDEFISC']))
+		# 	estados_financiero = EstadosFinancieros()
+		# 	try:
+		# 		estados_financiero.empresa = Empresa.objects.get(fiscal_id=str(row['ID_IDEFISC']))
+		# 	except Empresa.DoesNotExist:
+  #  				estados_financiero.empresa = None
+		# 	try:
+		# 		estados_financiero.ejercicio = str(row['ID_EJER_BALAN'])
+		# 	except:
+		# 		pass
+		# 	try:
+		# 		estados_financiero.fecha_balance = dateutil.parser.parse(row['ID_FCH_BALANCE'])
+		# 	except:
+		# 		pass
+		# 	estados_financiero.ventas = float(row['VENTAS'])
+		# 	estados_financiero.depreciaciones = float(row['DEPRECIACIONES'])
+		# 	estados_financiero.amortizaciones = float(row['AMORTIZACIONES'])
+		# 	estados_financiero.ebitda = float(row['EBITDA'])
+		# 	estados_financiero.resultado_explotacion = float(row['RESULTADO_EXPLOTACION'])
+		# 	estados_financiero.existencias = float(row['EXISTENCIAS'])
+		# 	estados_financiero.deudores = float(row['DEUDORES_COMERCIALES'])
+		# 	estados_financiero.periodificaciones_ac = float(row['PERIODIFICACIONES_AC'])
+		# 	estados_financiero.provisiones_cp = float(row['PROVISIONES_CP'])
+		# 	estados_financiero.acreedores_comerciales = float(row['ACREEDORES_COMERCIALES'])
+		# 	estados_financiero.PERIODIFICACIONES_PC = float(row['PERIODIFICACIONES_PC'])
+		# 	estados_financiero.save()
+
+		# ===============================================================
 
 		# # Importantdo datos de empresa
+
 		# link = static('data/empresas.csv')
 		# empresas = pd.read_csv("."+link, sep=';', decimal=',', encoding='latin1') # read empresas data
 		# Empresa.objects.all().delete()
@@ -159,7 +274,10 @@ class DataGenerator(View):
 		# 	empresa.oficina = row['OFICINA']
 		# 	empresa.save()
 
+		# ===============================================================
+
 		# # Importantdo transferencias.......
+
 		# link = static('data/transferencias.csv')
 		# transferencias = pd.read_csv("."+link, sep=';', decimal=',', encoding='latin1')
 		# Transfer.objects.all().delete()
@@ -180,7 +298,10 @@ class DataGenerator(View):
 		# 	transfer.origin_reference = Empresa.objects.get(fiscal_id=str(row['REFERENCIA_ORIGEN']))
 		# 	transfer.save()
 
+		# ===============================================================
+
 		# # Generando recomendaciones.......
+
 		# link = static('data/transferencias.csv')
 		# transferencias = pd.read_csv("."+link, sep=';', decimal=',', encoding='latin1')
 		# RecommendedClients.objects.all().delete()

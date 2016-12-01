@@ -39,7 +39,7 @@
 
   {% compress css %}
   <link rel="stylesheet" href="{% static 'css/main.css' %}">
-  <link href="{% static 'css/style.css'  %}" type="text/css" rel="stylesheet" media="screen,projection"/>
+  <link href="{% static 'css/style.css' %}" type="text/css" rel="stylesheet" media="screen,projection"/>
   {% block css %}{% endblock %}
   {% endcompress %}
 
@@ -81,11 +81,14 @@
       <a href="#!email"><span class="white-text email">{{ company.email }}</span></a>
     </div></li>
     <li class="">
-      <li><span class="center-text tiny light">{{ company.cnae }}</span></li>
+      <li><span class="center-text tiny light"><small>{{ company.cnae }}</small></span></li>
     </li>
     <li><div class="divider"></div></li>
     <li><a href="{% url 'empresas:empresas_home' %}"><i class="material-icons">airplay</i>Home</a></li>
-    <li><a href="{% url 'empresas:clients' %}"><i class="material-icons">star</i>Client Recommendations</a></li>
+    <li><a href="{% url 'empresas:clients' %}"><i class="material-icons">star</i>Your new clients!</a></li>
+    <li><a href="{% url 'empresas:providers' %}"><i class="material-icons">star</i>Your new providers!</a></li>
+    <li><a href="{% url 'empresas:recommendations' %}"><i class="material-icons">star</i>Your new opportunities!</a></li>
+
     <li><div class="divider"></div></li>
     <li><a class="subheader">Options</a></li>
     <li><a class="waves-effect" href="#!">Settings<i class="tiny material-icons">lock_open</i></a></li>
@@ -103,7 +106,7 @@
   <!-- Grab Google CDN's jQuery, with a protocol relative URL; fall back to local if offline -->
   {% block cdn_js %}
   <script src="https://code.jquery.com/jquery-3.1.1.min.js" integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8=" crossorigin="anonymous"></script>
-  <script>window.jQuery || document.write('<script src="{{ STATIC_URL }}js/libs/jquery-2.1.1.min.js"><\/script>')</script>
+  <script>window.jQuery || document.write('<script src="{{ STATIC_URL }}js/libs/jquery-3.1.1.min.js"><\/script>')</script>
   <!-- Compiled and minified JavaScript -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.8/js/materialize.min.js"></script>
 
