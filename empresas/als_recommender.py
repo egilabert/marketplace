@@ -17,8 +17,16 @@ def read_data(transferencias):
     """ Reads in the last.fm dataset, and returns a tuple of a pandas dataframe
     and a sparse matrix of artist/user/playcount """
     # read in triples of user/artist/playcount from the input dataset
-    print(transferencias.head())
     transfer_count = transferencias.groupby(["REFERENCIA_ORIGEN", "REFERENCIA_1"]).IMPORTE.count().reset_index()
+
+    for index, row in transfer_count.iterrows():
+        cliente = Empresa.objects.get(fiscal_id=str(row['REFERENCIA_ORIGEN']))
+        proveedor = Empresa.objects.get(fiscal_id=str(row['REFERENCIA_1']))
+        proveedor.clients.add(cliente)
+        cliente.providers.add(proveedor)
+
+    print("clientes y proveedores cargados")
+
     data = pandas.DataFrame()
     data['user'] = transfer_count['REFERENCIA_ORIGEN'].astype("category")
     data['artist'] = transfer_count['REFERENCIA_1'].astype("category")
@@ -53,7 +61,7 @@ class TopRelated(object):
         norms = numpy.linalg.norm(artist_factors, axis=-1)
         self.factors = artist_factors / norms[:, numpy.newaxis]
 
-    def get_related(self, artistid, N=15):
+    def get_related(self, artistid, N=50):
         scores = self.factors.dot(self.factors[artistid])
         best = numpy.argpartition(scores, -N)[-N:]
         return sorted(zip(best, scores[best]), key=lambda x: -x[1])
@@ -67,7 +75,7 @@ class ApproximateTopRelated(object):
         index.build(treecount)
         self.index = index
 
-    def get_related(self, artistid, N=15):
+    def get_related(self, artistid, N=50):
         neighbours = self.index.get_nns_by_item(artistid, N)
         return sorted(((other, 1 - self.index.get_distance(artistid, other))
                       for other in neighbours), key=lambda x: -x[1])
@@ -115,6 +123,7 @@ def calculate_similar_artists(input_filename, output_filename,
             artist = artists[artistid]
             for other, score in calc.get_related(artistid):
                 o.write("%s\t%s\t%s\n" % (artist, artists[other], score))
+                
                 recommendedClients = RecommendedClients()
                 recommendedClients.empresa = Empresa.objects.get(fiscal_id=artist)
                 recommendedClients.clientes_recomendados = Empresa.objects.get(fiscal_id=artists[other])

@@ -1,0 +1,153 @@
+{% extends "app_base.html" %}
+{% load static %}
+{% block page_title %}
+Generación de datos
+{% endblock %}
+
+{% block body_class %}background_grey{% endblock %}
+
+{% block content %}
+
+<div class="row padding_full">
+	<h1 class="center">Generate the data</h1>
+		<div class="col s1 center">
+  		</div>
+		<div class="col s2 center">
+			<a class="waves-effect waves-light btn" id="empresas_button">Empresas</a>
+			<div id="empresa_response"></div>
+  		</div>
+		<div class="col s2 center">
+			<a class="waves-effect waves-light btn" id="productos_button">Productos</a>
+			<div id="productos_response"></div>
+  		</div>
+		<div class="col s2 center">
+			<a class="waves-effect waves-light btn" id="estados_button">Estados Financieros</a>
+			<div id="estados_response"></div>
+  		</div>
+		<div class="col s2 center">
+			<a class="waves-effect waves-light btn" id="transfers_button">Transferencias</a>
+			<div id="transfers_response"></div>
+  		</div>
+		<div class="col s2 center">
+			<a class="waves-effect waves-light btn" id="recommedations_button">Recommedations</a>
+			<div id="recommedations_response"></div>
+  		</div>
+		<div class="col s1 center">
+  		</div>
+</div>
+
+<div class="ajax_modal">
+	<div id="loadingDiv6">
+		<div class="progress">
+		    <div class="indeterminate"></div>
+		</div>
+	</div>
+</div>
+
+{% endblock %}
+
+{% block js %}
+<script type="text/javascript">
+	$body = $("body");
+
+	$(document)
+		.ajaxStart(function () { $body.addClass("loading");})
+	   	.ajaxStop(function () { $body.removeClass("loading"); });
+
+	$( "#empresas_button" ).click(function() {
+		$.ajax({
+			url: '/empresas/generatedata/empresas/',
+			type: 'get'})
+				.done( function (responseText) {
+		            // Triggered if response status code is 200 (OK)
+		            $('#empresa_response').html(responseText);
+		         })
+		         .fail( function (jqXHR, status, error) {
+		            // Triggered if response status code is NOT 200 (OK)
+		            alert(jqXHR.responseText);
+		         })
+		         .always( function() {
+		            // Always run after .done() or .fail()
+		            $('p:first').after('<p>Thank you.</p>');
+		         });
+
+	});
+
+	$( "#productos_button" ).click(function() {
+		$.ajax({
+			url: '/empresas/generatedata/productos/',
+			type: 'get'})
+				.done( function (responseText) {
+		            // Triggered if response status code is 200 (OK)
+		            $('#productos_response').html(responseText);
+		         })
+		         .fail( function (jqXHR, status, error) {
+		            // Triggered if response status code is NOT 200 (OK)
+		            alert(jqXHR.responseText);
+		         })
+		         .always( function() {
+		            // Always run after .done() or .fail()
+		            $('p:first').after('<p>Thank you.</p>');
+		         });
+
+	});
+
+	$( "#estados_button" ).click(function() {
+		$.ajax({
+			url: '/empresas/generatedata/estados/',
+			type: 'get'})
+				.done( function (responseText) {
+		            // Triggered if response status code is 200 (OK)
+		            $('#estados_response').html(responseText);
+		         })
+		         .fail( function (jqXHR, status, error) {
+		            // Triggered if response status code is NOT 200 (OK)
+		            alert(jqXHR.responseText);
+		         })
+		         .always( function() {
+		            // Always run after .done() or .fail()
+		            $('p:first').after('<p>Thank you.</p>');
+		         });
+
+	});
+
+	$( "#transfers_button" ).click(function() {
+		$.ajax({
+			url: '/empresas/generatedata/transfers/',
+			type: 'get'})
+				.done( function (responseText) {
+		            // Triggered if response status code is 200 (OK)
+		            $('#transfers_response').html(responseText);
+		         })
+		         .fail( function (jqXHR, status, error) {
+		            // Triggered if response status code is NOT 200 (OK)
+		            alert(jqXHR.responseText);
+		         })
+		         .always( function() {
+		            // Always run after .done() or .fail()
+		            $('p:first').after('<p>Thank you.</p>');
+		         });
+
+	});
+
+	$( "#recommedations_button" ).click(function() {
+		$.ajax({
+			url: '/empresas/generatedata/recommendations/',
+			type: 'get'})
+				.done( function (responseText) {
+		            // Triggered if response status code is 200 (OK)
+		            $('#recommedations_response').html(responseText);
+		         })
+		         .fail( function (jqXHR, status, error) {
+		            // Triggered if response status code is NOT 200 (OK)
+		            alert(jqXHR.responseText);
+		         })
+		         .always( function() {
+		            // Always run after .done() or .fail()
+		            $('p:first').after('<p>Thank you.</p>');
+		         });
+
+	});
+
+</script>
+{% endblock %}

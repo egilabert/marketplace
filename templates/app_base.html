@@ -87,7 +87,7 @@
     <li><a href="{% url 'empresas:empresas_home' %}"><i class="material-icons">airplay</i>Home</a></li>
     <li><a href="{% url 'empresas:clients' %}"><i class="material-icons">star</i>Your new clients!</a></li>
     <li><a href="{% url 'empresas:providers' %}"><i class="material-icons">star</i>Your new providers!</a></li>
-    <li><a href="{% url 'empresas:recommendations' %}"><i class="material-icons">star</i>Your new opportunities!</a></li>
+    <li><a href="{% url 'empresas:opportunities' %}"><i class="material-icons">star</i>Your new opportunities!</a></li>
 
     <li><div class="divider"></div></li>
     <li><a class="subheader">Options</a></li>
@@ -97,16 +97,16 @@
   
    <a href="#" data-activates="slide-out" class="button-collapse show-on-medium top-left"><i class="material-icons medium white-text">menu</i></a>
    <a label="Exit" href="{% url 'landing' %}" class="show-on-medium positioning"><i class="material-icons medium white-text">power_settings_new</i></a>
-  <!-- {% include "footer.html" %} -->
-  {% include "modals.html" %}
-
 
   <!-- JavaScript at the bottom for fast page loading -->
 
   <!-- Grab Google CDN's jQuery, with a protocol relative URL; fall back to local if offline -->
   {% block cdn_js %}
-  <script src="https://code.jquery.com/jquery-3.1.1.min.js" integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8=" crossorigin="anonymous"></script>
-  <script>window.jQuery || document.write('<script src="{{ STATIC_URL }}js/libs/jquery-3.1.1.min.js"><\/script>')</script>
+  <script
+  src="https://code.jquery.com/jquery-2.2.4.min.js"
+  integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44="
+  crossorigin="anonymous"></script>
+  <script>window.jQuery || document.write('<script src="{{ STATIC_URL }}js/libs/jquery-2.1.1.min.js"><\/script>')</script>
   <!-- Compiled and minified JavaScript -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.8/js/materialize.min.js"></script>
 

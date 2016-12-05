@@ -11,15 +11,29 @@ background_grey
 
 {% block content %}
 
+	<div id="index-banner" class="parallax-container padding_landing">
+    <div class="section no-pad-bot">
+      <div class="container">
+            <h1 class="header center light grey-text text-darken-4 no-margin-top">Welcome to Pillango</h1>
+            <h1 class="header center light grey-text text-darken-4">Showroom</h1>
+            <div class="row center">
+              <h6 class="header light grey-text text-darken-2">What are you looking for? </h6>
+        	</div>
+      </div>
+    </div>
+    <div class="parallax">
+        <img src="{% static 'images/pills_apples3.jpg' %}" id="total" alt="Unsplashed background img 1">
+    </div>
+  </div>
     <div class="container">
-	<h2 class="header center light_pers">Welcome to Pillango Showroom</h2>
-	<h5 class="header center light_pers">What are you looking for? </h5>
+	<h2 class="header center light_pers"></h2>
+	<h5 class="header center light_pers"></h5>
 
 	<div class="row">
-		<div class="col s4 m4">
-		<div class="card blue-grey darken-1 hoverable">
+		<div class="col s12 m4">
+		<div class="card blue-grey lighten-1 hoverable">
 		    <div class="card-image waves-effect waves-block waves-light">
-		      <img class="activator" src="{% static 'images/dolphins.jpg' %}">
+		      <img class="activator" src="{% static 'images/bikes.jpg' %}">
 		    </div>
 		    <div class="card-content">
 		      <span class="card-title activator white-text text-darken-4">Network B2B<i class="material-icons right">more_vert</i></span>
@@ -34,10 +48,10 @@ background_grey
 		   </div>
 		</div>
 
-		<div class="col s4 m4">
+		<div class="col s12 m4">
 		<div class="card blue-grey lighten-1 hoverable">
 		    <div class="card-image waves-effect waves-block waves-light">
-		      <img class="activator" src="{% static 'images/blackboard.jpg' %}">
+		      <img class="activator" src="{% static 'images/fallingwater.jpg' %}">
 		    </div>
 		    <div class="card-content">
 		      <span class="card-title activator white-text text-darken-4">Risk management<i class="material-icons right">more_vert</i></span>
@@ -52,13 +66,13 @@ background_grey
 		</div>
 		</div>
 
-		<div class="col s4 m4">
-		<div class="card blue-grey darken-4 hoverable">
+		<div class="col s12 m4">
+		<div class="card blue-grey lighten-1 hoverable">
 		    <div class="card-image waves-effect waves-block waves-light">
-		      <img class="activator" src="{% static 'images/menacing_face.png' %}">
+		      <img class="activator" src="{% static 'images/material.jpg' %}">
 		    </div>
 		    <div class="card-content">
-		      <span class="card-title activator white-text text-darken-4">No toquis res!<i class="material-icons right">more_vert</i></span>
+		      <span class="card-title activator white-text text-darken-4">Real Estate<i class="material-icons right">more_vert</i></span>
 		      <div class="card-action">	
 				<a href="#">Go to the App</a>
 				</div>
@@ -73,59 +87,7 @@ background_grey
 	</div>
 
 	<div class="row">
-		<div class="col s4 m4">
-		<div class="card blue-grey lighten-3 hoverable">
-		    <div class="card-image waves-effect waves-block waves-light">
-		      <img class="activator" src="{% static 'images/background1.jpg' %}">
-		    </div>
-		    <div class="card-content">
-		      <span class="card-title activator grey-text text-darken-4">Network B2B<i class="material-icons right">more_vert</i></span>
-		      <div class="card-action">	
-				<a href="#">Go to the App</a>
-				</div>
-		    </div>
-		    <div class="card-reveal">
-		      <span class="card-title grey-text text-darken-4">Where business meets business<i class="material-icons right">close</i></span>
-		      <p>Impulsar el crecimiento de los clientes B2B a través de un marketplace inteligente que priorice las potenciales interacciones y anticipe posibilidades de financiación inhouse</p>
-		    </div>
-		</div>
-		</div>
-
-		<div class="col s4 m4">
-		<div class="card blue-grey darken-3 hoverable">
-		    <div class="card-image waves-effect waves-block waves-light">
-		      <img class="activator" src="{% static 'images/analytics.png' %}">
-		    </div>
-		    <div class="card-content">
-		      <span class="card-title activator white-text text-darken-4">Risk management<i class="material-icons right">more_vert</i></span>
-		      	<div class="card-action">	
-					<a href="#">Go to the App</a>
-				</div>
-		    </div>
-		    <div class="card-reveal">
-		      <span class="card-title grey-text text-darken-4">Risk management<i class="material-icons right">close</i></span>
-		      <p>We are able to display a complete solution for real time real estate portfolio valuation while our predictive models help optimizing portfolio and risk management</p>
-		    </div>
-		</div>
-		</div>
-
-		<div class="col s4 m4">
-		<div class="card blue-grey lighten-4 hoverable">
-		    <div class="card-image waves-effect waves-block waves-light">
-		      <img class="activator" src="{% static 'images/background2.jpg' %}">
-		    </div>
-		    <div class="card-content">
-		      <span class="card-title activator grey-text text-darken-4">No toquis res!<i class="material-icons right">more_vert</i></span>
-		      <div class="card-action">	
-				<a href="#">Go to the App</a>
-			</div>
-		    </div>
-		    <div class="card-reveal">
-		      <span class="card-title grey-text text-darken-4">Risk management<i class="material-icons right">close</i></span>
-		      <p>We are able to display a complete solution for real time real estate portfolio valuation while our predictive models help optimizing portfolio and risk management</p>
-		    </div>
-		</div>
-		</div>
+		
 
 	</div>
 

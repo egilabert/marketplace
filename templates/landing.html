@@ -23,24 +23,33 @@
   <div id="index-banner" class="parallax-container padding_landing">
     <div class="section no-pad-bot">
       <div class="container">
-        <br><br>
-        <h1 class="header center light">Pillango </h1>
-        <div class="row center">
-          <h6 class="header light">Data&Analytics</h6>
-          
+        <div class="row">
+            <div class="col s6">
+              <h1></h1>
+            </div>
+
+            <div class="col s6">
+              <h1 class="header center light ">Pillango</h1>
+              <div class="row center">
+                  <h6 class="header light">Data&Analytics</h6>
+              </div>
+              <div class="row center">
+
+                  <a href="{% url 'home' %}" id="download-button" class="btn-large waves-effect waves-light transparent pad_top border-white"><i class="material-icons right">skip_next</i>Go to the  PillStore  </a>
+              </div>
+            </div>
         </div>
-        <div class="row center">
-          <a href="{% url 'home' %}" id="download-button" class="btn-large waves-effect waves-light light-blue darken-3 pad_top">Go to the  PillStore</a>
-        </div>
-        </div>
+      </div>
     </div>
-    <div class="parallax"><img src="{% static 'images/strangeattractor.gif' %}" alt="Unsplashed background img 1"></div>
+    <div class="parallax">
+        <img src="{% static 'images/chaos_theory.jpg' %}" alt="Unsplashed background img 1">
+    </div>
   </div>
 
 
   <div class="container padding_landing">
     <div class="section" id="service_anchor">
-      <h5 class="header center col s12 light"><p>Pillango transforms data and analytics into apps for the financial industry.</p>
+      <h5 class="header center col s12 flow-text"><p>Pillango transforms data and analytics into apps for the financial industry.</p>
           Making them simple. Easy. In a continuous process of change</h5>
     
 

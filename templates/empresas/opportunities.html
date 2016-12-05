@@ -1,0 +1,243 @@
+{% extends "app_base.html" %}
+{% load static %}
+{% block page_title %}
+{{ title }}
+{% endblock %}
+{% load random_image %}
+
+{% block body_class %}background_grey{% endblock %}
+
+{% block content %}
+		
+	<div class="parallax-container">
+		<h3 class="center-align grey-text text-darken-3 light padding_title">Your opportunities</h3>
+	    <div class="parallax"><img src="{% static 'images/opportunity.jpg' %}"></div>
+	</div>
+    <h4 class="center title light padding_title">New clients found for <a href='{{ empresas.get_absolute_url }}'>{{empresas.name}}</a></h4>
+    <h5 class="light center">CNAE: {{ empresas.cnae }}</h5>
+    <!-- <h6 class="light center">{{ empresas.transfers.count }} transfers ({{ empresas.average_transfer | floatformat }}€ average transfer amount)</h6> -->
+    <h6 class="light center">{{ empresas.recommended_clients.count }} Recomendaciones</h6>
+
+      <div class="row">
+      	  <div class="col s3 m3">
+
+      	  		<div class="col s12 m12">
+		          <div class="card card blue-grey darken-1">
+		            <div class="card-content white-text">
+		              <span class="card-title">New clients recommendations...</span>
+		              <p>We have selected for you several potencial clients that might fit your need and enlarge your customers portfolio.</p>
+		            </div>
+		            <div class="card-action">
+		              <a href="#" id="client_form_button">Filter recommendation</a>
+		            </div>
+		          </div>
+		        </div>
+
+		        <div class="col s12 m12">
+		          <div class="card card blue-grey darken-1">
+		            <div class="card-content white-text">
+		              <span class="card-title">... but, wait, how does it work?</span>
+		              <p>Using your payment transfers data and the ones from your competitors, we can recommend you highly personalized new customers opportunities.</p>
+		            </div>
+		            <div class="card-action">
+		              <a href="#">Back to school</a>
+		            </div>
+		          </div>
+		        </div>
+
+      	  </div>
+
+	      <div class="col s9 l9">
+			<!-- Page Layout here -->
+				
+		    	<div class="row">
+		    		<div class="col s12 m4 cards-container">
+
+					{% for obj in empresas.oportunities.all %}
+							{% if  forloop.counter|add:"-1"|divisibleby:3 %}
+							<div class="card light-green lighten-4 hoverable">
+							    <div class="card-image waves-effect waves-block waves-light">
+							      <img class="activator" src="{{ obj.image}}">
+							    </div>
+							    <div class="card-content">
+							    	<div class="row">
+							      		<span class="activator center-align grey-text text-darken-4">{{forloop.counter}}. {{ obj.name}}</span>
+							      	</div>
+							      	<div class="divider"></div>
+							      	<br>
+							      	<div class="row">
+							      		<span class="grey-text light text-darken-4">Match: <span>{{ obj.similarity|floatformat }}</span><i class="fa fa-bullseye left" aria-hidden="true"></i></span>
+							      	</div>
+
+							      	<div class="row">
+							      		<span class="grey-text light text-darken-4">Financing: <span>100.000€</span><i class="fa fa-money left" aria-hidden="true"></i></span>
+							      	</div>
+								    <div class="card-action">
+								    	<a href="{{ obj.get_absolute_url }}">See details</a>
+								      	<span ><i class="material-icons right activator center">more_vert</i></span>
+								    </div>
+							    </div>
+							    <div class="card-reveal">
+							    	<span class="card-title">Actividad:<i class="material-icons right">close</i></span>
+							    	<div class="row">
+							      		<p class="grey-text text-darken-4">{{ obj.cnae }}</p>
+							      	</div>
+							      	<span class="card-title">Localización:</span>
+							      	<div class="row">
+							      		<p class="grey-text text-darken-4">{{ obj.territorial }}</p>
+							      	</div>
+							    </div>
+							</div>
+
+					    {% endif %}
+					{% endfor %}
+					</div>
+
+					<!-- =================== -->
+
+					<div class="col s12 m4 cards-container">
+						{% for obj in empresas.oportunities.all %}
+						
+							{% if forloop.counter|add:"-2"|divisibleby:3 %}
+
+							<div class="card light-green lighten-4 hoverable">
+							    <div class="card-image waves-effect waves-block waves-light">
+							      <img class="activator" src='{{ obj.image}}'>
+							    </div>
+							    <div class="card-content">
+							    	<div class="row">
+							      		<span class="activator center-align grey-text text-darken-4">{{forloop.counter}}. {{ obj.name}}</span>
+							      	</div>
+							      	<div class="divider"></div>
+							      	<br>
+							      	<div class="row">
+							      		<span class="grey-text light text-darken-4">Match: <span>{{ obj.similarity|floatformat }}</span><i class="fa fa-bullseye left" aria-hidden="true"></i></span>
+							      	</div>
+							      	<div class="row">
+							      		<span class="grey-text light text-darken-4">Financing: <span>150.000€</span><i class="fa fa-money left" aria-hidden="true"></i></span>
+							      	</div>
+								    <div class="card-action">
+								    	<a href="{{ obj.get_absolute_url }}">See details</a>
+								      	<span ><i class="material-icons right activator center">more_vert</i></span>
+								    </div>
+							    </div>
+							    <div class="card-reveal">
+							    	<span class="card-title">Actividad:<i class="material-icons right">close</i></span>
+							    	<div class="row">
+							      		<p class="grey-text text-darken-4">{{ obj.cnae }}</p>
+							      	</div>
+							      	<span class="card-title">Localización:</span>
+							      	<div class="row">
+							      		<p class="grey-text text-darken-4">{{ obj.territorial }}</p>
+							      	</div>
+							    </div>
+							</div>
+
+					    {% endif %}
+					{% endfor %}
+					</div>
+
+					<div class="col s12 m4 cards-container">
+						{% for obj in empresas.oportunities.all %}
+
+							{% if forloop.counter|add:"-3"|divisibleby:3 %}
+
+							<div class="card light-green lighten-4 hoverable">
+							    <div class="card-image waves-effect waves-block waves-light">
+							      <img class="activator" src='{{ obj.image}}'>
+							    </div>
+							    <div class="card-content">
+							    	<div class="row">
+							      		<span class="activator center-align grey-text text-darken-4">{{forloop.counter}}. {{ obj.name}}</span>
+							      	</div>
+							      	<div class="divider"></div>
+							      	<br>
+							      	<div class="row">
+							      		<span class="grey-text light text-darken-4">Match: <span>{{ obj.similarity|floatformat }}</span><i class="fa fa-bullseye left" aria-hidden="true"></i></span>
+							      	</div>
+							      	<div class="row">
+							      		<span class="grey-text light text-darken-4">Financing: <span>200.000€</span><i class="fa fa-money left" aria-hidden="true"></i></span>
+							      	</div>
+								    <div class="card-action">
+								    	<a href="{{ obj.get_absolute_url }}">See details</a>
+								      	<span ><i class="material-icons right activator center">more_vert</i></span>
+								    </div>
+							    </div>
+							    <div class="card-reveal">
+							    	<span class="card-title">Actividad:<i class="material-icons right">close</i></span>
+							    	<div class="row">
+							      		<p class="grey-text text-darken-4">{{ obj.cnae }}</p>
+							      	</div>
+							      	<span class="card-title">Localización:</span>
+							      	<div class="row">
+							      		<p class="grey-text text-darken-4">{{ obj.territorial }}</p>
+							      	</div>
+							    </div>
+							</div>
+
+				    {% endif %}
+
+				{% endfor %}
+				</div>
+
+				</div>
+		</div>
+	</div>
+
+	<!-- Modal Structure -->
+	<div id="modal_clients" class="modal">
+		<div class="modal-content">
+			<h4>What are you looking for?</h4>
+			<div class="row">
+				<form method="GET" action="">
+			        <div class="row">
+				        <div class="input-field col s6">
+				          <i class="material-icons prefix">comment</i>
+				          <input id="icon_prefix" type="text" class="validate">
+				          <label for="icon_prefix">Make your comment</label>
+				        </div>
+				        <div class="input-field col s6">
+							<i class="material-icons prefix">business</i>
+							<input type="text" id="autocomplete-input" class="autocomplete">
+							<label for="autocomplete-input">Activity of your desired new client</label>
+						</div>
+				    </div>
+				    <div class="divider"></div>
+			        <div class="row">
+			        	<div class="col s6">
+			        		<br>
+				        	<div class="switch">
+						    	<label>
+						      	En cualquier lugar
+						      	<input type="checkbox">
+						      	<span class="lever"></span>
+						      	Sólo en mi región
+						    </label>
+							</div>
+					  	</div>
+					  	<div class="col s6">
+						  	<p class="range-field">
+						  		<label>Minimum billing? (in k€)</label>
+						      	<input type="range" id="test5" min="0" max="1000" />
+						    </p>
+						</div>
+			        </div>
+					<!-- Switch -->
+				  	
+			    </form>
+			</div>
+
+			<div class="progress">
+		    	<div class="indeterminate"></div>
+		  	</div>
+
+		</div>
+		<div class="modal-footer">
+			<a href="#!" id="client_form" class=" modal-action modal-close waves-effect waves-green btn-flat">Agree</a>
+		</div>
+	</div>
+
+
+{% endblock %}
+
+  

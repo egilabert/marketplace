@@ -10,13 +10,23 @@ from .views import (HomeView,
                     TrasferCreateView, 
                     EmpresasListView,
                     RecommendationsView,
-                    ProviderView)
+                    ProviderView,
+                    EmpresasCreate,
+                    ProductosCreate,
+                    EstadosCreate,
+                    TranfersCreate,
+                    RecommendationsCreate,
+                    OpportunityView)
 
 urlpatterns = [
 
     url(r'^$', HomeView.as_view(), name='empresas_home'),
     url(r'^list/$', EmpresasListView, name='empresas_list'),
-    url(r'^empresa/(?P<empresa_id>[0-9]+)/$', EmpresaDetailView, name='empresa_detail'),
+    #url(r'^create/$', EmpresaDetailView, name='empresa_create'),
+    url(r'^(?P<pk>\d+)/$', EmpresaDetailView, name='detail'),
+    url(r'^empresas/opportunities/$', OpportunityView, name='opportunities'),
+    #url(r'^update/$', EmpresaDetailView, name='empresa_update'),
+    #url(r'^delete/$', EmpresaDetailView, name='empresa_delete'),
     url(r'^empresa/(?P<empresa_id>[0-9]+)/transfer_create/$', TrasferCreateView, name='transfer_create'),
     
     url(r'^clients/$', ClientView, name='clients'),
@@ -24,6 +34,13 @@ urlpatterns = [
     url(r'^recommendations/$', RecommendationsView, name='recommendations'),
     url(r'^transfers/$', TransferListView, name='transfer_list'),
     url(r'^transfers/(?P<transfer_id>[0-9]+)/$', TransferDetailView, name='transfer_detail'),
+
     url(r'^generatedata/$', DataGenerator.as_view(), name='generate_empreses'),
+    url(r'^generatedata/empresas/$', EmpresasCreate, name='empresas_create'),
+    url(r'^generatedata/productos/$', ProductosCreate, name='productos_create'),
+    url(r'^generatedata/estados/$', EstadosCreate, name='estados_create'),
+    url(r'^generatedata/transfers/$', TranfersCreate, name='transfers_create'),
+    url(r'^generatedata/recommendations/$', RecommendationsCreate, name='recommedations_create'),
+    
 
 ]

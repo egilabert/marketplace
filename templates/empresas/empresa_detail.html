@@ -4,16 +4,28 @@
 {{ empresa.name }}
 {% endblock %}
 
-{% block content %}
-
 {% block body_class %}background_grey{% endblock %}
+
+{% block content %}
 
 <div class="parallax-container">
     <div class="parallax"><img src="{% static 'images/cambodia-1476378_1920.jpg' %}"></div>
 </div>
 
 <div class="container">
-    <h2>{{ empresa.name }}</h2>
+    <div class="row">
+        <div class="col s9">
+            <h2>{{ empresa.name }}</h2>
+        </div>
+        <div class="col s3">
+            <p>
+              <input type="checkbox" id="test6" class="right" name="opportunity" {% if checked == 1 %} checked="checked" {% endif %}/>
+              <label for="test6" class="valign">Interesting opportunity</label>
+              <div id="opportunity_response"></div>
+            </p>
+        </div>
+    </div>
+    
     <h5 class="light">CNAE: {{ empresa.cnae }}</h5>
     <h6 class="light">{{ empresa.transfers.count }} transfers ({{ empresa.average_transfer | floatformat }} average transfer amount)</h6>
     <h6 class="light">{{ empresa.empresa.count }} Recomendaciones</h6>
@@ -21,17 +33,17 @@
     <!-- Graficos para el dashboard... vamos allà!!! vamonos!! -->
     <div class="row">
         <div class="col s12 m6">
-          <div class="card white">
-            <div class="card-content white-text">
-              <span class="card-title">El creador de gráficos</span>
+          <div class="card grey lighten-4">
+            <div class="card-content grey-text darken-4">
+              <span class="card-title">Volumen de ventas</span>
               <canvas id="barChart" width="400" height="400"></canvas>
             </div>
           </div>
         </div>
         <div class="col s12 m6">
-          <div class="card white">
-            <div class="card-content white-text">
-              <span class="card-title">El creador de gráficos</span>
+          <div class="card grey lighten-4">
+            <div class="card-content grey-text darken-4">
+              <span class="card-title">EBITDA</span>
               <canvas id="lineChart" width="400" height="400"></canvas>
             </div>
           </div>
@@ -41,7 +53,7 @@
 
     <h3 class="light">Recommended for this client</h3>
 
-    {% if empresa.transfers.all %}
+    {% if empresa.recommended.all %}
     <div class="row">
             <table class="highlight">
                 <thead>
@@ -55,13 +67,15 @@
 
             
                 <tbody>
-                    {% for company in empresa.empresa.all %}
+                    {% for company in empresa.recommended.all %}
+                        {% if company.similarity > 0 %}
                         <tr>
-                            <td><a href="{% url 'empresas:empresa_detail' company.clientes_recomendados.id %}">{{ company.clientes_recomendados.name }}</a></td>
+                            <td><a href="{{ obj.clientes_recomendados.get_absolute_url }}">{{ company.clientes_recomendados.name }}</a></td>
                             <td>{{ company.similarity }}</td>
                             <td>{{ company.clientes_recomendados.sector }}</td>
                             <td>{{ company.clientes_recomendados.cnae }}</td>
                         </tr>
+                        {% endif %}
                     {% endfor %}
                 </tbody>
             </table>
@@ -95,11 +109,11 @@
                 <tbody>
                     {% for transfer in empresa.transfers.all %}
                         <tr>
-                            <td><a href="{% url 'empresas:empresa_detail' transfer.transfers.id %}">{{ transfer.transfers.name }}</a></td>
+                            <td><a href="{{ transfer.origin_reference.get_absolute_url }}">{{ transfer.origin_reference.name }}</a></td>
                             <td>{{ transfer.concept }}</td>
                             <td>{{ transfer.amount }}</td>
                             <td>{{ transfer.balance }}</td>
-                            <td><a href="{% url 'empresas:empresa_detail' transfer.destination_reference.id %}">{{transfer.destination_reference.name }}</a></td>
+                            <td><a href="{{ transfer.destination_reference.get_absolute_url }}">{{transfer.destination_reference.name }}</a></td>
                             <td>{{ transfer.operation_data|date }}</td>
                             <td><a href="{% url 'empresas:transfer_detail' transfer.id %}">Detail</a></td>
 
@@ -130,23 +144,20 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.1.4/Chart.bundle.min.js"></script>
 
 <script>
+
+    var __MYAPP_CONFIG__ = {
+      empresa_id: JSON.stringify( {{ empresa.id }})
+    };
+    console.log(__MYAPP_CONFIG__.empresa_id)
+
     var bar = document.getElementById("barChart");
     var line = document.getElementById("lineChart");
     var scatterChart = new Chart(line, {
         type: 'line',
         data: {
             datasets: [{
-                label: 'Scatter Dataset',
-                data: [{
-                    x: -10,
-                    y: 0
-                }, {
-                    x: 0,
-                    y: 10
-                }, {
-                    x: 10,
-                    y: 5
-                }]
+                label: 'EBIDTA',
+                data: "{{ ebitda }}"
             }]
         },
         options: {
@@ -159,13 +170,15 @@
         }
     });
 
+    console.log('{{ fechas|safe }}')
+    console.log('{{ ventas }}')
+
     var myChart = new Chart(bar, {
         type: 'bar',
         data: {
-            labels: ["Red", "Blue", "Yellow", "Green", "Purple", "Orange"],
+            labels: {{ fechas|safe }},
             datasets: [{
-                label: '# of Votes',
-                data: [12, 19, 3, 5, 2, 3],
+                data: JSON.parse( "{{ ventas }}" ),
                 backgroundColor: [
                     'rgba(255, 99, 132, 0.2)',
                     'rgba(54, 162, 235, 0.2)',
@@ -187,14 +200,14 @@
         },
         options: {
             legend: {
-                display: true,
+                display: false,
                 labels: {
                     fontColor: 'rgb(255, 99, 132)'
                 }
             },
             title: {
                 display: true,
-                text: 'Custom Chart Title'
+                text: 'Ventas en los últimos ejercicios'
             },
             responsive: true,
             scales: {
