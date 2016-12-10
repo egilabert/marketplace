@@ -1,42 +1,39 @@
-var getUrlParameter = function getUrlParameter(sParam) {
-      var sPageURL = decodeURIComponent(window.location.search.substring(1)),
-          sURLVariables = sPageURL.split('&'),
-          sParameterName,
-          i;
-
-      for (i = 0; i < sURLVariables.length; i++) {
-          sParameterName = sURLVariables[i].split('=');
-
-          if (sParameterName[0] === sParam) {
-              return sParameterName[1] === undefined ? true : sParameterName[1];
-          }
-      }
-  };
+var form_filled_check = false;
 
 (function($){
   $(function(){
 
-    $('#loadingmessage').hide();
-    $('#modal_clients').modal('open');
-    
+    $('ul.tabs').tabs();
     $( "#client_form" ).click(function(e) {
       e.preventDefault();
-      $('#loadingmessage').show();
+      form_filled_check = true;
+      $('.ajax_bar').show();
+      var sector = $("#autocomplete-input").val();
+      var region = $("#region_checkbox").is(":checked");
+      var min_bill = $("#test5").val();
+      var comment = $("#comment_textarea").val();
+      console.log("Variables:");
+      console.log(sector);
+      console.log(region);
+      console.log(min_bill);
+
       $.ajax({
         url: '/empresas/clients/',
         type: 'get',
-        data:{ q: "hello", field2 : "hello2"}})
+        data:{ sector: sector, region : region, min_bill: min_bill, comment: comment}})
           .done( function (responseText) {
                   // Triggered if response status code is 200 (OK)
-                  $('body').html(responseText);
+                  $('#cards_container').html(responseText);
+                  $('#modal_clients').modal('close');
                })
                .fail( function (jqXHR, status, error) {
                   // Triggered if response status code is NOT 200 (OK)
+                  console.log(error)
                   alert(jqXHR.responseText);
                })
                .always( function() {
                   // Always run after .done() or .fail()
-                  $('p:first').after('<p>Thank you.</p>');
+                  $('.ajax_bar').hide();
                });
 
     });
@@ -66,6 +63,9 @@ var getUrlParameter = function getUrlParameter(sParam) {
     $('#loadingmessage').hide();
     $('.button-collapse').sideNav();
     $('.parallax').parallax();
+    $(".dropdown-button").dropdown();
+    
+    
     $('.modal').modal({
       opacity: .5, // Opacity of modal background
       in_duration: 300, // Transition in duration
@@ -73,13 +73,16 @@ var getUrlParameter = function getUrlParameter(sParam) {
       starting_top: '4%', // Starting top style attribute
       ending_top: '5%', // Ending top style attribute
     });
-    
-    $(".dropdown-button").dropdown();
     $('select').material_select();
-
+    
+    //Abril el formulario de filtros de clientes recommendados
+    
+    
     $('#client_form_button').click(function() {
       $('#modal_clients').modal('open');
     });
+
+    $('.ajax_bar').hide();
 
     $('input.autocomplete').autocomplete({
       data: {
@@ -223,6 +226,7 @@ var getUrlParameter = function getUrlParameter(sParam) {
         return false;
     });
 
+    //entrada en tempos de en la landing de la Network B2B
     $( ".fadding" ).fadeIn( 1500, function() {
       $( ".fadding_2" ).fadeIn( 700, function() {
         $( ".fadding_3" ).fadeIn( "slow", function() {

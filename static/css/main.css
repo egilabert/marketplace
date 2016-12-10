@@ -1,5 +1,13 @@
 {% load staticfiles %}
 
+[type="checkbox"]+label:before, [type="checkbox"]:not(.filled-in)+label:after {
+/*  width: 50px;
+  padding-left: 30px;
+  padding-bottom: 40px;*/
+}
+
+#map { height: 250px; }
+
 .parallax img {
     width: 80%;
 }

@@ -1,0 +1,149 @@
+{% load static %}
+{% load humanize %}
+
+				<div class="row">
+		    		<div class="col s12 m4 cards-container">
+		    		{% if  recommended_clients.all.count > 0 %}
+						{% for obj in recommended_clients.all %}
+							{% if  obj.similarity > 0 %}
+								{% if  forloop.counter|add:"-1"|divisibleby:3 %}
+								<div class="card blue-grey lighten-4 hoverable">
+								    <div class="card-image waves-effect waves-block waves-light">
+								      <img class="activator" src="{{ obj.clientes_recomendados.image}}">
+								    </div>
+								    <div class="card-content">
+								    	<div class="row">
+								      		<span class="activator center-align grey-text text-darken-4">{{forloop.counter}}. {{ obj.clientes_recomendados.name}}</span>
+								      	</div>
+								      	<div class="divider"></div>
+								      	<br>
+								      	<div class="row">
+								      		<span class="grey-text light text-darken-4">Match: <span class="right-align"><h3>{{ obj.similarity|floatformat }}</h3></span><i class="fa fa-bullseye left" aria-hidden="true"></i></span>
+								      	</div>
+
+								      	<div class="row">
+								      		<span class="grey-text light text-darken-4">Financing: <span>{{ obj.clientes_recomendados.estados_financieros.last.ventas|floatformat|intcomma }}€</span><i class="fa fa-money left" aria-hidden="true"></i></span>
+								      	</div>
+									    <div class="card-action">
+									    	<a href="{{ obj.clientes_recomendados.get_absolute_url }}">See details</a>
+									      	<span ><i class="material-icons right activator center">more_vert</i></span>
+									    </div>
+								    </div>
+								    <div class="card-reveal">
+								    	<span class="card-title">Actividad:<i class="material-icons right">close</i></span>
+								    	<div class="row">
+								      		<p class="grey-text text-darken-4">{{ obj.clientes_recomendados.cnae }}</p>
+								      	</div>
+								      	<span class="card-title">Localización:</span>
+								      	<div class="row">
+								      		<p class="grey-text text-darken-4">{{ obj.clientes_recomendados.territorial }}</p>
+								      	</div>
+								    </div>
+								</div>
+
+								{% endif %}
+						    {% endif %}
+						{% endfor %}
+						</div>
+
+						<!-- =================== -->
+
+						<div class="col s12 m4 cards-container">
+							{% for obj in recommended_clients.all %}
+							
+								{% if  obj.similarity > 0 %}
+
+								{% if forloop.counter|add:"-2"|divisibleby:3 %}
+
+								<div class="card blue-grey lighten-4 hoverable">
+								    <div class="card-image waves-effect waves-block waves-light">
+								      <img class="activator" src='{{ obj.clientes_recomendados.image}}'>
+								    </div>
+								    <div class="card-content">
+								    	<div class="row">
+								      		<span class="activator center-align grey-text text-darken-4">{{forloop.counter}}. {{ obj.clientes_recomendados.name}}</span>
+								      	</div>
+								      	<div class="divider"></div>
+								      	<br>
+								      	<div class="row">
+								      		<span class="grey-text light text-darken-4">Match: <span>{{ obj.similarity|floatformat }}</span><i class="fa fa-bullseye left" aria-hidden="true"></i></span>
+								      	</div>
+								      	<div class="row">
+								      		<span class="grey-text light text-darken-4">Financing: <span>{{ obj.clientes_recomendados.estados_financieros.last.ventas|floatformat|intcomma }}€</span><i class="fa fa-money left" aria-hidden="true"></i></span>
+								      	</div>
+									    <div class="card-action">
+									    	<a href="{{ obj.clientes_recomendados.get_absolute_url }}">See details</a>
+									      	<span ><i class="material-icons right activator center">more_vert</i></span>
+									    </div>
+								    </div>
+								    <div class="card-reveal">
+								    	<span class="card-title">Actividad:<i class="material-icons right">close</i></span>
+								    	<div class="row">
+								      		<p class="grey-text text-darken-4">{{ obj.clientes_recomendados.cnae }}</p>
+								      	</div>
+								      	<span class="card-title">Localización:</span>
+								      	<div class="row">
+								      		<p class="grey-text text-darken-4">{{ obj.clientes_recomendados.territorial }}</p>
+								      	</div>
+								    </div>
+								</div>
+
+								{% endif %}
+						    {% endif %}
+						{% endfor %}
+						</div>
+
+						<div class="col s12 m4 cards-container">
+							{% for obj in recommended_clients.all %}
+
+								{% if  obj.similarity > 0 %}
+							
+								{% if forloop.counter|add:"-3"|divisibleby:3 %}
+
+								<div class="card blue-grey lighten-4 hoverable">
+								    <div class="card-image waves-effect waves-block waves-light">
+								      <img class="activator" src='{{ obj.clientes_recomendados.image}}'>
+								    </div>
+								    <div class="card-content">
+								    	<div class="row">
+								      		<span class="activator center-align grey-text text-darken-4">{{forloop.counter}}. {{ obj.clientes_recomendados.name}}</span>
+								      	</div>
+								      	<div class="divider"></div>
+								      	<br>
+								      	<div class="row">
+								      		<span class="grey-text light text-darken-4">Match: <span>{{ obj.similarity|floatformat }}</span><i class="fa fa-bullseye left" aria-hidden="true"></i></span>
+								      	</div>
+								      	<div class="row">
+								      		<span class="grey-text light text-darken-4">Financing: <span>{{ obj.clientes_recomendados.estados_financieros.last.ventas|floatformat|intcomma }}€</span><i class="fa fa-money left" aria-hidden="true"></i></span>
+								      	</div>
+									    <div class="card-action">
+									    	<a href="{{ obj.clientes_recomendados.get_absolute_url }}">See details</a>
+									      	<span ><i class="material-icons right activator center">more_vert</i></span>
+									    </div>
+								    </div>
+								    <div class="card-reveal">
+								    	<span class="card-title">Actividad:<i class="material-icons right">close</i></span>
+								    	<div class="row">
+								      		<p class="grey-text text-darken-4">{{ obj.clientes_recomendados.cnae }}</p>
+								      	</div>
+								      	<span class="card-title">Localización:</span>
+								      	<div class="row">
+								      		<p class="grey-text text-darken-4">{{ obj.clientes_recomendados.territorial }}</p>
+								      	</div>
+								    </div>
+								</div>
+
+						    {% endif %}
+
+					    {% endif %}
+
+					{% endfor %}
+
+				</div>
+
+				</div>
+				{% else %}
+					</div>
+					</div>
+					<p class="flow-text">Uuupss... No clients found with the actual filtering criteria</p>
+				{% endif %}

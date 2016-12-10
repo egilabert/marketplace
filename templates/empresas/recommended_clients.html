@@ -16,9 +16,10 @@
 	    <div class="parallax"><img src="{% static 'images/rocks.jpg' %}"></div>
 	</div>
     <h4 class="center title light padding_title">New clients found for <a href='{{ company.get_absolute_url }}'>{{company.name}}</a></h4>
-    <h5 class="light center">CNAE: {{ company.cnae }}</h5>
+    <h6 class="light center">CNAE: {{ company.territorial }}</h6>
+    <h6 class="light center">CNAE: {{ company.cnae_2 }} | {{ company.cnae }}</h6>
     <!-- <h6 class="light center">{{ company.transfers.count }} transfers ({{ company.average_transfer | floatformat }}€ average transfer amount)</h6> -->
-    <h6 class="light center">{{ company.recommended_clients.count }} Recomendaciones</h6>
+    <h6 class="light center">{{ company.recommended.count }} Recomendaciones | {{ company.transfers.count }} Transferencias</h6>
 
       <div class="row">
       	  <div class="col s3 m3">
@@ -52,11 +53,12 @@
 
 	      <div class="col s9 l9">
 			<!-- Page Layout here -->
-		    	<div class="row">
+		    	<div id="cards_container">
+		    		<div class="row">
 		    		<div class="col s12 m4 cards-container">
 
 					{% for obj in company.recommended.all %}
-						{% if  obj.similarity > 0 %}
+						{% if  obj.similarity > -1000 %}
 							{% if  forloop.counter|add:"-1"|divisibleby:3 %}
 							<div class="card blue-grey lighten-4 hoverable">
 							    <div class="card-image waves-effect waves-block waves-light">
@@ -69,11 +71,21 @@
 							      	<div class="divider"></div>
 							      	<br>
 							      	<div class="row">
-							      		<span class="grey-text light text-darken-4">Match: <span>{{ obj.similarity|floatformat }}</span><i class="fa fa-bullseye left" aria-hidden="true"></i></span>
+							      		<div class="col s6">
+							      			<i class="fa fa-bullseye left-align" aria-hidden="true"></i><span class="grey-text light text-darken-4"> Match: 
+							      		</div>
+							      		<div class="col s6">
+							      			<span class="right-align flow-text" style="color: {% if obj.similarity > 0.7 %}green{% elif obj.similarity > 0.3 %} orange{% else %}red{% endif %}"> {{ obj.similarity|floatformat }}</span></span>
+							      		</div>
 							      	</div>
 
 							      	<div class="row">
-							      		<span class="grey-text light text-darken-4">Financing: <span>{{ obj.clientes_recomendados.estados_financieros.last.ventas|floatformat|intcomma }}€</span><i class="fa fa-money left" aria-hidden="true"></i></span>
+							      		<div class="col s6">
+							      			<i class="fa fa-money left-align" aria-hidden="true"></i></i><span class="grey-text light text-darken-4"> Financing: 
+							      		</div>
+							      		<div class="col s6">
+							      			<span class="right-align flow-text" style="color: {% if obj.clientes_recomendados.estados_financieros.last.ventas > 0 %}green{% else %}red{% endif %}"> {% if obj.clientes_recomendados.estados_financieros.last.ventas > 0 or obj.clientes_recomendados.estados_financieros.last.ventas is not Null %} {{obj.clientes_recomendados.estados_financieros.last.ventas|floatformat|intcomma }}€{% else %}-{%endif%}</span></span>
+							      		</div>
 							      	</div>
 								    <div class="card-action">
 								    	<a href="{{ obj.clientes_recomendados.get_absolute_url }}">See details</a>
@@ -83,6 +95,7 @@
 							    <div class="card-reveal">
 							    	<span class="card-title">Actividad:<i class="material-icons right">close</i></span>
 							    	<div class="row">
+							      		<p class="grey-text text-darken-4">{{ obj.clientes_recomendados.cnae_2 }}</p>
 							      		<p class="grey-text text-darken-4">{{ obj.clientes_recomendados.cnae }}</p>
 							      	</div>
 							      	<span class="card-title">Localización:</span>
@@ -102,7 +115,7 @@
 					<div class="col s12 m4 cards-container">
 						{% for obj in company.recommended.all %}
 						
-							{% if  obj.similarity > 0 %}
+							{% if  obj.similarity > -1000 %}
 
 							{% if forloop.counter|add:"-2"|divisibleby:3 %}
 
@@ -117,10 +130,21 @@
 							      	<div class="divider"></div>
 							      	<br>
 							      	<div class="row">
-							      		<span class="grey-text light text-darken-4">Match: <span>{{ obj.similarity|floatformat }}</span><i class="fa fa-bullseye left" aria-hidden="true"></i></span>
+							      		<div class="col s6">
+							      			<i class="fa fa-bullseye left-align" aria-hidden="true"></i><span class="grey-text light text-darken-4"> Match: 
+							      		</div>
+							      		<div class="col s6">
+							      			<span class="right-align flow-text" style="color: {% if obj.similarity > 0.7 %}green{% elif obj.similarity > 0.3 %} orange{% else %}red{% endif %}"> {{ obj.similarity|floatformat }}</span></span>
+							      		</div>
 							      	</div>
+
 							      	<div class="row">
-							      		<span class="grey-text light text-darken-4">Financing: <span>{{ obj.clientes_recomendados.estados_financieros.last.ventas|floatformat|intcomma }}€</span><i class="fa fa-money left" aria-hidden="true"></i></span>
+							      		<div class="col s6">
+							      			<i class="fa fa-money left-align" aria-hidden="true"></i></i><span class="grey-text light text-darken-4"> Financing: 
+							      		</div>
+							      		<div class="col s6">
+							      			<span class="right-align flow-text" style="color: {% if obj.clientes_recomendados.estados_financieros.last.ventas > 0 %}green{% else %}red{% endif %}"> {{obj.clientes_recomendados.estados_financieros.last.ventas|floatformat|intcomma }}€</span></span>
+							      		</div>
 							      	</div>
 								    <div class="card-action">
 								    	<a href="{{ obj.clientes_recomendados.get_absolute_url }}">See details</a>
@@ -130,6 +154,7 @@
 							    <div class="card-reveal">
 							    	<span class="card-title">Actividad:<i class="material-icons right">close</i></span>
 							    	<div class="row">
+							      		<p class="grey-text text-darken-4">{{ obj.clientes_recomendados.cnae_2 }}</p>
 							      		<p class="grey-text text-darken-4">{{ obj.clientes_recomendados.cnae }}</p>
 							      	</div>
 							      	<span class="card-title">Localización:</span>
@@ -147,7 +172,7 @@
 					<div class="col s12 m4 cards-container">
 						{% for obj in company.recommended.all %}
 
-							{% if  obj.similarity > 0 %}
+							{% if  obj.similarity > -1000 %}
 						
 							{% if forloop.counter|add:"-3"|divisibleby:3 %}
 
@@ -162,10 +187,21 @@
 							      	<div class="divider"></div>
 							      	<br>
 							      	<div class="row">
-							      		<span class="grey-text light text-darken-4">Match: <span>{{ obj.similarity|floatformat }}</span><i class="fa fa-bullseye left" aria-hidden="true"></i></span>
+							      		<div class="col s6">
+							      			<i class="fa fa-bullseye left-align" aria-hidden="true"></i><span class="grey-text light text-darken-4"> Match: 
+							      		</div>
+							      		<div class="col s6">
+							      			<span class="right-align flow-text" style="color: {% if obj.similarity > 0.7 %}green{% elif obj.similarity > 0.3 %} orange{% else %}red{% endif %}"> {{ obj.similarity|floatformat }}</span></span>
+							      		</div>
 							      	</div>
+
 							      	<div class="row">
-							      		<span class="grey-text light text-darken-4">Financing: <span>{{ obj.clientes_recomendados.estados_financieros.last.ventas|floatformat|intcomma }}€</span><i class="fa fa-money left" aria-hidden="true"></i></span>
+							      		<div class="col s6">
+							      			<i class="fa fa-money left-align" aria-hidden="true"></i></i><span class="grey-text light text-darken-4"> Financing: 
+							      		</div>
+							      		<div class="col s6">
+							      			<span class="right-align flow-text" style="color: {% if obj.clientes_recomendados.estados_financieros.last.ventas > 0 %}green{% else %}red{% endif %}"> {{obj.clientes_recomendados.estados_financieros.last.ventas|floatformat|intcomma }}€</span></span>
+							      		</div>
 							      	</div>
 								    <div class="card-action">
 								    	<a href="{{ obj.clientes_recomendados.get_absolute_url }}">See details</a>
@@ -175,6 +211,7 @@
 							    <div class="card-reveal">
 							    	<span class="card-title">Actividad:<i class="material-icons right">close</i></span>
 							    	<div class="row">
+							      		<p class="grey-text text-darken-4">{{ obj.clientes_recomendados.cnae_2 }}</p>
 							      		<p class="grey-text text-darken-4">{{ obj.clientes_recomendados.cnae }}</p>
 							      	</div>
 							      	<span class="card-title">Localización:</span>
@@ -192,63 +229,90 @@
 				</div>
 
 				</div>
+		    	</div>
 		</div>
 	</div>
 
 	<!-- Modal Structure -->
 	<div id="modal_clients" class="modal">
 		<div class="modal-content">
-			<h4>What are you looking for?</h4>
+			<h5>What are you looking for?</h5>
+			<div class="divider"></div>
 			<div class="row">
 				<form method="GET" action="">
-			        <div class="row">
-				        <div class="input-field col s6">
-				          <i class="material-icons prefix">comment</i>
-				          <input id="icon_prefix" type="text" class="validate">
-				          <label for="icon_prefix">Make your comment</label>
+				    <div class="row">
+			        	<div class="input-field col s6">
+				          <p class="flow-text">Any special sector?</p>
 				        </div>
-				        <div class="input-field col s6">
+				    	<div class="input-field col s6">
 							<i class="material-icons prefix">business</i>
 							<input type="text" id="autocomplete-input" class="autocomplete">
 							<label for="autocomplete-input">Activity of your desired new client</label>
 						</div>
-				    </div>
-				    <div class="divider"></div>
-			        <div class="row">
+					</div>
+					<div class="row">
+			        	<div class="input-field col s6">
+				          <p class="flow-text">Any special region?</p>
+				        </div>
 			        	<div class="col s6">
 			        		<br>
 				        	<div class="switch">
 						    	<label>
-						      	En cualquier lugar
-						      	<input type="checkbox">
+						      	Anywhere
+						      	<input type="checkbox" id="region_checkbox">
 						      	<span class="lever"></span>
-						      	Sólo en mi región
+						      	Just my region
 						    </label>
 							</div>
 					  	</div>
+					</div>
+					<div class="row">
+			        	<div class="input-field col s6">
+				          <p class="flow-text">Any minimum billing?</p>
+				        </div>
 					  	<div class="col s6">
 						  	<p class="range-field">
 						  		<label>Minimum billing? (in k€)</label>
 						      	<input type="range" id="test5" min="0" max="1000" />
 						    </p>
 						</div>
-			        </div>
+					</div>
+					<div class="row">
+			        	<div class="input-field col s6">
+				          <p class="flow-text">We want to know what are your needs in order to help you reach your spectations</p>
+				        </div>
+				        <div class="input-field col s6">
+				          <i class="material-icons prefix">mode_edit</i>
+				          <textarea id="comment" class="materialize-textarea"></textarea>
+				          <label for="comment">Write us your comments</label>
+				        </div>
+				    </div>
 					<!-- Switch -->
 				  	
 			    </form>
 			</div>
 
-			<div class="progress">
+			<div class="progress ajax_bar">
 		    	<div class="indeterminate"></div>
 		  	</div>
 
 		</div>
 		<div class="modal-footer">
-			<a href="#!" id="client_form" class=" modal-action modal-close waves-effect waves-green btn-flat">Agree</a>
+			<a href="#!" id="client_form" class=" modal-action modal-close waves-effect waves-green btn-flat">Give me new clients!</a>
 		</div>
 	</div>
 
+{% block alt_js %}
+<script type="text/javascript">
+	console.log({{loading_times}})
+	if ({{loading_times}}==1) {
+	    document.getElementById("modal_clients").modal('open');
+	}
+</script>
+{% endblock alt_js %}
 
 {% endblock %}
+
+
 
   

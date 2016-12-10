@@ -2,11 +2,18 @@
 {% load static %}
 {% block page_title %}
 {{ empresa.name }}
+{% load humanize %}
 {% endblock %}
 
 {% block body_class %}background_grey{% endblock %}
 
+{% block cdn_css %}
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.0.2/dist/leaflet.css" />
+{% endblock cdn_css %}
+ 
 {% block content %}
+
+
 
 <div class="parallax-container">
     <div class="parallax"><img src="{% static 'images/cambodia-1476378_1920.jpg' %}"></div>
@@ -19,18 +26,71 @@
         </div>
         <div class="col s3">
             <p>
-              <input type="checkbox" id="test6" class="right" name="opportunity" {% if checked == 1 %} checked="checked" {% endif %}/>
+              <input type="checkbox" id="test6" class="right large" name="opportunity" {% if checked == 1 %} checked="checked" {% endif %}/>
               <label for="test6" class="valign">Interesting opportunity</label>
               <div id="opportunity_response"></div>
             </p>
         </div>
     </div>
-    
-    <h5 class="light">CNAE: {{ empresa.cnae }}</h5>
-    <h6 class="light">{{ empresa.transfers.count }} transfers ({{ empresa.average_transfer | floatformat }} average transfer amount)</h6>
-    <h6 class="light">{{ empresa.empresa.count }} Recomendaciones</h6>
 
+    <div class="row">
+        <div class="col s12 m4">
+          <div class="card blue-grey darken-1">
+            <div class="card-content white-text">
+              <span class="card-title">Último ejercicio</span>
+              {% if empresa.estados_financieros.last.ejercicio %}
+              <h3 class="align-right orange-text darken-1">{{empresa.estados_financieros.last.ejercicio}}</h3>
+              {% else %}
+              <h4 class="align-right orange-text darken-1">Sin balances</h4>
+              {% endif %}
+            </div>
+          </div>
+        </div>
+        <div class="col s12 m4">
+          <div class="card blue-grey darken-1">
+            <div class="card-content white-text">
+              <span class="card-title">Ventas</span>
+              {% if empresa.estados_financieros.last.ventas %}
+              <h3 class="align-right orange-text darken-1">{{empresa.estados_financieros.last.ventas|floatformat|intcomma}}€</h3>
+              {% else %}
+              <h4 class="align-right orange-text darken-1">-</h4>
+              {% endif %}
+            </div>
+          </div>
+        </div>
+        <div class="col s12 m4">
+          <div class="card blue-grey darken-1">
+            <div class="card-content white-text">
+              <span class="card-title">EBITDA</span>
+              {% if empresa.estados_financieros.last.ebitda %}
+              <h3 class="align-right orange-text darken-1">{{empresa.estados_financieros.last.ebitda|floatformat|intcomma}}€</h3>
+              {% else %}
+              <h4 class="align-right orange-text darken-1">-</h4>
+              {% endif %}
+            </div>
+          </div>
+        </div>
+      </div>
+
+    <div class="row">
+        <div class="col s12 m6">
+            <h5>Contact details</h5>
+            <div><i class="tiny material-icons">contacts</i> {{empresa.name}}</div>  
+            <div><i class="tiny material-icons">email</i> {{empresa.email}}</div>
+            <div><i class="tiny material-icons">location_on</i>{{empresa.address}}</div>   
+            <div><i class="tiny material-icons">call</i> {{empresa.phone}}</div>   
+            <div><i class="tiny material-icons">business</i> Sector: {{ empresa.sector }}</div>   
+            <div><i class="tiny material-icons">info</i> CNAE: {{ empresa.cnae_2 }}</div>  
+            <div><i class="tiny material-icons">assignment</i> Created in {{ empresa.creation_date }}</div>  
+            <div><i class="tiny material-icons">view_day</i> Office: {{ empresa.oficina }}</div>  
+        </div>
+        <div class="col s12 m6">
+            <div id="map"></div>
+        </div>
+    </div>
+    <hr>
     <!-- Graficos para el dashboard... vamos allà!!! vamonos!! -->
+    {% if empresa.estados_financieros.last.ejercicio %}
     <div class="row">
         <div class="col s12 m6">
           <div class="card grey lighten-4">
@@ -49,6 +109,26 @@
           </div>
         </div>
     </div>
+
+    <div class="row">
+        <div class="col s12 m6">
+          <div class="card grey lighten-4">
+            <div class="card-content grey-text darken-4">
+              <span class="card-title">Ventas por Sector</span>
+              <canvas id="ctxChart" width="400" height="400"></canvas>
+            </div>
+          </div>
+        </div>
+        <div class="col s12 m6">
+          <div class="card grey lighten-4">
+            <div class="card-content grey-text darken-4">
+              <span class="card-title">Balances</span>
+              <canvas id="spiderChart" width="400" height="400"></canvas>
+            </div>
+          </div>
+        </div>
+    </div>
+    {% endif %}
     <!-- Graficos para el dashboard... vamos allà!!! vamonos!! -->
 
     <h3 class="light">Recommended for this client</h3>
@@ -73,7 +153,7 @@
                             <td><a href="{{ obj.clientes_recomendados.get_absolute_url }}">{{ company.clientes_recomendados.name }}</a></td>
                             <td>{{ company.similarity }}</td>
                             <td>{{ company.clientes_recomendados.sector }}</td>
-                            <td>{{ company.clientes_recomendados.cnae }}</td>
+                            <td>{{ company.clientes_recomendados.cnae_2 }}</td>
                         </tr>
                         {% endif %}
                     {% endfor %}
@@ -101,7 +181,7 @@
                         <th data-field="balance">Balance</th>
                         <th data-field="destination_id">Destination</th>
                         <th data-field="date">Date</th>
-                        <th data-field="date">Detail</th>
+                        <th data-field="date">CNAE_2</th>
                     </tr>
                 </thead>
 
@@ -115,7 +195,7 @@
                             <td>{{ transfer.balance }}</td>
                             <td><a href="{{ transfer.destination_reference.get_absolute_url }}">{{transfer.destination_reference.name }}</a></td>
                             <td>{{ transfer.operation_data|date }}</td>
-                            <td><a href="{% url 'empresas:transfer_detail' transfer.id %}">Detail</a></td>
+                            <td>{{ transfer.destination_reference.cnae_2 }}</td>
 
                         </tr>
                     {% endfor %}
@@ -142,60 +222,71 @@
 
 <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/1.0.2/Chart.min.js"></script> -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.1.4/Chart.bundle.min.js"></script>
+<script src="https://unpkg.com/leaflet@1.0.2/dist/leaflet.js"></script>
 
 <script>
 
-    var __MYAPP_CONFIG__ = {
-      empresa_id: JSON.stringify( {{ empresa.id }})
-    };
-    console.log(__MYAPP_CONFIG__.empresa_id)
-
     var bar = document.getElementById("barChart");
     var line = document.getElementById("lineChart");
+    var ctx = document.getElementById("ctxChart");
+    var spider = document.getElementById("spiderChart");
+
     var scatterChart = new Chart(line, {
         type: 'line',
         data: {
+            labels: {{ fechas|safe }},
             datasets: [{
-                label: 'EBIDTA',
-                data: "{{ ebitda }}"
-            }]
-        },
+            label: "EBITDA",
+            backgroundColor: "rgba(220,220,220,0.5)",
+            borderColor: "rgba(220,220,220,0.8)",
+            highlightFill: "rgba(220,220,220,0.75)",
+            pointHoverBackgroundColor: "rgba(220,220,220,1)",
+            showTooltip: false, //NEW OPTION DON"T NEED TO INCLUDE IT IF YOU WANT TO DISPLAY BUT WON"T HURT IF YOU DO
+            data: {{ ebitda }}
+        }, {
+            label: "Resultados de explotación",
+            backgroundColor: "rgba(47,79,79,0.5)",
+            borderColor: "rgba(47,79,79,0.8)",
+            highlightFill: "rgba(47,79,79,0.75)",
+            pointHoverBackgroundColor: "rgba(47,79,79,1)",
+            showTooltip: false, //NEW OPTION DON"T NEED TO INCLUDE IT IF YOU WANT TO DISPLAY BUT WON"T HURT IF YOU DO
+            data: {{ resultado_explotacion }}
+        }]},
         options: {
-            scales: {
-                xAxes: [{
-                    type: 'linear',
-                    position: 'bottom'
-                }]
-            }
+          responsive: true,
+          pointDotRadius: 10,
+          bezierCurve: false,
+          scaleShowVerticalLines: false,
+          scaleGridLineColor: 'black'
         }
     });
-
-    console.log('{{ fechas|safe }}')
-    console.log('{{ ventas }}')
 
     var myChart = new Chart(bar, {
         type: 'bar',
         data: {
             labels: {{ fechas|safe }},
             datasets: [{
+                label: "Ventas",
                 data: JSON.parse( "{{ ventas }}" ),
                 backgroundColor: [
-                    'rgba(255, 99, 132, 0.2)',
-                    'rgba(54, 162, 235, 0.2)',
-                    'rgba(255, 206, 86, 0.2)',
-                    'rgba(75, 192, 192, 0.2)',
-                    'rgba(153, 102, 255, 0.2)',
-                    'rgba(255, 159, 64, 0.2)'
+                    
+                    'rgba(192,192,192, 0.2)',
+                    'rgba(169,169,169, 0.2)',
+                    'rgba(119,136,153, 0.2)',
+                    'rgba(47,79,79, 0.2)',
+                    'rgba(128,128,128, 0.2)',
+                    'rgba(220,220,220, 0.2)'
                 ],
                 borderColor: [
-                    'rgba(255,99,132,1)',
-                    'rgba(54, 162, 235, 1)',
-                    'rgba(255, 206, 86, 1)',
-                    'rgba(75, 192, 192, 1)',
-                    'rgba(153, 102, 255, 1)',
-                    'rgba(255, 159, 64, 1)'
+                    
+                    'rgba(192,192,192, 1)',
+                    'rgba(169,169,169, 1)',
+                    'rgba(119,136,153, 1)',
+                    'rgba(47,79,79, 1)',
+                    'rgba(128,128,128, 1)',
+                    'rgba(220,220,220, 1)',
                 ],
-                borderWidth: 1
+                borderWidth: 2
             }]
         },
         options: {
@@ -219,7 +310,84 @@
             }
         }
     });
+
+    // And for a doughnut chart
+    var myDoughnutChart = new Chart(ctx, {
+        type: 'doughnut',
+        data: {
+            labels: [
+                "Industria de la alimentación",
+                "Agricultura, ganadería, caza y servicios relacionados con las mismas",
+                "Servicios de comidas y bebidas"
+            ],
+            datasets: [
+                {
+                    data: [300, 50, 100],
+                    backgroundColor: [
+                        'rgba(128,128,128, 0.5)',
+                        'rgba(119,136,153, 0.5)',
+                        'rgba(47,79,79, 0.5)',
+                    ],
+                    hoverBackgroundColor: [
+                        'rgba(128,128,128, 1)',
+                        'rgba(119,136,153, 1)',
+                        'rgba(47,79,79, 1)',
+                    ]
+                }]
+        },
+        animation:{
+            animateScale:true
+        }
+    });
+
+    var myRadarChart = new Chart(spider, {
+        type: 'radar',
+        data: {
+            labels: ["Depreciaciones", "Amortizaciones", "Existencias", "Deudores", "Acreedores_comerciales", "Provisiones_cp", "Periodificaciones_pc"],
+            datasets: [
+                {
+                    label: "2012",
+                    backgroundColor: "rgba(128,128,128,0.2)",
+                    borderColor: "rgba(128,128,128,1)",
+                    pointBackgroundColor: "rgba(128,128,128,1)",
+                    pointBorderColor: "#fff",
+                    pointHoverBackgroundColor: "#fff",
+                    pointHoverBorderColor: "rgba(128,128,128,1)",
+                    data: [65, 59, 90, 81, 56, 55, 40]
+                },
+                {
+                    label: "2013",
+                    backgroundColor: "rgba(47,79,79,0.2)",
+                    borderColor: "rgba(47,79,79,1)",
+                    pointBackgroundColor: "rgba(47,79,79,1)",
+                    pointBorderColor: "#fff",
+                    pointHoverBackgroundColor: "#fff",
+                    pointHoverBorderColor: "rgba(47,79,79,1)",
+                    data: [28, 48, 40, 19, 96, 27, 100]
+                }
+            ]
+        },
+        options: {
+                scale: {
+                    reverse: true,
+                    ticks: {
+                        beginAtZero: true
+                    }
+                }
+        }
+    });
+
+    var map = L.map('map').setView([41.3931129,2.1448724], 15);
+        mapLink = 
+            '<a href="http://openstreetmap.org">OpenStreetMap</a>';
+        L.tileLayer(
+            'http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            attribution: '&copy; ' + mapLink + ' Contributors',
+            maxZoom: 18,
+            }).addTo(map);
+
 </script>
+
 
 
 {% endblock %}

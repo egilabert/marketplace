@@ -21,6 +21,7 @@ import os
 import json
 import random
 import posixpath
+from django.db.models import Avg, Max, Min, Count
 
 """-------------------------------------------------------"""
 """				EMPRESAS VIEWS 							  """
@@ -31,6 +32,7 @@ class HomeView(View):
 	def get(self, request, *args, **kwargs):
 		try:
 			del request.session['company']
+			del request.session['recommended_clients_page']
 		except:
 			pass
 		request.session.modified = True
@@ -70,23 +72,31 @@ def EmpresaDetailView(request, pk=None):
 	ventas = []
 	fechas = []
 	ebitda = []
+	depreciaciones = []
 	resultado_explotacion = []
+	amortizaciones = []
 	for estado in empresa.estados_financieros.all():
 		fechas.append(estado.ejercicio)
 		try:
+			depreciaciones.append(estado.depreciaciones)
 			ebitda.append(estado.ebitda)
 			resultado_explotacion.append(estado.resultado_explotacion)
 			ventas.append(estado.ventas)
+			amortizaciones.append(estado.amortizaciones)
 		except:
 			ventas.append(0)
+			depreciaciones.append(0)
 			ebitda.append(0)
 			resultado_explotacion.append(0)
+			amortizaciones.append(0)
 
 	context = {
 		'empresa':empresa,
 		'form': form,
 		'ventas': json.dumps(ventas),
 		'ebitda': json.dumps(ebitda),
+		'depreciaciones': json.dumps(depreciaciones),
+		'amortizaciones': json.dumps(amortizaciones),
 		'resultado_explotacion': json.dumps(resultado_explotacion),
 		'fechas': json.dumps(fechas),
 		'checked': checked}
@@ -103,9 +113,72 @@ def OpportunityView(request):
 
 def RecommendationsView(request):
 	
-	empresa = request.session.get('company') #get_object_or_404(Empresa, pk=empresa_id)
+	empresa = request.session.get('company')
+	proveedores_tu_teritorial = Transfer.objects.filter(
+									origin_reference=Empresa.objects.filter(name=empresa.name)).filter(
+									destination_reference__territorial=empresa.territorial).values(
+									'destination_reference').annotate(company_count=Count(
+									'destination_reference', distinct=True)).count()
+
+	proveedores_no_tu_teritorial = Transfer.objects.filter(
+									origin_reference=Empresa.objects.filter(name=empresa.name)).exclude(
+									destination_reference__territorial=empresa.territorial).values(
+									'destination_reference').annotate(company_count=Count(
+									'destination_reference', distinct=True)).count()
+
+	proveedores_sector_tu_teritorial = Transfer.objects.filter(
+									origin_reference=Empresa.objects.filter(territorial=empresa.territorial)).filter(
+									destination_reference__territorial=empresa.territorial).values(
+									'destination_reference').annotate(company_count=Count(
+									'destination_reference', distinct=True)).count()
+
+	proveedores_sector_no_tu_teritorial = Transfer.objects.filter(
+									origin_reference=Empresa.objects.filter(territorial=empresa.territorial)).exclude(
+									destination_reference__territorial=empresa.territorial).values(
+									'destination_reference').annotate(company_count=Count(
+									'destination_reference', distinct=True)).count()
+
+	clientes_tu_teritorial = Transfer.objects.filter(
+									destination_reference=Empresa.objects.filter(name=empresa.name)).filter(
+									origin_reference__territorial=empresa.territorial).values(
+									'origin_reference').annotate(company_count=Count(
+									'origin_reference', distinct=True)).count()
+
+	clientes_no_tu_teritorial = Transfer.objects.filter(
+									destination_reference=Empresa.objects.filter(name=empresa.name)).exclude(
+									origin_reference__territorial=empresa.territorial).values(
+									'origin_reference').annotate(company_count=Count(
+									'origin_reference', distinct=True)).count()
+
+	clientes_sector_tu_teritorial = Transfer.objects.filter(
+									destination_reference=Empresa.objects.filter(territorial=empresa.territorial)).filter(
+									origin_reference__territorial=empresa.territorial).values(
+									'origin_reference').annotate(company_count=Count(
+									'origin_reference', distinct=True)).count()
+
+	clientes_sector_no_tu_teritorial = Transfer.objects.filter(
+									destination_reference=Empresa.objects.filter(territorial=empresa.territorial)).exclude(
+									origin_reference__territorial=empresa.territorial).values(
+									'origin_reference').annotate(company_count=Count(
+									'origin_reference', distinct=True)).count()
+	
+	# Empresa.objects.filter(territorial__startswith=empresa.territorial).values('territorial').annotate(count=Count('territorial'))
+	# no_tu_teritorial = Empresa.objects.exclude(territorial__startswith=empresa.territorial).count()
+
+	# clientes = Empresa.objects.filter(transfers=Transfer.objects.filter(destination_reference=Empresa.objects.filter(name="AMERICAN BRAND INVEST, S.L."))).values('territorial').annotate(count=Count('territorial'))
+	# Empresa.objects.filter(transfers=Transfer.objects.filter(destination_reference=Empresa.objects.filter(name="AMERICAN BRAND INVEST, S.L."))).values('territorial').annotate(count=Count('territorial'))
+	territoriales_proveedores = [proveedores_tu_teritorial,proveedores_no_tu_teritorial]
+	sector_territoriales_proveedores = [proveedores_sector_tu_teritorial,proveedores_sector_no_tu_teritorial]
+
+	territoriales_clientes = [clientes_tu_teritorial,clientes_no_tu_teritorial]
+	sector_territoriales_clientes = [clientes_sector_tu_teritorial, clientes_sector_no_tu_teritorial]
+
 	context = {
-		'empresa':empresa
+		'empresa':empresa,
+		'territoriales_proveedores': territoriales_proveedores,
+		'territoriales_clientes': territoriales_clientes,
+		'sector_territoriales_proveedores': sector_territoriales_proveedores,
+		'sector_territoriales_clientes': sector_territoriales_clientes
 		}
 	return render(request, 'empresas/recommendations.html', context)
 
@@ -160,17 +233,48 @@ def ClientView(request):
 	today = timezone.now().date()
 	company = request.session.get('company')
 	recommended_clients = company.recommended.all()
-	query = request.GET.get("q")
-	if query:
-		return HttpResponse("<h1>Rebut data</h1>"+query)
-		# recommended_clients = recommended_clients.filter(cnae__icontains=query)
+	sector, region, min_bill, comment = request.GET.get("sector"), request.GET.get("region"), request.GET.get("min_bill"), request.GET.get("comment")
+
+	if request.session.get('recommended_clients_page') is None:
+		request.session['recommended_clients_page'] = 1
+	else:
+		request.session['recommended_clients_page'] = request.session.get('recommended_clients_page') + 1
+
+	if sector is not None or region is not None or min_bill is not None:
+		if region=="true" or sector!="": 
+			if region=="true":
+				recommended_clients = company.recommended.filter(
+					clientes_recomendados__territorial=company.territorial)
+			if sector!="":
+				# clientes_recomendados__cnae_2=sector, 
+				recommended_clients = recommended_clients.filter(
+					clientes_recomendados__cnae_2=sector)
+			context = {
+				"company": company, 
+				"recommended_clients": recommended_clients,
+				"loading_times": request.session['recommended_clients_page']
+			}
+			print(recommended_clients.count())
+			return render(request, "empresas/cards_layout.html", context)
+		else:
+			recommended_clients = company.recommended.all()
+			context = {
+				"company": company, 
+				"recommended_clients": recommended_clients,
+				"loading_times": request.session['recommended_clients_page']
+			}
+			print(recommended_clients.count())
+			return render(request, "empresas/cards_layout.html", context)
+
 	context = {
 		"company": company, 
 		"title": "Recommended clients",
 		"recommended_clients": recommended_clients,
 		"today": today,
+		"loading_times": request.session['recommended_clients_page']
 	}
-	
+	print("Normal print...")
+	print(company.recommended.all().count())
 	return render(request, "empresas/recommended_clients.html", context)
 
 """-------------------------------------------------------"""
@@ -181,12 +285,48 @@ def ClientView(request):
 def ProviderView(request):
 	today = timezone.now().date()
 	company = request.session.get('company')
+	recommended_clients = company.providers_recommended.all()
+	sector, region, min_bill, comment = request.GET.get("sector"), request.GET.get("region"), request.GET.get("min_bill"), request.GET.get("comment")
+
+	if request.session.get('recommended_providers_page') is None:
+		request.session['recommended_providers_page'] = 1
+	else:
+		request.session['recommended_providers_page'] = request.session.get('recommended_providers_page') + 1
+
+	if sector is not None or region is not None or min_bill is not None:
+		if region=="true" or sector!="": 
+			if region=="true":
+				recommended_providers = company.recommended.filter(
+					clientes_recomendados__territorial=company.territorial)
+			if sector!="":
+				# clientes_recomendados__cnae_2=sector, 
+				recommended_providers = recommended_providers.filter(
+					clientes_recomendados__cnae_2=sector)
+			context = {
+				"company": company, 
+				"recommended_providers": recommended_providers,
+				"loading_times": request.session['recommended_providers_page']
+			}
+			print(recommended_providers.count())
+			return render(request, "empresas/cards_layout.html", context)
+		else:
+			recommended_providers = company.recommended.all()
+			context = {
+				"company": company, 
+				"recommended_providers": recommended_providers,
+				"loading_times": request.session['recommended_providers_page']
+			}
+			print(recommended_providers.count())
+			return render(request, "empresas/cards_layout.html", context)
+
 	context = {
 		"company": company, 
-		"title": "Recommended PROVIDERS",
+		"title": "Recommended providers",
 		"today": today,
+		"loading_times": request.session['recommended_providers_page']
 	}
-	
+	print("Normal print...")
+	print(company.providers_recommended.all().count())
 	return render(request, "empresas/recommended_providers.html", context)
 
 """-------------------------------------------------------"""
@@ -207,12 +347,13 @@ def EmpresasCreate(request):
 		empresa.fiscal_id = row['ID_IDEFISC']
 		empresa.name = row['NOMBRE']
 		empresa.email = fake.email()
+		empresa.contact_person = fake.name()
 		empresa.state_name = fake.state_name()
 		empresa.latitude = fake.latitude()
 		empresa.longitude = fake.longitude()
 		empresa.phone = fake.phone_number()
 		empresa.address = fake.address()
-		empresa.image = random_image('images/')
+		empresa.image = random_image('images/TBR/Resized/')
 		try:
 			empresa.data_date = dateutil.parser.parse(row['ID_FCH_DATOS'])
 		except:
@@ -297,6 +438,7 @@ def ProductosCreate(request):
 		producto.save()
 	return HttpResponse("Productos loaded")
 
+
 @login_required
 def EstadosCreate(request):
 	# ===============================================================
@@ -341,26 +483,26 @@ def TranfersCreate(request):
 	# ===============================================================
 	# Importantdo transferencias.......
 	fake = Factory.create('es_ES')
-	link = static('data/transferencias.csv')
+	link = static('data/transferencias_cnae_v2.csv')
 	transferencias = pd.read_csv("."+link, sep=';', decimal=',', encoding='latin1')
 	Transfer.objects.all().delete()
 	
-	# for index, row in transferencias.iterrows():
-	# 	transfer = Transfer()
-	# 	try:
-	# 		transfer.operation_data = dateutil.parser.parse(row['FECHA_OPER'])
-	# 	except:
-	# 		pass
-	# 	try:
-	# 		transfer.value_date = dateutil.parser.parse(row['FECHA_VALOR'])
-	# 	except:
-	# 		pass
-	# 	transfer.concept = fake.sentence(nb_words=6, variable_nb_words=True)
-	# 	transfer.amount = row['IMPORTE']
-	# 	transfer.balance = row['SALDO']
-	# 	transfer.destination_reference = Empresa.objects.get(fiscal_id=str(row['REFERENCIA_1']))
-	# 	transfer.origin_reference = Empresa.objects.get(fiscal_id=str(row['REFERENCIA_ORIGEN']))
-	# 	transfer.save()
+	for index, row in transferencias.iterrows():
+		transfer = Transfer()
+		try:
+			transfer.operation_data = dateutil.parser.parse(row['FECHA_OPER'])
+		except:
+			pass
+		try:
+			transfer.value_date = dateutil.parser.parse(row['FECHA_VALOR'])
+		except:
+			pass
+		transfer.concept = fake.sentence(nb_words=6, variable_nb_words=True)
+		transfer.amount = row['IMPORTE']
+		transfer.balance = row['SALDO']
+		transfer.destination_reference = Empresa.objects.get(fiscal_id=str(row['REFERENCIA_1']))
+		transfer.origin_reference = Empresa.objects.get(fiscal_id=str(row['REFERENCIA_ORIGEN']))
+		transfer.save()
 
 	return HttpResponse("Transferencias loaded")
 
@@ -370,7 +512,7 @@ def RecommendationsCreate(request):
 
 	# Generando recomendaciones.......
 
-	link = static('data/transferencias.csv')
+	link = static('data/transferencias_cnae_v2.csv')
 	transferencias = pd.read_csv("."+link, sep=';', decimal=',', encoding='latin1')
 	RecommendedClients.objects.all().delete()
 	# Empresa.objects.clients.all().delete()
@@ -398,12 +540,6 @@ def is_image_file(filename):
     return ext in img_types
 
 def random_image(path):
-    """
-    Select a random image file from the provided directory
-    and return its href. `path` should be relative to STATIC_ROOT.
-    
-    Usage:  <img src='{% random_image "images/whatever/" %}'>
-    """
     fullpath = os.path.join(settings.STATIC_ROOT, path)
     filenames = [f for f in os.listdir(fullpath) if is_image_file(f)]
     pick = random.choice(filenames)

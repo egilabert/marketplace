@@ -14,8 +14,7 @@
       <ul class="right hide-on-med-and-down">
         {% if not request.user.is_authenticated %}
           <li><a href="#" class='modal-trigger'>Home</a></li>
-          <li><a href="#service_anchor" rel="" id="anchor1" class="anchorLink modal-trigger">Services</a></li>
-          <li><a href="#products_anchor" rel="" id="anchor2" class="anchorLink modal-trigger">Products</a></li>
+          <li><a href="{% url 'home' %}" rel="" id="anchor1" class="anchorLink modal-trigger">Pillstore</a></li>
           <li><a href="#about_anchor" rel="" id="anchor3" class="anchorLink modal-trigger">About</a></li>
           <li><a href="#contact_anchor" rel="" id="anchor4" class="anchorLink modal-trigger">Contact</a></li>
           <!-- <li><a href="#modal2" class='modal-trigger'>Register</a></li>
@@ -23,10 +22,9 @@
           {% else %}
           <!-- Dropdown Trigger -->
           <li><a href="#" class='modal-trigger'>Home</a></li>
-          <li><a href="#" class='modal-trigger'>Services</a></li>
-          <li><a href="#" class='modal-trigger'>Products</a></li>
-          <li><a href="#" class='modal-trigger'>About</a></li>
-          <li><a href="#" class='modal-trigger'>Contact</a></li>
+          <li><a href="{% url 'home' %}" rel="" id="anchor1" class="anchorLink modal-trigger">Pillstore</a></li>
+          <li><a href="#about_anchor" rel="" id="anchor3" class="anchorLink modal-trigger">About</a></li>
+          <li><a href="#contact_anchor" rel="" id="anchor4" class="anchorLink modal-trigger">Contact</a></li>
           <!-- <li><a class="dropdown-button" href="#!" data-activates="dropdown1">{{ request.user.username}}<i class="material-icons right">arrow_drop_down</i></a></li> -->
         {% endif %}
       </ul>

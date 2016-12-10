@@ -10,33 +10,35 @@ import pandas
 from scipy.sparse import coo_matrix
 import annoy
 from implicit import alternating_least_squares
-from .models import Empresa, RecommendedClients
+from .models import Empresa, RecommendedClients, RecommendedProviders
 
-
-def read_data(transferencias):
+def read_data(transferencias, inv=False):
     """ Reads in the last.fm dataset, and returns a tuple of a pandas dataframe
     and a sparse matrix of artist/user/playcount """
     # read in triples of user/artist/playcount from the input dataset
-    transfer_count = transferencias.groupby(["REFERENCIA_ORIGEN", "REFERENCIA_1"]).IMPORTE.count().reset_index()
+    if inv:
+        transfer_count = transferencias.groupby(["REFERENCIA_1", "REFERENCIA_ORIGEN"]).IMPORTE.count().reset_index()
+    else:
+        transfer_count = transferencias.groupby(["REFERENCIA_ORIGEN", "REFERENCIA_1"]).IMPORTE.count().reset_index()
 
-    for index, row in transfer_count.iterrows():
-        cliente = Empresa.objects.get(fiscal_id=str(row['REFERENCIA_ORIGEN']))
-        proveedor = Empresa.objects.get(fiscal_id=str(row['REFERENCIA_1']))
-        proveedor.clients.add(cliente)
-        cliente.providers.add(proveedor)
+    # for index, row in transfer_count.iterrows():
+    #     cliente = Empresa.objects.get(fiscal_id=str(row['REFERENCIA_ORIGEN']))
+    #     proveedor = Empresa.objects.get(fiscal_id=str(row['REFERENCIA_1']))
+    #     proveedor.clients.add(cliente)
+    #     cliente.providers.add(proveedor)
 
     print("clientes y proveedores cargados")
 
     data = pandas.DataFrame()
     data['user'] = transfer_count['REFERENCIA_ORIGEN'].astype("category")
     data['artist'] = transfer_count['REFERENCIA_1'].astype("category")
-    data['plays'] = transfer_count['IMPORTE'].astype("category")
+    data['transfers'] = transfer_count['IMPORTE'].astype("category")
 
-    plays = coo_matrix((data['plays'].astype(float),
+    transfers = coo_matrix((data['transfers'].astype(float),
                        (data['artist'].cat.codes.copy(),
                         data['user'].cat.codes.copy())))
 
-    return data, plays
+    return data, transfers
 
 def bm25_weight(X, K1=100, B=0.8):
     """ Weighs each row of the sparse matrix of the data by BM25 weighting """
@@ -87,14 +89,17 @@ def calculate_similar_artists(input_filename, output_filename,
                               exact=False, trees=20,
                               use_native=True,
                               dtype=numpy.float64):
-    print("Calculating similar artists. This might take a while")
+
+    # Calculo de clientes recomendados ---
+
+    print("Calculating similar clients. This might take a while")
     print("reading data from %s", input_filename)
     start = time.time()
-    df, plays = read_data(input_filename)
+    df, transfers = read_data(input_filename, inv=False)
     print("read data file in %s", time.time() - start)
 
     print("weighting matrix by bm25")
-    weighted = bm25_weight(plays)
+    weighted = bm25_weight(transfers)
 
     print("calculating factors")
     start = time.time()
@@ -107,7 +112,7 @@ def calculate_similar_artists(input_filename, output_filename,
     print("calculated factors in %s", time.time() - start)
 
     # write out artists by popularity
-    print("calculating top artists")
+    print("calculating top clients")
     user_count = df.groupby('artist').size()
     artists = dict(enumerate(df['artist'].cat.categories))
     to_generate = sorted(list(artists), key=lambda x: -user_count[x])
@@ -129,3 +134,48 @@ def calculate_similar_artists(input_filename, output_filename,
                 recommendedClients.clientes_recomendados = Empresa.objects.get(fiscal_id=artists[other])
                 recommendedClients.similarity = score
                 recommendedClients.save()
+
+    # Calculo de proveedores recomendados ---
+
+    print("Calculating similar providers. This might take a while")
+    print("reading data from %s", input_filename)
+    start = time.time()
+    df, transfers = read_data(input_filename, inv=True)
+    print("read data file in %s", time.time() - start)
+
+    print("weighting matrix by bm25")
+    weighted = bm25_weight(transfers)
+
+    print("calculating factors")
+    start = time.time()
+    artist_factors, user_factors = alternating_least_squares(weighted,
+                                                             factors=factors,
+                                                             regularization=regularization,
+                                                             iterations=iterations,
+                                                             use_native=use_native,
+                                                             dtype=dtype)
+    print("calculated factors in %s", time.time() - start)
+
+    # write out artists by popularity
+    print("calculating top providers")
+    user_count = df.groupby('artist').size()
+    artists = dict(enumerate(df['artist'].cat.categories))
+    to_generate = sorted(list(artists), key=lambda x: -user_count[x])
+
+    if exact:
+        calc = TopRelated(artist_factors)
+    else:
+        calc = ApproximateTopRelated(artist_factors, trees)
+
+    print("writing top related to %s", output_filename)
+    with open(output_filename, "w") as o:
+        for artistid in to_generate:
+            artist = artists[artistid]
+            for other, score in calc.get_related(artistid):
+                o.write("%s\t%s\t%s\n" % (artist, artists[other], score))
+                
+                recommendedProviders = RecommendedProviders()
+                recommendedProviders.empresa = Empresa.objects.get(fiscal_id=artist)
+                recommendedProviders.clientes_recomendados = Empresa.objects.get(fiscal_id=artists[other])
+                recommendedProviders.similarity = score
+                recommendedProviders.save()

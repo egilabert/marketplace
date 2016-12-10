@@ -9,6 +9,7 @@ class Empresa(models.Model):
 
     fiscal_id = models.CharField(max_length=30)
     name = models.CharField(max_length=255)
+    contact_person = models.CharField(max_length=255)
     email = models.EmailField()
     data_date = models.DateField(null=True, blank=True)
     creation_date = models.DateField(null=True, blank=True)
@@ -118,12 +119,23 @@ class Productos(models.Model):
     def __unicode__(self):
         return self.tipo_producto
 
-
 class RecommendedClients(models.Model):
 
     empresa = models.ForeignKey(Empresa, related_name='recommended', on_delete=models.CASCADE)
     similarity = models.FloatField()
     clientes_recomendados = models.ForeignKey(Empresa, related_name='clientes_recomendados', on_delete=models.CASCADE)
+
+    def __unicode__(self):
+        return str(self.similarity)
+
+    class Meta:
+        ordering = ['-similarity']
+
+class RecommendedProviders(models.Model):
+
+    empresa = models.ForeignKey(Empresa, related_name='providers_recommended', on_delete=models.CASCADE)
+    similarity = models.FloatField()
+    clientes_recomendados = models.ForeignKey(Empresa, related_name='proveedores_recomendados', on_delete=models.CASCADE)
 
     def __unicode__(self):
         return str(self.similarity)

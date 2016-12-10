@@ -1,7 +1,7 @@
 from django.contrib import admin
 
 # Register your models here.
-from .models import Empresa, Transfer, RecommendedClients, EstadosFinancieros, Productos
+from .models import Empresa, Transfer, RecommendedClients, EstadosFinancieros, Productos, RecommendedProviders
 
 class EmpresaAdmin(admin.ModelAdmin):
 	list_display = ["__unicode__", "name", "sector", "cnae","territorial", "creation_date","updated_at"]
@@ -28,4 +28,5 @@ admin.site.register(EstadosFinancieros, EstadosFinancierosAdmin)
 admin.site.register(Transfer)
 admin.site.register(Productos)
 admin.site.register(RecommendedClients)
+admin.site.register(RecommendedProviders)
 admin.site.register(Empresa, EmpresaAdmin)
