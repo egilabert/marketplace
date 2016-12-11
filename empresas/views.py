@@ -115,49 +115,49 @@ def RecommendationsView(request):
 	
 	empresa = request.session.get('company')
 	proveedores_tu_teritorial = Transfer.objects.filter(
-									origin_reference=Empresa.objects.filter(name=empresa.name)).filter(
+									origin_reference__in=Empresa.objects.filter(name=empresa.name)).filter(
 									destination_reference__territorial=empresa.territorial).values(
 									'destination_reference').annotate(company_count=Count(
 									'destination_reference', distinct=True)).count()
 
 	proveedores_no_tu_teritorial = Transfer.objects.filter(
-									origin_reference=Empresa.objects.filter(name=empresa.name)).exclude(
+									origin_reference__in=Empresa.objects.filter(name=empresa.name)).exclude(
 									destination_reference__territorial=empresa.territorial).values(
 									'destination_reference').annotate(company_count=Count(
 									'destination_reference', distinct=True)).count()
 
 	proveedores_sector_tu_teritorial = Transfer.objects.filter(
-									origin_reference=Empresa.objects.filter(territorial=empresa.territorial)).filter(
+									origin_reference__in=Empresa.objects.filter(territorial=empresa.territorial)).filter(
 									destination_reference__territorial=empresa.territorial).values(
 									'destination_reference').annotate(company_count=Count(
 									'destination_reference', distinct=True)).count()
 
 	proveedores_sector_no_tu_teritorial = Transfer.objects.filter(
-									origin_reference=Empresa.objects.filter(territorial=empresa.territorial)).exclude(
+									origin_reference__in=Empresa.objects.filter(territorial=empresa.territorial)).exclude(
 									destination_reference__territorial=empresa.territorial).values(
 									'destination_reference').annotate(company_count=Count(
 									'destination_reference', distinct=True)).count()
 
 	clientes_tu_teritorial = Transfer.objects.filter(
-									destination_reference=Empresa.objects.filter(name=empresa.name)).filter(
+									destination_reference__in=Empresa.objects.filter(name=empresa.name)).filter(
 									origin_reference__territorial=empresa.territorial).values(
 									'origin_reference').annotate(company_count=Count(
 									'origin_reference', distinct=True)).count()
 
 	clientes_no_tu_teritorial = Transfer.objects.filter(
-									destination_reference=Empresa.objects.filter(name=empresa.name)).exclude(
+									destination_reference__in=Empresa.objects.filter(name=empresa.name)).exclude(
 									origin_reference__territorial=empresa.territorial).values(
 									'origin_reference').annotate(company_count=Count(
 									'origin_reference', distinct=True)).count()
 
 	clientes_sector_tu_teritorial = Transfer.objects.filter(
-									destination_reference=Empresa.objects.filter(territorial=empresa.territorial)).filter(
+									destination_reference__in=Empresa.objects.filter(territorial=empresa.territorial)).filter(
 									origin_reference__territorial=empresa.territorial).values(
 									'origin_reference').annotate(company_count=Count(
 									'origin_reference', distinct=True)).count()
 
 	clientes_sector_no_tu_teritorial = Transfer.objects.filter(
-									destination_reference=Empresa.objects.filter(territorial=empresa.territorial)).exclude(
+									destination_reference__in=Empresa.objects.filter(territorial=empresa.territorial)).exclude(
 									origin_reference__territorial=empresa.territorial).values(
 									'origin_reference').annotate(company_count=Count(
 									'origin_reference', distinct=True)).count()
@@ -404,7 +404,10 @@ def ProductosCreate(request):
 			producto.fecha_datos = dateutil.parser.parse(row['ID_FCH_DATOS'])
 		except:
 			pass
-		producto.numero_persona = row['NUMPER']
+		try:
+			producto.numero_persona = row['NUMPER']
+		except:
+			producto.numero_persona = None
 		producto.tipo_producto = row['ID_TIPO_PRODUCTO_2']
 		producto.producto = row['PRODUCTE']
 		producto.desc_producto = row['DESC_PR']
@@ -435,6 +438,8 @@ def ProductosCreate(request):
 			producto.refinanciado = True
 		else:
 			producto.refinanciado = False
+		for k,v in producto.items():
+			print(k,fecha_vencimiento)
 		producto.save()
 	return HttpResponse("Productos loaded")
 
