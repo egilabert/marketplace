@@ -5,6 +5,7 @@
 {{ title }}
 {% endblock %}
 {% load random_image %}
+{% load mathfilters %}
 
 {% block body_class %}background_grey{% endblock %}
 
@@ -80,7 +81,7 @@
 							      			<i class="fa fa-money left-align" aria-hidden="true"></i></i><span class="grey-text light text-darken-4"> Financing: 
 							      		</div>
 							      		<div class="col s6">
-							      			<span class="right-align flow-text" style="color: {% if obj.estados_financieros.last.ventas > 0 %}green{% else %}red{% endif %}"> {% if obj.estados_financieros.last.ventas > 0 or obj.estados_financieros.last.ventas is not Null %} {{obj.estados_financieros.last.ventas|floatformat|intcomma }}€{% else %}-{%endif%}</span></span>
+							      			<span class="right-align flow-text" style="color: {% if obj.estados_financieros.last.ebitda > 0 %}green{% else %}red{% endif %}"> {% if obj.estados_financieros.last.ebitda > 0 %} {{obj.estados_financieros.last.ebitda|mul:0.2|floatformat|intcomma }}€{% else %}-{%endif%}</span></span>
 							      		</div>
 							      	</div>
 								    <div class="card-action">
@@ -135,7 +136,7 @@
 							      			<i class="fa fa-money left-align" aria-hidden="true"></i></i><span class="grey-text light text-darken-4"> Financing: 
 							      		</div>
 							      		<div class="col s6">
-							      			<span class="right-align flow-text" style="color: {% if obj.estados_financieros.last.ventas > 0 %}green{% else %}red{% endif %}"> {% if obj.estados_financieros.last.ventas > 0 or obj.estados_financieros.last.ventas is not Null %} {{obj.estados_financieros.last.ventas|floatformat|intcomma }}€{% else %}-{%endif%}</span></span>
+							      			<span class="right-align flow-text" style="color: {% if obj.estados_financieros.last.ebitda > 0 %}green{% else %}red{% endif %}"> {% if obj.estados_financieros.last.ebitda > 0 %} {{obj.estados_financieros.last.ebitda|mul:0.2|floatformat|intcomma }}€{% else %}-{%endif%}</span></span>
 							      		</div>
 							      	</div>
 								    <div class="card-action">
@@ -188,7 +189,7 @@
 							      			<i class="fa fa-money left-align" aria-hidden="true"></i></i><span class="grey-text light text-darken-4"> Financing: 
 							      		</div>
 							      		<div class="col s6">
-							      			<span class="right-align flow-text" style="color: {% if obj.estados_financieros.last.ventas > 0 %}green{% else %}red{% endif %}"> {% if obj.estados_financieros.last.ventas > 0 or obj.estados_financieros.last.ventas is not Null %} {{obj.estados_financieros.last.ventas|floatformat|intcomma }}€{% else %}-{%endif%}</span></span>
+							      			<span class="right-align flow-text" style="color: {% if obj.estados_financieros.last.ebitda > 0 %}green{% else %}red{% endif %}"> {% if obj.estados_financieros.last.ebitda > 0 %} {{obj.estados_financieros.last.ebitda|mul:0.2|floatformat|intcomma }}€{% else %}-{%endif%}</span></span>
 							      		</div>
 							      	</div>
 								    <div class="card-action">
