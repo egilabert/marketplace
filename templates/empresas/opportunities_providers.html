@@ -10,13 +10,13 @@
 {% block content %}
 		
 	<div class="parallax-container">
-		<h3 class="center-align grey-text text-darken-3 light padding_title">Your opportunities</h3>
-	    <div class="parallax"><img src="{% static 'images/opportunity.jpg' %}"></div>
+		<h3 class="center-align grey-text text-darken-3 light padding_title">Your providers opportunities</h3>
+	    <div class="parallax"><img src="{% static 'images/supplier.jpg' %}"></div>
 	</div>
     <h4 class="center title light padding_title">New clients found for <a href='{{ empresas.get_absolute_url }}'>{{empresas.name}}</a></h4>
     <h5 class="light center">CNAE: {{ empresas.cnae }}</h5>
     <!-- <h6 class="light center">{{ empresas.transfers.count }} transfers ({{ empresas.average_transfer | floatformat }}€ average transfer amount)</h6> -->
-    <h6 class="light center">{{ empresas.recommended_clients.count }} Recomendaciones</h6>
+    <h6 class="light center">{{ empresas.recommended_providers.count }} Recomendaciones</h6>
 
       <div class="row">
       	  <div class="col s3 m3">
@@ -53,7 +53,7 @@
 		    	<div class="row">
 		    		<div class="col s12 m4 cards-container">
 
-					{% for obj in empresas.oportunities.all %}
+					{% for obj in empresas.recommended_providers.all %}
 							{% if  forloop.counter|add:"-1"|divisibleby:3 %}
 							<div class="card light-green lighten-4 hoverable">
 							    <div class="card-image waves-effect waves-block waves-light">
@@ -61,19 +61,29 @@
 							    </div>
 							    <div class="card-content">
 							    	<div class="row">
-							      		<span class="activator center-align grey-text text-darken-4">{{forloop.counter}}. {{ obj.name}}</span>
+							      		<span class="activator center-align grey-text text-darken-4">{{forloop.counter}}. {{ obj.clientes_recomendados.name}}</span>
 							      	</div>
 							      	<div class="divider"></div>
 							      	<br>
 							      	<div class="row">
-							      		<span class="grey-text light text-darken-4">Match: <span>{{ obj.similarity|floatformat }}</span><i class="fa fa-bullseye left" aria-hidden="true"></i></span>
+							      		<div class="col s6">
+							      			<i class="fa fa-bullseye left-align" aria-hidden="true"></i><span class="grey-text light text-darken-4"> Match: 
+							      		</div>
+							      		<div class="col s6">
+							      			<span class="right-align flow-text" style="color: {% if obj.similarity > 0.7 %}green{% elif obj.similarity > 0.3 %} orange{% else %}red{% endif %}"> {{ obj.similarity|floatformat }}</span></span>
+							      		</div>
 							      	</div>
 
 							      	<div class="row">
-							      		<span class="grey-text light text-darken-4">Financing: <span>100.000€</span><i class="fa fa-money left" aria-hidden="true"></i></span>
+							      		<div class="col s6">
+							      			<i class="fa fa-money left-align" aria-hidden="true"></i></i><span class="grey-text light text-darken-4"> Financing: 
+							      		</div>
+							      		<div class="col s6">
+							      			<span class="right-align flow-text" style="color: {% if obj.clientes_recomendados.estados_financieros.last.ventas > 0 %}green{% else %}red{% endif %}"> {% if obj.clientes_recomendados.estados_financieros.last.ventas > 0 or obj.clientes_recomendados.estados_financieros.last.ventas is not Null %} {{obj.clientes_recomendados.estados_financieros.last.ventas|floatformat|intcomma }}€{% else %}-{%endif%}</span></span>
+							      		</div>
 							      	</div>
 								    <div class="card-action">
-								    	<a href="{{ obj.get_absolute_url }}">See details</a>
+								    	<a href="{{ obj.clientes_recomendados.get_absolute_url }}">See details</a>
 								      	<span ><i class="material-icons right activator center">more_vert</i></span>
 								    </div>
 							    </div>
@@ -96,7 +106,7 @@
 					<!-- =================== -->
 
 					<div class="col s12 m4 cards-container">
-						{% for obj in empresas.oportunities.all %}
+						{% for obj in empresas.recommended_providers.all %}
 						
 							{% if forloop.counter|add:"-2"|divisibleby:3 %}
 
@@ -106,18 +116,29 @@
 							    </div>
 							    <div class="card-content">
 							    	<div class="row">
-							      		<span class="activator center-align grey-text text-darken-4">{{forloop.counter}}. {{ obj.name}}</span>
+							      		<span class="activator center-align grey-text text-darken-4">{{forloop.counter}}. {{ obj.clientes_recomendados.name}}</span>
 							      	</div>
 							      	<div class="divider"></div>
 							      	<br>
 							      	<div class="row">
-							      		<span class="grey-text light text-darken-4">Match: <span>{{ obj.similarity|floatformat }}</span><i class="fa fa-bullseye left" aria-hidden="true"></i></span>
+							      		<div class="col s6">
+							      			<i class="fa fa-bullseye left-align" aria-hidden="true"></i><span class="grey-text light text-darken-4"> Match: 
+							      		</div>
+							      		<div class="col s6">
+							      			<span class="right-align flow-text" style="color: {% if obj.similarity > 0.7 %}green{% elif obj.similarity > 0.3 %} orange{% else %}red{% endif %}"> {{ obj.similarity|floatformat }}</span></span>
+							      		</div>
 							      	</div>
+
 							      	<div class="row">
-							      		<span class="grey-text light text-darken-4">Financing: <span>150.000€</span><i class="fa fa-money left" aria-hidden="true"></i></span>
+							      		<div class="col s6">
+							      			<i class="fa fa-money left-align" aria-hidden="true"></i></i><span class="grey-text light text-darken-4"> Financing: 
+							      		</div>
+							      		<div class="col s6">
+							      			<span class="right-align flow-text" style="color: {% if obj.clientes_recomendados.estados_financieros.last.ventas > 0 %}green{% else %}red{% endif %}"> {% if obj.clientes_recomendados.estados_financieros.last.ventas > 0 or obj.clientes_recomendados.estados_financieros.last.ventas is not Null %} {{obj.clientes_recomendados.estados_financieros.last.ventas|floatformat|intcomma }}€{% else %}-{%endif%}</span></span>
+							      		</div>
 							      	</div>
 								    <div class="card-action">
-								    	<a href="{{ obj.get_absolute_url }}">See details</a>
+								    	<a href="{{ obj.clientes_recomendados.get_absolute_url }}">See details</a>
 								      	<span ><i class="material-icons right activator center">more_vert</i></span>
 								    </div>
 							    </div>
@@ -138,7 +159,7 @@
 					</div>
 
 					<div class="col s12 m4 cards-container">
-						{% for obj in empresas.oportunities.all %}
+						{% for obj in empresas.recommended_providers.all %}
 
 							{% if forloop.counter|add:"-3"|divisibleby:3 %}
 
@@ -148,18 +169,29 @@
 							    </div>
 							    <div class="card-content">
 							    	<div class="row">
-							      		<span class="activator center-align grey-text text-darken-4">{{forloop.counter}}. {{ obj.name}}</span>
+							      		<span class="activator center-align grey-text text-darken-4">{{forloop.counter}}. {{ obj.clientes_recomendados.name}}</span>
 							      	</div>
 							      	<div class="divider"></div>
 							      	<br>
 							      	<div class="row">
-							      		<span class="grey-text light text-darken-4">Match: <span>{{ obj.similarity|floatformat }}</span><i class="fa fa-bullseye left" aria-hidden="true"></i></span>
+							      		<div class="col s6">
+							      			<i class="fa fa-bullseye left-align" aria-hidden="true"></i><span class="grey-text light text-darken-4"> Match: 
+							      		</div>
+							      		<div class="col s6">
+							      			<span class="right-align flow-text" style="color: {% if obj.similarity > 0.7 %}green{% elif obj.similarity > 0.3 %} orange{% else %}red{% endif %}"> {{ obj.similarity|floatformat }}</span></span>
+							      		</div>
 							      	</div>
+
 							      	<div class="row">
-							      		<span class="grey-text light text-darken-4">Financing: <span>200.000€</span><i class="fa fa-money left" aria-hidden="true"></i></span>
+							      		<div class="col s6">
+							      			<i class="fa fa-money left-align" aria-hidden="true"></i></i><span class="grey-text light text-darken-4"> Financing: 
+							      		</div>
+							      		<div class="col s6">
+							      			<span class="right-align flow-text" style="color: {% if obj.clientes_recomendados.estados_financieros.last.ventas > 0 %}green{% else %}red{% endif %}"> {% if obj.clientes_recomendados.estados_financieros.last.ventas > 0 or obj.clientes_recomendados.estados_financieros.last.ventas is not Null %} {{obj.clientes_recomendados.estados_financieros.last.ventas|floatformat|intcomma }}€{% else %}-{%endif%}</span></span>
+							      		</div>
 							      	</div>
 								    <div class="card-action">
-								    	<a href="{{ obj.get_absolute_url }}">See details</a>
+								    	<a href="{{ obj.clientes_recomendados.get_absolute_url }}">See details</a>
 								      	<span ><i class="material-icons right activator center">more_vert</i></span>
 								    </div>
 							    </div>

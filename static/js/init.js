@@ -37,27 +37,6 @@ var form_filled_check = false;
                });
 
     });
-
-    $( "#test6" ).click(function() {
-      $.ajax({
-        
-        url: '/empresas/'+__MYAPP_CONFIG__.empresa_id,
-
-        type: 'get',
-        data:{ opp: $( "#test6" ).is(':checked')}})
-          .done( function (responseText) {
-                  // Triggered if response status code is 200 (OK)
-                  $('#opportunity_response').html(responseText);
-               })
-               .fail( function (jqXHR, status, error) {
-                  // Triggered if response status code is NOT 200 (OK)
-                  alert(jqXHR.responseText);
-               })
-               .always( function() {
-                  // Always run after .done() or .fail()
-               });
-
-    });
     
 
     $('#loadingmessage').hide();

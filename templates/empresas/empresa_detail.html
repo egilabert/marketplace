@@ -22,13 +22,18 @@
 <div class="container">
     <div class="row">
         <div class="col s9">
-            <h2>{{ empresa.name }}</h2>
+            <h3>{{ empresa.name }}</h3>
         </div>
         <div class="col s3">
             <p>
-              <input type="checkbox" id="test6" class="right large" name="opportunity" {% if checked == 1 %} checked="checked" {% endif %}/>
-              <label for="test6" class="valign">Interesting opportunity</label>
-              <div id="opportunity_response"></div>
+              <input type="checkbox" id="add_client" class="right large" name="opportunity" {% if checked_client == 1 %} checked="checked" {% endif %}/>
+              <label for="add_client" class="valign">Interesting client</label>
+              <span id="client_response"></span>
+            </p>
+            <p>
+              <input type="checkbox" id="add_provider" class="right large" name="opportunity" {% if checked_providers == 1 %} checked="checked" {% endif %}/>
+              <label for="add_provider" class="valign">Interesting provider</label>
+              <span id="provider_response"></span>
             </p>
         </div>
     </div>
@@ -391,3 +396,61 @@
 
 
 {% endblock %}
+
+{% block alt_js %}
+<script type="text/javascript">
+    var empresa_id = {{empresa.id}};
+
+    $("#add_client" ).click(function() {
+      $.ajax({
+        
+        url: '/empresas/'+empresa_id,
+
+        type: 'get',
+        data:{ opp_client: $( "#add_client" ).is(':checked')}})
+          .done( function (responseText) {
+                  // Triggered if response status code is 200 (OK)
+                  if ($( "#add_client" ).is(':checked')==true) {
+                    Materialize.toast('Added to your interesting clients', 4000);
+                  } else {
+                    Materialize.toast('Removed from your interesting clients', 4000);
+                  }
+                  // $('#client_response').html(responseText);
+               })
+               .fail( function (jqXHR, status, error) {
+                  // Triggered if response status code is NOT 200 (OK)
+                  alert(jqXHR.responseText);
+               })
+               .always( function() {
+                  // Always run after .done() or .fail()
+               });
+
+    });
+
+    $("#add_provider" ).click(function() {
+      $.ajax({
+        
+        url: '/empresas/'+empresa_id,
+
+        type: 'get',
+        data:{ opp_provider: $( "#add_provider" ).is(':checked')}})
+          .done( function (responseText) {
+                  // Triggered if response status code is 200 (OK)
+                  if ($( "#add_provider" ).is(':checked')==true) {
+                    Materialize.toast('Added to your interesting providers', 4000);
+                  } else {
+                    Materialize.toast('Removed from your interesting providers', 4000);
+                  }
+                  // $('#provider_response').html(responseText);
+               })
+               .fail( function (jqXHR, status, error) {
+                  // Triggered if response status code is NOT 200 (OK)
+                  alert(jqXHR.responseText);
+               })
+               .always( function() {
+                  // Always run after .done() or .fail()
+               });
+
+    });
+</script>
+{% endblock alt_js %}

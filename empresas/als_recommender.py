@@ -123,12 +123,10 @@ def calculate_similar_artists(input_filename, output_filename,
         calc = ApproximateTopRelated(artist_factors, trees)
 
     print("writing top related to %s", output_filename)
-    with open(output_filename, "w") as o:
-        for artistid in to_generate:
-            artist = artists[artistid]
-            for other, score in calc.get_related(artistid):
-                o.write("%s\t%s\t%s\n" % (artist, artists[other], score))
-                
+    for artistid in to_generate:
+        artist = artists[artistid]
+        for other, score in calc.get_related(artistid):
+            if (artist!=artists[other]):
                 recommendedClients = RecommendedClients()
                 recommendedClients.empresa = Empresa.objects.get(fiscal_id=artist)
                 recommendedClients.clientes_recomendados = Empresa.objects.get(fiscal_id=artists[other])
@@ -168,12 +166,10 @@ def calculate_similar_artists(input_filename, output_filename,
         calc = ApproximateTopRelated(artist_factors, trees)
 
     print("writing top related to %s", output_filename)
-    with open(output_filename, "w") as o:
-        for artistid in to_generate:
-            artist = artists[artistid]
-            for other, score in calc.get_related(artistid):
-                o.write("%s\t%s\t%s\n" % (artist, artists[other], score))
-                
+    for artistid in to_generate:
+        artist = artists[artistid]
+        for other, score in calc.get_related(artistid):
+            if (artist!=artists[other]):
                 recommendedProviders = RecommendedProviders()
                 recommendedProviders.empresa = Empresa.objects.get(fiscal_id=artist)
                 recommendedProviders.clientes_recomendados = Empresa.objects.get(fiscal_id=artists[other])

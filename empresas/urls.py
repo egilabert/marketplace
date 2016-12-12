@@ -16,7 +16,8 @@ from .views import (HomeView,
                     EstadosCreate,
                     TranfersCreate,
                     RecommendationsCreate,
-                    OpportunityView)
+                    OpportunityClientsView,
+                    OpportunityProviderView)
 
 urlpatterns = [
 
@@ -24,7 +25,8 @@ urlpatterns = [
     url(r'^list/$', EmpresasListView, name='empresas_list'),
     #url(r'^create/$', EmpresaDetailView, name='empresa_create'),
     url(r'^(?P<pk>\d+)/$', EmpresaDetailView, name='detail'),
-    url(r'^empresas/opportunities/$', OpportunityView, name='opportunities'),
+    url(r'^empresas/client_opportunities/$', OpportunityClientsView, name='client_opportunities'),
+    url(r'^empresas/provider_opportunities/$', OpportunityProviderView, name='provider_opportunities'),
     #url(r'^update/$', EmpresaDetailView, name='empresa_update'),
     #url(r'^delete/$', EmpresaDetailView, name='empresa_delete'),
     url(r'^empresa/(?P<empresa_id>[0-9]+)/transfer_create/$', TrasferCreateView, name='transfer_create'),

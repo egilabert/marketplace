@@ -1,4 +1,5 @@
 from django.http import HttpResponse, HttpResponseRedirect
+from django.conf import settings
 from django.shortcuts import render, get_object_or_404
 from django.contrib.auth.decorators import login_required
 from django.utils.decorators import method_decorator
@@ -59,15 +60,27 @@ def EmpresaDetailView(request, pk=None):
 	empresa = get_object_or_404(Empresa, pk=pk)
 	company = request.session.get('company')
 	form = TransferForm()
-	opp = request.GET.get("opp")
-	if opp:
-		if opp=='true':
-			company.oportunities.add(empresa)
+	opp_client = request.GET.get("opp_client")
+	print(opp_client)
+	if opp_client:
+		if opp_client=='true':
+			company.recommended_clients.add(empresa)
 			return HttpResponse("<small>Added to your opportunities</small>")
 		else:
-			company.oportunities.remove(empresa)
+			company.recommended_clients.remove(empresa)
 			return HttpResponse("<small>Removed from your opportunities</small>")
-	checked = company.oportunities.filter(pk=empresa.pk).count()
+	checked_client = company.recommended_clients.filter(pk=empresa.pk).count()
+
+	opp_provider = request.GET.get("opp_provider")
+	print(opp_provider)
+	if opp_provider:
+		if opp_provider=='true':
+			company.recommended_providers.add(empresa)
+			return HttpResponse("<small>Added to your opportunities</small>")
+		else:
+			company.recommended_providers.remove(empresa)
+			return HttpResponse("<small>Removed from your opportunities</small>")
+	checked_providers = company.recommended_providers.filter(pk=empresa.pk).count()
 
 	ventas = []
 	fechas = []
@@ -99,17 +112,28 @@ def EmpresaDetailView(request, pk=None):
 		'amortizaciones': json.dumps(amortizaciones),
 		'resultado_explotacion': json.dumps(resultado_explotacion),
 		'fechas': json.dumps(fechas),
-		'checked': checked}
+		'checked_client': checked_client,
+		'checked_providers': checked_providers}
+
 	return render(request, 'empresas/empresa_detail.html', context)
 
-def OpportunityView(request):
+def OpportunityClientsView(request):
 	
 	company = request.session.get('company')
 	# empresas = company.opportunities.all()
 	context = {
 		'empresas':company
 		}
-	return render(request, 'empresas/opportunities.html', context)
+	return render(request, 'empresas/opportunities_clients.html', context)
+
+def OpportunityProviderView(request):
+	
+	company = request.session.get('company')
+	# empresas = company.opportunities.all()
+	context = {
+		'empresas':company
+		}
+	return render(request, 'empresas/opportunities_providers.html', context)
 
 def RecommendationsView(request):
 	
@@ -339,8 +363,8 @@ def EmpresasCreate(request):
 
 	# Importantdo datos de empresa
 	fake = Factory.create('es_ES')
-	link = static('data/empresas_ok.csv')
-	empresas = pd.read_csv("."+link, sep=';', decimal=',', encoding='latin1') # read empresas data
+	link = settings.DATA_FOLDER+'empresas_ok.csv'
+	empresas = pd.read_csv(link, sep=';', decimal=',', encoding='latin1') # read empresas data
 	Empresa.objects.all().delete()
 	for index, row in empresas.iterrows():
 		empresa = Empresa()
@@ -390,8 +414,8 @@ def ProductosCreate(request):
 	fake = Factory.create('es_ES')
 
 	# Importantdo datos financieros......
-	link = static('data/productos.csv')
-	productos = pd.read_csv("."+link, sep=';', decimal=',', thousands='.', encoding='latin1') # read empresas data
+	link = settings.DATA_FOLDER+'productos.csv'
+	productos = pd.read_csv(link, sep=';', decimal=',', thousands='.', encoding='latin1') # read empresas data
 	EstadosFinancieros.objects.all().delete()
 
 	for index, row in productos.iterrows():
@@ -449,8 +473,8 @@ def EstadosCreate(request):
 	# ===============================================================
 	# Importantdo datos financieros
 
-	link = static('data/estados_financieros.csv')
-	estados_financieros = pd.read_csv("."+link, sep=';', decimal=',', thousands='.', encoding='utf-8') # read empresas data
+	link = settings.DATA_FOLDER+'estados_financieros.csv'
+	estados_financieros = pd.read_csv(link, sep=';', decimal=',', thousands='.', encoding='utf-8') # read empresas data
 	EstadosFinancieros.objects.all().delete()
 
 	for index, row in estados_financieros.iterrows():
@@ -488,8 +512,8 @@ def TranfersCreate(request):
 	# ===============================================================
 	# Importantdo transferencias.......
 	fake = Factory.create('es_ES')
-	link = static('data/transferencias_cnae_v2.csv')
-	transferencias = pd.read_csv("."+link, sep=';', decimal=',', encoding='latin1')
+	link = settings.DATA_FOLDER+'transferencias_cnae_v2.csv'
+	transferencias = pd.read_csv(link, sep=';', decimal=',', encoding='latin1')
 	Transfer.objects.all().delete()
 	
 	for index, row in transferencias.iterrows():
@@ -517,8 +541,8 @@ def RecommendationsCreate(request):
 
 	# Generando recomendaciones.......
 
-	link = static('data/transferencias_cnae_v2.csv')
-	transferencias = pd.read_csv("."+link, sep=';', decimal=',', encoding='latin1')
+	link = settings.DATA_FOLDER+'transferencias_cnae_v2.csv'
+	transferencias = pd.read_csv(link, sep=';', decimal=',', encoding='latin1')
 	RecommendedClients.objects.all().delete()
 	# Empresa.objects.clients.all().delete()
 	# Empresa.objects.providers.all().delete()

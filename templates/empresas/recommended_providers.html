@@ -16,7 +16,7 @@
 	    <div class="parallax"><img src="{% static 'images/providers.jpg' %}"></div>
 	</div>
     <h4 class="center title light padding_title">New clients found for <a href='{{ company.get_absolute_url }}'>{{company.name}}</a></h4>
-    <h6 class="light center">CNAE: {{ company.territorial }}</h6>
+    <h6 class="light center">Region: {{ company.territorial }}</h6>
     <h6 class="light center">CNAE: {{ company.cnae_2 }} | {{ company.cnae }}</h6>
     <!-- <h6 class="light center">{{ company.transfers.count }} transfers ({{ company.average_transfer | floatformat }}€ average transfer amount)</h6> -->
     <h6 class="light center">{{ company.providers_recommended.count }} Recomendaciones | {{ company.transfers.count }} Transferencias</h6>
