@@ -14,10 +14,10 @@
 		<h3 class="center-align grey-text text-darken-3 light padding_title">Your clients opportunities</h3>
 	    <div class="parallax"><img src="{% static 'images/opportunity.jpg' %}"></div>
 	</div>
-    <h4 class="center title light padding_title">New clients found for <a href='{{ empresas.get_absolute_url }}'>{{empresas.name}}</a></h4>
-    <h5 class="light center">CNAE: {{ empresas.cnae }}</h5>
-    <!-- <h6 class="light center">{{ empresas.transfers.count }} transfers ({{ empresas.average_transfer | floatformat }}€ average transfer amount)</h6> -->
-    <h6 class="light center">{{ empresas.recommended_clients.count }} Recomendaciones</h6>
+    <h4 class="center title light padding_title">New clients found for <a href='{{ company.get_absolute_url }}'>{{company.name}}</a></h4>
+    <h5 class="light center">CNAE: {{ company.cnae }}</h5>
+    <!-- <h6 class="light center">{{ company.transfers.count }} transfers ({{ company.average_transfer | floatformat }}€ average transfer amount)</h6> -->
+    <h6 class="light center">{{ company.recommended_clients.count }} Recomendaciones</h6>
 
       <div class="row">
       	  <div class="col s3 m3">
@@ -54,7 +54,7 @@
 		    	<div class="row">
 		    		<div class="col s12 m4 cards-container">
 
-					{% for obj in empresas.recommended_clients.all %}
+					{% for obj in company.recommended_clients.all %}
 							{% if  forloop.counter|add:"-1"|divisibleby:3 %}
 							<div class="card blue-grey lighten-3 hoverable">
 							    <div class="card-image waves-effect waves-block waves-light">
@@ -107,7 +107,7 @@
 					<!-- =================== -->
 
 					<div class="col s12 m4 cards-container">
-						{% for obj in empresas.recommended_clients.all %}
+						{% for obj in company.recommended_clients.all %}
 						
 							{% if forloop.counter|add:"-2"|divisibleby:3 %}
 
@@ -160,7 +160,7 @@
 					</div>
 
 					<div class="col s12 m4 cards-container">
-						{% for obj in empresas.recommended_clients.all %}
+						{% for obj in company.recommended_clients.all %}
 
 							{% if forloop.counter|add:"-3"|divisibleby:3 %}
 

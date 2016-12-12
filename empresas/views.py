@@ -61,7 +61,7 @@ def EmpresaDetailView(request, pk=None):
 	company = request.session.get('company')
 	form = TransferForm()
 	opp_client = request.GET.get("opp_client")
-
+	print(opp_client)
 	if opp_client:
 		if opp_client=='true':
 			company.recommended_clients.add(empresa)
@@ -72,7 +72,7 @@ def EmpresaDetailView(request, pk=None):
 	checked_client = company.recommended_clients.filter(pk=empresa.pk).count()
 
 	opp_provider = request.GET.get("opp_provider")
-
+	print(opp_provider)
 	if opp_provider:
 		if opp_provider=='true':
 			company.recommended_providers.add(empresa)
