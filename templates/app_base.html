@@ -76,7 +76,7 @@
       <div class="background">
         <img src="{% static 'images/testimonial-bg.jpg' %}">
       </div>
-      <a href="#!user"><img class="circle" src="{% static 'images/pillango_logo.png' %}"></a>
+      <a href="#!user"><img class="circle" src="{{ company.image }}"></a>
       <a href="#!name"><span class="white-text name">{{ company.name }}</span></a>
       <a href="#!email"><span class="white-text email">{{ company.email }}</span></a>
     </div></li>

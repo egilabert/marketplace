@@ -1,5 +1,6 @@
 {% extends "app_base.html" %}
 {% load static %}
+{% load humanize %}
 {% block page_title %}
 {{ title }}
 {% endblock %}
@@ -55,13 +56,13 @@
 
 					{% for obj in empresas.recommended_providers.all %}
 							{% if  forloop.counter|add:"-1"|divisibleby:3 %}
-							<div class="card light-green lighten-4 hoverable">
+							<div class="card brown lighten-3 hoverable">
 							    <div class="card-image waves-effect waves-block waves-light">
 							      <img class="activator" src="{{ obj.image}}">
 							    </div>
 							    <div class="card-content">
 							    	<div class="row">
-							      		<span class="activator center-align grey-text text-darken-4">{{forloop.counter}}. {{ obj.clientes_recomendados.name}}</span>
+							      		<span class="activator center-align grey-text text-darken-4">{{forloop.counter}}. {{ obj.name}}</span>
 							      	</div>
 							      	<div class="divider"></div>
 							      	<br>
@@ -79,11 +80,11 @@
 							      			<i class="fa fa-money left-align" aria-hidden="true"></i></i><span class="grey-text light text-darken-4"> Financing: 
 							      		</div>
 							      		<div class="col s6">
-							      			<span class="right-align flow-text" style="color: {% if obj.clientes_recomendados.estados_financieros.last.ventas > 0 %}green{% else %}red{% endif %}"> {% if obj.clientes_recomendados.estados_financieros.last.ventas > 0 or obj.clientes_recomendados.estados_financieros.last.ventas is not Null %} {{obj.clientes_recomendados.estados_financieros.last.ventas|floatformat|intcomma }}€{% else %}-{%endif%}</span></span>
+							      			<span class="right-align flow-text" style="color: {% if obj.estados_financieros.last.ventas > 0 %}green{% else %}red{% endif %}"> {% if obj.estados_financieros.last.ventas > 0 or obj.estados_financieros.last.ventas is not Null %} {{obj.estados_financieros.last.ventas|floatformat|intcomma }}€{% else %}-{%endif%}</span></span>
 							      		</div>
 							      	</div>
 								    <div class="card-action">
-								    	<a href="{{ obj.clientes_recomendados.get_absolute_url }}">See details</a>
+								    	<a class="blue-grey-text text-darken-3" href="{{ obj.get_absolute_url }}">See details</a>
 								      	<span ><i class="material-icons right activator center">more_vert</i></span>
 								    </div>
 							    </div>
@@ -110,13 +111,13 @@
 						
 							{% if forloop.counter|add:"-2"|divisibleby:3 %}
 
-							<div class="card light-green lighten-4 hoverable">
+							<div class="card brown lighten-3 hoverable">
 							    <div class="card-image waves-effect waves-block waves-light">
 							      <img class="activator" src='{{ obj.image}}'>
 							    </div>
 							    <div class="card-content">
 							    	<div class="row">
-							      		<span class="activator center-align grey-text text-darken-4">{{forloop.counter}}. {{ obj.clientes_recomendados.name}}</span>
+							      		<span class="activator center-align grey-text text-darken-4">{{forloop.counter}}. {{ obj.name}}</span>
 							      	</div>
 							      	<div class="divider"></div>
 							      	<br>
@@ -134,11 +135,11 @@
 							      			<i class="fa fa-money left-align" aria-hidden="true"></i></i><span class="grey-text light text-darken-4"> Financing: 
 							      		</div>
 							      		<div class="col s6">
-							      			<span class="right-align flow-text" style="color: {% if obj.clientes_recomendados.estados_financieros.last.ventas > 0 %}green{% else %}red{% endif %}"> {% if obj.clientes_recomendados.estados_financieros.last.ventas > 0 or obj.clientes_recomendados.estados_financieros.last.ventas is not Null %} {{obj.clientes_recomendados.estados_financieros.last.ventas|floatformat|intcomma }}€{% else %}-{%endif%}</span></span>
+							      			<span class="right-align flow-text" style="color: {% if obj.estados_financieros.last.ventas > 0 %}green{% else %}red{% endif %}"> {% if obj.estados_financieros.last.ventas > 0 or obj.estados_financieros.last.ventas is not Null %} {{obj.estados_financieros.last.ventas|floatformat|intcomma }}€{% else %}-{%endif%}</span></span>
 							      		</div>
 							      	</div>
 								    <div class="card-action">
-								    	<a href="{{ obj.clientes_recomendados.get_absolute_url }}">See details</a>
+								    	<a class="blue-grey-text text-darken-3" href="{{ obj.get_absolute_url }}">See details</a>
 								      	<span ><i class="material-icons right activator center">more_vert</i></span>
 								    </div>
 							    </div>
@@ -163,13 +164,13 @@
 
 							{% if forloop.counter|add:"-3"|divisibleby:3 %}
 
-							<div class="card light-green lighten-4 hoverable">
+							<div class="card brown lighten-3 hoverable">
 							    <div class="card-image waves-effect waves-block waves-light">
 							      <img class="activator" src='{{ obj.image}}'>
 							    </div>
 							    <div class="card-content">
 							    	<div class="row">
-							      		<span class="activator center-align grey-text text-darken-4">{{forloop.counter}}. {{ obj.clientes_recomendados.name}}</span>
+							      		<span class="activator center-align grey-text text-darken-4">{{forloop.counter}}. {{ obj.name}}</span>
 							      	</div>
 							      	<div class="divider"></div>
 							      	<br>
@@ -187,11 +188,11 @@
 							      			<i class="fa fa-money left-align" aria-hidden="true"></i></i><span class="grey-text light text-darken-4"> Financing: 
 							      		</div>
 							      		<div class="col s6">
-							      			<span class="right-align flow-text" style="color: {% if obj.clientes_recomendados.estados_financieros.last.ventas > 0 %}green{% else %}red{% endif %}"> {% if obj.clientes_recomendados.estados_financieros.last.ventas > 0 or obj.clientes_recomendados.estados_financieros.last.ventas is not Null %} {{obj.clientes_recomendados.estados_financieros.last.ventas|floatformat|intcomma }}€{% else %}-{%endif%}</span></span>
+							      			<span class="right-align flow-text" style="color: {% if obj.estados_financieros.last.ventas > 0 %}green{% else %}red{% endif %}"> {% if obj.estados_financieros.last.ventas > 0 or obj.estados_financieros.last.ventas is not Null %} {{obj.estados_financieros.last.ventas|floatformat|intcomma }}€{% else %}-{%endif%}</span></span>
 							      		</div>
 							      	</div>
 								    <div class="card-action">
-								    	<a href="{{ obj.clientes_recomendados.get_absolute_url }}">See details</a>
+								    	<a class="blue-grey-text text-darken-3" href="{{ obj.get_absolute_url }}">See details</a>
 								      	<span ><i class="material-icons right activator center">more_vert</i></span>
 								    </div>
 							    </div>

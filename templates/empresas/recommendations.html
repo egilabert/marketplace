@@ -1,7 +1,7 @@
 {% extends "app_base.html" %}
 {% load static %}
 {% block page_title %}
-{{ empresa.name }}
+{{ company.name }}
 {% load humanize %}
 {% endblock %}
 
@@ -10,7 +10,7 @@
 {% block content %}
 
 	<div class="parallax-container">
-		<h3 class="center-align white-text light">{{ empresa.name }}</h3>
+		<h3 class="center-align white-text light">{{ company.name }}</h3>
 	    <div class="parallax"><img src="{% static 'images/hero-area.jpg' %}"></div>
 	</div>
 

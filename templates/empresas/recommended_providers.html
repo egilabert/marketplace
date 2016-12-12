@@ -12,7 +12,7 @@
 {% block content %}
 		
 	<div class="parallax-container">
-		<h3 class="center-align grey-text text-darken-3 light">Providers change your efficiency</h3>
+		<h3 class="center-align white-text light">Providers change your efficiency</h3>
 	    <div class="parallax"><img src="{% static 'images/providers.jpg' %}"></div>
 	</div>
     <h4 class="center title light padding_title">New clients found for <a href='{{ company.get_absolute_url }}'>{{company.name}}</a></h4>
@@ -60,7 +60,7 @@
 					{% for obj in company.providers_recommended.all %}
 						{% if  obj.similarity > -1000 %}
 							{% if  forloop.counter|add:"-1"|divisibleby:3 %}
-							<div class="card teal lighten-5 hoverable">
+							<div class="card brown lighten-5 hoverable">
 							    <div class="card-image waves-effect waves-block waves-light">
 							      <img class="activator" src="{{ obj.clientes_recomendados.image}}">
 							    </div>
@@ -88,7 +88,7 @@
 							      		</div>
 							      	</div>
 								    <div class="card-action">
-								    	<a href="{{ obj.clientes_recomendados.get_absolute_url }}">See details</a>
+								    	<a class="blue-grey-text text-darken-3" href="{{ obj.clientes_recomendados.get_absolute_url }}">See details</a>
 								      	<span ><i class="material-icons right activator center">more_vert</i></span>
 								    </div>
 							    </div>
@@ -119,7 +119,7 @@
 
 							{% if forloop.counter|add:"-2"|divisibleby:3 %}
 
-							<div class="card teal lighten-5 hoverable">
+							<div class="card brown lighten-5 hoverable">
 							    <div class="card-image waves-effect waves-block waves-light">
 							      <img class="activator" src='{{ obj.clientes_recomendados.image}}'>
 							    </div>
@@ -147,7 +147,7 @@
 							      		</div>
 							      	</div>
 								    <div class="card-action">
-								    	<a href="{{ obj.clientes_recomendados.get_absolute_url }}">See details</a>
+								    	<a class="blue-grey-text text-darken-3" href="{{ obj.clientes_recomendados.get_absolute_url }}">See details</a>
 								      	<span ><i class="material-icons right activator center">more_vert</i></span>
 								    </div>
 							    </div>
@@ -176,7 +176,7 @@
 						
 							{% if forloop.counter|add:"-3"|divisibleby:3 %}
 
-							<div class="card teal lighten-5 hoverable">
+							<div class="card brown lighten-5 hoverable">
 							    <div class="card-image waves-effect waves-block waves-light">
 							      <img class="activator" src='{{ obj.clientes_recomendados.image}}'>
 							    </div>
@@ -204,7 +204,7 @@
 							      		</div>
 							      	</div>
 								    <div class="card-action">
-								    	<a href="{{ obj.clientes_recomendados.get_absolute_url }}">See details</a>
+								    	<a class="blue-grey-text text-darken-3" href="{{ obj.clientes_recomendados.get_absolute_url }}">See details</a>
 								      	<span ><i class="material-icons right activator center">more_vert</i></span>
 								    </div>
 							    </div>

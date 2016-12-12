@@ -39,7 +39,7 @@ class HomeView(View):
 		request.session.modified = True
 		queryset = Empresa.objects.all()
 		if request.session.get('company') is None:
-			company = Empresa.objects.all()[randint(0, queryset.count() - 1)]
+			company = Empresa.objects.all()[865-1] #[randint(0, queryset.count() - 1)]
 			request.session['company'] = company
 		else:
 			company = request.session.get('company')
@@ -61,7 +61,7 @@ def EmpresaDetailView(request, pk=None):
 	company = request.session.get('company')
 	form = TransferForm()
 	opp_client = request.GET.get("opp_client")
-	print(opp_client)
+
 	if opp_client:
 		if opp_client=='true':
 			company.recommended_clients.add(empresa)
@@ -72,7 +72,7 @@ def EmpresaDetailView(request, pk=None):
 	checked_client = company.recommended_clients.filter(pk=empresa.pk).count()
 
 	opp_provider = request.GET.get("opp_provider")
-	print(opp_provider)
+
 	if opp_provider:
 		if opp_provider=='true':
 			company.recommended_providers.add(empresa)
@@ -104,6 +104,7 @@ def EmpresaDetailView(request, pk=None):
 			amortizaciones.append(0)
 
 	context = {
+		'company': company,
 		'empresa':empresa,
 		'form': form,
 		'ventas': json.dumps(ventas),
@@ -122,7 +123,7 @@ def OpportunityClientsView(request):
 	company = request.session.get('company')
 	# empresas = company.opportunities.all()
 	context = {
-		'empresas':company
+		'company':company
 		}
 	return render(request, 'empresas/opportunities_clients.html', context)
 
@@ -131,7 +132,7 @@ def OpportunityProviderView(request):
 	company = request.session.get('company')
 	# empresas = company.opportunities.all()
 	context = {
-		'empresas':company
+		'company':company
 		}
 	return render(request, 'empresas/opportunities_providers.html', context)
 
@@ -198,7 +199,7 @@ def RecommendationsView(request):
 	sector_territoriales_clientes = [clientes_sector_tu_teritorial, clientes_sector_no_tu_teritorial]
 
 	context = {
-		'empresa':empresa,
+		'company':empresa,
 		'territoriales_proveedores': territoriales_proveedores,
 		'territoriales_clientes': territoriales_clientes,
 		'sector_territoriales_proveedores': sector_territoriales_proveedores,
@@ -416,8 +417,9 @@ def ProductosCreate(request):
 	# Importantdo datos financieros......
 	link = settings.DATA_FOLDER+'productos.csv'
 	productos = pd.read_csv(link, sep=';', decimal=',', thousands='.', encoding='latin1') # read empresas data
-	EstadosFinancieros.objects.all().delete()
+	Productos.objects.all().delete()
 
+	productos = productos.astype(object).where(pd.notnull(productos), None)
 	for index, row in productos.iterrows():
 		producto = Productos()
 		try:
@@ -432,6 +434,7 @@ def ProductosCreate(request):
 			producto.numero_persona = row['NUMPER']
 		except:
 			producto.numero_persona = None
+
 		producto.tipo_producto = row['ID_TIPO_PRODUCTO_2']
 		producto.producto = row['PRODUCTE']
 		producto.desc_producto = row['DESC_PR']
@@ -462,8 +465,6 @@ def ProductosCreate(request):
 			producto.refinanciado = True
 		else:
 			producto.refinanciado = False
-		for k,v in producto.items():
-			print(k,fecha_vencimiento)
 		producto.save()
 	return HttpResponse("Productos loaded")
 
@@ -475,6 +476,7 @@ def EstadosCreate(request):
 
 	link = settings.DATA_FOLDER+'estados_financieros.csv'
 	estados_financieros = pd.read_csv(link, sep=';', decimal=',', thousands='.', encoding='utf-8') # read empresas data
+	estados_financieros = estados_financieros.astype(object).where(pd.notnull(estados_financieros), None)
 	EstadosFinancieros.objects.all().delete()
 
 	for index, row in estados_financieros.iterrows():
@@ -515,7 +517,7 @@ def TranfersCreate(request):
 	link = settings.DATA_FOLDER+'transferencias_cnae_v2.csv'
 	transferencias = pd.read_csv(link, sep=';', decimal=',', encoding='latin1')
 	Transfer.objects.all().delete()
-	
+	transfers_list = []
 	for index, row in transferencias.iterrows():
 		transfer = Transfer()
 		try:
@@ -531,7 +533,8 @@ def TranfersCreate(request):
 		transfer.balance = row['SALDO']
 		transfer.destination_reference = Empresa.objects.get(fiscal_id=str(row['REFERENCIA_1']))
 		transfer.origin_reference = Empresa.objects.get(fiscal_id=str(row['REFERENCIA_ORIGEN']))
-		transfer.save()
+		transfer_list.append(transfer)
+	Transfer.objects.bulk_create(transfer_list)
 
 	return HttpResponse("Transferencias loaded")
 
@@ -544,6 +547,7 @@ def RecommendationsCreate(request):
 	link = settings.DATA_FOLDER+'transferencias_cnae_v2.csv'
 	transferencias = pd.read_csv(link, sep=';', decimal=',', encoding='latin1')
 	RecommendedClients.objects.all().delete()
+	RecommendedProviders.objects.all().delete()
 	# Empresa.objects.clients.all().delete()
 	# Empresa.objects.providers.all().delete()
 	calculate_similar_artists(transferencias, "similar-artists.tsv",

@@ -121,9 +121,10 @@ def calculate_similar_artists(input_filename, output_filename,
         calc = TopRelated(artist_factors)
     else:
         calc = ApproximateTopRelated(artist_factors, trees)
-
+    list_of_recommended_clients = []
     print("writing top related to %s", output_filename)
-    for artistid in to_generate:
+    for i, artistid in enumerate(to_generate):
+        print(i)
         artist = artists[artistid]
         for other, score in calc.get_related(artistid):
             if (artist!=artists[other]):
@@ -131,7 +132,10 @@ def calculate_similar_artists(input_filename, output_filename,
                 recommendedClients.empresa = Empresa.objects.get(fiscal_id=artist)
                 recommendedClients.clientes_recomendados = Empresa.objects.get(fiscal_id=artists[other])
                 recommendedClients.similarity = score
-                recommendedClients.save()
+                list_of_recommended_clients.append(recommendedClients)
+    
+    print('All clients recommendations have been stored in a list, saving them to DB')
+    RecommendedClients.objects.bulk_create(list_of_recommended_clients, batch_size=20000)
 
     # Calculo de proveedores recomendados ---
 
@@ -165,8 +169,10 @@ def calculate_similar_artists(input_filename, output_filename,
     else:
         calc = ApproximateTopRelated(artist_factors, trees)
 
+    list_of_recommended_providers = []
     print("writing top related to %s", output_filename)
-    for artistid in to_generate:
+    for i, artistid in enumerate(to_generate):
+        print(i)
         artist = artists[artistid]
         for other, score in calc.get_related(artistid):
             if (artist!=artists[other]):
@@ -174,4 +180,7 @@ def calculate_similar_artists(input_filename, output_filename,
                 recommendedProviders.empresa = Empresa.objects.get(fiscal_id=artist)
                 recommendedProviders.clientes_recomendados = Empresa.objects.get(fiscal_id=artists[other])
                 recommendedProviders.similarity = score
-                recommendedProviders.save()
+                list_of_recommended_providers.append(recommendedProviders)
+    
+    print('All providers recommendations have been stored in a list, saving them to DB')
+    RecommendedProviders.objects.bulk_create(list_of_recommended_providers, batch_size=20000)
