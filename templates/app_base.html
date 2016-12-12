@@ -76,9 +76,9 @@
       <div class="background">
         <img src="{% static 'images/testimonial-bg.jpg' %}">
       </div>
-      <a href="#!user"><img class="circle" src="{{ company.image }}"></a>
-      <a href="#!name"><span class="white-text name">{{ company.name }}</span></a>
-      <a href="#!email"><span class="white-text email">{{ company.email }}</span></a>
+      <a href="{{ company.get_absolute_url }}"><img class="circle" src="{{ company.image }}"></a>
+      <a href="{{ company.get_absolute_url }}"><span class="white-text name">{{ company.name }}</span></a>
+      <a href="{{ company.get_absolute_url }}"><span class="white-text email">{{ company.email }}</span></a>
     </div></li>
     <li class="">
       <li><span class="center-text tiny light"><small>{{ company.cnae }}</small></span></li>
@@ -93,7 +93,7 @@
     <li><a class="subheader">Monitoring</a></li>
     <li><a href="{% url 'empresas:client_opportunities' %}"><i class="material-icons">person_pin</i>Identified clients</a></li>
     <li><a href="{% url 'empresas:provider_opportunities' %}"><i class="material-icons">settings_input_antenna</i>Identified providers</a></li>
-    <li><a href="{% url 'empresas:recommendations' %}"><i class="material-icons">assessment</i>Favourite recommendations</a></li>
+    <li><a href="{% url 'empresas:recommendations' %}"><i class="material-icons">assessment</i>Virtual manager</a></li>
 
     <li><div class="divider"></div></li>
     <li><a class="subheader">Options</a></li>

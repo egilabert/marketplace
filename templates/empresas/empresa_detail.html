@@ -86,8 +86,8 @@
             <div><i class="tiny material-icons">call</i> {{empresa.phone}}</div>   
             <div><i class="tiny material-icons">business</i> Sector: {{ empresa.sector }}</div>   
             <div><i class="tiny material-icons">info</i> CNAE: {{ empresa.cnae_2 }}</div>  
-            <div><i class="tiny material-icons">assignment</i> Created in {{ empresa.creation_date }}</div>  
-            <div><i class="tiny material-icons">view_day</i> Office: {{ empresa.oficina }}</div>  
+            <div><i class="tiny material-icons">schedule</i> Created in {{ empresa.creation_date }}</div>
+            <div class="right-align"><a href="mailto:{{empresa.email}}?Subject=Hello%20{{empresa.name}}" target="_top" class="btn-large waves-effect waves-light right-align"><i class="material-icons right">email</i>Contact</a></div>
         </div>
         <div class="col s12 m6">
             <div id="map"></div>
@@ -136,6 +136,88 @@
     {% endif %}
     <!-- Graficos para el dashboard... vamos allà!!! vamonos!! -->
 
+    <h3 class="light">Recent transfers to clients</h3>
+
+    {% if empresa.transfers.all %}
+    <div class="row">
+            <table class="highlight">
+                <thead>
+                    <tr>
+                        <th data-field="origin_id">Origin</th>
+                        <!-- <th data-field="concept">Concept</th> -->
+                        <th data-field="amount">Amount</th>
+                        <th data-field="balance">Balance</th>
+                        <th data-field="destination_id">Destination</th>
+                        <th data-field="date">Date</th>
+                        <th data-field="date">CNAE</th>
+                    </tr>
+                </thead>
+
+            
+                <tbody>
+                    {% for transfer in empresa.transfers.all %}
+                        <tr>
+                            <td><a href="{{ transfer.origin_reference.get_absolute_url }}">{{ transfer.origin_reference.name }}</a></td>
+                            <!-- <td>{{ transfer.concept }}</td> -->
+                            <td>{{ transfer.amount }}</td>
+                            <td>{{ transfer.balance }}</td>
+                            <td><a href="{{ transfer.destination_reference.get_absolute_url }}">{{transfer.destination_reference.name }}</a></td>
+                            <td>{{ transfer.operation_data|date }}</td>
+                            <td>{{ transfer.destination_reference.cnae_2 }}</td>
+
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+
+    {% else %}
+
+        <p>No transfers to clients are available.</p>
+
+    {% endif %}
+
+    <h3 class="light">Recent transfers from providers</h3>
+
+    {% if empresa.destination_reference.all %}
+    <div class="row">
+            <table class="highlight">
+                <thead>
+                    <tr>
+                        <th data-field="origin_id">Origin</th>
+                        <th data-field="date">CNAE</th>
+                        <!-- <th data-field="concept">Concept</th> -->
+                        <th data-field="amount">Amount</th>
+                        <th data-field="balance">Balance</th>
+                        <th data-field="destination_id">Destination</th>
+                        <th data-field="date">Date</th>
+                        
+                    </tr>
+                </thead>
+
+            
+                <tbody>
+                    {% for transfer in empresa.destination_reference.all %}
+                        <tr>
+                            <td><a href="{{ transfer.origin_reference.get_absolute_url }}">{{ transfer.origin_reference.name }}</a></td>
+                            <td>{{ transfer.origin_reference.cnae_2 }}</td>
+                            <!-- <td>{{ transfer.concept }}</td> -->
+                            <td>{{ transfer.amount }}</td>
+                            <td>{{ transfer.balance }}</td>
+                            <td><a href="{{ transfer.destination_reference.get_absolute_url }}">{{transfer.destination_reference.name }}</a></td>
+                            <td>{{ transfer.operation_data|date }}</td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+
+    {% else %}
+
+        <p>No transfers to clients are available.</p>
+
+    {% endif %}
+
     <h3 class="light">Recommended for this client</h3>
 
     {% if empresa.recommended.all %}
@@ -172,47 +254,6 @@
 
     {% endif %}
 
-
-    <h3 class="light">Recent transfers</h3>
-
-    {% if empresa.transfers.all %}
-    <div class="row">
-            <table class="highlight">
-                <thead>
-                    <tr>
-                        <th data-field="origin_id">Origin</th>
-                        <th data-field="concept">Concept</th>
-                        <th data-field="amount">Amount</th>
-                        <th data-field="balance">Balance</th>
-                        <th data-field="destination_id">Destination</th>
-                        <th data-field="date">Date</th>
-                        <th data-field="date">CNAE_2</th>
-                    </tr>
-                </thead>
-
-            
-                <tbody>
-                    {% for transfer in empresa.transfers.all %}
-                        <tr>
-                            <td><a href="{{ transfer.origin_reference.get_absolute_url }}">{{ transfer.origin_reference.name }}</a></td>
-                            <td>{{ transfer.concept }}</td>
-                            <td>{{ transfer.amount }}</td>
-                            <td>{{ transfer.balance }}</td>
-                            <td><a href="{{ transfer.destination_reference.get_absolute_url }}">{{transfer.destination_reference.name }}</a></td>
-                            <td>{{ transfer.operation_data|date }}</td>
-                            <td>{{ transfer.destination_reference.cnae_2 }}</td>
-
-                        </tr>
-                    {% endfor %}
-                </tbody>
-            </table>
-        </div>
-
-    {% else %}
-
-        <p>No transfers are available.</p>
-
-    {% endif %}
 
     <h3 class="light">Add your transfer</h3>
     
