@@ -39,7 +39,7 @@ class HomeView(View):
 		request.session.modified = True
 		queryset = Empresa.objects.all()
 		if request.session.get('company') is None:
-			company = Empresa.objects.all()[865-1] #[randint(0, queryset.count() - 1)]
+			company = Empresa.objects.all()[randint(0, queryset.count() - 1)] #[865-1] #
 			request.session['company'] = company
 		else:
 			company = request.session.get('company')
@@ -139,72 +139,33 @@ def OpportunityProviderView(request):
 def RecommendationsView(request):
 	
 	empresa = request.session.get('company')
-	proveedores_tu_teritorial = Transfer.objects.filter(
-									origin_reference__in=Empresa.objects.filter(name=empresa.name)).filter(
-									destination_reference__territorial=empresa.territorial).values(
-									'destination_reference').annotate(company_count=Count(
-									'destination_reference', distinct=True)).count()
-
-	proveedores_no_tu_teritorial = Transfer.objects.filter(
-									origin_reference__in=Empresa.objects.filter(name=empresa.name)).exclude(
-									destination_reference__territorial=empresa.territorial).values(
-									'destination_reference').annotate(company_count=Count(
-									'destination_reference', distinct=True)).count()
-
-	proveedores_sector_tu_teritorial = Transfer.objects.filter(
-									origin_reference__in=Empresa.objects.filter(territorial=empresa.territorial)).filter(
-									destination_reference__territorial=empresa.territorial).values(
-									'destination_reference').annotate(company_count=Count(
-									'destination_reference', distinct=True)).count()
-
-	proveedores_sector_no_tu_teritorial = Transfer.objects.filter(
-									origin_reference__in=Empresa.objects.filter(territorial=empresa.territorial)).exclude(
-									destination_reference__territorial=empresa.territorial).values(
-									'destination_reference').annotate(company_count=Count(
-									'destination_reference', distinct=True)).count()
-
-	clientes_tu_teritorial = Transfer.objects.filter(
-									destination_reference__in=Empresa.objects.filter(name=empresa.name)).filter(
-									origin_reference__territorial=empresa.territorial).values(
-									'origin_reference').annotate(company_count=Count(
-									'origin_reference', distinct=True)).count()
-
-	clientes_no_tu_teritorial = Transfer.objects.filter(
-									destination_reference__in=Empresa.objects.filter(name=empresa.name)).exclude(
-									origin_reference__territorial=empresa.territorial).values(
-									'origin_reference').annotate(company_count=Count(
-									'origin_reference', distinct=True)).count()
-
-	clientes_sector_tu_teritorial = Transfer.objects.filter(
-									destination_reference__in=Empresa.objects.filter(territorial=empresa.territorial)).filter(
-									origin_reference__territorial=empresa.territorial).values(
-									'origin_reference').annotate(company_count=Count(
-									'origin_reference', distinct=True)).count()
-
-	clientes_sector_no_tu_teritorial = Transfer.objects.filter(
-									destination_reference__in=Empresa.objects.filter(territorial=empresa.territorial)).exclude(
-									origin_reference__territorial=empresa.territorial).values(
-									'origin_reference').annotate(company_count=Count(
-									'origin_reference', distinct=True)).count()
 	
-	# Empresa.objects.filter(territorial__startswith=empresa.territorial).values('territorial').annotate(count=Count('territorial'))
-	# no_tu_teritorial = Empresa.objects.exclude(territorial__startswith=empresa.territorial).count()
+	territoriales_clientes = [empresa.in_my_region(empresa.get_clients()).count(), empresa.out_of_my_region(empresa.get_clients()).count()]
+	territoriales_proveedores = [empresa.in_my_region(empresa.get_providers()).count(), empresa.out_of_my_region(empresa.get_providers()).count()]
+	sector_territoriales_clientes = [empresa.in_my_region(empresa.get_qs_clients(empresa.get_sector_companies())).count(), empresa.out_of_my_region(empresa.get_qs_clients(empresa.get_sector_companies())).count()]
+	sector_territoriales_proveedores = [empresa.in_my_region(empresa.get_qs_providers(empresa.get_sector_companies())).count(), empresa.out_of_my_region(empresa.get_qs_providers(empresa.get_sector_companies())).count()]
 
-	# clientes = Empresa.objects.filter(transfers=Transfer.objects.filter(destination_reference=Empresa.objects.filter(name="AMERICAN BRAND INVEST, S.L."))).values('territorial').annotate(count=Count('territorial'))
-	# Empresa.objects.filter(transfers=Transfer.objects.filter(destination_reference=Empresa.objects.filter(name="AMERICAN BRAND INVEST, S.L."))).values('territorial').annotate(count=Count('territorial'))
-	territoriales_proveedores = [proveedores_tu_teritorial,proveedores_no_tu_teritorial]
-	sector_territoriales_proveedores = [proveedores_sector_tu_teritorial,proveedores_sector_no_tu_teritorial]
-
-	territoriales_clientes = [clientes_tu_teritorial,clientes_no_tu_teritorial]
-	sector_territoriales_clientes = [clientes_sector_tu_teritorial, clientes_sector_no_tu_teritorial]
+	sectores_clients, counts_sectores_clients = empresa.get_sectors(empresa.get_clients())
+	sectores_providers, counts_sectores_providers = empresa.get_sectors(empresa.get_providers())
+	mean_sectores_clients, mean_counts_sectores_clients = empresa.get_sectors(empresa.get_qs_clients(empresa.get_sector_companies()))
+	mean_sectores_providers, mean_counts_sectores_providers = empresa.get_sectors(empresa.get_qs_providers(empresa.get_sector_companies()))
 
 	context = {
 		'company':empresa,
 		'territoriales_proveedores': territoriales_proveedores,
 		'territoriales_clientes': territoriales_clientes,
 		'sector_territoriales_proveedores': sector_territoriales_proveedores,
-		'sector_territoriales_clientes': sector_territoriales_clientes
+		'sector_territoriales_clientes': sector_territoriales_clientes,
+		'sectores_clients': json.dumps(sectores_clients),
+		'counts_sectores_clients': counts_sectores_clients,
+		'sectores_providers': json.dumps(sectores_providers),
+		'counts_sectores_providers': counts_sectores_providers,
+		'mean_sectores_clients': json.dumps(mean_sectores_clients),
+		'mean_counts_sectores_clients': mean_counts_sectores_clients,
+		'mean_sectores_providers': json.dumps(mean_sectores_providers),
+		'mean_counts_sectores_providers': mean_counts_sectores_providers
 		}
+
 	return render(request, 'empresas/recommendations.html', context)
 
 """-------------------------------------------------------"""
@@ -565,6 +526,9 @@ class DataGenerator(View):
 
 	def get(self, request, *args, **kwargs):
   		return render(request, "empresas/dataset_generator.html", {})
+
+ # =====================================================================================
+# Helper function
 
 def is_image_file(filename):
     """Does `filename` appear to be an image file?"""

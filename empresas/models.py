@@ -3,8 +3,13 @@ import numpy as np
 from django.db import models
 from  django.core.urlresolvers import reverse
 from django.conf import settings
+from django.db.models import Avg, Max, Min, Count
+from django.db.models.functions import TruncMonth
 
-# Create your models here.
+# ------------------------------------------------------------------
+# Model Empresa
+# Tabla y funciones del model Empresa
+# ------------------------------------------------------------------
 class Empresa(models.Model):
 
     fiscal_id = models.CharField(max_length=30)
@@ -34,19 +39,59 @@ class Empresa(models.Model):
     phone = models.CharField(max_length=255, null=True, blank=True)
     address = models.CharField(max_length=255, null=True, blank=True)
     image = models.CharField(max_length=255, null=True, blank=True)
+    created_at = models.DateTimeField(auto_now=False, auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True, auto_now_add=False)
     
     clients = models.ManyToManyField("self", blank=True)
     providers = models.ManyToManyField("self", blank=True)
     recommended_clients = models.ManyToManyField("self", blank=True)
     recommended_providers = models.ManyToManyField("self", blank=True)
     oportunities = models.ManyToManyField("self", blank=True)
-    
-    created_at = models.DateTimeField(auto_now=False, auto_now_add=True)
-    updated_at = models.DateTimeField(auto_now=True, auto_now_add=False)
 
-    def average_transfer(self):
+    # Helper functions of the model empresaas 
+
+    def average_transfer_to_provider(self):
         all_transfers = map(lambda x: x.amount, self.transfers.all())
         return np.mean(all_transfers)
+
+    def average_transfer_from_client(self):
+        all_transfers = map(lambda x: x.amount, self.destination_reference.all())
+        return np.mean(all_transfers)
+
+    def get_clients(self):
+        return Empresa.objects.filter(transfers__destination_reference=self).annotate(Count('name', distinct=True))
+
+    def get_qs_clients(self,qs):
+        return Empresa.objects.filter(transfers__destination_reference__in=qs).annotate(Count('name', distinct=True))
+
+    def get_providers(self):
+        return Empresa.objects.filter(destination_reference__in=Transfer.objects.filter(origin_reference=self)).annotate(Count('name', distinct=True))
+
+    def get_qs_providers(self,qs):
+        return Empresa.objects.filter(destination_reference__in=Transfer.objects.filter(origin_reference__in=qs)).annotate(Count('name', distinct=True))
+
+    def in_my_region(self, qs):
+        return qs.filter(territorial=self.territorial)
+
+    def get_monthly_buys(self, qs):
+        group_by = qs.annotate(month=TruncMonth('transfers__operation_data')).values('month').annotate(c=Count('id'))
+        return group_by
+
+    def get_monthly_sells(self, qs):
+        group_by = qs.annotate(month=TruncMonth('destination_reference__operation_data')).values('month').annotate(c=Count('id'))
+        return group_by
+
+    def get_sectors(self, qs):
+        group_by = qs.values("cnae_2").annotate(count=Count('id', distinct=True)).order_by('-count')
+        sectores = [d['cnae_2'] for d in group_by]
+        counts = [d['count'] for d in group_by]
+        return sectores, counts
+
+    def out_of_my_region(self, qs):
+        return qs.exclude(territorial=self.territorial)
+
+    def get_sector_companies(self):
+        return Empresa.objects.filter(cnae=self.cnae)
     
     def __unicode__(self):
         return self.name
@@ -54,6 +99,11 @@ class Empresa(models.Model):
     def get_absolute_url(self):
         return reverse("empresas:detail", kwargs={"pk": self.id})
 
+
+# ------------------------------------------------------------------
+# Model Transfer
+# Tabla y funciones del model Transfer (transferencias entre empresas)
+# ------------------------------------------------------------------
 class Transfer(models.Model):
 
     origin_reference = models.ForeignKey(Empresa, related_name='transfers', on_delete=models.CASCADE)
@@ -67,6 +117,10 @@ class Transfer(models.Model):
     def __unicode__(self):
         return self.concept
 
+# ------------------------------------------------------------------
+# Model EstadosFinancieros
+# Tabla y funciones del model EstadosFinancieros (de una empresa)
+# ------------------------------------------------------------------
 class EstadosFinancieros(models.Model):
 
     empresa = models.ForeignKey(Empresa, related_name='estados_financieros', null=True, blank=True, on_delete=models.CASCADE)
@@ -89,6 +143,10 @@ class EstadosFinancieros(models.Model):
     def __unicode__(self):
         return self.ejercicio or u''
 
+# ------------------------------------------------------------------
+# Model Productos
+# Tabla y funciones del model Productos (contratados por una empresa)
+# ------------------------------------------------------------------
 class Productos(models.Model):
 
     empresa = models.ForeignKey(Empresa, related_name='productos', on_delete=models.CASCADE)
@@ -119,6 +177,10 @@ class Productos(models.Model):
     def __unicode__(self):
         return self.tipo_producto
 
+# ------------------------------------------------------------------
+# Model RecommendedClients
+# Tabla y funciones del model RecommendedClients (recommendaciones entre empresa)
+# ------------------------------------------------------------------
 class RecommendedClients(models.Model):
 
     empresa = models.ForeignKey(Empresa, related_name='recommended', on_delete=models.CASCADE)
@@ -131,6 +193,10 @@ class RecommendedClients(models.Model):
     class Meta:
         ordering = ['-similarity']
 
+# ------------------------------------------------------------------
+# Model RecommendedProviders
+# Tabla y funciones del model RecommendedProviders (recommendaciones entre empresa)
+# ------------------------------------------------------------------
 class RecommendedProviders(models.Model):
 
     empresa = models.ForeignKey(Empresa, related_name='providers_recommended', on_delete=models.CASCADE)

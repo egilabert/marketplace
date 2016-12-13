@@ -1,9 +1,6 @@
-var form_filled_check = false;
-
 (function($){
   $(function(){
 
-    $('ul.tabs').tabs();
     $( "#client_form" ).click(function(e) {
       e.preventDefault();
       form_filled_check = true;
