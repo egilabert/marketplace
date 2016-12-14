@@ -1,8 +1,44 @@
 {% load staticfiles %}
 
+.title_conf {
+  margin-top: 0;
+  padding-top: 5px;
+  padding-bottom: 5px;
+  padding-left: 50px;
+}
+.white_back {
+  background-color: white;
+}
+.line {
+    position: relative;
+}
+.line:after {
+    content: '';
+    position: absolute;
+    right: 0;
+    border-right: 1px solid #cfc7c0;
+    top: 10%;
+    bottom: 10%;
+}
+
+.green {
+  color: #43a047;
+}
+
+.red {
+  color: #e53935;
+}
+
+.padding-top {
+  padding-top: 2rem
+}
 .tabs .indicator {
     color: #9e9e9e;
     background-color: #9e9e9e;
+}
+
+.grey-bckg {
+  background-color: #e0e0e0;
 }
 
 .ribbon-wrapper-green {
@@ -172,6 +208,7 @@
 .padding_title {
   padding-top: 2rem;
   padding-bottom: 2rem;
+  margin-bottom: 0px !important;
 }
 .padding_landing {
   padding-top: 3rem;

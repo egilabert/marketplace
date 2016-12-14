@@ -150,6 +150,15 @@ def RecommendationsView(request):
 	mean_sectores_clients, mean_counts_sectores_clients = empresa.get_sectors(empresa.get_qs_clients(empresa.get_sector_companies()))
 	mean_sectores_providers, mean_counts_sectores_providers = empresa.get_sectors(empresa.get_qs_providers(empresa.get_sector_companies()))
 
+	your_monthly_sells = empresa.get_monthly_sells_amount()
+	for data in your_monthly_sells:
+		data['month'] = data['month'].strftime('%b')+'-'+data['month'].strftime('%y')
+	
+	your_monthly_sells_amount=[d['c'] for d in your_monthly_sells]
+	your_monthly_sells_month=[d['month'] for d in your_monthly_sells]
+
+	buttons = False
+
 	context = {
 		'company':empresa,
 		'territoriales_proveedores': territoriales_proveedores,
@@ -163,7 +172,10 @@ def RecommendationsView(request):
 		'mean_sectores_clients': json.dumps(mean_sectores_clients),
 		'mean_counts_sectores_clients': mean_counts_sectores_clients,
 		'mean_sectores_providers': json.dumps(mean_sectores_providers),
-		'mean_counts_sectores_providers': mean_counts_sectores_providers
+		'mean_counts_sectores_providers': mean_counts_sectores_providers,
+		'your_monthly_sells_amount': your_monthly_sells_amount,
+		'your_monthly_sells_month': json.dumps(your_monthly_sells_month),
+		'buttons': buttons
 		}
 
 	return render(request, 'empresas/recommendations.html', context)
@@ -495,7 +507,9 @@ def TranfersCreate(request):
 		transfer.destination_reference = Empresa.objects.get(fiscal_id=str(row['REFERENCIA_1']))
 		transfer.origin_reference = Empresa.objects.get(fiscal_id=str(row['REFERENCIA_ORIGEN']))
 		transfers_list.append(transfer)
-		if index % 1000:
+		if (index % 10000==0) and (index!=0):
+			print(index)
+			print("I'am in!")
 			Transfer.objects.bulk_create(transfers_list)
 			transfers_list = []
 

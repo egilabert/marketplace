@@ -90,7 +90,7 @@
             <div class="right-align"><a href="mailto:{{empresa.email}}?Subject=Hello%20{{empresa.name}}" target="_top" class="btn-large waves-effect waves-light right-align"><i class="material-icons right">email</i>Contact</a></div>
         </div>
         <div class="col s12 m6">
-            <div id="map"></div>
+            <div id="map"> </div>
         </div>
     </div>
     <hr>
@@ -281,6 +281,15 @@
 
 <script>
 
+    var map = L.map('map').setView([41.3931129,2.1448724], 15);
+        mapLink = 
+            '<a href="http://openstreetmap.org">OpenStreetMap</a>';
+        L.tileLayer(
+            'http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            attribution: '&copy; ' + mapLink + ' Contributors',
+            maxZoom: 18,
+    }).addTo(map);
+
     var bar = document.getElementById("barChart");
     var line = document.getElementById("lineChart");
     var ctx = document.getElementById("ctxChart");
@@ -366,84 +375,7 @@
         }
     });
 
-    // And for a doughnut chart
-    var myDoughnutChart = new Chart(ctx, {
-        type: 'doughnut',
-        data: {
-            labels: [
-                "Industria de la alimentación",
-                "Agricultura, ganadería, caza y servicios relacionados con las mismas",
-                "Servicios de comidas y bebidas"
-            ],
-            datasets: [
-                {
-                    data: [300, 50, 100],
-                    backgroundColor: [
-                        'rgba(128,128,128, 0.5)',
-                        'rgba(119,136,153, 0.5)',
-                        'rgba(47,79,79, 0.5)',
-                    ],
-                    hoverBackgroundColor: [
-                        'rgba(128,128,128, 1)',
-                        'rgba(119,136,153, 1)',
-                        'rgba(47,79,79, 1)',
-                    ]
-                }]
-        },
-        animation:{
-            animateScale:true
-        }
-    });
-
-    var myRadarChart = new Chart(spider, {
-        type: 'radar',
-        data: {
-            labels: ["Depreciaciones", "Amortizaciones", "Existencias", "Deudores", "Acreedores_comerciales", "Provisiones_cp", "Periodificaciones_pc"],
-            datasets: [
-                {
-                    label: "2012",
-                    backgroundColor: "rgba(128,128,128,0.2)",
-                    borderColor: "rgba(128,128,128,1)",
-                    pointBackgroundColor: "rgba(128,128,128,1)",
-                    pointBorderColor: "#fff",
-                    pointHoverBackgroundColor: "#fff",
-                    pointHoverBorderColor: "rgba(128,128,128,1)",
-                    data: [65, 59, 90, 81, 56, 55, 40]
-                },
-                {
-                    label: "2013",
-                    backgroundColor: "rgba(47,79,79,0.2)",
-                    borderColor: "rgba(47,79,79,1)",
-                    pointBackgroundColor: "rgba(47,79,79,1)",
-                    pointBorderColor: "#fff",
-                    pointHoverBackgroundColor: "#fff",
-                    pointHoverBorderColor: "rgba(47,79,79,1)",
-                    data: [28, 48, 40, 19, 96, 27, 100]
-                }
-            ]
-        },
-        options: {
-                scale: {
-                    reverse: true,
-                    ticks: {
-                        beginAtZero: true
-                    }
-                }
-        }
-    });
-
-    var map = L.map('map').setView([41.3931129,2.1448724], 15);
-        mapLink = 
-            '<a href="http://openstreetmap.org">OpenStreetMap</a>';
-        L.tileLayer(
-            'http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-            attribution: '&copy; ' + mapLink + ' Contributors',
-            maxZoom: 18,
-            }).addTo(map);
-
 </script>
-
-
 
 {% endblock %}
 

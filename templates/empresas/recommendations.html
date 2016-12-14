@@ -1,107 +1,130 @@
 {% extends "app_base.html" %}
 {% load static %}
+{% load humanize %}
+{% load mathfilters %}
 {% block page_title %}
 {{ company.name }}
-{% load humanize %}
 {% endblock %}
 
 {% block body_class %}background_grey{% endblock %}
 
 {% block content %}
-
+	
+	<!-- Dropdown Structure -->
+	<ul id="dropdown1" class="dropdown-content grey-text">
+	  <li><a href="#!" class="black-text">TBD</a></li>
+	  <li><a href="#!" class="black-text">TBD</a></li>
+	  <li class="divider" ></li>
+	  <li><a href="{% url 'landing' %}" class="black-text">Logout<i class="material-icons medium right black-text">power_settings_new</i></a></li>
+	</ul>
+	<nav>
+	  <div class="nav-wrapper grey darken-2">
+	  	<ul class="left">
+		  	<li><a href="#" data-activates="slide-out" id="hamb"><i class="large material-icons white-text">menu</i></a></li>
+		  	<!-- <li><a href="sass.html"><i class="material-icons">search</i></a></li>
+	        <li><a href="badges.html"><i class="material-icons">view_module</i></a></li>
+	        <li><a href="collapsible.html"><i class="material-icons">refresh</i></a></li>
+	        <li><a href="mobile.html"><i class="material-icons">more_vert</i></a></li> -->
+	    </ul>
+	    <ul class="right hide-on-med-and-down">
+	      <li><a href="sass.html" class="white-text">Clients</a></li>
+	      <li><a href="badges.html" class="white-text">Providers</a></li>
+	      <!-- Dropdown Trigger -->
+	      <li><a class="dropdown-button" href="#!" data-activates="dropdown1">
+	      	<div class="chip grey darken-3 white-text">
+    			<img src="{{company.image}}" alt="Contact Person">
+    			{{company.name}}
+  			</div>
+  			<i class="material-icons right">arrow_drop_down</i></a>
+  		</li>
+	    </ul>
+	  </div>
+	</nav>
+<!-- 
 	<div class="parallax-container">
-		<h3 class="center-align white-text light">{{ company.name }}</h3>
+		<h3 class="center-align white-text light"></h3>
 	    <div class="parallax"><img src="{% static 'images/hero-area.jpg' %}"></div>
-	</div>
+	</div> -->
 
 	<div class="row">
-
-			<!-- {{company.get_monthly_buys }}
-			<br>
-			=====================
-			<br>
-			{{company.get_monthly_buys_amount }}
-			<br>
-			=====================
-			<br>
-			{{company.get_monthly_sells }}
-			<br>
-			=====================
-			<br>
-			{{company.get_monthly_sells_amount }}
-			<br>
-			=====================
-			<br>
-			{{company.get_total_buys }}
-			<br>
-			=====================
-			<br>
-			{{company.get_total_sells }}
-			<br>
-			=====================
-			<br>
-			{{company.get_total_sector_buys }}
-			<br>
-			=====================
-			<br>
-			{{company.get_total_sector_sells }}
-			<br>
-			=====================
-			<br> -->
-
-		        
-	      <div class="col s12 m12">
-	      	<div class="row">
-
-			    <div class="col s12">
-			      <ul class="tabs grey-text">
-			        <li class="tab col s3 grey-text"><a class="active" href="#tab1">Your clients</a></li>
-			        <li class="tab col s3 grey-text"><a href="#tab2">Your providers</a></li>
-			      </ul>
-			    </div>
-
-			    <div id="tab1" class="col s12">
-			    	<div class="row">
-		      	  		<div class="col s12 m2">
-				          <div class="card tiny blue-grey darken-1">
-				            <div class="card-content white-text">
-				              <span class="card-title">Clients</span>
-				              <h3 class="align-right orange-text darken-1">{{company.get_clients.count}}</h3>
+			    <div class="grey-bckg">
+			    	<div class="row grey-bckg padding_title">
+		      	  		<div class="col s12 m2 line">
+		      	  			<div class="center-align">
+				            <i class="fa fa-user-o" aria-hidden="true"></i><span class="card-title"> Your Clients</span>
+				            <h3 class="align-right orange-text darken-1">{{company.get_clients.count}}</h3>
+				            <span class="green-text text-darken-1"><i class="fa fa-sort-up" aria-hidden="true"></i><span class="card-title">34%</span></span> <span class="light">From last month</span>
 				            </div>
-				          </div>
+				        </div>
+
+				        <div class="col s12 m2 line">
+		      	  			<div class="center-align ">
+				            <i class="fa fa-money" aria-hidden="true"></i><span class="card-title"> Your Average ticket</span>
+				            <h3 class="align-right orange-text darken-1">{{company.average_transfer_from_client|floatformat:0|intcomma}}€</h3>
+				            <span class="green-text text-darken-1"><i class="fa fa-sort-up" aria-hidden="true"></i><span class="card-title">10%</span></span> <span class="light">From last month</span>
+				            </div>
+				        </div>
+
+				        <div class="col s12 m2 line">
+		      	  			<div class="center-align ">
+				            <i class="fa fa-eur" aria-hidden="true"></i><span class="card-title"> Your total profit</span>
+				            <h3 class="align-right orange-text darken-1">{{company.get_total_sells|floatformat:0|intcomma}}€</h3>
+				            <span class="red-text text-darken-1"><i class="fa fa-sort-down" aria-hidden="true"></i><span class="card-title">4%</span></span> <span class="light">From last month</span>
+				            </div>
+				        </div>
+
+				        <div class="col s12 m2 line">
+		      	  			<div class="center-align ">
+				            <i class="fa fa-rocket" aria-hidden="true"></i><span class="card-title"> Your penetration</span>
+				            <h3 class="align-right orange-text darken-1">{{company.get_total_sells|div:company.get_total_sector_sells|mul:100|floatformat:0|intcomma}}%</h3>
+				            <span class="green-text text-darken-1"><i class="fa fa-sort-up" aria-hidden="true"></i><span class="card-title">5%</span></span> <span class="light">From last month</span>
+				            </div>
+				        </div>
+
+				        <div class="col s12 m2 line">
+		      	  			<div class="center-align ">
+				            <i class="fa fa-cubes" aria-hidden="true"></i><span class="card-title"> Comparable companies</span>
+				            <h3 class="align-right orange-text darken-1">{{company.get_sector_companies.count}}</h3>
+				            <span class="red-text text-darken-1"><i class="fa fa-sort-down" aria-hidden="true"></i><span class="card-title">7%</span></span> <span class="light">From last month</span>
+				            </div>
 				        </div>
 
 				        <div class="col s12 m2">
-				          <div class="card tiny blue-grey darken-1">
-				            <div class="card-content white-text">
-				              <span class="card-title">Sector</span>
-				              <h3 class="align-right orange-text darken-1">{{company.get_sector_companies.count}}</h3>
+		      	  			<div class="center-align ">
+				            <i class="fa fa-money" aria-hidden="true"></i><span class="card-title"> Their average ticket</span>
+				            <h3 class="align-right orange-text darken-1">{{company.average_sector_sells|floatformat:0|intcomma}}€</h3>
+				            <span class="green-text text-darken-1"><i class="fa fa-sort-up" aria-hidden="true"></i><span class="card-title">1%</span></span> <span class="light">From last month</span>
 				            </div>
-				          </div>
 				        </div>
-
-				        <div class="col s12 m2">
-				          <div class="card tiny blue-grey darken-1">
-				            <div class="card-content white-text">
-				              <span class="card-title">Cobro medio</span>
-				              <h3 class="align-right orange-text darken-1">{{company.average_transfer_from_client|floatformat:0|intcomma}}€</h3>
-				            </div>
-				          </div>
-				        </div>
-
-				        <div class="col s12 m2">
-				          <div class="card tiny blue-grey darken-1">
-				            <div class="card-content white-text">
-				              <span class="card-title"># Cobros</span>
-				              <h3 class="align-right orange-text darken-1">{{company.destination_reference.count|floatformat:0|intcomma}}</h3>
-				            </div>
-				          </div>
-				        </div>
+				    
 				    </div>
-			    	<p class="flow-text">Concentration</p>
-			    	<div class="divider"></div>
-
+				 </div>
+				 	<div class="white_back title_conf">
+			    		<h3 class="flow-text">Concentration</h3>
+			    	</div>
+					<div class="col s12">
+			    	
 			    	<!-- Concentración geográfica -->
+			    	<div class="row">
+			    		<div class="col m8 s12 center-align">
+			    			<div class="card small grey lighten-4">
+					            <div class="card-content grey-text darken-4">
+					              <canvas id="your_timeseries_of_selling" width="300" height="100"></canvas>
+					            </div>
+					        </div>
+			    		</div>
+			    		<div class="col m4 s12">
+			    			<div class="card small grey lighten-4">
+					            <div class="card-content grey-text darken-4">
+					              <blockquote>
+					    				<p class="light"><i class="tiny material-icons indigo-text darken-4">live_help</i> Geographical clients measures the degree of internationalization and diversification by region</p>
+					    				<p class="light"><i class="tiny material-icons indigo-text darken-4">new_releases</i> <span class="bold"> Hint:</span> Try to overcome this concentration by finding more clients outside of your region. <a href="">Do you want us to find them for you?</a> </p>
+					    				<p class="light"><i class="tiny material-icons indigo-text darken-4">info</i> You are part of the 20% with the higher risk of geographical concentration of your sector </p>
+					    			</blockquote>
+					            </div>
+					        </div>
+			    		</div>
+			    	</div>
 			    	<div class="row">
 			    		<div class="col m3 s12 center-align">
 			    			<h5 class="center-align">You</h5>
@@ -164,7 +187,9 @@
 			    		</div>
 			    	</div>
 
-			    	<p class="flow-text">Loyalty</p>
+			    	<div class="white_back title_conf">
+			    		<h3 class="flow-text">Loyalty</h3>
+			    	</div>
 			    	<div class="divider"></div>
 			    	<div class="row">
 			    		<div class="col m3 s12">
@@ -298,8 +323,6 @@
 			    	</div>
 			    	<p class="flow-text">Loyalty</p>
 			    </div>
-			</div>
-	      </div>
 	  </div>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.1.4/Chart.bundle.min.js"></script>
@@ -316,7 +339,7 @@
   	var your_sector_concentration_providers = document.getElementById("your_sector_concentration_providers");
   	var mean_sector_concentration_clients = document.getElementById("mean_sector_concentration_clients");
   	var mean_sector_concentration_providers = document.getElementById("mean_sector_concentration_providers");
-  	
+  	var your_timeseries_of_selling = document.getElementById("your_timeseries_of_selling");
 
   	donut(my_geo_clients, {{ territoriales_clientes }}, ["In your region","Outside your region"]);
   	donut(my_geo_providers, {{ territoriales_proveedores }}, ["In your region","Outside your region"]);
@@ -327,6 +350,60 @@
   	donut(mean_sector_concentration_clients, {{ mean_counts_sectores_clients }}, {{mean_sectores_clients|safe}});
   	donut(mean_sector_concentration_providers, {{ mean_counts_sectores_providers }}, {{mean_sectores_providers|safe}});
 
+  	barchart(your_timeseries_of_selling,{{your_monthly_sells_amount}},{{your_monthly_sells_month|safe}}, 'Tus Cobros del último año');
+  	
+  	function barchart(div, data, labels, title)
+        {
+        	var myChart = new Chart(div, {
+	        type: 'bar',
+	        data: {
+	            labels: labels,
+	            datasets: [{
+	                label: "Ventas",
+	                data: data,
+	                backgroundColor: [
+	                    
+	                    'rgba(192,192,192, 0.2)',
+	                    'rgba(169,169,169, 0.2)',
+	                    'rgba(119,136,153, 0.2)',
+	                    'rgba(47,79,79, 0.2)',
+	                    'rgba(128,128,128, 0.2)',
+	                    'rgba(220,220,220, 0.2)'
+	                ],
+	                borderColor: [
+	                    
+	                    'rgba(192,192,192, 1)',
+	                    'rgba(169,169,169, 1)',
+	                    'rgba(119,136,153, 1)',
+	                    'rgba(47,79,79, 1)',
+	                    'rgba(128,128,128, 1)',
+	                    'rgba(220,220,220, 1)',
+	                ],
+	                borderWidth: 2
+	            }]
+	        },
+	        options: {
+	            legend: {
+	                display: false,
+	                labels: {
+	                    fontColor: 'rgb(255, 99, 132)'
+	                }
+	            },
+	            title: {
+	                display: true,
+	                text: title
+	            },
+	            responsive: true,
+	            scales: {
+	                yAxes: [{
+	                    ticks: {
+	                        beginAtZero:true
+	                    }
+	                }]
+	            }
+	        }
+	    });
+        }
   	function donut(div, data, labels)
         {
            var myDoughnutChart = new Chart(div, {

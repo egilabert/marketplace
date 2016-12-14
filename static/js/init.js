@@ -9,10 +9,6 @@
       var region = $("#region_checkbox").is(":checked");
       var min_bill = $("#test5").val();
       var comment = $("#comment_textarea").val();
-      console.log("Variables:");
-      console.log(sector);
-      console.log(region);
-      console.log(min_bill);
 
       $.ajax({
         url: '/empresas/clients/',
@@ -40,6 +36,7 @@
     $('.button-collapse').sideNav();
     $('.parallax').parallax();
     $(".dropdown-button").dropdown();
+    $('#hamb').sideNav();
     
     
     $('.modal').modal({
@@ -53,9 +50,12 @@
     
     //Abril el formulario de filtros de clientes recommendados
     
-    
     $('#client_form_button').click(function() {
       $('#modal_clients').modal('open');
+    });
+
+    $('#hamb').click(function() {
+      console.log('Hola hola!!')
     });
 
     $('.ajax_bar').hide();
