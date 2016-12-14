@@ -495,7 +495,9 @@ def TranfersCreate(request):
 		transfer.destination_reference = Empresa.objects.get(fiscal_id=str(row['REFERENCIA_1']))
 		transfer.origin_reference = Empresa.objects.get(fiscal_id=str(row['REFERENCIA_ORIGEN']))
 		transfer_list.append(transfer)
-	Transfer.objects.bulk_create(transfer_list)
+		if index % 1000:
+			Transfer.objects.bulk_create(transfer_list)
+			transfer_list = []
 
 	return HttpResponse("Transferencias loaded")
 
