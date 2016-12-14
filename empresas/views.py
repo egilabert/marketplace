@@ -494,10 +494,10 @@ def TranfersCreate(request):
 		transfer.balance = row['SALDO']
 		transfer.destination_reference = Empresa.objects.get(fiscal_id=str(row['REFERENCIA_1']))
 		transfer.origin_reference = Empresa.objects.get(fiscal_id=str(row['REFERENCIA_ORIGEN']))
-		transfer_list.append(transfer)
+		transfers_list.append(transfer)
 		if index % 1000:
-			Transfer.objects.bulk_create(transfer_list)
-			transfer_list = []
+			Transfer.objects.bulk_create(transfers_list)
+			transfers_list = []
 
 	return HttpResponse("Transferencias loaded")
 
