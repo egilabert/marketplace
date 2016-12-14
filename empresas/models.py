@@ -3,7 +3,7 @@ import numpy as np
 from django.db import models
 from  django.core.urlresolvers import reverse
 from django.conf import settings
-from django.db.models import Avg, Max, Min, Count
+from django.db.models import Avg, Max, Min, Count, Sum
 from django.db.models.functions import TruncMonth
 
 # ------------------------------------------------------------------
@@ -73,13 +73,37 @@ class Empresa(models.Model):
     def in_my_region(self, qs):
         return qs.filter(territorial=self.territorial)
 
-    def get_monthly_buys(self, qs):
-        group_by = qs.annotate(month=TruncMonth('transfers__operation_data')).values('month').annotate(c=Count('id'))
+    def get_monthly_buys(self):
+        group_by = self.transfers.all().annotate(month=TruncMonth('operation_data')).values('month').annotate(c=Count('id')).order_by('-month')
         return group_by
 
-    def get_monthly_sells(self, qs):
-        group_by = qs.annotate(month=TruncMonth('destination_reference__operation_data')).values('month').annotate(c=Count('id'))
+    def get_monthly_sells(self):
+        group_by = self.destination_reference.all().annotate(month=TruncMonth('operation_data')).values('month').annotate(c=Count('id')).order_by('-month')
         return group_by
+
+    def get_monthly_buys_amount(self):
+        group_by = self.transfers.all().annotate(month=TruncMonth('operation_data')).values('month').annotate(c=Sum('amount')).order_by('-month')
+        return group_by
+
+    def get_monthly_sells_amount(self):
+        group_by = self.destination_reference.all().annotate(month=TruncMonth('operation_data')).values('month').annotate(c=Sum('amount')).order_by('-month')
+        return group_by
+
+    def get_total_buys(self):
+        total = self.transfers.all().aggregate(total=Sum('amount'))
+        return total
+
+    def get_total_sells(self):
+        total = self.destination_reference.all().aggregate(total=Sum('amount'))
+        return total
+
+    def get_total_sector_buys(self):
+        total = Transfer.objects.filter(origin_reference__in=self.get_sector_companies().all()).aggregate(total=Sum('amount'))
+        return total
+
+    def get_total_sector_sells(self):
+        total = Transfer.objects.filter(destination_reference__in=self.get_sector_companies().all()).aggregate(total=Sum('amount'))
+        return total
 
     def get_sectors(self, qs):
         group_by = qs.values("cnae_2").annotate(count=Count('id', distinct=True)).order_by('-count')
