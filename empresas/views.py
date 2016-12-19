@@ -43,7 +43,7 @@ class HomeView(View):
 			company = Empresa.objects.all()[865-1] #[randint(0, queryset.count() - 1)]
 			request.session['company'] = company
 		else:
-			company = request.session.get('company')
+			company = Empresa.objects.all()[865-1]#request.session.get('company')
 		return render(request, "empresas/empresas_home.html", {'company': company})
 
 	def post(self, request, *args, **kwargs):
