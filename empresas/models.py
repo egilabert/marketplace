@@ -122,11 +122,15 @@ class Empresa(models.Model):
     def margen_comercial_clientes(self):
         ebitda = self.balance_clients_ebitda().last()['c']
         ventas = self.balance_clients_sells().last()['c']
+        if float(ventas-ebitda)==0:
+            return 0
         return float(ebitda)/float(ventas-ebitda)
 
     def margen_comercial_sector_clientes(self):
         ebitda = self.balance_clients_ebitda_avg_sector().last()['c']
         ventas = self.balance_clients_sells_avg_sector().last()['c']
+        if float(ventas-ebitda)==0:
+            return 0
         return float(ebitda)/float(ventas-ebitda)
 
     def ratio_comercial_clientes(self):
