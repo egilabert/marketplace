@@ -78,9 +78,15 @@
         <div class="col s12 m3">
           <div class="card blue-grey darken-1">
             <div class="card-content white-text">
-              <span class="card-title">Risk</span>
-              {% if empresa.estados_financieros.last.ebitda %}
-              <h5 class="align-right orange-text darken-1">{{empresa.hats_alert}}</h5>
+              <span class="card-title">Riesgo</span>
+              {% if empresa.hats_alert %}
+              {% if empresa.hats_alert == "ROJA" %}
+              <h5 class="align-right red-text darken-1">{{empresa.hats_alert}}</h5>
+              {% elif empresa.hats_alert == "AMARILLA" %}
+              <h5 class="align-right yellow-text darken-1">{{empresa.hats_alert}}</h5>
+              {% elif empresa.hats_alert == "VERDE" %}
+              <h5 class="align-right green-text darken-1">{{empresa.hats_alert}}</h5>
+              {% endif %}
               {% else %}
               <h4 class="align-right orange-text darken-1">-</h4>
               {% endif %}
