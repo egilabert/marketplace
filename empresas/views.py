@@ -40,7 +40,7 @@ class HomeView(View):
 		request.session.modified = True
 		queryset = Empresa.objects.all()
 		if request.session.get('company') is None:
-			company = Empresa.objects.all()[randint(0, queryset.count() - 1)] #[865-1] #
+			company = Empresa.objects.all()[865-1] #[randint(0, queryset.count() - 1)]
 			request.session['company'] = company
 		else:
 			company = request.session.get('company')
