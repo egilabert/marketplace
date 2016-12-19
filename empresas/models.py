@@ -3,7 +3,7 @@ import numpy as np
 from django.db import models
 from  django.core.urlresolvers import reverse
 from django.conf import settings
-from django.db.models import Avg, Max, Min, Count, Sum
+from django.db.models import Avg, Max, Min, Count, Sum, F
 from django.db.models.functions import TruncMonth
 
 # ------------------------------------------------------------------
@@ -48,6 +48,16 @@ class Empresa(models.Model):
     recommended_providers = models.ManyToManyField("self", blank=True)
     oportunities = models.ManyToManyField("self", blank=True)
 
+    def my_penetration(self):
+        if self.balance_clients_payments():
+            return self.get_total_sells()/self.balance_clients_payments()[len(self.balance_clients_payments())-1]
+        return 0
+
+    def my_sector_penetration(self):
+        if self.balance_clients_payments_avg_sector():
+            return self.get_total_sector_sells()/self.balance_clients_payments_avg_sector()[len(self.balance_clients_payments_avg_sector())-1]
+        return 0
+        
     # Helpers de los estados financieros
     # ------------------------------------------------------------------
 
@@ -92,6 +102,22 @@ class Empresa(models.Model):
 
     def balance_amortisation_avg_sector(self):
         return EstadosFinancieros.objects.filter(empresa__in=self.get_sector_companies().all()).values('ejercicio').annotate(c=Avg('amortizaciones')).order_by('ejercicio')
+
+    def balance_clients_payments(self):
+        ebitda = self.balance_clients_ebitda()
+        earnings = self.balance_clients_sells()
+        payments = []
+        for i, ejercicio in enumerate(ebitda):
+            payments.append(earnings[i]['c']-ebitda[i]['c'])
+        return payments
+
+    def balance_clients_payments_avg_sector(self):
+        ebitda = self.balance_clients_ebitda_avg_sector()
+        earnings = self.balance_clients_sells_avg_sector()
+        payments = []
+        for i, ejercicio in enumerate(ebitda):
+            payments.append(earnings[i]['c']-ebitda[i]['c'])
+        return payments
 
     def balance_ebitda(self):
         return self.estados_financieros.all().values('ejercicio').annotate(c=Sum('ebitda')).order_by('ejercicio')

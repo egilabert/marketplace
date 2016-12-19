@@ -268,7 +268,7 @@
 			    			<div class="card grey lighten-4">
 					            <div class="card-content grey-text darken-4">
 					            	<span class="card-title">Frecuencia</span>
-					              <canvas id="frecuencia_graph" width="300" height="100"></canvas>
+					              	<canvas id="frecuencia_graph" width="300" height="100"></canvas>
 					            </div>
 					        </div>
 			    		</div>
@@ -288,12 +288,47 @@
 			    		</div>
 			    	<!-- Resultado explotaciones -->
 			    		<div class="col m8 s12">
-			    			<div class="card grey lighten-4">
-					            <div class="card-content grey-text darken-4">
-					            	<span class="card-title">Resultado explotación</span>
-					              <canvas id="resultado_graph" width="300" height="100"></canvas>
-					            </div>
-					        </div>
+			    			<div class="col m6 s12">
+				    			<div class="card grey lighten-4">
+						            <div class="card-content grey-text darken-4">
+						            	<span class="card-title">Penetración</span>
+						            	<canvas id="penetration_graph" width="300" height="200"></canvas>
+						            </div>
+						        </div>
+						    </div>
+						    <div class="col m6 s12">
+						    	<div class="card grey lighten-4">
+						    	<div class="card-content grey-text darken-4">
+							    		<span class="card-title">Variance</span>
+				              			<div class="row">
+					              			<div class="col s4">
+					              				<i class="fa fa-user" aria-hidden="true"></i>
+					              				<br>
+					              				You
+					              			</div>
+					              			<div class="col s5">
+					              				<h4> 34<small>%</small></h4>
+					              			</div>
+					              			<div class="col s3">
+					              				<span class="green-text text-darken-1"><i class="fa fa-sort-up" aria-hidden="true"></i><span class="card-title"> 34%</span></span> 
+					              			</div>
+				              			</div>
+				              			<div class="row">
+					              			<div class="col s4">
+					              				<i class="fa fa-users" aria-hidden="true"></i>
+					              				<br>
+					              				Your comparables
+					              			</div>
+					              			<div class="col s5">
+					              				<h4> 40 <small>%</small></h4>
+					              			</div>
+					              			<div class="col s3">
+					              				<span class="green-text text-darken-1"><i class="fa fa-sort-up" aria-hidden="true"></i><span class="card-title"> 10%</span></span> 
+					              			</div>
+				              			</div>
+				              	</div>
+				              	</div>
+						    </div>
 			    		</div>
 			    		<div class="col m4 s12">
 			    			<div class="card grey lighten-4">
@@ -494,12 +529,15 @@
   	var facturacion_graph = document.getElementById("facturacion_graph");
   	var resultado_graph = document.getElementById("resultado_graph");
   	var frecuencia_graph = document.getElementById("frecuencia_graph");
-  	
+  	var penetration_graph = document.getElementById("penetration_graph");
+  	var penetracion_clientes = {{company.my_penetration}}
+	var penetracion_clientes_sector = {{company.my_sector_penetration}}
   	// Como son mis clients
   	LineGraph(facturacion_graph, {{balance_sells_avg_sector|safe}}, {{balance_sells|safe}});
   	LineGraph(ebitda_graph, {{balance_ebitda_avg_sector|safe}}, {{balance_ebitda|safe}});
   	LineGraph(resultado_graph, {{balance_resultado_avg_sector|safe}}, {{balance_resultado|safe}});
-  	BarGraph(frecuencia_graph, {{get_monthly_sells|safe}}, {{get_monthly_sector_avg_sells|safe}})
+  	BarGraph(frecuencia_graph, {{get_monthly_sells|safe}}, {{get_monthly_sector_avg_sells|safe}});
+  	stackedbarchart(penetration_graph, 'hola', 'hola', penetracion_clientes, penetracion_clientes_sector, 'Penetration')
   	// donut(my_geo_clients, {{ territoriales_clientes }}, ["In your region","Outside your region"]);
   	// donut(mean_geo_clients, {{ territoriales_proveedores }}, ["In your region","Outside your region"]);
   	// donut(mean_geo_concentration_clients, {{ sector_territoriales_clientes }}, ["In your region","Outside your region"]);
@@ -616,6 +654,62 @@
 		                        beginAtZero:true
 		                    }
 		                }]
+		            }
+		        }
+		    });
+    	}
+
+    function stackedbarchart(div, labels_1, labels_2, data_1, data_2, title)
+        {
+        	if (data_1<1) {
+        		data_1x = data_1*100
+        	} else {
+        		data_1x = 100
+        	}
+        	if (data_2<1) {
+        		data_2x = data_2*100
+        	} else {
+        		data_2x = 100
+        	}
+        	var dataset_1 = [data_1x,data_2x]
+        	var dataset_2 = [100-data_1x,100-data_2x]
+        	console.log(dataset_1)
+        	console.log(dataset_2)
+        	var myChart = new Chart(div, {
+		        type: 'bar',
+		        data: {
+		            labels: ["You","Comparables"],
+		            datasets: [{
+		            	type: 'bar',
+		                label: "Penetration",
+		                data: dataset_1,
+		                backgroundColor: 'rgba(47,79,79, 0.2)',
+		                borderColor: 'rgba(47,79,79, 1)',
+		                borderWidth: 2
+		            },
+		            {
+		            	type: 'bar',
+		                label: "Rest of the market",
+		                data: dataset_2,
+		                backgroundColor: 'rgba(169,169,169, 0.2)',
+		                borderColor: 'rgba(169,169,169, 1)',
+		                borderWidth: 2
+		            }]
+		        },
+		        options: {
+		            legend: {
+		                display: false,
+		                labels: {
+		                    fontColor: 'rgb(255, 99, 132)'
+		                }
+		            },
+		            scales: {
+		                yAxes: [{
+						    stacked: true
+		                }],
+		                xAxes: [{
+					        stacked: true
+					    }]
 		            }
 		        }
 		    });
