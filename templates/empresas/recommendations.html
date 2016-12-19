@@ -21,10 +21,6 @@
 	  <div class="nav-wrapper grey darken-2">
 	  	<ul class="left">
 		  	<li><a href="#" data-activates="slide-out" id="hamb"><i class="large material-icons white-text">menu</i></a></li>
-		  	<!-- <li><a href="sass.html"><i class="material-icons">search</i></a></li>
-	        <li><a href="badges.html"><i class="material-icons">view_module</i></a></li>
-	        <li><a href="collapsible.html"><i class="material-icons">refresh</i></a></li>
-	        <li><a href="mobile.html"><i class="material-icons">more_vert</i></a></li> -->
 	    </ul>
 	    <ul class="right hide-on-med-and-down">
 	      <li><a href="sass.html" class="white-text">Clients</a></li>
@@ -40,13 +36,10 @@
 	    </ul>
 	  </div>
 	</nav>
-<!-- 
-	<div class="parallax-container">
-		<h3 class="center-align white-text light"></h3>
-	    <div class="parallax"><img src="{% static 'images/hero-area.jpg' %}"></div>
-	</div> -->
 
 	<div class="row">
+				<!-- {{company.ebitda}}
+				{{company.ebitda_avg_sector}} -->
 			    <div class="grey-bckg">
 			    	<div class="row grey-bckg padding_title">
 		      	  		<div class="col s12 m2 line">
@@ -59,8 +52,8 @@
 
 				        <div class="col s12 m2 line">
 		      	  			<div class="center-align ">
-				            <i class="fa fa-money" aria-hidden="true"></i><span class="card-title"> Your Average ticket</span>
-				            <h3 class="align-right orange-text darken-1">{{company.average_transfer_from_client|floatformat:0|intcomma}}€</h3>
+				            <i class="fa fa-users" aria-hidden="true"></i><span class="card-title"> Comparable clients</span>
+				            <h3 class="align-right orange-text darken-1">{{company.get_sector_clients|floatformat:0|intcomma}}</h3>
 				            <span class="green-text text-darken-1"><i class="fa fa-sort-up" aria-hidden="true"></i><span class="card-title">10%</span></span> <span class="light">From last month</span>
 				            </div>
 				        </div>
@@ -99,22 +92,398 @@
 				    
 				    </div>
 				 </div>
-				 	<div class="white_back title_conf">
-			    		<h3 class="flow-text">Concentration</h3>
-			    	</div>
-					<div class="col s12">
-			    	
-			    	<!-- Concentración geográfica -->
-			    	<div class="row">
-			    		<div class="col m8 s12 center-align">
-			    			<div class="card small grey lighten-4">
+
+				 <!-- /////////////////////////////////////////////////////////////
+				 ////// ¿Como son mis clientes?
+				 ///////////////////////////////////////////////////////////// -->
+
+				
+				
+				
+					<div class="white_back title_conf">
+				    	<h3 class="flow-text">¿Cómo son mis clientes?  <i class="fa fa-caret-right" aria-hidden="true"></i>  Mejora la calidad de tus clientes</h3>
+				    </div>
+			    	<div class="row title_conf">
+			    	<!-- Facturación -->
+			    		<div class="col m8 s12">
+			    			<div class="card grey lighten-4">
 					            <div class="card-content grey-text darken-4">
-					              <canvas id="your_timeseries_of_selling" width="300" height="100"></canvas>
+					            	<span class="card-title">Ventas</span>
+					              <canvas id="facturacion_graph" width="300" height="100"></canvas>
 					            </div>
 					        </div>
 			    		</div>
 			    		<div class="col m4 s12">
-			    			<div class="card small grey lighten-4">
+			    			<div class="card grey lighten-4">
+					            <div class="card-content grey-text darken-4">
+					              <blockquote>
+					    				<p class="light"><i class="tiny material-icons indigo-text darken-4">live_help</i> Geographical clients measures the degree of internationalization and diversification by region</p>
+					    				<p class="light"><i class="tiny material-icons indigo-text darken-4">new_releases</i> <span class="bold"> Hint:</span> Try to overcome this concentration by finding more clients outside of your region. <a href="">Do you want us to find them for you?</a> </p>
+					    				<p class="light"><i class="tiny material-icons indigo-text darken-4">info</i> You are part of the 20% with the higher risk of geographical concentration of your sector </p>
+					    			</blockquote>
+					    			<blockquote>
+					    				<p class="light"><i class="tiny material-icons indigo-text darken-4">live_help</i> Hola</p>
+					    			</blockquote>
+					            </div>
+					        </div>
+			    		</div>
+			    	<!-- EBITDA -->
+			    		<div class="col m8 s12">
+			    			<div class="card grey lighten-4">
+					            <div class="card-content grey-text darken-4">
+					            	<span class="card-title">EBITDA</span>
+					              <canvas id="ebitda_graph" width="300" height="100"></canvas>
+					            </div>
+					        </div>
+			    		</div>
+			    		<div class="col m4 s12">
+			    			<div class="card grey lighten-4">
+					            <div class="card-content grey-text darken-4">
+					              <blockquote>
+					    				<p class="light"><i class="tiny material-icons indigo-text darken-4">live_help</i> Geographical clients measures the degree of internationalization and diversification by region</p>
+					    				<p class="light"><i class="tiny material-icons indigo-text darken-4">new_releases</i> <span class="bold"> Hint:</span> Try to overcome this concentration by finding more clients outside of your region. <a href="">Do you want us to find them for you?</a> </p>
+					    				<p class="light"><i class="tiny material-icons indigo-text darken-4">info</i> You are part of the 20% with the higher risk of geographical concentration of your sector </p>
+					    			</blockquote>
+					    			<blockquote>
+					    				<p class="light"><i class="tiny material-icons indigo-text darken-4">live_help</i> Hola</p>
+					    			</blockquote>
+					            </div>
+					        </div>
+			    		</div>
+			    	<!-- Resultado explotaciones -->
+			    		<div class="col m8 s12">
+			    			<div class="card grey lighten-4">
+					            <div class="card-content grey-text darken-4">
+					            	<span class="card-title">Resultado explotación</span>
+					              <canvas id="resultado_graph" width="300" height="100"></canvas>
+					            </div>
+					        </div>
+			    		</div>
+			    		<div class="col m4 s12">
+			    			<div class="card grey lighten-4">
+					            <div class="card-content grey-text darken-4">
+					              <blockquote>
+					    				<p class="light"><i class="tiny material-icons indigo-text darken-4">live_help</i> Geographical clients measures the degree of internationalization and diversification by region</p>
+					    				<p class="light"><i class="tiny material-icons indigo-text darken-4">new_releases</i> <span class="bold"> Hint:</span> Try to overcome this concentration by finding more clients outside of your region. <a href="">Do you want us to find them for you?</a> </p>
+					    				<p class="light"><i class="tiny material-icons indigo-text darken-4">info</i> You are part of the 20% with the higher risk of geographical concentration of your sector </p>
+					    			</blockquote>
+					    			<blockquote>
+					    				<p class="light"><i class="tiny material-icons indigo-text darken-4">live_help</i> Hola</p>
+					    			</blockquote>
+					            </div>
+					        </div>
+			    		</div>
+			    	</div>
+
+			    <!-- /////////////////////////////////////////////////////////////
+				 ////// ¿Cómo me relaciono con ellos?
+				 ///////////////////////////////////////////////////////////// -->
+
+			    <div class="white_back title_conf">
+			    	<h3 class="flow-text">¿Cómo me relaciono con ellos?  <i class="fa fa-caret-right" aria-hidden="true"></i>  Amplia y mejora la relación con tus clientes</h3>
+			    </div>
+			    	<div class="row title_conf">
+			    	<!-- Facturación -->
+			    		<div class="col m8 s12">
+			    			<div class="card grey lighten-4">
+					            <div class="card-content grey-text darken-4">
+					            	<span class="card-title">Ventas</span>
+					              <canvas id="facturacion_graph" width="300" height="100"></canvas>
+					            </div>
+					        </div>
+			    		</div>
+			    		<div class="col m4 s12">
+			    			<div class="card grey lighten-4">
+					            <div class="card-content grey-text darken-4">
+					              <blockquote>
+					    				<p class="light"><i class="tiny material-icons indigo-text darken-4">live_help</i> Geographical clients measures the degree of internationalization and diversification by region</p>
+					    				<p class="light"><i class="tiny material-icons indigo-text darken-4">new_releases</i> <span class="bold"> Hint:</span> Try to overcome this concentration by finding more clients outside of your region. <a href="">Do you want us to find them for you?</a> </p>
+					    				<p class="light"><i class="tiny material-icons indigo-text darken-4">info</i> You are part of the 20% with the higher risk of geographical concentration of your sector </p>
+					    			</blockquote>
+					    			<blockquote>
+					    				<p class="light"><i class="tiny material-icons indigo-text darken-4">live_help</i> Hola</p>
+					    			</blockquote>
+					            </div>
+					        </div>
+			    		</div>
+			    	<!-- EBITDA -->
+			    		<div class="col m8 s12">
+			    			<div class="card grey lighten-4">
+					            <div class="card-content grey-text darken-4">
+					            	<span class="card-title">EBITDA</span>
+					              <canvas id="ebitda_graph" width="300" height="100"></canvas>
+					            </div>
+					        </div>
+			    		</div>
+			    		<div class="col m4 s12">
+			    			<div class="card grey lighten-4">
+					            <div class="card-content grey-text darken-4">
+					              <blockquote>
+					    				<p class="light"><i class="tiny material-icons indigo-text darken-4">live_help</i> Geographical clients measures the degree of internationalization and diversification by region</p>
+					    				<p class="light"><i class="tiny material-icons indigo-text darken-4">new_releases</i> <span class="bold"> Hint:</span> Try to overcome this concentration by finding more clients outside of your region. <a href="">Do you want us to find them for you?</a> </p>
+					    				<p class="light"><i class="tiny material-icons indigo-text darken-4">info</i> You are part of the 20% with the higher risk of geographical concentration of your sector </p>
+					    			</blockquote>
+					    			<blockquote>
+					    				<p class="light"><i class="tiny material-icons indigo-text darken-4">live_help</i> Hola</p>
+					    			</blockquote>
+					            </div>
+					        </div>
+			    		</div>
+			    	<!-- Resultado explotaciones -->
+			    		<div class="col m8 s12">
+			    			<div class="card grey lighten-4">
+					            <div class="card-content grey-text darken-4">
+					            	<span class="card-title">Resultado explotación</span>
+					              <canvas id="resultado_graph" width="300" height="100"></canvas>
+					            </div>
+					        </div>
+			    		</div>
+			    		<div class="col m4 s12">
+			    			<div class="card grey lighten-4">
+					            <div class="card-content grey-text darken-4">
+					              <blockquote>
+					    				<p class="light"><i class="tiny material-icons indigo-text darken-4">live_help</i> Geographical clients measures the degree of internationalization and diversification by region</p>
+					    				<p class="light"><i class="tiny material-icons indigo-text darken-4">new_releases</i> <span class="bold"> Hint:</span> Try to overcome this concentration by finding more clients outside of your region. <a href="">Do you want us to find them for you?</a> </p>
+					    				<p class="light"><i class="tiny material-icons indigo-text darken-4">info</i> You are part of the 20% with the higher risk of geographical concentration of your sector </p>
+					    			</blockquote>
+					    			<blockquote>
+					    				<p class="light"><i class="tiny material-icons indigo-text darken-4">live_help</i> Hola</p>
+					    			</blockquote>
+					            </div>
+					        </div>
+			    		</div>
+			    </div>
+
+			    <!-- /////////////////////////////////////////////////////////////
+				 ////// ¿Cómo me relaciono con ellos?
+				 ///////////////////////////////////////////////////////////// -->
+
+			    <div class="white_back title_conf">
+			    	<h3 class="flow-text">¿Cómo me relaciono con ellos?  <i class="fa fa-caret-right" aria-hidden="true"></i>  Amplia y mejora la relación con tus clientes</h3>
+			    </div>
+			    	<div class="row title_conf">
+			    	<!-- Facturación -->
+			    		<div class="col m8 s12">
+			    			<div class="card grey lighten-4">
+					            <div class="card-content grey-text darken-4">
+					            	<span class="card-title">Ventas</span>
+					              <canvas id="facturacion_graph" width="300" height="100"></canvas>
+					            </div>
+					        </div>
+			    		</div>
+			    		<div class="col m4 s12">
+			    			<div class="card grey lighten-4">
+					            <div class="card-content grey-text darken-4">
+					              <blockquote>
+					    				<p class="light"><i class="tiny material-icons indigo-text darken-4">live_help</i> Geographical clients measures the degree of internationalization and diversification by region</p>
+					    				<p class="light"><i class="tiny material-icons indigo-text darken-4">new_releases</i> <span class="bold"> Hint:</span> Try to overcome this concentration by finding more clients outside of your region. <a href="">Do you want us to find them for you?</a> </p>
+					    				<p class="light"><i class="tiny material-icons indigo-text darken-4">info</i> You are part of the 20% with the higher risk of geographical concentration of your sector </p>
+					    			</blockquote>
+					    			<blockquote>
+					    				<p class="light"><i class="tiny material-icons indigo-text darken-4">live_help</i> Hola</p>
+					    			</blockquote>
+					            </div>
+					        </div>
+			    		</div>
+			    	<!-- EBITDA -->
+			    		<div class="col m8 s12">
+			    			<div class="card grey lighten-4">
+					            <div class="card-content grey-text darken-4">
+					            	<span class="card-title">EBITDA</span>
+					              <canvas id="ebitda_graph" width="300" height="100"></canvas>
+					            </div>
+					        </div>
+			    		</div>
+			    		<div class="col m4 s12">
+			    			<div class="card grey lighten-4">
+					            <div class="card-content grey-text darken-4">
+					              <blockquote>
+					    				<p class="light"><i class="tiny material-icons indigo-text darken-4">live_help</i> Geographical clients measures the degree of internationalization and diversification by region</p>
+					    				<p class="light"><i class="tiny material-icons indigo-text darken-4">new_releases</i> <span class="bold"> Hint:</span> Try to overcome this concentration by finding more clients outside of your region. <a href="">Do you want us to find them for you?</a> </p>
+					    				<p class="light"><i class="tiny material-icons indigo-text darken-4">info</i> You are part of the 20% with the higher risk of geographical concentration of your sector </p>
+					    			</blockquote>
+					    			<blockquote>
+					    				<p class="light"><i class="tiny material-icons indigo-text darken-4">live_help</i> Hola</p>
+					    			</blockquote>
+					            </div>
+					        </div>
+			    		</div>
+			    	<!-- Resultado explotaciones -->
+			    		<div class="col m8 s12">
+			    			<div class="card grey lighten-4">
+					            <div class="card-content grey-text darken-4">
+					            	<span class="card-title">Resultado explotación</span>
+					              <canvas id="resultado_graph" width="300" height="100"></canvas>
+					            </div>
+					        </div>
+			    		</div>
+			    		<div class="col m4 s12">
+			    			<div class="card grey lighten-4">
+					            <div class="card-content grey-text darken-4">
+					              <blockquote>
+					    				<p class="light"><i class="tiny material-icons indigo-text darken-4">live_help</i> Geographical clients measures the degree of internationalization and diversification by region</p>
+					    				<p class="light"><i class="tiny material-icons indigo-text darken-4">new_releases</i> <span class="bold"> Hint:</span> Try to overcome this concentration by finding more clients outside of your region. <a href="">Do you want us to find them for you?</a> </p>
+					    				<p class="light"><i class="tiny material-icons indigo-text darken-4">info</i> You are part of the 20% with the higher risk of geographical concentration of your sector </p>
+					    			</blockquote>
+					    			<blockquote>
+					    				<p class="light"><i class="tiny material-icons indigo-text darken-4">live_help</i> Hola</p>
+					    			</blockquote>
+					            </div>
+					        </div>
+			    		</div>
+			    </div>
+
+			    <!-- /////////////////////////////////////////////////////////////
+				 ////// ¿Cómo me relaciono con ellos?
+				 ///////////////////////////////////////////////////////////// -->
+
+			    <div class="white_back title_conf">
+			    	<h3 class="flow-text">¿Cómo me relaciono con ellos?  <i class="fa fa-caret-right" aria-hidden="true"></i>  Amplia y mejora la relación con tus clientes</h3>
+			    </div>
+			    	<div class="row title_conf">
+			    	<!-- Facturación -->
+			    		<div class="col m8 s12">
+			    			<div class="card grey lighten-4">
+					            <div class="card-content grey-text darken-4">
+					            	<span class="card-title">Ventas</span>
+					              <canvas id="facturacion_graph" width="300" height="100"></canvas>
+					            </div>
+					        </div>
+			    		</div>
+			    		<div class="col m4 s12">
+			    			<div class="card grey lighten-4">
+					            <div class="card-content grey-text darken-4">
+					              <blockquote>
+					    				<p class="light"><i class="tiny material-icons indigo-text darken-4">live_help</i> Geographical clients measures the degree of internationalization and diversification by region</p>
+					    				<p class="light"><i class="tiny material-icons indigo-text darken-4">new_releases</i> <span class="bold"> Hint:</span> Try to overcome this concentration by finding more clients outside of your region. <a href="">Do you want us to find them for you?</a> </p>
+					    				<p class="light"><i class="tiny material-icons indigo-text darken-4">info</i> You are part of the 20% with the higher risk of geographical concentration of your sector </p>
+					    			</blockquote>
+					    			<blockquote>
+					    				<p class="light"><i class="tiny material-icons indigo-text darken-4">live_help</i> Hola</p>
+					    			</blockquote>
+					            </div>
+					        </div>
+			    		</div>
+			    	<!-- EBITDA -->
+			    		<div class="col m8 s12">
+			    			<div class="card grey lighten-4">
+					            <div class="card-content grey-text darken-4">
+					            	<span class="card-title">EBITDA</span>
+					              <canvas id="ebitda_graph" width="300" height="100"></canvas>
+					            </div>
+					        </div>
+			    		</div>
+			    		<div class="col m4 s12">
+			    			<div class="card grey lighten-4">
+					            <div class="card-content grey-text darken-4">
+					              <blockquote>
+					    				<p class="light"><i class="tiny material-icons indigo-text darken-4">live_help</i> Geographical clients measures the degree of internationalization and diversification by region</p>
+					    				<p class="light"><i class="tiny material-icons indigo-text darken-4">new_releases</i> <span class="bold"> Hint:</span> Try to overcome this concentration by finding more clients outside of your region. <a href="">Do you want us to find them for you?</a> </p>
+					    				<p class="light"><i class="tiny material-icons indigo-text darken-4">info</i> You are part of the 20% with the higher risk of geographical concentration of your sector </p>
+					    			</blockquote>
+					    			<blockquote>
+					    				<p class="light"><i class="tiny material-icons indigo-text darken-4">live_help</i> Hola</p>
+					    			</blockquote>
+					            </div>
+					        </div>
+			    		</div>
+			    	<!-- Resultado explotaciones -->
+			    		<div class="col m8 s12">
+			    			<div class="card grey lighten-4">
+					            <div class="card-content grey-text darken-4">
+					            	<span class="card-title">Resultado explotación</span>
+					              <canvas id="resultado_graph" width="300" height="100"></canvas>
+					            </div>
+					        </div>
+			    		</div>
+			    		<div class="col m4 s12">
+			    			<div class="card grey lighten-4">
+					            <div class="card-content grey-text darken-4">
+					              <blockquote>
+					    				<p class="light"><i class="tiny material-icons indigo-text darken-4">live_help</i> Geographical clients measures the degree of internationalization and diversification by region</p>
+					    				<p class="light"><i class="tiny material-icons indigo-text darken-4">new_releases</i> <span class="bold"> Hint:</span> Try to overcome this concentration by finding more clients outside of your region. <a href="">Do you want us to find them for you?</a> </p>
+					    				<p class="light"><i class="tiny material-icons indigo-text darken-4">info</i> You are part of the 20% with the higher risk of geographical concentration of your sector </p>
+					    			</blockquote>
+					    			<blockquote>
+					    				<p class="light"><i class="tiny material-icons indigo-text darken-4">live_help</i> Hola</p>
+					    			</blockquote>
+					            </div>
+					        </div>
+			    		</div>
+			    	
+			    </div>
+
+
+
+
+
+
+			    		<!-- COBROS -->
+			    		<div class="col m8 s12 center-align">
+			    			<div class="card grey lighten-4">
+					            <div class="card-content grey-text darken-4">
+					              <canvas id="sector_timeseries_of_selling" width="300" height="100"></canvas>
+					            </div>
+					        </div>
+			    		</div>
+			    		<div class="col m4 s12">
+			    			<div class="card grey lighten-4">
+					            <div class="card-content grey-text darken-4">
+					              <blockquote>
+					    				<p class="light"><i class="tiny material-icons indigo-text darken-4">live_help</i> Geographical clients measures the degree of internationalization and diversification by region</p>
+					    				<p class="light"><i class="tiny material-icons indigo-text darken-4">new_releases</i> <span class="bold"> Hint:</span> Try to overcome this concentration by finding more clients outside of your region. <a href="">Do you want us to find them for you?</a> </p>
+					    				<p class="light"><i class="tiny material-icons indigo-text darken-4">info</i> You are part of the 20% with the higher risk of geographical concentration of your sector </p>
+					    			</blockquote>
+					            </div>
+					        </div>
+			    		</div>
+			    		<!-- EBITDA -->
+			    		<div class="col m4 s12 center-align">
+			    			<div class="card grey lighten-4">
+					            <div class="card-content grey-text darken-4">
+					              <canvas id="your_ebitda"></canvas>
+					            </div>
+					        </div>
+			    		</div>
+
+			    		<div class="col m4 s12 center-align">
+			    			<div class="card grey lighten-4">
+					            <div class="card-content grey-text darken-4">
+					              <canvas id="mean_ebitda"></canvas>
+					            </div>
+					        </div>
+			    		</div>
+
+			    		<div class="col m4 s12">
+			    			<div class="card grey lighten-4">
+					            <div class="card-content grey-text darken-4">
+					              <blockquote>
+					    				<p class="light"><i class="tiny material-icons indigo-text darken-4">live_help</i> Geographical clients measures the degree of internationalization and diversification by region</p>
+					    				<p class="light"><i class="tiny material-icons indigo-text darken-4">new_releases</i> <span class="bold"> Hint:</span> Try to overcome this concentration by finding more clients outside of your region. <a href="">Do you want us to find them for you?</a> </p>
+					    				<p class="light"><i class="tiny material-icons indigo-text darken-4">info</i> You are part of the 20% with the higher risk of geographical concentration of your sector </p>
+					    			</blockquote>
+					            </div>
+					        </div>
+			    		</div>
+			    		<!-- RESULTADOS DE EXPLOTACION -->
+			    		<div class="col m4 s12 center-align">
+			    			<div class="card grey lighten-4">
+					            <div class="card-content grey-text darken-4">
+					              <canvas id="your_resultado_explotacion"></canvas>
+					            </div>
+					        </div>
+			    		</div>
+
+			    		<div class="col m4 s12 center-align">
+			    			<div class="card grey lighten-4">
+					            <div class="card-content grey-text darken-4">
+					              <canvas id="mean_resultado_explotacion"></canvas>
+					            </div>
+					        </div>
+			    		</div>
+
+			    		<div class="col m4 s12">
+			    			<div class="card grey lighten-4">
 					            <div class="card-content grey-text darken-4">
 					              <blockquote>
 					    				<p class="light"><i class="tiny material-icons indigo-text darken-4">live_help</i> Geographical clients measures the degree of internationalization and diversification by region</p>
@@ -125,6 +494,7 @@
 					        </div>
 			    		</div>
 			    	</div>
+
 			    	<div class="row">
 			    		<div class="col m3 s12 center-align">
 			    			<h5 class="center-align">You</h5>
@@ -196,7 +566,7 @@
 			    			<div class="card grey lighten-4">
 					            <div class="card-content grey-text darken-4">
 					              <span class="card-title">Your clients loyalty</span>
-					              <canvas id="your_loyalty" width="200" height="200"></canvas>
+					              <canvas id="your_loyalty" width="100" height="100"></canvas>
 					            </div>
 					          </div>
 			    		</div>
@@ -204,7 +574,7 @@
 			    			<div class="card grey lighten-4">
 					            <div class="card-content grey-text darken-4">
 					              <span class="card-title">Average of the sector</span>
-					              <canvas id="mean_loyalty" width="200" height="200"></canvas>
+					              <canvas id="mean_loyalty" width="100" height="100"></canvas>
 					            </div>
 					        </div>
 			    		</div>
@@ -340,9 +710,21 @@
   	var mean_sector_concentration_clients = document.getElementById("mean_sector_concentration_clients");
   	var mean_sector_concentration_providers = document.getElementById("mean_sector_concentration_providers");
   	var your_timeseries_of_selling = document.getElementById("your_timeseries_of_selling");
+  	var sector_timeseries_of_selling = document.getElementById("sector_timeseries_of_selling");
+  	var your_ebitda = document.getElementById("your_ebitda");
+  	var mean_ebitda = document.getElementById("mean_ebitda");
+  	var your_resultado_explotacion = document.getElementById("your_resultado_explotacion");
+  	var mean_resultado_explotacion = document.getElementById("mean_resultado_explotacion");
+  	var facturacion_graph = document.getElementById("facturacion_graph");
+  	var resultado_graph = document.getElementById("resultado_graph");
+  	
+  	// Como son mis clients
+  	LineGraph(facturacion_graph, {{balance_sells_avg_sector|safe}}, {{balance_sells|safe}});
+  	LineGraph(ebitda_graph, {{balance_ebitda_avg_sector|safe}}, {{balance_ebitda|safe}});
+  	LineGraph(resultado_graph, {{balance_resultado_avg_sector|safe}}, {{balance_resultado|safe}});
 
   	donut(my_geo_clients, {{ territoriales_clientes }}, ["In your region","Outside your region"]);
-  	donut(my_geo_providers, {{ territoriales_proveedores }}, ["In your region","Outside your region"]);
+  	donut(mean_geo_clients, {{ territoriales_proveedores }}, ["In your region","Outside your region"]);
   	donut(mean_geo_concentration_clients, {{ sector_territoriales_clientes }}, ["In your region","Outside your region"]);
   	donut(mean_geo_concentration_providers, {{ sector_territoriales_proveedores }}, ["In your region","Outside your region"]);
   	donut(your_sector_concentration_clients, {{ counts_sectores_clients }}, {{sectores_clients|safe}});
@@ -351,7 +733,36 @@
   	donut(mean_sector_concentration_providers, {{ mean_counts_sectores_providers }}, {{mean_sectores_providers|safe}});
 
   	barchart(your_timeseries_of_selling,{{your_monthly_sells_amount}},{{your_monthly_sells_month|safe}}, 'Tus Cobros del último año');
-  	
+  	barchart(sector_timeseries_of_selling,{{sector_monthly_sells_amount}},{{sector_monthly_sells_month|safe}}, 'Media de Cobros del sector el último año');
+  	barchart(your_ebitda,{{your_ebitda_amount}},{{your_ebitda_ejercicio|safe}}, 'Tu EBITDA');
+  	barchart(mean_ebitda,{{sector_ebitda_amount}},{{sector_ebitda_ejercicio|safe}}, 'EBITDA medio del sector');
+  	barchart(your_resultado_explotacion,{{your_resultado_explotacion_amount}},{{your_resultado_explotacion_ejercicio|safe}}, 'Tu resultado_explotacion');
+  	barchart(mean_resultado_explotacion,{{sector_resultado_explotacion_amount}},{{sector_resultado_explotacion_ejercicio|safe}}, 'Resultado_explotacion medio del sector');
+
+  	// prepare data...
+  	function LineGraph(div, data_sector, data_you) {
+  		var labels_1 = [];
+  		var labels_2 = []; 
+  		var data_1=[];
+  		var data_2=[];
+  		var sector = data_sector
+  		var you = data_you
+  		sector.forEach(function(packet, i) {
+	      labels_1.push(packet.ejercicio);
+	      data_1.push(packet.c);
+	    });
+	    you.forEach(function(packet, i) {
+	      labels_2.push(packet.ejercicio);
+	      data_2.push(packet.c);
+	    });
+	    console.log(facturacion_graph)
+	    console.log(labels_1)
+	    console.log(labels_2)
+	    console.log(data_1)
+	    console.log(data_2)
+	    line(div, labels_1, labels_2, data_1, data_2)
+  	}
+
   	function barchart(div, data, labels, title)
         {
         	var myChart = new Chart(div, {
@@ -438,6 +849,38 @@
             }
         });
         }
+
+    function line(div, labels, labels2, data1, data2) {
+    	var scatterChart = new Chart(div, {
+        type: 'line',
+        data: {
+            labels: labels,
+            datasets: [{
+            label: "Comparables",
+            backgroundColor: "rgba(220,220,220,0.5)",
+            borderColor: "rgba(220,220,220,0.8)",
+            highlightFill: "rgba(220,220,220,0.75)",
+            pointHoverBackgroundColor: "rgba(220,220,220,1)",
+            showTooltip: false, //NEW OPTION DON"T NEED TO INCLUDE IT IF YOU WANT TO DISPLAY BUT WON"T HURT IF YOU DO
+            data: data1
+        }, {
+            label: "{{company.name|safe}}",
+            backgroundColor: "rgba(47,79,79,0.5)",
+            borderColor: "rgba(47,79,79,0.8)",
+            highlightFill: "rgba(47,79,79,0.75)",
+            pointHoverBackgroundColor: "rgba(47,79,79,1)",
+            showTooltip: false, //NEW OPTION DON"T NEED TO INCLUDE IT IF YOU WANT TO DISPLAY BUT WON"T HURT IF YOU DO
+            data: data2
+        }]},
+        options: {
+          responsive: true,
+          pointDotRadius: 10,
+          bezierCurve: false,
+          scaleShowVerticalLines: false,
+          scaleGridLineColor: 'black'
+        }
+    });
+    }
 </script>
 {% endblock %}
 
@@ -445,7 +888,7 @@
 <script type="text/javascript">
 
 	$(document).ready(function(){
-  		$('ul.tabs').tabs();
+
 	});
 
 

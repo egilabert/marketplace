@@ -49,7 +49,6 @@ INSTALLED_APPS = [
     'empresas',
     'business',
     'compressor',
-    'django_reset',
 ]
 
 SITE_ID = 1
