@@ -49,15 +49,17 @@ class Empresa(models.Model):
     oportunities = models.ManyToManyField("self", blank=True)
 
     def my_penetration(self):
-        if self.balance_clients_payments():
+        if (len(self.balance_clients_payments())-1>=0):
             return self.get_total_sells()/self.balance_clients_payments()[len(self.balance_clients_payments())-1]
-        return 0
+        else:
+            return 0
 
     def my_sector_penetration(self):
-        if self.balance_clients_payments_avg_sector():
+        if (len(self.balance_clients_payments())-1>=0):
             return self.get_total_sector_sells()/self.balance_clients_payments_avg_sector()[len(self.balance_clients_payments_avg_sector())-1]
-        return 0
-        
+        else:
+            return 0
+
     # Helpers de los estados financieros
     # ------------------------------------------------------------------
 
