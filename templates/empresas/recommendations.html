@@ -347,18 +347,18 @@
 			    </div>
 
 			    <!-- /////////////////////////////////////////////////////////////
-				 ////// ¿Cómo me relaciono con ellos?
+				 ////// ¿Debería buscar nuevas oportunidades?
 				 ///////////////////////////////////////////////////////////// -->
 
 			    <div class="white_back title_conf">
-			    	<h3 class="flow-text">¿Cómo me relaciono con ellos?  <i class="fa fa-caret-right" aria-hidden="true"></i>  Amplia y mejora la relación con tus clientes</h3>
+			    	<h3 class="flow-text">¿Debería buscar nuevas oportunidades?  <i class="fa fa-caret-right" aria-hidden="true"></i>  Amplia y mejora la calidad de tu cartera de clientes</h3>
 			    </div>
 			    	<div class="row title_conf">
 			    	<!-- Facturación -->
 			    		<div class="col m8 s12">
 			    			<div class="card grey lighten-4">
 					            <div class="card-content grey-text darken-4">
-					            	<span class="card-title">Ventas</span>
+					            	<span class="card-title">Concentración geográfica</span>
 					              <canvas id="facturacion_graph" width="300" height="100"></canvas>
 					            </div>
 					        </div>
@@ -381,7 +381,7 @@
 			    		<div class="col m8 s12">
 			    			<div class="card grey lighten-4">
 					            <div class="card-content grey-text darken-4">
-					            	<span class="card-title">EBITDA</span>
+					            	<span class="card-title">Concentración sectorial</span>
 					              <canvas id="ebitda_graph" width="300" height="100"></canvas>
 					            </div>
 					        </div>
@@ -404,7 +404,7 @@
 			    		<div class="col m8 s12">
 			    			<div class="card grey lighten-4">
 					            <div class="card-content grey-text darken-4">
-					            	<span class="card-title">Resultado explotación</span>
+					            	<span class="card-title">Concentración temporal</span>
 					              <canvas id="resultado_graph" width="300" height="100"></canvas>
 					            </div>
 					        </div>
@@ -426,18 +426,18 @@
 			    </div>
 
 			    <!-- /////////////////////////////////////////////////////////////
-				 ////// ¿Cómo me relaciono con ellos?
+				 ////// ¿Cómo podría hacerlo?
 				 ///////////////////////////////////////////////////////////// -->
 
 			    <div class="white_back title_conf">
-			    	<h3 class="flow-text">¿Cómo me relaciono con ellos?  <i class="fa fa-caret-right" aria-hidden="true"></i>  Amplia y mejora la relación con tus clientes</h3>
+			    	<h3 class="flow-text">¿Cómo podría hacerlo? </h3>
 			    </div>
 			    	<div class="row title_conf">
 			    	<!-- Facturación -->
 			    		<div class="col m8 s12">
 			    			<div class="card grey lighten-4">
 					            <div class="card-content grey-text darken-4">
-					            	<span class="card-title">Ventas</span>
+					            	<span class="card-title">Margen</span>
 					              <canvas id="facturacion_graph" width="300" height="100"></canvas>
 					            </div>
 					        </div>
@@ -460,7 +460,7 @@
 			    		<div class="col m8 s12">
 			    			<div class="card grey lighten-4">
 					            <div class="card-content grey-text darken-4">
-					            	<span class="card-title">EBITDA</span>
+					            	<span class="card-title">Ratio eficiencia</span>
 					              <canvas id="ebitda_graph" width="300" height="100"></canvas>
 					            </div>
 					        </div>
@@ -483,7 +483,7 @@
 			    		<div class="col m8 s12">
 			    			<div class="card grey lighten-4">
 					            <div class="card-content grey-text darken-4">
-					            	<span class="card-title">Resultado explotación</span>
+					            	<span class="card-title">Ticket medio</span>
 					              <canvas id="resultado_graph" width="300" height="100"></canvas>
 					            </div>
 					        </div>
@@ -536,7 +536,7 @@
   	LineGraph(facturacion_graph, {{balance_sells_avg_sector|safe}}, {{balance_sells|safe}});
   	LineGraph(ebitda_graph, {{balance_ebitda_avg_sector|safe}}, {{balance_ebitda|safe}});
   	LineGraph(resultado_graph, {{balance_resultado_avg_sector|safe}}, {{balance_resultado|safe}});
-  	// BarGraph(frecuencia_graph, {{get_monthly_sells|safe}}, {{get_monthly_sector_avg_sells|safe}});
+  	BarGraph(frecuencia_graph); //, {{get_monthly_sells|safe}}, {{get_monthly_sector_avg_sells|safe}});
   	stackedbarchart(penetration_graph, 'hola', 'hola', penetracion_clientes, penetracion_clientes_sector, 'Penetration')
   	// donut(my_geo_clients, {{ territoriales_clientes }}, ["In your region","Outside your region"]);
   	// donut(mean_geo_clients, {{ territoriales_proveedores }}, ["In your region","Outside your region"]);
@@ -555,31 +555,31 @@
   	// barchart(mean_resultado_explotacion,{{sector_resultado_explotacion_amount}},{{sector_resultado_explotacion_ejercicio|safe}}, 'Resultado_explotacion medio del sector');
 
   	// prepare data...
-  	function BarGraph(div, data_sector, data_you) {
-  		var labels_1 = [];
-  		var labels_2 = []; 
-  		var data_1=[];
-  		var data_2=[];
-  		var sector = data_sector
-  		var you = data_you
-  		sector.forEach(function(packet, i) {
-	      labels_1.push(packet.month);
-	      data_1.push(packet.c);
-	    });
-	    you.forEach(function(packet, i) {
-	    	console.log('Bar Graphs')
-	    	console.log(labels_1)
-	    	console.log(packet.month)
-	    	console.log(labels_1.includes(packet.month))
-	    	if (labels_1.includes(packet.month)==true) {
-	    		labels_2.push(packet.month);
-	      		data_2.push(packet.c);
-	    	} else {
-	    		labels_2.push(labels_1[i]);
-	      		data_2.push(0);
-	    	}
-	    });
-	    barchart(div, labels_1, labels_2, data_1, data_2, '# Transferencias / mes')
+  	function BarGraph(div) {//, data_sector, data_you) {
+  		// var labels_1 = [];
+  		// var labels_2 = []; 
+  		// var data_1=[];
+  		// var data_2=[];
+  		// var sector = data_sector
+  		// var you = data_you
+  		// sector.forEach(function(packet, i) {
+	   //    labels_1.push(packet.month);
+	   //    data_1.push(packet.c);
+	   //  });
+	   //  you.forEach(function(packet, i) {
+	   //  	console.log('Bar Graphs')
+	   //  	console.log(labels_1)
+	   //  	console.log(packet.month)
+	   //  	console.log(labels_1.includes(packet.month))
+	   //  	if (labels_1.includes(packet.month)==true) {
+	   //  		labels_2.push(packet.month);
+	   //    		data_2.push(packet.c);
+	   //  	} else {
+	   //  		labels_2.push(labels_1[i]);
+	   //    		data_2.push(0);
+	   //  	}
+	   //  });
+	    barchart(div, ["Dec-15","Jan-16","Feb-16","Mar-16","Apr-16","May-16","Jun-16","Jul-16","Aug-16","Sep-16","Oct-16","Nov-16","Dec-16"], ["Dec-15","Jan-16","Feb-16","Mar-16","Apr-16","May-16","Jun-16","Jul-16","Aug-16","Sep-16","Oct-16","Nov-16","Dec-16"], [3,4,5,4,7,1,3,5,2,3,4,2,3], [3,4,3,3,7,5,8,2,2,1,2,3], '# Transferencias / mes') //barchart(div, labels_1, labels_2, data_1, data_2, '# Transferencias / mes')
   	}
 
   	// prepare data...
@@ -617,6 +617,8 @@
 
   	function barchart(div, labels_1, labels_2, data_1, data_2, title)
         {
+        	console.log(data_1)
+        	console.log(data_2)
         	var myChart = new Chart(div, {
 		        type: 'bar',
 		        data: {
