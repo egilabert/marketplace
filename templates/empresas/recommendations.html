@@ -187,8 +187,68 @@
 			    		<div class="col m8 s12">
 			    			<div class="card grey lighten-4">
 					            <div class="card-content grey-text darken-4">
-					            	<span class="card-title">Ventas</span>
-					              <canvas id="facturacion_graph" width="300" height="100"></canvas>
+					            	<span class="card-title">Fidelización</span>
+					              	<div class="row">
+					              		<div class="col m6 s12">
+					              			Iteracción media
+					              			<div class="row">
+						              			<div class="col s4">
+						              				<i class="fa fa-user" aria-hidden="true"></i>
+						              				<br>
+						              				You
+						              			</div>
+						              			<div class="col s5">
+						              				<h4> 44 <small>días</small></h4>
+						              			</div>
+						              			<div class="col s3">
+						              				<span class="green-text text-darken-1"><i class="fa fa-sort-up" aria-hidden="true"></i><span class="card-title"> 34%</span></span> 
+						              			</div>
+					              			</div>
+					              			<div class="row">
+						              			<div class="col s4">
+						              				<i class="fa fa-users" aria-hidden="true"></i>
+						              				<br>
+						              				Your comparables
+						              			</div>
+						              			<div class="col s5">
+						              				<h4> 33 <small>días</small></h4>
+						              			</div>
+						              			<div class="col s3">
+						              				<span class="green-text text-darken-1"><i class="fa fa-sort-up" aria-hidden="true"></i><span class="card-title"> 10%</span></span> 
+						              			</div>
+					              			</div>
+					              		</div>
+
+					              		<div class="col m6 s12">
+					              			Trabajo con ellos desde
+					              			<div class="row">
+						              			<div class="col s4">
+						              				<i class="fa fa-user" aria-hidden="true"></i>
+						              				<br>
+						              				You
+						              			</div>
+						              			<div class="col s5">
+						              				<h4> 4,5 <small>años</small></h4>
+						              			</div>
+						              			<div class="col s3">
+						              				<span class="red-text text-darken-1"><i class="fa fa-sort-down" aria-hidden="true"></i><span class="card-title"> 2%</span></span> 
+						              			</div>
+					              			</div>
+					              			<div class="row">
+						              			<div class="col s4">
+						              				<i class="fa fa-users" aria-hidden="true"></i>
+						              				<br>
+						              				Your comparables
+						              			</div>
+						              			<div class="col s5">
+						              				<h4> 8,1 <small>años</small></h4>
+						              			</div>
+						              			<div class="col s3">
+						              				<span class="green-text text-darken-1"><i class="fa fa-sort-up" aria-hidden="true"></i><span class="card-title"> 1%</span></span> 
+						              			</div>
+					              			</div>
+					              		</div>
+					              	</div>
 					            </div>
 					        </div>
 			    		</div>
@@ -200,9 +260,6 @@
 					    				<p class="light"><i class="tiny material-icons indigo-text darken-4">new_releases</i> <span class="bold"> Hint:</span> Try to overcome this concentration by finding more clients outside of your region. <a href="">Do you want us to find them for you?</a> </p>
 					    				<p class="light"><i class="tiny material-icons indigo-text darken-4">info</i> You are part of the 20% with the higher risk of geographical concentration of your sector </p>
 					    			</blockquote>
-					    			<blockquote>
-					    				<p class="light"><i class="tiny material-icons indigo-text darken-4">live_help</i> Hola</p>
-					    			</blockquote>
 					            </div>
 					        </div>
 			    		</div>
@@ -210,8 +267,8 @@
 			    		<div class="col m8 s12">
 			    			<div class="card grey lighten-4">
 					            <div class="card-content grey-text darken-4">
-					            	<span class="card-title">EBITDA</span>
-					              <canvas id="ebitda_graph" width="300" height="100"></canvas>
+					            	<span class="card-title">Frecuencia</span>
+					              <canvas id="frecuencia_graph" width="300" height="100"></canvas>
 					            </div>
 					        </div>
 			    		</div>
@@ -436,12 +493,13 @@
   	var mean_resultado_explotacion = document.getElementById("mean_resultado_explotacion");
   	var facturacion_graph = document.getElementById("facturacion_graph");
   	var resultado_graph = document.getElementById("resultado_graph");
+  	var frecuencia_graph = document.getElementById("frecuencia_graph");
   	
   	// Como son mis clients
   	LineGraph(facturacion_graph, {{balance_sells_avg_sector|safe}}, {{balance_sells|safe}});
   	LineGraph(ebitda_graph, {{balance_ebitda_avg_sector|safe}}, {{balance_ebitda|safe}});
   	LineGraph(resultado_graph, {{balance_resultado_avg_sector|safe}}, {{balance_resultado|safe}});
-
+  	BarGraph(frecuencia_graph, {{get_monthly_sells|safe}}, {{get_monthly_sector_avg_sells|safe}})
   	// donut(my_geo_clients, {{ territoriales_clientes }}, ["In your region","Outside your region"]);
   	// donut(mean_geo_clients, {{ territoriales_proveedores }}, ["In your region","Outside your region"]);
   	// donut(mean_geo_concentration_clients, {{ sector_territoriales_clientes }}, ["In your region","Outside your region"]);
@@ -459,6 +517,34 @@
   	// barchart(mean_resultado_explotacion,{{sector_resultado_explotacion_amount}},{{sector_resultado_explotacion_ejercicio|safe}}, 'Resultado_explotacion medio del sector');
 
   	// prepare data...
+  	function BarGraph(div, data_sector, data_you) {
+  		var labels_1 = [];
+  		var labels_2 = []; 
+  		var data_1=[];
+  		var data_2=[];
+  		var sector = data_sector
+  		var you = data_you
+  		sector.forEach(function(packet, i) {
+	      labels_1.push(packet.month);
+	      data_1.push(packet.c);
+	    });
+	    you.forEach(function(packet, i) {
+	    	console.log('Bar Graphs')
+	    	console.log(labels_1)
+	    	console.log(packet.month)
+	    	console.log(labels_1.includes(packet.month))
+	    	if (labels_1.includes(packet.month)==true) {
+	    		labels_2.push(packet.month);
+	      		data_2.push(packet.c);
+	    	} else {
+	    		labels_2.push(labels_1[i]);
+	      		data_2.push(0);
+	    	}
+	    });
+	    barchart(div, labels_1, labels_2, data_1, data_2, '# Transferencias / mes')
+  	}
+
+  	// prepare data...
   	function LineGraph(div, data_sector, data_you) {
   		var labels_1 = [];
   		var labels_2 = []; 
@@ -471,69 +557,70 @@
 	      data_1.push(packet.c);
 	    });
 	    you.forEach(function(packet, i) {
-	      labels_2.push(packet.ejercicio);
-	      data_2.push(packet.c);
+	    	console.log('Line Graphs')
+	    	console.log(labels_1)
+	    	console.log(packet.ejercicio)
+	    	console.log(labels_1.includes(packet.ejercicio))
+	      	if (labels_1.includes(packet.ejercicio)==true) {
+	    		labels_2.push(packet.ejercicio);
+	      		data_2.push(packet.c);
+	    	} else {
+	    		labels_2.push(labels_1[i]);
+	      		data_2.push(0);
+	    	}
 	    });
-	    console.log(facturacion_graph)
-	    console.log(labels_1)
-	    console.log(labels_2)
-	    console.log(data_1)
-	    console.log(data_2)
+	    // console.log(facturacion_graph)
+	    // console.log(labels_1)
+	    // console.log(labels_2)
+	    // console.log(data_1)
+	    // console.log(data_2)
 	    line(div, labels_1, labels_2, data_1, data_2)
   	}
 
-  	function barchart(div, data, labels, title)
+  	function barchart(div, labels_1, labels_2, data_1, data_2, title)
         {
         	var myChart = new Chart(div, {
-	        type: 'bar',
-	        data: {
-	            labels: labels,
-	            datasets: [{
-	                label: "Ventas",
-	                data: data,
-	                backgroundColor: [
-	                    
-	                    'rgba(192,192,192, 0.2)',
-	                    'rgba(169,169,169, 0.2)',
-	                    'rgba(119,136,153, 0.2)',
-	                    'rgba(47,79,79, 0.2)',
-	                    'rgba(128,128,128, 0.2)',
-	                    'rgba(220,220,220, 0.2)'
-	                ],
-	                borderColor: [
-	                    
-	                    'rgba(192,192,192, 1)',
-	                    'rgba(169,169,169, 1)',
-	                    'rgba(119,136,153, 1)',
-	                    'rgba(47,79,79, 1)',
-	                    'rgba(128,128,128, 1)',
-	                    'rgba(220,220,220, 1)',
-	                ],
-	                borderWidth: 2
-	            }]
-	        },
-	        options: {
-	            legend: {
-	                display: false,
-	                labels: {
-	                    fontColor: 'rgb(255, 99, 132)'
-	                }
-	            },
-	            title: {
-	                display: true,
-	                text: title
-	            },
-	            responsive: true,
-	            scales: {
-	                yAxes: [{
-	                    ticks: {
-	                        beginAtZero:true
-	                    }
-	                }]
-	            }
-	        }
-	    });
-        }
+		        type: 'bar',
+		        data: {
+		            labels: labels_2,
+		            datasets: [{
+		                label: "{{company.name|safe}}",
+		                data: data_1,
+		                backgroundColor: 'rgba(47,79,79, 0.2)',
+		                borderColor: 'rgba(47,79,79, 1)',
+		                borderWidth: 2
+		            },
+		            {
+		                label: "Average comparables",
+		                data: data_2,
+		                backgroundColor: 'rgba(169,169,169, 0.2)',
+		                borderColor: 'rgba(169,169,169, 1)',
+		                borderWidth: 2
+		            }]
+		        },
+		        options: {
+		            legend: {
+		                display: false,
+		                labels: {
+		                    fontColor: 'rgb(255, 99, 132)'
+		                }
+		            },
+		            title: {
+		                display: true,
+		                text: title
+		            },
+		            responsive: true,
+		            scales: {
+		                yAxes: [{
+		                    ticks: {
+		                        beginAtZero:true
+		                    }
+		                }]
+		            }
+		        }
+		    });
+    	}
+
   	function donut(div, data, labels)
         {
            var myDoughnutChart = new Chart(div, {

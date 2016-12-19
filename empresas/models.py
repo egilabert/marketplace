@@ -122,7 +122,7 @@ class Empresa(models.Model):
 
     def ebitda_avg_sector(self):
         return EstadosFinancieros.objects.filter(empresa__in=self.get_sector_companies().all()).values('ejercicio').annotate(c=Sum('ebitda')).order_by('ejercicio')
-        
+
     # Helpers de transferencias
     # ------------------------------------------------------------------
 
@@ -145,10 +145,21 @@ class Empresa(models.Model):
 
     def get_monthly_buys(self):
         group_by = self.transfers.all().annotate(month=TruncMonth('operation_data')).values('month').annotate(c=Count('id')).order_by('month')
+        for month in group_by:
+            month['month'] = month['month'].strftime("%b %Y")
         return group_by
 
     def get_monthly_sells(self):
         group_by = self.destination_reference.all().annotate(month=TruncMonth('operation_data')).values('month').annotate(c=Count('id')).order_by('month')
+        for month in group_by:
+            month['month'] = month['month'].strftime("%b %Y") 
+        return group_by
+
+    def get_monthly_sector_avg_sells(self):
+        group_by = Transfer.objects.filter(destination_reference__in=self.get_sector_companies().all()).annotate(month=TruncMonth('operation_data')).values('month').annotate(c=Count('id')).order_by('month')
+        for month in group_by:
+            month['c'] = month['c']/self.get_sector_companies().count()
+            month['month'] = month['month'].strftime("%b %Y")
         return group_by
 
     def get_monthly_buys_amount(self):
