@@ -49,10 +49,33 @@ class Empresa(models.Model):
     oportunities = models.ManyToManyField("self", blank=True)
 
     def my_penetration_client(self):
-        return self.get_total_sells()/self.balance_clients_payments()[len(self.balance_clients_payments())-1]
+        return float(self.get_total_sells())/float(self.balance_clients_payments()[len(self.balance_clients_payments())-1])
+
+    def my_penetration_provider(self):
+        return float(self.get_total_buys())/float(list(self.balance_providers_sells())[len(list(self.balance_providers_sells()))-1]['c'])
 
     def my_sector_penetration_client(self):
-        return self.get_total_sector_sells()/self.balance_clients_payments_avg_sector()[len(self.balance_clients_payments_avg_sector())-1]
+        return float(self.get_total_sector_sells())/float(self.balance_clients_payments_avg_sector()[len(self.balance_clients_payments_avg_sector())-1])
+
+    def hhi_clients_clients(self):
+        groub_by = self.get_clients().values('name').annotate(c=Sum('transfers__amount')).order_by('c')
+        total = self.get_total_sells()
+        hhi = 0
+        for i, name in enumerate(groub_by):
+            one = float(name['c'])
+            total = float(total)
+            hhi += pow(one/total,2)
+        return hhi
+
+    def hhi_clients_sector_clients(self):
+        groub_by = Empresa.objects.filter(transfers__destination_reference__in=self.get_sector_companies()).values('name').annotate(c=Sum('transfers__amount')).order_by('c')
+        total = self.get_total_sector_sells()
+        hhi = 0
+        for i, name in enumerate(groub_by):
+            one = float(name['c'])
+            total = float(total)
+            hhi += pow(one/total,2)
+        return hhi
 
     def hhi_geografical_clients(self):
         groub_by = self.get_clients().values('territorial').annotate(c=Sum('transfers__amount')).order_by('c')
@@ -86,11 +109,9 @@ class Empresa(models.Model):
 
     def hhi_cnae_sector_clients(self):
         groub_by = Empresa.objects.filter(transfers__destination_reference__in=self.get_sector_companies()).values('cnae').annotate(c=Sum('transfers__amount')).order_by('c')
-        print(groub_by)
         total = self.get_total_sector_sells()
         hhi = 0
         for i, cnae in enumerate(groub_by):
-            print(cnae['c'])
             one = float(cnae['c'])
             total = float(total)
             hhi += pow(one/total,2)
@@ -158,17 +179,41 @@ class Empresa(models.Model):
     def balance_clients_resultado_avg_sector(self):
         return EstadosFinancieros.objects.filter(empresa__in=Empresa.objects.filter(transfers__destination_reference__in=self.get_sector_companies())).values('ejercicio').annotate(c=Avg('resultado_explotacion')).order_by('ejercicio')
 
+    def balance_providers_resultado(self):
+        return EstadosFinancieros.objects.filter(empresa__in=self.get_providers()).values('ejercicio').annotate(c=Avg('resultado_explotacion')).order_by('ejercicio')
+
+    def balance_providers_resultado_avg_sector(self):
+        return EstadosFinancieros.objects.filter(empresa__in=Empresa.objects.filter(transfers__origin_reference__in=self.get_sector_companies())).values('ejercicio').annotate(c=Avg('resultado_explotacion')).order_by('ejercicio')
+
     def balance_clients_sells(self):
         return EstadosFinancieros.objects.filter(empresa__in=self.get_clients()).values('ejercicio').annotate(c=Avg('ventas')).order_by('ejercicio')
 
     def balance_clients_sells_avg_sector(self):
         return EstadosFinancieros.objects.filter(empresa__in=Empresa.objects.filter(transfers__destination_reference__in=self.get_sector_companies())).values('ejercicio').annotate(c=Avg('ventas')).order_by('ejercicio')
 
+    def balance_providers_sells(self):
+        return EstadosFinancieros.objects.filter(empresa__in=self.get_providers()).values('ejercicio').annotate(c=Avg('ventas')).order_by('ejercicio')
+
+    def balance_providers_sells_avg_sector(self):
+        return EstadosFinancieros.objects.filter(empresa__in=Empresa.objects.filter(transfers__origin_reference__in=self.get_sector_companies())).values('ejercicio').annotate(c=Avg('ventas')).order_by('ejercicio')
+
+    def balance_providers_buys(self):
+        return EstadosFinancieros.objects.filter(empresa__in=self.get_clients()).values('ejercicio').annotate(c=Avg(F('ventas')-F('ebitda'))).order_by('ejercicio')
+
+    def balance_providers_buys_avg_sector(self):
+        return EstadosFinancieros.objects.filter(empresa__in=Empresa.objects.filter(transfers__destination_reference__in=self.get_sector_companies())).values('ejercicio').annotate(c=Avg(F('ventas')-F('ebitda'))).order_by('ejercicio')
+
     def balance_sells(self):
         return self.estados_financieros.all().values('ejercicio').annotate(c=Sum('ventas')).order_by('ejercicio')
 
     def balance_sells_avg_sector(self):
         return EstadosFinancieros.objects.filter(empresa__in=self.get_sector_companies().all()).values('ejercicio').annotate(c=Avg('ventas')).order_by('ejercicio')
+
+    def balance_buys(self):
+        return self.estados_financieros.all().values('ejercicio').annotate(c=Sum(F('ventas')-F('ebitda'))).order_by('ejercicio')
+
+    def balance_buys_avg_sector(self):
+        return EstadosFinancieros.objects.filter(empresa__in=self.get_sector_companies().all()).values('ejercicio').annotate(c=Avg(F('ventas')-F('ebitda'))).order_by('ejercicio')
 
     def balance_depreciation(self):
         return self.estados_financieros.all().values('ejercicio').annotate(c=Sum('depreciaciones')).order_by('ejercicio')
@@ -209,6 +254,12 @@ class Empresa(models.Model):
 
     def balance_clients_ebitda_avg_sector(self):
         return EstadosFinancieros.objects.filter(empresa__in=Empresa.objects.filter(transfers__destination_reference__in=self.get_sector_companies())).values('ejercicio').annotate(c=Avg('ebitda')).order_by('ejercicio')
+
+    def balance_providers_ebitda(self):
+        return EstadosFinancieros.objects.filter(empresa__in=self.get_providers()).values('ejercicio').annotate(c=Avg('ebitda')).order_by('ejercicio')
+
+    def balance_providers_ebitda_avg_sector(self):
+        return EstadosFinancieros.objects.filter(empresa__in=Empresa.objects.filter(transfers__origin_reference__in=self.get_sector_companies())).values('ejercicio').annotate(c=Avg('ebitda')).order_by('ejercicio')
 
     def balance_stock(self):
         return self.estados_financieros.all().values('ejercicio').annotate(c=Sum('existencias')).order_by('ejercicio')

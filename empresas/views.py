@@ -39,11 +39,11 @@ class HomeView(View):
 			pass
 		request.session.modified = True
 		queryset = Empresa.objects.all()
-		if request.session.get('company') is None:
-			company = Empresa.objects.all()[865-1] #[randint(0, queryset.count() - 1)]
+		if request.session.get('company') is None: 
+			company = Empresa.objects.all()[1470-1] #[randint(0, queryset.count() - 1)] ##865
 			request.session['company'] = company
 		else:
-			company = Empresa.objects.all()[865-1]#request.session.get('company')
+			company = request.session.get('company')
 		return render(request, "empresas/empresas_home.html", {'company': company})
 
 	def post(self, request, *args, **kwargs):
@@ -139,81 +139,16 @@ def OpportunityProviderView(request):
 
 def CommercialProvidersRecommendationsView(request):
 	empresa = request.session.get('company')
-	# territoriales_clientes = [empresa.in_my_region(empresa.get_clients()).count(), empresa.out_of_my_region(empresa.get_clients()).count()]
-	# territoriales_proveedores = [empresa.in_my_region(empresa.get_providers()).count(), empresa.out_of_my_region(empresa.get_providers()).count()]
-	# sector_territoriales_clientes = [empresa.in_my_region(empresa.get_qs_clients(empresa.get_sector_companies())).count(), empresa.out_of_my_region(empresa.get_qs_clients(empresa.get_sector_companies())).count()]
-	# sector_territoriales_proveedores = [empresa.in_my_region(empresa.get_qs_providers(empresa.get_sector_companies())).count(), empresa.out_of_my_region(empresa.get_qs_providers(empresa.get_sector_companies())).count()]
-
-	# sectores_clients, counts_sectores_clients = empresa.get_sectors(empresa.get_clients())
-	# sectores_providers, counts_sectores_providers = empresa.get_sectors(empresa.get_providers())
-	# mean_sectores_clients, mean_counts_sectores_clients = empresa.get_sectors(empresa.get_qs_clients(empresa.get_sector_companies()))
-	# mean_sectores_providers, mean_counts_sectores_providers = empresa.get_sectors(empresa.get_qs_providers(empresa.get_sector_companies()))
-
-	# your_monthly_sells = empresa.get_monthly_sells_amount()
-	# for data in your_monthly_sells:
-	# 	data['month'] = data['month'].strftime('%b')+'-'+data['month'].strftime('%y')
-	
-	# your_monthly_sells_amount = [d['c'] for d in your_monthly_sells]
-	# your_monthly_sells_month = [d['month'] for d in your_monthly_sells]
-
-	# sector_monthly_sells = empresa.get_sector_avg_monthly_sells_amount()
-	# for data in sector_monthly_sells:
-	# 	data['month'] = data['month'].strftime('%b')+'-'+data['month'].strftime('%y')
-	
-	# sector_monthly_sells_amount = [d['c'] for d in sector_monthly_sells]
-	# sector_monthly_sells_month = [d['month'] for d in sector_monthly_sells]
-
-	# your_ebitda = empresa.ebitda()
-	# your_ebitda_amount = [d['c'] for d in your_ebitda]
-	# your_ebitda_ejercicio = [d['ejercicio'] for d in your_ebitda]
-	# sector_ebitda = empresa.ebitda_avg_sector()
-	# sector_ebitda_amount = [d['c'] for d in sector_ebitda]
-	# sector_ebitda_ejercicio = [d['ejercicio'] for d in sector_ebitda]
-
-	# your_resultado_explotacion = empresa.resultado_explotacion()
-	# your_resultado_explotacion_amount = [d['c'] for d in your_resultado_explotacion]
-	# your_resultado_explotacion_ejercicio = [d['ejercicio'] for d in your_resultado_explotacion]
-	# sector_resultado_explotacion = empresa.resultado_explotacion_avg_sector()
-	# sector_resultado_explotacion_amount = [d['c'] for d in sector_resultado_explotacion]
-	# sector_resultado_explotacion_ejercicio = [d['ejercicio'] for d in sector_resultado_explotacion]
-	
 
 	buttons = False
-
 	context = {
 		'company':empresa,
-		# 'territoriales_proveedores': territoriales_proveedores,
-		# 'territoriales_clientes': territoriales_clientes,
-		# 'sector_territoriales_proveedores': sector_territoriales_proveedores,
-		# 'sector_territoriales_clientes': sector_territoriales_clientes,
-		# 'sectores_clients': json.dumps(sectores_clients),
-		# 'counts_sectores_clients': counts_sectores_clients,
-		# 'sectores_providers': json.dumps(sectores_providers),
-		# 'counts_sectores_providers': counts_sectores_providers,
-		# 'mean_sectores_clients': json.dumps(mean_sectores_clients),
-		# 'mean_counts_sectores_clients': mean_counts_sectores_clients,
-		# 'mean_sectores_providers': json.dumps(mean_sectores_providers),
-		# 'mean_counts_sectores_providers': mean_counts_sectores_providers,
-		# 'your_monthly_sells_amount': your_monthly_sells_amount,
-		# 'your_monthly_sells_month': json.dumps(your_monthly_sells_month),
-		# 'sector_monthly_sells_amount': sector_monthly_sells_amount,
-		# 'sector_monthly_sells_month': json.dumps(sector_monthly_sells_month),
-		# 'your_ebitda_amount': your_ebitda_amount,
-		# 'your_ebitda_ejercicio': json.dumps(your_ebitda_ejercicio),
-		# 'sector_ebitda_amount': sector_ebitda_amount,
-		# 'sector_ebitda_ejercicio': json.dumps(sector_ebitda_ejercicio),
-		# 'your_resultado_explotacion_amount': your_resultado_explotacion_amount,
-		# 'your_resultado_explotacion_ejercicio': json.dumps(your_resultado_explotacion_ejercicio),
-		# 'sector_resultado_explotacion_amount': sector_resultado_explotacion_amount,
-		# 'sector_resultado_explotacion_ejercicio': json.dumps(sector_resultado_explotacion_ejercicio),
-		# 'get_monthly_sells': json.dumps(list(empresa.get_monthly_sells()), cls=DjangoJSONEncoder),
-		# 'get_monthly_sector_avg_sells': json.dumps(list(empresa.get_monthly_sector_avg_sells()), cls=DjangoJSONEncoder),
-		'balance_sells_avg_sector': json.dumps(list(empresa.balance_clients_sells_avg_sector()), cls=DjangoJSONEncoder),
-		'balance_sells': json.dumps(list(empresa.balance_clients_sells()), cls=DjangoJSONEncoder),
-		'balance_ebitda_avg_sector': json.dumps(list(empresa.balance_clients_ebitda_avg_sector()), cls=DjangoJSONEncoder),
-		'balance_ebitda': json.dumps(list(empresa.balance_clients_ebitda()), cls=DjangoJSONEncoder),
-		'balance_resultado_avg_sector': json.dumps(list(empresa.balance_clients_resultado_avg_sector()), cls=DjangoJSONEncoder),
-		'balance_resultado': json.dumps(list(empresa.balance_clients_resultado()), cls=DjangoJSONEncoder),
+		'balance_providers_buys_avg_sector': json.dumps(list(empresa.balance_providers_buys_avg_sector()), cls=DjangoJSONEncoder),
+		'balance_providers_buys': json.dumps(list(empresa.balance_providers_buys()), cls=DjangoJSONEncoder),
+		'balance_providers_ebitda_avg_sector': json.dumps(list(empresa.balance_providers_ebitda_avg_sector()), cls=DjangoJSONEncoder),
+		'balance_providers_ebitda': json.dumps(list(empresa.balance_providers_ebitda()), cls=DjangoJSONEncoder),
+		'balance_providers_resultado_avg_sector': json.dumps(list(empresa.balance_providers_resultado_avg_sector()), cls=DjangoJSONEncoder),
+		'balance_providers_resultado': json.dumps(list(empresa.balance_providers_resultado()), cls=DjangoJSONEncoder),
 		'buttons': buttons
 		}
 
@@ -222,76 +157,10 @@ def CommercialProvidersRecommendationsView(request):
 def CommercialClientsRecommendationsView(request):
 	
 	empresa = request.session.get('company')
-	
-	# territoriales_clientes = [empresa.in_my_region(empresa.get_clients()).count(), empresa.out_of_my_region(empresa.get_clients()).count()]
-	# territoriales_proveedores = [empresa.in_my_region(empresa.get_providers()).count(), empresa.out_of_my_region(empresa.get_providers()).count()]
-	# sector_territoriales_clientes = [empresa.in_my_region(empresa.get_qs_clients(empresa.get_sector_companies())).count(), empresa.out_of_my_region(empresa.get_qs_clients(empresa.get_sector_companies())).count()]
-	# sector_territoriales_proveedores = [empresa.in_my_region(empresa.get_qs_providers(empresa.get_sector_companies())).count(), empresa.out_of_my_region(empresa.get_qs_providers(empresa.get_sector_companies())).count()]
-
-	# sectores_clients, counts_sectores_clients = empresa.get_sectors(empresa.get_clients())
-	# sectores_providers, counts_sectores_providers = empresa.get_sectors(empresa.get_providers())
-	# mean_sectores_clients, mean_counts_sectores_clients = empresa.get_sectors(empresa.get_qs_clients(empresa.get_sector_companies()))
-	# mean_sectores_providers, mean_counts_sectores_providers = empresa.get_sectors(empresa.get_qs_providers(empresa.get_sector_companies()))
-
-	# your_monthly_sells = empresa.get_monthly_sells_amount()
-	# for data in your_monthly_sells:
-	# 	data['month'] = data['month'].strftime('%b')+'-'+data['month'].strftime('%y')
-	
-	# your_monthly_sells_amount = [d['c'] for d in your_monthly_sells]
-	# your_monthly_sells_month = [d['month'] for d in your_monthly_sells]
-
-	# sector_monthly_sells = empresa.get_sector_avg_monthly_sells_amount()
-	# for data in sector_monthly_sells:
-	# 	data['month'] = data['month'].strftime('%b')+'-'+data['month'].strftime('%y')
-	
-	# sector_monthly_sells_amount = [d['c'] for d in sector_monthly_sells]
-	# sector_monthly_sells_month = [d['month'] for d in sector_monthly_sells]
-
-	# your_ebitda = empresa.ebitda()
-	# your_ebitda_amount = [d['c'] for d in your_ebitda]
-	# your_ebitda_ejercicio = [d['ejercicio'] for d in your_ebitda]
-	# sector_ebitda = empresa.ebitda_avg_sector()
-	# sector_ebitda_amount = [d['c'] for d in sector_ebitda]
-	# sector_ebitda_ejercicio = [d['ejercicio'] for d in sector_ebitda]
-
-	# your_resultado_explotacion = empresa.resultado_explotacion()
-	# your_resultado_explotacion_amount = [d['c'] for d in your_resultado_explotacion]
-	# your_resultado_explotacion_ejercicio = [d['ejercicio'] for d in your_resultado_explotacion]
-	# sector_resultado_explotacion = empresa.resultado_explotacion_avg_sector()
-	# sector_resultado_explotacion_amount = [d['c'] for d in sector_resultado_explotacion]
-	# sector_resultado_explotacion_ejercicio = [d['ejercicio'] for d in sector_resultado_explotacion]
-	
-
 	buttons = False
 
 	context = {
 		'company':empresa,
-		# 'territoriales_proveedores': territoriales_proveedores,
-		# 'territoriales_clientes': territoriales_clientes,
-		# 'sector_territoriales_proveedores': sector_territoriales_proveedores,
-		# 'sector_territoriales_clientes': sector_territoriales_clientes,
-		# 'sectores_clients': json.dumps(sectores_clients),
-		# 'counts_sectores_clients': counts_sectores_clients,
-		# 'sectores_providers': json.dumps(sectores_providers),
-		# 'counts_sectores_providers': counts_sectores_providers,
-		# 'mean_sectores_clients': json.dumps(mean_sectores_clients),
-		# 'mean_counts_sectores_clients': mean_counts_sectores_clients,
-		# 'mean_sectores_providers': json.dumps(mean_sectores_providers),
-		# 'mean_counts_sectores_providers': mean_counts_sectores_providers,
-		# 'your_monthly_sells_amount': your_monthly_sells_amount,
-		# 'your_monthly_sells_month': json.dumps(your_monthly_sells_month),
-		# 'sector_monthly_sells_amount': sector_monthly_sells_amount,
-		# 'sector_monthly_sells_month': json.dumps(sector_monthly_sells_month),
-		# 'your_ebitda_amount': your_ebitda_amount,
-		# 'your_ebitda_ejercicio': json.dumps(your_ebitda_ejercicio),
-		# 'sector_ebitda_amount': sector_ebitda_amount,
-		# 'sector_ebitda_ejercicio': json.dumps(sector_ebitda_ejercicio),
-		# 'your_resultado_explotacion_amount': your_resultado_explotacion_amount,
-		# 'your_resultado_explotacion_ejercicio': json.dumps(your_resultado_explotacion_ejercicio),
-		# 'sector_resultado_explotacion_amount': sector_resultado_explotacion_amount,
-		# 'sector_resultado_explotacion_ejercicio': json.dumps(sector_resultado_explotacion_ejercicio),
-		# 'get_monthly_sells': json.dumps(list(empresa.get_monthly_sells()), cls=DjangoJSONEncoder),
-		# 'get_monthly_sector_avg_sells': json.dumps(list(empresa.get_monthly_sector_avg_sells()), cls=DjangoJSONEncoder),
 		'balance_sells_avg_sector': json.dumps(list(empresa.balance_clients_sells_avg_sector()), cls=DjangoJSONEncoder),
 		'balance_sells': json.dumps(list(empresa.balance_clients_sells()), cls=DjangoJSONEncoder),
 		'balance_ebitda_avg_sector': json.dumps(list(empresa.balance_clients_ebitda_avg_sector()), cls=DjangoJSONEncoder),

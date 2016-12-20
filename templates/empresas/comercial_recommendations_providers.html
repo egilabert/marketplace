@@ -68,7 +68,7 @@
 				        <div class="col s12 m2 line">
 		      	  			<div class="center-align ">
 				            <i class="fa fa-rocket" aria-hidden="true"></i><span class="card-title"> Your penetration</span>
-				            <h3 class="align-right red-text darken-1">{{company.get_total_sells|div:company.get_total_sector_sells|mul:100|floatformat:0|intcomma}}%</h3>
+				            <h3 class="align-right orange-text darken-1">{{company.my_penetration_provider|mul:100|floatformat:1|intcomma}}%</h3>
 				            <span class="green-text text-darken-1"><i class="fa fa-sort-up" aria-hidden="true"></i><span class="card-title">5%</span></span> <span class="light">From last month</span>
 				            </div>
 				        </div>
@@ -84,7 +84,7 @@
 				        <div class="col s12 m2">
 		      	  			<div class="center-align ">
 				            <i class="fa fa-money" aria-hidden="true"></i><span class="card-title"> Their average ticket</span>
-				            <h3 class="align-right orange-text darken-1">{{company.average_sector_sells|floatformat:0|intcomma}}€</h3>
+				            <h3 class="align-right orange-text darken-1">{{company.average_sector_buys|floatformat:0|intcomma}}€</h3>
 				            <span class="green-text text-darken-1"><i class="fa fa-sort-up" aria-hidden="true"></i><span class="card-title">1%</span></span> <span class="light">From last month</span>
 				            </div>
 				        </div>
@@ -100,20 +100,20 @@
 				
 				
 					<div class="white_back title_conf">
-				    	<h3 class="flow-text">¿Cómo son mis clientes?  <i class="fa fa-caret-right" aria-hidden="true"></i>  Mejora la calidad de tus clientes</h3>
+				    	<h3 class="flow-text">¿Cómo son mis proveedores?  <i class="fa fa-caret-right" aria-hidden="true"></i>  Mejora la calidad de tus proveedores</h3>
 				    </div>
 			    	<div class="row title_conf">
 			    	<!-- Facturación -->
 			    		<div class="col m8 s12">
-			    			<div class="card grey lighten-4">
+			    			<div class="card brown lighten-5">
 					            <div class="card-content grey-text darken-4">
-					            	<span class="card-title">Ventas</span>
+					            	<span class="card-title">Gastos</span>
 					              <canvas id="facturacion_graph" width="300" height="100"></canvas>
 					            </div>
 					        </div>
 			    		</div>
 			    		<div class="col m4 s12">
-			    			<div class="card grey lighten-4">
+			    			<div class="card brown lighten-5">
 					            <div class="card-content grey-text darken-4">
 					              <blockquote>
 					    				<p class="light"><i class="tiny material-icons indigo-text darken-4">live_help</i> Geographical clients measures the degree of internationalization and diversification by region</p>
@@ -125,7 +125,7 @@
 			    		</div>
 			    	<!-- EBITDA -->
 			    		<div class="col m8 s12">
-			    			<div class="card grey lighten-4">
+			    			<div class="card brown lighten-5">
 					            <div class="card-content grey-text darken-4">
 					            	<span class="card-title">EBITDA</span>
 					              <canvas id="ebitda_graph" width="300" height="100"></canvas>
@@ -133,7 +133,7 @@
 					        </div>
 			    		</div>
 			    		<div class="col m4 s12">
-			    			<div class="card grey lighten-4">
+			    			<div class="card brown lighten-5">
 					            <div class="card-content grey-text darken-4">
 					              <blockquote>
 					    				<p class="light"><i class="tiny material-icons indigo-text darken-4">live_help</i> Geographical clients measures the degree of internationalization and diversification by region</p>
@@ -145,7 +145,7 @@
 			    		</div>
 			    	<!-- Resultado explotaciones -->
 			    		<div class="col m8 s12">
-			    			<div class="card grey lighten-4">
+			    			<div class="card brown lighten-5">
 					            <div class="card-content grey-text darken-4">
 					            	<span class="card-title">Resultado explotación</span>
 					              <canvas id="resultado_graph" width="300" height="100"></canvas>
@@ -153,7 +153,7 @@
 					        </div>
 			    		</div>
 			    		<div class="col m4 s12">
-			    			<div class="card grey lighten-4">
+			    			<div class="card brown lighten-5">
 					            <div class="card-content grey-text darken-4">
 					              <blockquote>
 					    				<p class="light"><i class="tiny material-icons indigo-text darken-4">live_help</i> Geographical clients measures the degree of internationalization and diversification by region</p>
@@ -175,7 +175,7 @@
 			    	<div class="row title_conf">
 			    	<!-- Facturación -->
 			    		<div class="col m8 s12">
-			    			<div class="card grey lighten-4">
+			    			<div class="card brown lighten-5">
 					            <div class="card-content grey-text darken-4">
 					            	<span class="card-title">Fidelización</span>
 					              	<div class="row">
@@ -243,7 +243,7 @@
 					        </div>
 			    		</div>
 			    		<div class="col m4 s12">
-			    			<div class="card grey lighten-4">
+			    			<div class="card brown lighten-5">
 					            <div class="card-content grey-text darken-4">
 					              <blockquote>
 					    				<p class="light"><i class="tiny material-icons indigo-text darken-4">live_help</i> Geographical clients measures the degree of internationalization and diversification by region</p>
@@ -255,7 +255,7 @@
 			    		</div>
 			    	<!-- EBITDA -->
 			    		<div class="col m8 s12">
-			    			<div class="card grey lighten-4">
+			    			<div class="card brown lighten-5">
 					            <div class="card-content grey-text darken-4">
 					            	<span class="card-title">Frecuencia</span>
 					              	<canvas id="frecuencia_graph" width="300" height="100"></canvas>
@@ -263,7 +263,7 @@
 					        </div>
 			    		</div>
 			    		<div class="col m4 s12">
-			    			<div class="card grey lighten-4">
+			    			<div class="card brown lighten-5">
 					            <div class="card-content grey-text darken-4">
 					              <blockquote>
 					    				<p class="light"><i class="tiny material-icons indigo-text darken-4">live_help</i> Geographical clients measures the degree of internationalization and diversification by region</p>
@@ -276,7 +276,7 @@
 			    	<!-- Resultado explotaciones -->
 			    		<div class="col m8 s12">
 			    			<div class="col m6 s12">
-				    			<div class="card grey lighten-4">
+				    			<div class="card brown lighten-5">
 						            <div class="card-content grey-text darken-4">
 						            	<span class="card-title">Penetración</span>
 						            	<canvas id="penetration_graph" width="300" height="200"></canvas>
@@ -284,7 +284,7 @@
 						        </div>
 						    </div>
 						    <div class="col m6 s12">
-						    	<div class="card grey lighten-4">
+						    	<div class="card brown lighten-5">
 						    	<div class="card-content grey-text darken-4">
 							    		<span class="card-title">Variance</span>
 				              			<div class="row">
@@ -318,7 +318,7 @@
 						    </div>
 			    		</div>
 			    		<div class="col m4 s12">
-			    			<div class="card grey lighten-4">
+			    			<div class="card brown lighten-5">
 					            <div class="card-content grey-text darken-4">
 					              <blockquote>
 					    				<p class="light"><i class="tiny material-icons indigo-text darken-4">live_help</i> Geographical clients measures the degree of internationalization and diversification by region</p>
@@ -340,7 +340,7 @@
 			    	<div class="row title_conf">
 			    	<!-- Facturación -->
 			    		<div class="col m8 s12">
-			    			<div class="card grey lighten-4">
+			    			<div class="card brown lighten-5">
 					            <div class="card-content grey-text darken-4">
 					            	<span class="card-title">Concentración de mis clientes</span>
 					            	<div class="row">
@@ -364,7 +364,7 @@
 					        </div>
 			    		</div>
 			    		<div class="col m4 s12">
-			    			<div class="card grey lighten-4">
+			    			<div class="card brown lighten-5">
 					            <div class="card-content grey-text darken-4">
 					              <blockquote>
 					    				<p class="light"><i class="tiny material-icons indigo-text darken-4">live_help</i> Geographical clients measures the degree of internationalization and diversification by region</p>
@@ -386,7 +386,7 @@
 			    	<div class="row title_conf">
 			    	<!-- Facturación -->
 			    		<div class="col m8 s12">
-			    			<div class="card grey lighten-4">
+			    			<div class="card brown lighten-5">
 					            <div class="card-content grey-text darken-4">
 					            	<span class="card-title">Margen de venta</span>
 					              	<div class="row">
@@ -410,7 +410,7 @@
 					        </div>
 			    		</div>
 			    		<div class="col m4 s12">
-			    			<div class="card grey lighten-4">
+			    			<div class="card brown lighten-5">
 					            <div class="card-content grey-text darken-4">
 					              <blockquote>
 					    				<p class="light"><i class="tiny material-icons indigo-text darken-4">live_help</i> Geographical clients measures the degree of internationalization and diversification by region</p>
@@ -451,10 +451,11 @@
   	var penetration_graph = document.getElementById("penetration_graph");
   	var penetracion_clientes = 0.12
 	var penetracion_clientes_sector = 0.35//{{company.my_sector_penetration}}
+
   	// Como son mis clients
-  	LineGraph(facturacion_graph, {{balance_sells_avg_sector|safe}}, {{balance_sells|safe}});
-  	LineGraph(ebitda_graph, {{balance_ebitda_avg_sector|safe}}, {{balance_ebitda|safe}});
-  	LineGraph(resultado_graph, {{balance_resultado_avg_sector|safe}}, {{balance_resultado|safe}});
+  	LineGraph(facturacion_graph, {{balance_providers_buys_avg_sector|safe}}, {{balance_providers_buys|safe}});
+  	LineGraph(ebitda_graph, {{balance_providers_ebitda_avg_sector|safe}}, {{balance_providers_ebitda|safe}});
+  	LineGraph(resultado_graph, {{balance_providers_resultado_avg_sector|safe}}, {{balance_providers_resultado|safe}});
   	BarGraph(frecuencia_graph); //, {{get_monthly_sells|safe}}, {{get_monthly_sector_avg_sells|safe}});
   	stackedbarchart(penetration_graph, 'hola_2', 'hola_2', penetracion_clientes, penetracion_clientes_sector, 'Penetration')
   	// donut(my_geo_clients, {{ territoriales_clientes }}, ["In your region","Outside your region"]);
@@ -677,7 +678,7 @@
         data: {
             labels: labels,
             datasets: [{
-            label: "Comparables",
+            label: "Avg Comparables sector providers",
             backgroundColor: "rgba(220,220,220,0.5)",
             borderColor: "rgba(220,220,220,0.8)",
             highlightFill: "rgba(220,220,220,0.75)",
@@ -685,7 +686,7 @@
             showTooltip: false, //NEW OPTION DON"T NEED TO INCLUDE IT IF YOU WANT TO DISPLAY BUT WON"T HURT IF YOU DO
             data: data1
         }, {
-            label: "{{company.name|safe}}",
+            label: "Avg {{company.name|safe}} Providers",
             backgroundColor: "rgba(47,79,79,0.5)",
             borderColor: "rgba(47,79,79,0.8)",
             highlightFill: "rgba(47,79,79,0.75)",
