@@ -40,7 +40,7 @@ class HomeView(View):
 		request.session.modified = True
 		queryset = Empresa.objects.all()
 		if request.session.get('company') is None: 
-			company = Empresa.objects.all()[1470-1] #[randint(0, queryset.count() - 1)] ##865
+			company = Empresa.objects.all()[randint(0, queryset.count() - 1)] ##1470 865
 			request.session['company'] = company
 		else:
 			company = request.session.get('company')
@@ -49,12 +49,6 @@ class HomeView(View):
 	def post(self, request, *args, **kwargs):
 		return HttpResponse('<h1>Home POST page</h1>')
 
-def EmpresasListView(request):
-	latest_empresas_list = Empresa.objects.order_by('-created_at')[:10]
-	context = {
-		'latest_empresas_list':latest_empresas_list,
-		'title': "Empresas"}
-	return render(request, 'empresas/empresas_list.html', context)
 
 def EmpresaDetailView(request, pk=None):
 	
@@ -62,7 +56,6 @@ def EmpresaDetailView(request, pk=None):
 	company = request.session.get('company')
 	form = TransferForm()
 	opp_client = request.GET.get("opp_client")
-	print(opp_client)
 	if opp_client:
 		if opp_client=='true':
 			company.recommended_clients.add(empresa)
@@ -73,7 +66,6 @@ def EmpresaDetailView(request, pk=None):
 	checked_client = company.recommended_clients.filter(pk=empresa.pk).count()
 
 	opp_provider = request.GET.get("opp_provider")
-	print(opp_provider)
 	if opp_provider:
 		if opp_provider=='true':
 			company.recommended_providers.add(empresa)

@@ -57,6 +57,26 @@ class Empresa(models.Model):
     def my_sector_penetration_client(self):
         return float(self.get_total_sector_sells())/float(self.balance_clients_payments_avg_sector()[len(self.balance_clients_payments_avg_sector())-1])
 
+    def hhi_providers(self):
+        groub_by = self.get_providers().values('name').annotate(c=Sum('destination_reference__amount')).order_by('c')
+        total = self.get_total_buys()
+        hhi = 0
+        for i, name in enumerate(groub_by):
+            one = float(name['c'])
+            total = float(total)
+            hhi += pow(one/total,2)
+        return hhi
+
+    def hhi_providers_sector(self):
+        groub_by = Empresa.objects.filter(transfers__origin_reference__in=self.get_sector_companies()).values('name').annotate(c=Sum('transfers__amount')).order_by('c')
+        total = self.get_total_sector_buys()
+        hhi = 0
+        for i, name in enumerate(groub_by):
+            one = float(name['c'])
+            total = float(total)
+            hhi += pow(one/total,2)
+        return hhi
+
     def hhi_clients_clients(self):
         groub_by = self.get_clients().values('name').annotate(c=Sum('transfers__amount')).order_by('c')
         total = self.get_total_sells()
@@ -97,6 +117,26 @@ class Empresa(models.Model):
             hhi += pow(one/total,2)
         return hhi
 
+    def hhi_geografical_providers(self):
+        groub_by = self.get_providers().values('territorial').annotate(c=Sum('destination_reference__amount')).order_by('c')
+        total = self.get_total_buys()
+        hhi = 0
+        for i, territorial in enumerate(groub_by):
+            one = float(territorial['c'])
+            total = float(total)
+            hhi += pow(one/total,2)
+        return hhi
+
+    def hhi_geografical_sector_providers(self):
+        groub_by = Empresa.objects.filter(transfers__origin_reference__in=self.get_sector_companies()).values('territorial').annotate(c=Sum('transfers__amount')).order_by('c')
+        total = self.get_total_sector_buys()
+        hhi = 0
+        for i, territorial in enumerate(groub_by):
+            one = float(territorial['c'])
+            total = float(total)
+            hhi += pow(one/total,2)
+        return hhi
+
     def hhi_cnae_clients(self):
         groub_by = self.get_clients().values('cnae').annotate(c=Sum('transfers__amount')).order_by('c')
         total = self.get_total_sells()
@@ -110,6 +150,26 @@ class Empresa(models.Model):
     def hhi_cnae_sector_clients(self):
         groub_by = Empresa.objects.filter(transfers__destination_reference__in=self.get_sector_companies()).values('cnae').annotate(c=Sum('transfers__amount')).order_by('c')
         total = self.get_total_sector_sells()
+        hhi = 0
+        for i, cnae in enumerate(groub_by):
+            one = float(cnae['c'])
+            total = float(total)
+            hhi += pow(one/total,2)
+        return hhi
+
+    def hhi_cnae_providers(self):
+        groub_by = self.get_providers().values('cnae').annotate(c=Sum('destination_reference__amount')).order_by('c')
+        total = self.get_total_buys()
+        hhi = 0
+        for i, cnae in enumerate(groub_by):
+            one = float(cnae['c'])
+            total = float(total)
+            hhi += pow(one/total,2)
+        return hhi
+
+    def hhi_cnae_sector_providers(self):
+        groub_by = Empresa.objects.filter(transfers__origin_reference__in=self.get_sector_companies()).values('cnae').annotate(c=Sum('transfers__amount')).order_by('c')
+        total = self.get_total_sector_buys()
         hhi = 0
         for i, cnae in enumerate(groub_by):
             one = float(cnae['c'])
@@ -137,6 +197,26 @@ class Empresa(models.Model):
             hhi += pow(one/total,2)
         return hhi
 
+    def hhi_temporal_providers(self):
+        groub_by = self.get_monthly_buys_amount()
+        total = self.get_total_buys()
+        hhi = 0
+        for i, cnae in enumerate(groub_by):
+            one = float(cnae['c'])
+            total = float(total)
+            hhi += pow(one/total,2)
+        return hhi
+
+    def hhi_temporal_sector_providers(self):
+        groub_by = self.get_sector_total_monthly_buys_amount()
+        total = self.get_total_sector_buys()
+        hhi = 0
+        for i, cnae in enumerate(groub_by):
+            one = float(cnae['c'])
+            total = float(total)
+            hhi += pow(one/total,2)
+        return hhi
+
     # Helpers de los estados financieros
     # ------------------------------------------------------------------
 
@@ -154,12 +234,31 @@ class Empresa(models.Model):
             return 0
         return float(ebitda)/float(ventas-ebitda)
 
+    def margen_comercial_providers(self):
+        ebitda = self.balance_providers_ebitda().last()['c']
+        ventas = self.balance_providers_sells().last()['c']
+        if float(ventas-ebitda)==0:
+            return 0
+        return float(ebitda)/float(ventas-ebitda)
+
+    def margen_comercial_sector_providers(self):
+        ebitda = self.balance_providers_ebitda_avg_sector().last()['c']
+        ventas = self.balance_providers_sells_avg_sector().last()['c']
+        if float(ventas-ebitda)==0:
+            return 0
+        return float(ebitda)/float(ventas-ebitda)
+
+    def ratio_comercial_providers(self):
+        return 1-self.margen_comercial_providers()
+
+    def ratio_comercial_sector_providers(self):
+        return 1-self.margen_comercial_sector_providers()
+
     def ratio_comercial_clientes(self):
         return 1-self.margen_comercial_clientes()
 
     def ratio_comercial_sector_clientes(self):
         return 1-self.margen_comercial_sector_clientes()
-
 
     def annual_balance_exercises(self):
         return self.estados_financieros.all().values('ejercicio').order_by('ejercicio')
