@@ -114,6 +114,7 @@
     <hr>
     <!-- Graficos para el dashboard... vamos allà!!! vamonos!! -->
     {% if empresa.estados_financieros.last.ejercicio %}
+    <h4 class="light">Últimos ejercicios</h4>
     <div class="row">
         <div class="col s12 m6">
           <div class="card grey lighten-4">
@@ -160,8 +161,113 @@
           </div>
         </div>
     </div>
+    <h4 class="light">Indicadores de la empresa</h4>
+    <h6 class="light">¿Como es el portfolia de clientes y proveedores?</h6>
+    <div class="row">
+      <div class="col s12 m3">
+          <div class="card blue-grey lighten-1">
+            <div class="card-content white-text">
+              <h6 class="light">Clientes</h6>
+              <h4><i class="fa fa-user" aria-hidden="true"></i> {{company.hhi_clients_clients|floatformat:2}}   <small style="color: red"><i class="fa fa-sort-down" aria-hidden="true"></i>  4%</small></h4>
+            </div>
+          </div>
+        </div>
+        <div class="col s12 m3">
+          <div class="card blue-grey lighten-1">
+            <div class="card-content white-text">
+              <h6 class="light">Proveedores</h6>
+              <h4><i class="fa fa-user" aria-hidden="true"></i> {{company.hhi_providers|floatformat:2}}   <small style="color: green"><i class="fa fa-sort-up" aria-hidden="true"></i>  4%</small></h4>
+            </div>
+          </div>
+        </div>
+        <div class="col s12 m6">
+          <div class="card blue-grey lighten-1">
+            <div class="card-content white-text">
+              El Índice de Herfindahl es una medida, empleada en economía, que informa sobre la concentración económica de un mercado. O, inversamente, la medida de falta de competencia en un sistema económico. Un índice elevado expresa un mercado muy concentrado y poco competitivo (valores de 0 a 1).
+            </div>
+          </div>
+        </div>
+    </div>
+    <h6 class="light">¿Dónde trabaja?</h6>
+    <div class="row">
+      <div class="col s12 m3">
+          <div class="card blue-grey lighten-1">
+            <div class="card-content white-text">
+              <h6 class="light">Geográfica clientes</h6>
+              <h4><i class="fa fa-user" aria-hidden="true"></i> {{company.hhi_geografical_clients|floatformat:2}}   <small style="color: red"><i class="fa fa-sort-down" aria-hidden="true"></i>  4%</small></h4>
+            </div>
+          </div>
+        </div>
+        <div class="col s12 m3">
+          <div class="card blue-grey lighten-1">
+            <div class="card-content white-text">
+              <h6 class="light">Geográfica proveedores</h6>
+              <h4><i class="fa fa-user" aria-hidden="true"></i> {{company.hhi_geografical_providers|floatformat:2}}   <small style="color: green"><i class="fa fa-sort-up" aria-hidden="true"></i>  4%</small></h4>
+            </div>
+          </div>
+        </div>
+        <div class="col s12 m6">
+          <div class="card blue-grey lighten-1">
+            <div class="card-content white-text">
+              El Índice de Herfindahl es una medida, empleada en economía, que informa sobre la concentración económica de un mercado. O, inversamente, la medida de falta de competencia en un sistema económico. Un índice elevado expresa un mercado muy concentrado y poco competitivo (valores de 0 a 1).
+            </div>
+          </div>
+        </div>
+    </div>
+    <h6 class="light">¿Trabaja de un modo diversificado en diversos sectores?</h6>
+    <div class="row">
+      <div class="col s12 m3">
+          <div class="card blue-grey lighten-1">
+            <div class="card-content white-text">
+              <h6 class="light">Sectores clientes</h6>
+              <h4><i class="fa fa-user" aria-hidden="true"></i> {{company.hhi_cnae_clients|floatformat:2}}   <small style="color: red"><i class="fa fa-sort-down" aria-hidden="true"></i>  4%</small></h4>
+            </div>
+          </div>
+        </div>
+        <div class="col s12 m3">
+          <div class="card blue-grey lighten-1">
+            <div class="card-content white-text">
+              <h6 class="light">Sectores proveedores</h6>
+              <h4><i class="fa fa-user" aria-hidden="true"></i> {{company.hhi_cnae_providers|floatformat:2}}   <small style="color: green"><i class="fa fa-sort-up" aria-hidden="true"></i>  4%</small></h4>
+            </div>
+          </div>
+        </div>
+        <div class="col s12 m6">
+          <div class="card blue-grey lighten-1">
+            <div class="card-content white-text">
+              El Índice de Herfindahl es una medida, empleada en economía, que informa sobre la concentración económica de un mercado. O, inversamente, la medida de falta de competencia en un sistema económico. Un índice elevado expresa un mercado muy concentrado y poco competitivo (valores de 0 a 1).
+            </div>
+          </div>
+        </div>
+    </div>
+    <h6 class="light">¿Cuál es el mejor momento para empezar a trabajar juntos?</h6>
+    <div class="row">
+      <div class="col s12 m3">
+          <div class="card blue-grey lighten-1">
+            <div class="card-content white-text">
+              <h6 class="light">Estacionalidad clientes</h6>
+              <h4><i class="fa fa-user" aria-hidden="true"></i> {{company.hhi_temporal_clients|floatformat:2}}   <small style="color: red"><i class="fa fa-sort-down" aria-hidden="true"></i>  4%</small></h4>
+            </div>
+          </div>
+        </div>
+        <div class="col s12 m3">
+          <div class="card blue-grey lighten-1">
+            <div class="card-content white-text">
+              <h6 class="light">Estacionalidad proveedores</h6>
+              <h4><i class="fa fa-user" aria-hidden="true"></i> {{company.hhi_temporal_providers|floatformat:2}}   <small style="color: green"><i class="fa fa-sort-up" aria-hidden="true"></i>  4%</small></h4>
+            </div>
+          </div>
+        </div>
+        <div class="col s12 m6">
+          <div class="card blue-grey lighten-1">
+            <div class="card-content white-text">
+              El Índice de Herfindahl es una medida, empleada en economía, que informa sobre la concentración económica de un mercado. O, inversamente, la medida de falta de competencia en un sistema económico. Un índice elevado expresa un mercado muy concentrado y poco competitivo (valores de 0 a 1).
+            </div>
+          </div>
+        </div>
+    </div>
     <!-- Graficos para el dashboard... vamos allà!!! vamonos!! -->
-
+<!-- 
     <h3 class="light">Recent transfers from clients</h3>
 
     {% if empresa.destination_reference.all %}
@@ -171,7 +277,6 @@
                     <tr>
                         <th data-field="origin_id">Origin</th>
                         <th data-field="date">CNAE</th>
-                        <!-- <th data-field="concept">Concept</th> -->
                         <th data-field="amount">Amount</th>
                         <th data-field="balance">Balance</th>
                         <th data-field="destination_id">Destination</th>
@@ -186,7 +291,6 @@
                         <tr>
                             <td><a href="{{ transfer.origin_reference.get_absolute_url }}">{{forloop.counter}} {{ transfer.origin_reference.name }}</a></td>
                             <td>{{ transfer.origin_reference.cnae_2 }}</td>
-                            <!-- <td>{{ transfer.concept }}</td> -->
                             <td>{{ transfer.amount }}</td>
                             <td>{{ transfer.balance }}</td>
                             <td><a href="{{ transfer.destination_reference.get_absolute_url }}">{{transfer.destination_reference.name }}</a></td>
@@ -211,7 +315,6 @@
                 <thead>
                     <tr>
                         <th data-field="origin_id">Origin</th>
-                        <!-- <th data-field="concept">Concept</th> -->
                         <th data-field="amount">Amount</th>
                         <th data-field="balance">Balance</th>
                         <th data-field="destination_id">Destination</th>
@@ -225,7 +328,6 @@
                     {% for transfer in empresa.transfers.all %}
                         <tr>
                             <td><a href="{{ transfer.origin_reference.get_absolute_url }}"> {{forloop.counter}} {{ transfer.origin_reference.name }}</a></td>
-                            <!-- <td>{{ transfer.concept }}</td> -->
                             <td>{{ transfer.amount }}</td>
                             <td>{{ transfer.balance }}</td>
                             <td><a href="{{ transfer.destination_reference.get_absolute_url }}">{{transfer.destination_reference.name }}</a></td>
@@ -280,7 +382,7 @@
         <p>No companies are available.</p>
 
     {% endif %}
-
+ -->
 <!-- 
     <h3 class="light">Add your transfer</h3>
     
