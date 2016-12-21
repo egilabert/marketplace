@@ -44,6 +44,7 @@ INSTALLED_APPS = [
     'allauth.account',
     'allauth.socialaccount',
     'mathfilters',
+    'debug_toolbar',
 
     #Personal apps
     'empresas',
@@ -61,6 +62,8 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'debug_toolbar.middleware.DebugToolbarMiddleware',
+
 ]
 
 ROOT_URLCONF = 'marketplace.urls'
@@ -125,7 +128,6 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-
 # Internationalization
 # https://docs.djangoproject.com/en/1.10/topics/i18n/
 
@@ -155,3 +157,13 @@ STATICFILES_DIRS = [
 ]
 
 DATA_FOLDER = os.path.join(BASE_DIR, 'static/data/')
+
+def show_toolbar(request):
+    if not request.is_ajax() and request.user and request.user.is_staff:
+        return True
+    return False
+
+DEBUG_TOOLBAR_CONFIG = {
+    'SHOW_TOOLBAR_CALLBACK': 'marketplace.settings.show_toolbar',
+    'INSERT_BEFORE': '</body>'
+}

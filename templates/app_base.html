@@ -42,9 +42,7 @@
 
   <!-- More ideas for your <head> here: h5bp.com/d/head-Tips -->
 
-  <!-- All JavaScript at the bottom, except this Modernizr build.
-       Modernizr enables HTML5 elements & feature detects for optimal performance.
-       Create your own custom Modernizr build: www.modernizr.com/download/ -->
+  <!-- All JavaScript at the bottom, except this Modernizr build. -->
   {% compress js %}
   <script src="https://cdnjs.cloudflare.com/ajax/libs/modernizr/2.8.3/modernizr.min.js"></script>
   {% endcompress %}
@@ -52,7 +50,7 @@
 
 
 <body class="{% block body_class %}{% endblock %}" {% block body_attributes %}{% endblock %}>
-{% block body %}
+  {% block body %}
   <!-- Prompt IE 6 users to install Chrome Frame. Remove this if you support IE 6.
        chromium.org/developers/how-tos/chrome-frame-getting-started -->
   <!--[if lt IE 7]>
@@ -69,6 +67,7 @@
   </div>
 
   {% include "side-nav.html" %}
+
   {% if buttons != False %}
        <a href="#" data-activates="slide-out" class="button-collapse show-on-medium top-left" {% block hide %}{% endblock hide %}><i class="material-icons medium white-text">menu</i></a>
        <a label="Exit" href="{% url 'landing' %}" class="show-on-medium positioning" {% block hide_2 %}{% endblock hide_2 %}><i class="material-icons medium white-text">power_settings_new</i></a>
@@ -85,7 +84,7 @@
   <script>window.jQuery || document.write('<script src="{{ STATIC_URL }}js/libs/jquery-2.1.1.min.js"><\/script>')</script>
   <!-- Compiled and minified JavaScript -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.8/js/materialize.min.js"></script>
-  <script src="https://d3js.org/d3.v4.min.js"></script>
+  <!-- <script src="https://d3js.org/d3.v4.min.js"></script> -->
   {% endblock cdn_js %}
   <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/marked/0.3.6/marked.min.js"></script>
   <!-- scripts concatenated and minified via django-compressor -->

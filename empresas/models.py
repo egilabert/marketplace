@@ -58,7 +58,7 @@ class Empresa(models.Model):
         return float(self.get_total_sector_sells())/float(self.balance_clients_payments_avg_sector()[len(self.balance_clients_payments_avg_sector())-1])
 
     def hhi_providers(self):
-        groub_by = self.get_providers().values('name').annotate(c=Sum('destination_reference__amount')).order_by('c')
+        groub_by = self.get_providers().values('name').annotate(c=Sum('destination_reference__amount'))
         total = self.get_total_buys()
         hhi = 0
         for i, name in enumerate(groub_by):
@@ -68,7 +68,7 @@ class Empresa(models.Model):
         return hhi
 
     def hhi_providers_sector(self):
-        groub_by = Empresa.objects.filter(transfers__origin_reference__in=self.get_sector_companies()).values('name').annotate(c=Sum('transfers__amount')).order_by('c')
+        groub_by = Empresa.objects.filter(transfers__origin_reference__in=self.get_sector_companies()).values('name').annotate(c=Sum('transfers__amount'))
         total = self.get_total_sector_buys()
         hhi = 0
         for i, name in enumerate(groub_by):
@@ -78,7 +78,7 @@ class Empresa(models.Model):
         return hhi
 
     def hhi_clients_clients(self):
-        groub_by = self.get_clients().values('name').annotate(c=Sum('transfers__amount')).order_by('c')
+        groub_by = self.get_clients().values('name').annotate(c=Sum('transfers__amount'))
         total = self.get_total_sells()
         hhi = 0
         for i, name in enumerate(groub_by):
@@ -88,7 +88,7 @@ class Empresa(models.Model):
         return hhi
 
     def hhi_clients_sector_clients(self):
-        groub_by = Empresa.objects.filter(transfers__destination_reference__in=self.get_sector_companies()).values('name').annotate(c=Sum('transfers__amount')).order_by('c')
+        groub_by = Empresa.objects.filter(transfers__destination_reference__in=self.get_sector_companies()).values('name').annotate(c=Sum('transfers__amount'))
         total = self.get_total_sector_sells()
         hhi = 0
         for i, name in enumerate(groub_by):
@@ -98,7 +98,7 @@ class Empresa(models.Model):
         return hhi
 
     def hhi_geografical_clients(self):
-        groub_by = self.get_clients().values('territorial').annotate(c=Sum('transfers__amount')).order_by('c')
+        groub_by = self.get_clients().values('territorial').annotate(c=Sum('transfers__amount'))
         total = self.get_total_sells()
         hhi = 0
         for i, territorial in enumerate(groub_by):
@@ -108,7 +108,7 @@ class Empresa(models.Model):
         return hhi
 
     def hhi_geografical_sector_clients(self):
-        groub_by = Empresa.objects.filter(transfers__destination_reference__in=self.get_sector_companies()).values('territorial').annotate(c=Sum('transfers__amount')).order_by('c')
+        groub_by = Empresa.objects.filter(transfers__destination_reference__in=self.get_sector_companies()).values('territorial').annotate(c=Sum('transfers__amount'))
         total = self.get_total_sector_sells()
         hhi = 0
         for i, territorial in enumerate(groub_by):
@@ -118,7 +118,7 @@ class Empresa(models.Model):
         return hhi
 
     def hhi_geografical_providers(self):
-        groub_by = self.get_providers().values('territorial').annotate(c=Sum('destination_reference__amount')).order_by('c')
+        groub_by = self.get_providers().values('territorial').annotate(c=Sum('destination_reference__amount'))
         total = self.get_total_buys()
         hhi = 0
         for i, territorial in enumerate(groub_by):
@@ -128,7 +128,7 @@ class Empresa(models.Model):
         return hhi
 
     def hhi_geografical_sector_providers(self):
-        groub_by = Empresa.objects.filter(transfers__origin_reference__in=self.get_sector_companies()).values('territorial').annotate(c=Sum('transfers__amount')).order_by('c')
+        groub_by = Empresa.objects.filter(transfers__origin_reference__in=self.get_sector_companies()).values('territorial').annotate(c=Sum('transfers__amount'))
         total = self.get_total_sector_buys()
         hhi = 0
         for i, territorial in enumerate(groub_by):
@@ -138,7 +138,7 @@ class Empresa(models.Model):
         return hhi
 
     def hhi_cnae_clients(self):
-        groub_by = self.get_clients().values('cnae').annotate(c=Sum('transfers__amount')).order_by('c')
+        groub_by = self.get_clients().values('cnae').annotate(c=Sum('transfers__amount'))
         total = self.get_total_sells()
         hhi = 0
         for i, cnae in enumerate(groub_by):
@@ -148,7 +148,7 @@ class Empresa(models.Model):
         return hhi
 
     def hhi_cnae_sector_clients(self):
-        groub_by = Empresa.objects.filter(transfers__destination_reference__in=self.get_sector_companies()).values('cnae').annotate(c=Sum('transfers__amount')).order_by('c')
+        groub_by = Empresa.objects.filter(transfers__destination_reference__in=self.get_sector_companies()).values('cnae').annotate(c=Sum('transfers__amount'))
         total = self.get_total_sector_sells()
         hhi = 0
         for i, cnae in enumerate(groub_by):
@@ -158,7 +158,7 @@ class Empresa(models.Model):
         return hhi
 
     def hhi_cnae_providers(self):
-        groub_by = self.get_providers().values('cnae').annotate(c=Sum('destination_reference__amount')).order_by('c')
+        groub_by = self.get_providers().values('cnae').annotate(c=Sum('destination_reference__amount'))
         total = self.get_total_buys()
         hhi = 0
         for i, cnae in enumerate(groub_by):
@@ -168,7 +168,7 @@ class Empresa(models.Model):
         return hhi
 
     def hhi_cnae_sector_providers(self):
-        groub_by = Empresa.objects.filter(transfers__origin_reference__in=self.get_sector_companies()).values('cnae').annotate(c=Sum('transfers__amount')).order_by('c')
+        groub_by = Empresa.objects.filter(transfers__origin_reference__in=self.get_sector_companies()).values('cnae').annotate(c=Sum('transfers__amount'))
         total = self.get_total_sector_buys()
         hhi = 0
         for i, cnae in enumerate(groub_by):
