@@ -390,7 +390,7 @@ class Empresa(models.Model):
         return group_by['avg']
 
     def get_clients(self):
-        return Empresa.objects.filter(transfers__destination_reference=self).annotate(Count('name', distinct=True))
+        return Empresa.objects.filter(transfers__destination_reference=self).prefetch_related('transfers').annotate(Count('name', distinct=True))
 
     def get_sector_clients(self):
         return Empresa.objects.filter(transfers__destination_reference__in=self.get_sector_companies()).annotate(Count('name', distinct=True)).count()

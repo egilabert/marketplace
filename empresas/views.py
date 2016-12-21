@@ -40,11 +40,11 @@ class HomeView(View):
 		request.session.modified = True
 		queryset = Empresa.objects.all()
 		if request.session.get('company') is None: 
-			company = Empresa.objects.all()[randint(0, queryset.count() - 1)] ##1470 865
+			company = 865-1 #Empresa.objects.all()[randint(0, queryset.count() - 1)] ##1470 865
 			request.session['company'] = company
 		else:
 			company = request.session.get('company')
-		return render(request, "empresas/empresas_home.html", {'company': company})
+		return render(request, "empresas/empresas_home.html", {'company': Empresa.objects.all()[company]})
 
 	def post(self, request, *args, **kwargs):
 		return HttpResponse('<h1>Home POST page</h1>')
@@ -53,7 +53,10 @@ class HomeView(View):
 def EmpresaDetailView(request, pk=None):
 	
 	empresa = get_object_or_404(Empresa, pk=pk)
-	company = request.session.get('company')
+	company_id = request.session.get('company')
+	company = Empresa.objects.filter(pk=company_id)
+	company = company.prefetch_related('providers_recommended__clientes_recomendados__estados_financieros','transfers')[0] #'estados_financieros','recommended','recommended__clientes_recomendados'
+
 	form = TransferForm()
 	opp_client = request.GET.get("opp_client")
 	if opp_client:
@@ -114,7 +117,6 @@ def EmpresaDetailView(request, pk=None):
 def OpportunityClientsView(request):
 	
 	company = request.session.get('company')
-	# empresas = company.opportunities.all()
 	context = {
 		'company':company
 		}
@@ -123,7 +125,6 @@ def OpportunityClientsView(request):
 def OpportunityProviderView(request):
 	
 	company = request.session.get('company')
-	# empresas = company.opportunities.all()
 	context = {
 		'company':company
 		}
@@ -131,7 +132,6 @@ def OpportunityProviderView(request):
 
 def CommercialProvidersRecommendationsView(request):
 	empresa = request.session.get('company')
-
 	buttons = False
 	context = {
 		'company':empresa,
@@ -147,10 +147,11 @@ def CommercialProvidersRecommendationsView(request):
 	return render(request, 'empresas/comercial_recommendations_providers.html', context)
 
 def CommercialClientsRecommendationsView(request):
-	
-	empresa = request.session.get('company')
-	buttons = False
+	company_id = request.session.get('company')
+	empresa = Empresa.objects.filter(pk=company_id)
+	empresa = empresa[0] #'estados_financieros','recommended','recommended__clientes_recomendados'
 
+	buttons = False
 	context = {
 		'company':empresa,
 		'balance_sells_avg_sector': json.dumps(list(empresa.balance_clients_sells_avg_sector()), cls=DjangoJSONEncoder),
@@ -213,7 +214,9 @@ def TrasferCreateView(request, empresa_id):
 @login_required
 def ClientView(request):
 	today = timezone.now().date()
-	company = request.session.get('company')
+	company_id = request.session.get('company')
+	company = Empresa.objects.filter(pk=company_id)
+	company = company.prefetch_related('recommended__clientes_recomendados__estados_financieros','transfers')[0] #'estados_financieros','recommended','recommended__clientes_recomendados'
 	recommended_clients = company.recommended.all()
 	sector, region, min_bill, comment = request.GET.get("sector"), request.GET.get("region"), request.GET.get("min_bill"), request.GET.get("comment")
 
@@ -236,7 +239,6 @@ def ClientView(request):
 				"recommended_clients": recommended_clients,
 				"loading_times": request.session['recommended_clients_page']
 			}
-			print(recommended_clients.count())
 			return render(request, "empresas/cards_layout.html", context)
 		else:
 			recommended_clients = company.recommended.all()
@@ -245,18 +247,14 @@ def ClientView(request):
 				"recommended_clients": recommended_clients,
 				"loading_times": request.session['recommended_clients_page']
 			}
-			print(recommended_clients.count())
 			return render(request, "empresas/cards_layout.html", context)
 
 	context = {
 		"company": company, 
 		"title": "Recommended clients",
-		"recommended_clients": recommended_clients,
 		"today": today,
 		"loading_times": request.session['recommended_clients_page']
 	}
-	print("Normal print...")
-	print(company.recommended.all().count())
 	return render(request, "empresas/recommended_clients.html", context)
 
 """-------------------------------------------------------"""
@@ -266,7 +264,10 @@ def ClientView(request):
 @login_required
 def ProviderView(request):
 	today = timezone.now().date()
-	company = request.session.get('company')
+	company_id = request.session.get('company')
+	company = Empresa.objects.filter(pk=company_id)
+	company = company.prefetch_related('providers_recommended__clientes_recomendados__estados_financieros','transfers')[0] #'estados_financieros','recommended','recommended__clientes_recomendados'
+
 	recommended_clients = company.providers_recommended.all()
 	sector, region, min_bill, comment = request.GET.get("sector"), request.GET.get("region"), request.GET.get("min_bill"), request.GET.get("comment")
 
@@ -289,7 +290,6 @@ def ProviderView(request):
 				"recommended_providers": recommended_providers,
 				"loading_times": request.session['recommended_providers_page']
 			}
-			print(recommended_providers.count())
 			return render(request, "empresas/cards_layout.html", context)
 		else:
 			recommended_providers = company.recommended.all()
@@ -298,7 +298,6 @@ def ProviderView(request):
 				"recommended_providers": recommended_providers,
 				"loading_times": request.session['recommended_providers_page']
 			}
-			print(recommended_providers.count())
 			return render(request, "empresas/cards_layout.html", context)
 
 	context = {
@@ -307,8 +306,6 @@ def ProviderView(request):
 		"today": today,
 		"loading_times": request.session['recommended_providers_page']
 	}
-	print("Normal print...")
-	print(company.providers_recommended.all().count())
 	return render(request, "empresas/recommended_providers.html", context)
 
 """-------------------------------------------------------"""
@@ -437,8 +434,6 @@ def EstadosCreate(request):
 	EstadosFinancieros.objects.all().delete()
 
 	for index, row in estados_financieros.iterrows():
-		print "%s: %s" %(index, str(row['ID_IDEFISC']))
-
 		estados_financiero = EstadosFinancieros()
 		try:
 			estados_financiero.empresa = Empresa.objects.get(fiscal_id=str(row['ID_IDEFISC']))
@@ -492,8 +487,6 @@ def TranfersCreate(request):
 		transfer.origin_reference = Empresa.objects.get(fiscal_id=str(row['REFERENCIA_ORIGEN']))
 		transfers_list.append(transfer)
 		if (index % 10000==0) and (index!=0):
-			print(index)
-			print("I'am in!")
 			Transfer.objects.bulk_create(transfers_list)
 			transfers_list = []
 
