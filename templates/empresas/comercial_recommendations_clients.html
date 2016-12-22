@@ -29,31 +29,21 @@
 	6
 	{{company.destination_reference.all.origin_reference.all}}
 	<br> -->
-	<ul id="dropdown1" class="dropdown-content grey-text">
-	  <li><a href="#!" class="black-text">TBD</a></li>
-	  <li><a href="#!" class="black-text">TBD</a></li>
-	  <li class="divider" ></li>
-	  <li><a href="{% url 'landing' %}" class="black-text">Logout<i class="material-icons medium right black-text">power_settings_new</i></a></li>
-	</ul>
-	<nav>
-	  <div class="nav-wrapper grey darken-2">
-	  	<ul class="left">
-		  	<li><a href="#" data-activates="slide-out" id="hamb"><i class="large material-icons white-text">menu</i></a></li>
-	    </ul>
-	    <ul class="right hide-on-med-and-down">
-	      <li><a href="{% url 'empresas:recommendations' %}"  class="white-text">Clients</a></li>
-	      <li><a href="{% url 'empresas:recommendations_providers' %}" class="white-text">Providers</a></li>
-	      <!-- Dropdown Trigger -->
-	      <li><a class="dropdown-button" href="#!" data-activates="dropdown1">
-	      	<div class="chip grey darken-3 white-text">
-    			<img src="{{company.image}}" alt="Contact Person">
-    			{{company.name}}
-  			</div>
-  			<i class="material-icons right">arrow_drop_down</i></a>
-  		</li>
-	    </ul>
-	  </div>
-	</nav>
+	<div class="parallax-container">
+		<h3 class="center-align white-text text-darken-3 light">¿Cómo son tus clientes?</h3>
+		<div class="row center">{{company.name}}</div>
+		<div class="row center">
+
+			<div class="col m4 s1"></div>
+			<div class="col m2 s4">
+				<a href="{% url 'empresas:recommendations' %}" id="download-button" class="btn-large waves-effect waves-light transparent pad_top border-white">Clientes  </a>
+			</div>
+			<div class="col m2 s4">
+				<a href="{% url 'empresas:recommendations_providers' %}" id="download-button" class="btn-large waves-effect waves-light transparent pad_top border-white">Proveedores  </a>
+			</div>
+        </div>
+	    <div class="parallax"><img src="{% static 'images/testimonial-bg.jpg' %}"></div>
+	</div>
 
 	<div class="row">
 				<!-- {{company.ebitda_avg_sector}} -->

@@ -147,7 +147,6 @@ def CommercialProvidersRecommendationsView(request):
 	empresa = Empresa.objects.filter(pk=company_id)
 	empresa = empresa.prefetch_related('estados_financieros','transfers__destination_reference', 'destination_reference__origin_reference',
 		'transfers__destination_reference')[0]
-	buttons = False
 	context = {
 		'company':empresa,
 		'balance_providers_buys_avg_sector': json.dumps(list(empresa.balance_providers_buys_avg_sector()), cls=DjangoJSONEncoder),
@@ -156,7 +155,6 @@ def CommercialProvidersRecommendationsView(request):
 		'balance_providers_ebitda': json.dumps(list(empresa.balance_providers_ebitda()), cls=DjangoJSONEncoder),
 		'balance_providers_resultado_avg_sector': json.dumps(list(empresa.balance_providers_resultado_avg_sector()), cls=DjangoJSONEncoder),
 		'balance_providers_resultado': json.dumps(list(empresa.balance_providers_resultado()), cls=DjangoJSONEncoder),
-		'buttons': buttons
 		}
 
 	return render(request, 'empresas/comercial_recommendations_providers.html', context)
@@ -172,7 +170,6 @@ def CommercialClientsRecommendationsView(request):
     #     to_attr="get_clients"
     # ))[0] #'estados_financieros','recommended','recommended__clientes_recomendados'
 
-	buttons = False
 	context = {
 		'company':empresa,
 		'balance_sells_avg_sector': json.dumps(list(empresa.balance_clients_sells_avg_sector()), cls=DjangoJSONEncoder),
@@ -181,7 +178,6 @@ def CommercialClientsRecommendationsView(request):
 		'balance_ebitda': json.dumps(list(empresa.balance_clients_ebitda()), cls=DjangoJSONEncoder),
 		'balance_resultado_avg_sector': json.dumps(list(empresa.balance_clients_resultado_avg_sector()), cls=DjangoJSONEncoder),
 		'balance_resultado': json.dumps(list(empresa.balance_clients_resultado()), cls=DjangoJSONEncoder),
-		'buttons': buttons
 		}
 
 	return render(request, 'empresas/comercial_recommendations_clients.html', context)

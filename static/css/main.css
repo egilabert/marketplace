@@ -125,6 +125,11 @@
   border: 1px solid !important;
 }
 
+.border-grey {
+  border-color: grey !important;
+  border: 1px solid !important;
+}
+
 .numberCircle {
     border-radius: 50%;
     behavior: url(PIE.htc); /* remove if you don't care about IE8 */
