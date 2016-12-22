@@ -1,4 +1,4 @@
-from django.http import HttpResponse, HttpResponseRedirect
+from django.http import HttpResponse, HttpResponseRedirect, HttpRequest
 from django.conf import settings
 from django.shortcuts import render, get_object_or_404
 from django.contrib.auth.decorators import login_required
@@ -53,7 +53,16 @@ class HomeView(View):
 
 @login_required
 def EmpresaDetailView(request, pk=None):
-	
+	referrer = request.META['HTTP_REFERER']
+	if int(pk) == int(request.session.get('company')):
+		key = 'self'
+	elif 'clients' in referrer:
+		key = 'client'
+	elif 'providers' in referrer:	
+		key = 'provider'
+	else:
+		key = 'none'
+
 	empresa = get_object_or_404(Empresa, pk=pk)
 	company_id = request.session.get('company')
 	company = Empresa.objects.filter(pk=company_id)
@@ -107,6 +116,7 @@ def EmpresaDetailView(request, pk=None):
 			amortizaciones.append(0)
 
 	context = {
+		'referrer': key,
 		'company': company,
 		'empresa':empresa,
 		'form': form,
@@ -145,8 +155,14 @@ def OpportunityProviderView(request):
 def CommercialProvidersRecommendationsView(request):
 	company_id = request.session.get('company')
 	empresa = Empresa.objects.filter(pk=company_id)
+	print(empresa)
+	print(empresa[0])
 	empresa = empresa.prefetch_related('estados_financieros','transfers__destination_reference', 'destination_reference__origin_reference',
-		'transfers__destination_reference')[0]
+	Prefetch(
+        "hola",
+        queryset=Empresa.objects.filter(transfers__destination_reference=empresa[0]).annotate(Count('name', distinct=True)),
+        to_attr="clients"
+    ))[0]
 	context = {
 		'company':empresa,
 		'balance_providers_buys_avg_sector': json.dumps(list(empresa.balance_providers_buys_avg_sector()), cls=DjangoJSONEncoder),
@@ -163,12 +179,9 @@ def CommercialProvidersRecommendationsView(request):
 def CommercialClientsRecommendationsView(request):
 	company_id = request.session.get('company')
 	empresa = Empresa.objects.filter(pk=company_id)
-	empresa = empresa.prefetch_related('estados_financieros','transfers__destination_reference', 'destination_reference__origin_reference')[0]
-    # Prefetch(
-    #     "transfers",
-    #     queryset=Empresa.objects.filter(transfers__destination_reference=empresa).annotate(Count('name', distinct=True)),
-    #     to_attr="get_clients"
-    # ))[0] #'estados_financieros','recommended','recommended__clientes_recomendados'
+	empresa = empresa.prefetch_related(None)
+	empresa = empresa.prefetch_related('transfers', 'destination_reference', 'destination_reference__origin_reference')[0]
+	print(empresa.__dict__)
 
 	context = {
 		'company':empresa,
