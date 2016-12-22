@@ -1,3 +1,6 @@
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
+
 from __future__ import unicode_literals
 import numpy as np
 from django.db import models
@@ -5,11 +8,13 @@ from  django.core.urlresolvers import reverse
 from django.conf import settings
 from django.db.models import Avg, Max, Min, Count, Sum, F
 from django.db.models.functions import TruncMonth
+from django.db.models import Prefetch
 
 # ------------------------------------------------------------------
 # Model Empresa
 # Tabla y funciones del model Empresa
 # ------------------------------------------------------------------
+
 class Empresa(models.Model):
 
     fiscal_id = models.CharField(max_length=30)
@@ -46,7 +51,17 @@ class Empresa(models.Model):
     providers = models.ManyToManyField("self", blank=True)
     recommended_clients = models.ManyToManyField("self", blank=True)
     recommended_providers = models.ManyToManyField("self", blank=True)
-    oportunities = models.ManyToManyField("self", blank=True)
+    oportunities = models.ManyToManyField("self", blank=True)   
+
+    def last_with_py(self, qs):
+        print(list(qs))
+        return 1 #list(qs)[len(list(qs))-1]
+
+    def respuesta_sabia(self):
+        if self.hhi_clients_clients() < 0.1:
+            return "El Índice de Herfindahl es una medida, empleada en economía, que informa sobre la concentración económica de un mercado. O, inversamente, la medida de falta de competencia en un sistema económico. Un índice elevado expresa un mercado muy concentrado y poco competitivo (valores de 0 a 1)."
+        else:
+            return "hola"
 
     def my_penetration_client(self):
         return float(self.get_total_sells())/float(self.balance_clients_payments()[len(self.balance_clients_payments())-1])
@@ -390,7 +405,7 @@ class Empresa(models.Model):
         return group_by['avg']
 
     def get_clients(self):
-        return Empresa.objects.filter(transfers__destination_reference=self).prefetch_related('transfers').annotate(Count('name', distinct=True))
+        return Empresa.objects.filter(transfers__destination_reference=self).annotate(Count('name', distinct=True))
 
     def get_sector_clients(self):
         return Empresa.objects.filter(transfers__destination_reference__in=self.get_sector_companies()).annotate(Count('name', distinct=True)).count()

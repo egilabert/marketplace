@@ -1,4 +1,4 @@
-{% extends "debug.html" %}
+{% extends "app_base.html" %}
 {% load static %}
 {% load humanize %}
 {% load mathfilters %}
@@ -11,6 +11,24 @@
 {% block content %}
 	
 	<!-- Dropdown Structure -->
+	<!-- 1
+	{{company.estados_financieros.all}}
+	<br>
+	2
+	{{company.transfers.all}}
+	<br>
+	{{company.destination_reference.all}}
+	3
+	<br>
+	4
+	{{company.transfers__destination_reference}}
+	<br>
+	5
+	{{company.destination_reference.all}}
+	<br>
+	6
+	{{company.destination_reference.all.origin_reference.all}}
+	<br> -->
 	<ul id="dropdown1" class="dropdown-content grey-text">
 	  <li><a href="#!" class="black-text">TBD</a></li>
 	  <li><a href="#!" class="black-text">TBD</a></li>

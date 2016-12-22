@@ -22,8 +22,9 @@ import os
 import json
 import random
 import posixpath
-from django.db.models import Avg, Max, Min, Count
+from django.db.models import Avg, Max, Min, Count, Sum
 from django.core.serializers.json import DjangoJSONEncoder
+from django.db.models import Prefetch
 
 """-------------------------------------------------------"""
 """				EMPRESAS VIEWS 							  """
@@ -43,19 +44,25 @@ class HomeView(View):
 			company = 865-1 #Empresa.objects.all()[randint(0, queryset.count() - 1)] ##1470 865
 			request.session['company'] = company
 		else:
-			company = request.session.get('company')
+			company_id = request.session.get('company')
+			company = Empresa.objects.filter(pk=company_id).first()
 		return render(request, "empresas/empresas_home.html", {'company': Empresa.objects.all()[company]})
 
 	def post(self, request, *args, **kwargs):
 		return HttpResponse('<h1>Home POST page</h1>')
 
-
+@login_required
 def EmpresaDetailView(request, pk=None):
 	
 	empresa = get_object_or_404(Empresa, pk=pk)
 	company_id = request.session.get('company')
 	company = Empresa.objects.filter(pk=company_id)
-	company = company.prefetch_related('providers_recommended__clientes_recomendados__estados_financieros','transfers')[0] #'estados_financieros','recommended','recommended__clientes_recomendados'
+	company = company.prefetch_related('providers_recommended__clientes_recomendados__estados_financieros','transfers',
+	Prefetch(
+        "estados_financieros",
+        queryset=EstadosFinancieros.objects.filter(empresa=company).last(),
+        to_attr="ultimos_estados_financieros"
+    ))[0] 
 
 	form = TransferForm()
 	opp_client = request.GET.get("opp_client")
@@ -114,24 +121,32 @@ def EmpresaDetailView(request, pk=None):
 
 	return render(request, 'empresas/empresa_detail.html', context)
 
+@login_required
 def OpportunityClientsView(request):
 	
-	company = request.session.get('company')
+	company_id = request.session.get('company')
+	company = Empresa.objects.filter(pk=company_id).first()
 	context = {
 		'company':company
 		}
 	return render(request, 'empresas/opportunities_clients.html', context)
 
+@login_required
 def OpportunityProviderView(request):
 	
-	company = request.session.get('company')
+	company_id = request.session.get('company')
+	company = Empresa.objects.filter(pk=company_id).first()
 	context = {
 		'company':company
 		}
 	return render(request, 'empresas/opportunities_providers.html', context)
 
+@login_required
 def CommercialProvidersRecommendationsView(request):
-	empresa = request.session.get('company')
+	company_id = request.session.get('company')
+	empresa = Empresa.objects.filter(pk=company_id)
+	empresa = empresa.prefetch_related('estados_financieros','transfers__destination_reference', 'destination_reference__origin_reference',
+		'transfers__destination_reference')[0]
 	buttons = False
 	context = {
 		'company':empresa,
@@ -146,10 +161,16 @@ def CommercialProvidersRecommendationsView(request):
 
 	return render(request, 'empresas/comercial_recommendations_providers.html', context)
 
+@login_required
 def CommercialClientsRecommendationsView(request):
 	company_id = request.session.get('company')
 	empresa = Empresa.objects.filter(pk=company_id)
-	empresa = empresa[0] #'estados_financieros','recommended','recommended__clientes_recomendados'
+	empresa = empresa.prefetch_related('estados_financieros','transfers__destination_reference', 'destination_reference__origin_reference')[0]
+    # Prefetch(
+    #     "transfers",
+    #     queryset=Empresa.objects.filter(transfers__destination_reference=empresa).annotate(Count('name', distinct=True)),
+    #     to_attr="get_clients"
+    # ))[0] #'estados_financieros','recommended','recommended__clientes_recomendados'
 
 	buttons = False
 	context = {
@@ -169,6 +190,7 @@ def CommercialClientsRecommendationsView(request):
 """				TRANFERS VIEWS 							  """
 """-------------------------------------------------------"""
 
+@login_required
 def TransferListView(request):
 	latest_tranfers_list = Transfer.objects.order_by('-operation_data')[:10]
 	context = {
@@ -216,7 +238,13 @@ def ClientView(request):
 	today = timezone.now().date()
 	company_id = request.session.get('company')
 	company = Empresa.objects.filter(pk=company_id)
-	company = company.prefetch_related('recommended__clientes_recomendados__estados_financieros','transfers')[0] #'estados_financieros','recommended','recommended__clientes_recomendados'
+	company = company.prefetch_related('recommended__clientes_recomendados','transfers',
+	Prefetch(
+        "estados_financieros",
+        queryset=EstadosFinancieros.objects.filter(empresa=company).last(),
+        to_attr="ultimos_estados_financieros"
+    ))[0]
+
 	recommended_clients = company.recommended.all()
 	sector, region, min_bill, comment = request.GET.get("sector"), request.GET.get("region"), request.GET.get("min_bill"), request.GET.get("comment")
 
