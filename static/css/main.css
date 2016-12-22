@@ -1,5 +1,8 @@
 {% load staticfiles %}
 
+.padding_top {
+  padding-top: 100px !important;
+}
 .title_conf {
   margin-top: 0;
   padding-top: 5px;

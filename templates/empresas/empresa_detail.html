@@ -65,7 +65,7 @@
           <div class="col s12 m9">
           <div class="row">
               <div class="col s9">
-                  <h3>{{ empresa.name }}</h3>
+                  <h4>{{ empresa.name }}</h4>
               </div>
               <div class="col s3">
                   {% if referrer == 'client' %}
@@ -83,16 +83,15 @@
                   {% endif %}
               </div>
           </div>
-
           <div class="row">
               <div class="col s12 m3">
                 <div class="card blue-grey darken-1">
                   <div class="card-content white-text">
                     <span class="card-title">Último ejercicio</span>
-                    {% if empresa.ultimos_estados_financieros.ejercicio %}
-                    <h5 class="align-right orange-text darken-1">{{empresa.ultimos_estados_financieros.ejercicio}}</h5>
+                    {% if empresa.estados_financieros.last.ejercicio %}
+                    <h5 class="align-right orange-text darken-1">{{empresa.estados_financieros.last.ejercicio}}</h5>
                     {% else %}
-                    <h4 class="align-right orange-text darken-1">Sin balances</h4>
+                    <h5 class="align-right orange-text darken-1">Sin balances</h5>
                     {% endif %}
                   </div>
                 </div>
@@ -101,10 +100,10 @@
                 <div class="card blue-grey darken-1">
                   <div class="card-content white-text">
                     <span class="card-title">Ventas</span>
-                    {% if empresa.ultimos_estados_financieros.ventas %}
-                    <h5 class="align-right orange-text darken-1">{{empresa.ultimos_estados_financieros.ventas|floatformat|intcomma}}€</h5>
+                    {% if empresa.estados_financieros.last.ventas %}
+                    <h5 class="align-right orange-text darken-1">{{empresa.estados_financieros.last.ventas|floatformat|intcomma}}€</h5>
                     {% else %}
-                    <h4 class="align-right orange-text darken-1">-</h4>
+                    <h5 class="align-right orange-text darken-1">-</h5>
                     {% endif %}
                   </div>
                 </div>
@@ -113,10 +112,10 @@
                 <div class="card blue-grey darken-1">
                   <div class="card-content white-text">
                     <span class="card-title">EBITDA</span>
-                    {% if empresa.ultimos_estados_financieros.ebitda %}
-                    <h5 class="align-right orange-text darken-1">{{empresa.ultimos_estados_financieros.ebitda|floatformat|intcomma}}€</h5>
+                    {% if empresa.estados_financieros.last.ebitda %}
+                    <h5 class="align-right orange-text darken-1">{{empresa.estados_financieros.last.ebitda|floatformat|intcomma}}€</h5>
                     {% else %}
-                    <h4 class="align-right orange-text darken-1">-</h4>
+                    <h5 class="align-right orange-text darken-1">-</h5>
                     {% endif %}
                   </div>
                 </div>
@@ -134,7 +133,7 @@
                     <h5 class="align-right green-text darken-1">{{empresa.hats_alert}}</h5>
                     {% endif %}
                     {% else %}
-                    <h4 class="align-right orange-text darken-1">-</h4>
+                    <h5 class="align-right orange-text darken-1">-</h5>
                     {% endif %}
                   </div>
                 </div>
@@ -159,7 +158,7 @@
           </div>
           <hr>
           <!-- Graficos para el dashboard... vamos allà!!! vamonos!! -->
-          {% if empresa.ultimos_estados_financieros.ejercicio %}
+          {% if empresa.estados_financieros %}
           <h4 class="light">Últimos ejercicios</h4>
           <div class="row">
               <div class="col s12 m6">
@@ -208,13 +207,14 @@
               </div>
           </div>
           <h4 class="light">Indicadores de la empresa</h4>
-          <h6 class="light">¿Como es el portfolia de clientes y proveedores?</h6>
+          <div class="divider"></div>
+          <h5 class="light">¿Como es el portfolio de clientes y proveedores? ¿Cuan diversificado está?</h5>
           <div class="row">
             <div class="col s12 m3">
                 <div class="card blue-grey lighten-1">
                   <div class="card-content white-text">
                     <h6 class="light">Clientes</h6>
-                    <h4><i class="fa fa-user" aria-hidden="true"></i> {{company.hhi_clients_clients|floatformat:2}}   <small style="color: red"><i class="fa fa-sort-down" aria-hidden="true"></i>  4%</small></h4>
+                    <h4><i class="fa fa-user" aria-hidden="true"></i> {{empresa.hhi_clients_clients|floatformat:2}}   <small style="color: red"><i class="fa fa-sort-down" aria-hidden="true"></i>  4%</small></h4>
                   </div>
                 </div>
               </div>
@@ -222,35 +222,40 @@
                 <div class="card blue-grey lighten-1">
                   <div class="card-content white-text">
                     <h6 class="light">Proveedores</h6>
-                    <h4><i class="fa fa-user" aria-hidden="true"></i> {{company.hhi_providers|floatformat:2}}   <small style="color: green"><i class="fa fa-sort-up" aria-hidden="true"></i>  4%</small></h4>
+                    <h4><i class="fa fa-user" aria-hidden="true"></i> {{empresa.hhi_providers|floatformat:2}}   <small style="color: green"><i class="fa fa-sort-up" aria-hidden="true"></i>  4%</small></h4>
                   </div>
                 </div>
               </div>
               <div class="col s12 m6">
                 <div class="card blue-grey lighten-1">
                   <div class="card-content white-text">
-                    {{company.respuesta_sabia}}
+                    {{empresa.respuesta_sabia}}
                   </div>
                 </div>
               </div>
           </div>
-          <h6 class="light">¿Dónde trabaja?</h6>
+
+          <h5 class="light">¿Cuál es el mejor momento para empezar a trabajar juntos?</h5>
           <div class="row">
-            <div class="col s12 m3">
-                <div class="card blue-grey lighten-1">
-                  <div class="card-content white-text">
-                    <h6 class="light">Geográfica clientes</h6>
-                    <h4><i class="fa fa-user" aria-hidden="true"></i> {{company.hhi_geografical_clients|floatformat:2}}   <small style="color: red"><i class="fa fa-sort-down" aria-hidden="true"></i>  4%</small></h4>
+            <div class="col m12 s12">
+                <div class="card grey lighten-4">
+                      <div class="card-content grey-text darken-4">
+                        <span class="card-title">Identifica la estacionalidad contactar en el momento idóneo</span>
+                          <canvas id="frecuencia_graph" width="300" height="150"></canvas>
+                      </div>
                   </div>
-                </div>
               </div>
-              <div class="col s12 m3">
-                <div class="card blue-grey lighten-1">
-                  <div class="card-content white-text">
-                    <h6 class="light">Geográfica proveedores</h6>
-                    <h4><i class="fa fa-user" aria-hidden="true"></i> {{company.hhi_geografical_providers|floatformat:2}}   <small style="color: green"><i class="fa fa-sort-up" aria-hidden="true"></i>  4%</small></h4>
+          </div>
+
+          <h5 class="light">¿Dónde trabaja?</h5>
+          <div class="row">
+            <div class="col m6 s12">
+                <div class="card grey lighten-4">
+                      <div class="card-content grey-text darken-4">
+                        <span class="card-title">Grado de deslocalización</span>
+                          <canvas id="geo_graph" width="200" height="200"></canvas>
+                      </div>
                   </div>
-                </div>
               </div>
               <div class="col s12 m6">
                 <div class="card blue-grey lighten-1">
@@ -260,23 +265,16 @@
                 </div>
               </div>
           </div>
-          <h6 class="light">¿Trabaja de un modo diversificado en diversos sectores?</h6>
+
+          <h5 class="light">¿Trabaja de un modo diversificado en diversos sectores?</h5>
           <div class="row">
-            <div class="col s12 m3">
-                <div class="card blue-grey lighten-1">
-                  <div class="card-content white-text">
-                    <h6 class="light">Sectores clientes</h6>
-                    <h4><i class="fa fa-user" aria-hidden="true"></i> {{company.hhi_cnae_clients|floatformat:2}}   <small style="color: red"><i class="fa fa-sort-down" aria-hidden="true"></i>  4%</small></h4>
+            <div class="col m6 s12">
+                <div class="card grey lighten-4">
+                      <div class="card-content grey-text darken-4">
+                        <span class="card-title">Grado de diversificación</span>
+                          <canvas id="sector_graph" width="200" height="200"></canvas>
+                      </div>
                   </div>
-                </div>
-              </div>
-              <div class="col s12 m3">
-                <div class="card blue-grey lighten-1">
-                  <div class="card-content white-text">
-                    <h6 class="light">Sectores proveedores</h6>
-                    <h4><i class="fa fa-user" aria-hidden="true"></i> {{company.hhi_cnae_providers|floatformat:2}}   <small style="color: green"><i class="fa fa-sort-up" aria-hidden="true"></i>  4%</small></h4>
-                  </div>
-                </div>
               </div>
               <div class="col s12 m6">
                 <div class="card blue-grey lighten-1">
@@ -286,32 +284,7 @@
                 </div>
               </div>
           </div>
-          <h6 class="light">¿Cuál es el mejor momento para empezar a trabajar juntos?</h6>
-          <div class="row">
-            <div class="col s12 m3">
-                <div class="card blue-grey lighten-1">
-                  <div class="card-content white-text">
-                    <h6 class="light">Estacionalidad clientes</h6>
-                    <h4><i class="fa fa-user" aria-hidden="true"></i> {{company.hhi_temporal_clients|floatformat:2}}   <small style="color: red"><i class="fa fa-sort-down" aria-hidden="true"></i>  4%</small></h4>
-                  </div>
-                </div>
-              </div>
-              <div class="col s12 m3">
-                <div class="card blue-grey lighten-1">
-                  <div class="card-content white-text">
-                    <h6 class="light">Estacionalidad proveedores</h6>
-                    <h4><i class="fa fa-user" aria-hidden="true"></i> {{company.hhi_temporal_providers|floatformat:2}}   <small style="color: green"><i class="fa fa-sort-up" aria-hidden="true"></i>  4%</small></h4>
-                  </div>
-                </div>
-              </div>
-              <div class="col s12 m6">
-                <div class="card blue-grey lighten-1">
-                  <div class="card-content white-text">
-                    El Índice de Herfindahl es una medida, empleada en economía, que informa sobre la concentración económica de un mercado. O, inversamente, la medida de falta de competencia en un sistema económico. Un índice elevado expresa un mercado muy concentrado y poco competitivo (valores de 0 a 1).
-                  </div>
-                </div>
-              </div>
-          </div>
+          
       </div>
     </div>
 
@@ -422,6 +395,141 @@
 
 {% block alt_js %}
 <script type="text/javascript">
+    var frecuencia_graph = document.getElementById("frecuencia_graph");
+    var geo_graph = document.getElementById("geo_graph");
+    var sector_graph = document.getElementById("sector_graph");
+
+    
+    BarGraph(frecuencia_graph, {{monthly_sells|safe}} );
+    DonutGraph(geo_graph, {{clients_by_region|safe}} );
+    DonutGraphSector(sector_graph, {{clients_by_sector|safe}});
+
+    function DonutGraph(div, data_you) {
+      var labels_1 = ["En su región","Fuera de su región"];
+      var data_1=[0,0];
+      var you = data_you
+      you.forEach(function(packet, i) {
+        if (packet.territorial=="{{empresa.territorial}}") {
+           data_1[0] += packet.c;
+        } else {
+           data_1[1] += packet.c;
+        }
+      });
+      donut(div, data_1, labels_1)
+    }
+
+    function DonutGraphSector(div, data_you) {
+      var labels_1 = ["En su sector","Fuera de su sector"];
+      var data_1=[0,0];
+      var you = data_you
+      you.forEach(function(packet, i) {
+        console.log(packet.cnae)
+        console.log("{{empresa.cnae}}")
+        if (packet.cnae=="{{empresa.cnae}}") {
+           data_1[0] += packet.c;
+        } else {
+           data_1[1] += packet.c;
+        }
+      });
+      donut(div, data_1, labels_1)
+    }
+
+    function BarGraph(div, data_you) {
+      var labels_1 = [];
+      var data_1=[];
+      var you = data_you
+      you.forEach(function(packet, i) {
+         labels_1.push(packet.month);
+         data_1.push(packet.c);
+      });
+      barchart(div, labels_1, data_1, '# Transferencias / mes')
+    }
+
+    function donut(div, data, labels)
+        {
+           var myDoughnutChart = new Chart(div, {
+            type: 'doughnut',
+            data: {
+                labels: labels,
+                datasets: [
+                    {
+                        data: data,
+                        backgroundColor: [
+                            'rgba(128,128,128, 0.5)',
+                            'rgba(47,79,79, 0.5)',
+                            'rgba(119,136,153, 0.5)',
+                            'rgba(192,192,192, 0.5)',
+                        'rgba(169,180,169, 0.5)',
+                        'rgba(128,128,128, 0.5)',
+                        'rgba(220,220,220, 0.5)',
+                        ],
+                        hoverBackgroundColor: [
+                            'rgba(128,128,128, 1)',
+                            'rgba(47,79,79, 1)',
+                            'rgba(119,136,153, 1)',
+                            'rgba(192,192,192, 1)',
+                        'rgba(169,180,169, 1)',
+                        'rgba(128,128,128, 1)',
+                        'rgba(220,220,220, 1)',
+                        ]
+                    }]
+            },
+            animation:{
+                animateScale:true
+            }
+        });
+    }
+
+
+    function BarGraph(div, data_you) {
+      var labels_1 = [];
+      var data_1=[];
+      var you = data_you
+      you.forEach(function(packet, i) {
+         labels_1.push(packet.month);
+         data_1.push(packet.c);
+      });
+      barchart(div, labels_1, data_1, '# Transferencias / mes')
+    }
+
+    function barchart(div, labels_1, data_1, title)
+        {
+          var myChart = new Chart(div, {
+            type: 'bar',
+            data: {
+                labels: labels_1,
+                datasets: [{
+                    label: "{{company.name|safe}}",
+                    data: data_1,
+                    backgroundColor: 'rgba(47,79,79, 0.2)',
+                    borderColor: 'rgba(47,79,79, 1)',
+                    borderWidth: 2
+                }]
+            },
+            options: {
+                legend: {
+                    display: false,
+                    labels: {
+                        fontColor: 'rgb(255, 99, 132)'
+                    }
+                },
+                title: {
+                    display: true,
+                    text: title
+                },
+                responsive: true,
+                scales: {
+                    yAxes: [{
+                        ticks: {
+                            beginAtZero:true
+                        }
+                    }]
+                }
+            }
+        });
+      }
+
+
     var empresa_id = {{empresa.id}};
 
     $("#add_client" ).click(function() {

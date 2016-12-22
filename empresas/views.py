@@ -41,7 +41,7 @@ class HomeView(View):
 		request.session.modified = True
 		queryset = Empresa.objects.all()
 		if request.session.get('company') is None: 
-			company = 865-1 #Empresa.objects.all()[randint(0, queryset.count() - 1)] ##1470 865
+			company = randint(0, queryset.count() - 1) ##1470 865 865-1 
 			request.session['company'] = company
 		else:
 			company_id = request.session.get('company')
@@ -63,15 +63,10 @@ def EmpresaDetailView(request, pk=None):
 	else:
 		key = 'none'
 
-	empresa = get_object_or_404(Empresa, pk=pk)
+	empresa = Empresa.objects.filter(pk=pk)
 	company_id = request.session.get('company')
-	company = Empresa.objects.filter(pk=company_id)
-	company = company.prefetch_related('providers_recommended__clientes_recomendados__estados_financieros','transfers',
-	Prefetch(
-        "estados_financieros",
-        queryset=EstadosFinancieros.objects.filter(empresa=company).last(),
-        to_attr="ultimos_estados_financieros"
-    ))[0] 
+	company = Empresa.objects.filter(pk=company_id)[0]
+	empresa = empresa.prefetch_related('estados_financieros','transfers')[0]
 
 	form = TransferForm()
 	opp_client = request.GET.get("opp_client")
@@ -123,6 +118,9 @@ def EmpresaDetailView(request, pk=None):
 		'ventas': json.dumps(ventas),
 		'ebitda': json.dumps(ebitda),
 		'depreciaciones': json.dumps(depreciaciones),
+		'clients_by_sector': json.dumps(list(empresa.clients_by_sector()), cls=DjangoJSONEncoder),
+		'clients_by_region': json.dumps(list(empresa.clients_by_region()), cls=DjangoJSONEncoder),
+		'monthly_sells': json.dumps(list(empresa.get_monthly_sells()), cls=DjangoJSONEncoder),
 		'amortizaciones': json.dumps(amortizaciones),
 		'resultado_explotacion': json.dumps(resultado_explotacion),
 		'fechas': json.dumps(fechas),
@@ -250,7 +248,7 @@ def ClientView(request):
 	company = company.prefetch_related('recommended__clientes_recomendados','transfers',
 	Prefetch(
         "estados_financieros",
-        queryset=EstadosFinancieros.objects.filter(empresa=company).last(),
+        queryset=EstadosFinancieros.objects.filter(empresa=company),
         to_attr="ultimos_estados_financieros"
     ))[0]
 

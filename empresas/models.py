@@ -58,7 +58,7 @@ class Empresa(models.Model):
         return 1 #list(qs)[len(list(qs))-1]
 
     def respuesta_sabia(self):
-        if self.hhi_clients_clients() < 0.1:
+        if self.hhi_clients_clients() > -0.1:
             return "El Índice de Herfindahl es una medida, empleada en economía, que informa sobre la concentración económica de un mercado. O, inversamente, la medida de falta de competencia en un sistema económico. Un índice elevado expresa un mercado muy concentrado y poco competitivo (valores de 0 a 1)."
         else:
             return "hola"
@@ -489,6 +489,18 @@ class Empresa(models.Model):
     def get_qs_providers(self,qs):
         return Empresa.objects.filter(destination_reference__in=Transfer.objects.filter(origin_reference__in=qs)).annotate(Count('name', distinct=True))
 
+    def clients_by_region(self):
+        return Empresa.objects.filter(transfers__destination_reference=self).all().values('territorial').annotate(c=Sum('transfers__amount'))
+
+    def providers_by_region(self):
+        return Empresa.objects.filter(destination_reference__origin_reference=self).all().values('territorial').annotate(c=Sum('transfers__amount'))
+
+    def clients_by_sector(self):
+        print(Empresa.objects.filter(transfers__destination_reference=self).all().values('cnae').annotate(c=Sum('transfers__amount')))
+        return Empresa.objects.filter(transfers__destination_reference=self).all().values('cnae').annotate(c=Sum('transfers__amount'))
+
+    def providers_by_sector(self):
+        return Empresa.objects.filter(destination_reference__origin_reference=self).all().values('cnae').annotate(c=Sum('transfers__amount'))
     # General Helpers
     # ------------------------------------------------------------------
 
