@@ -157,7 +157,7 @@ def CommercialProvidersRecommendationsView(request):
 	print(empresa[0])
 	empresa = empresa.prefetch_related('estados_financieros','transfers__destination_reference', 'destination_reference__origin_reference',
 	Prefetch(
-        "hola",
+        "transfers__destination_reference",
         queryset=Empresa.objects.filter(transfers__destination_reference=empresa[0]).annotate(Count('name', distinct=True)),
         to_attr="clients"
     ))[0]
