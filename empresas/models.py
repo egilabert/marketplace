@@ -64,7 +64,9 @@ class Empresa(models.Model):
             return "hola"
 
     def my_penetration_client(self):
-        return float(self.get_total_sells())/float(self.balance_clients_payments()[len(self.balance_clients_payments())-1])
+        if self.balance_clients_payments():
+            return float(self.get_total_sells())/float(self.balance_clients_payments()[len(self.balance_clients_payments())-1])
+        return 0
 
     def my_penetration_provider(self):
         if self.balance_providers_sells():
