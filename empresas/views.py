@@ -140,6 +140,16 @@ def OpportunityClientsView(request):
 	return render(request, 'empresas/opportunities_clients.html', context)
 
 @login_required
+def FinancialRiskRecommendationsView(request):
+	
+	company_id = request.session.get('company')
+	company = Empresa.objects.filter(pk=company_id).first()
+	context = {
+		'company':company
+		}
+	return render(request, 'empresas/financial_risk.html', context)
+
+@login_required
 def OpportunityProviderView(request):
 	
 	company_id = request.session.get('company')
