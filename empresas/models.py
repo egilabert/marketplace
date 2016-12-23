@@ -67,7 +67,9 @@ class Empresa(models.Model):
         return float(self.get_total_sells())/float(self.balance_clients_payments()[len(self.balance_clients_payments())-1])
 
     def my_penetration_provider(self):
-        return float(self.get_total_buys())/float(list(self.balance_providers_sells())[len(list(self.balance_providers_sells()))-1]['c'])
+        if self.balance_providers_sells():
+            return float(self.get_total_buys())/float(list(self.balance_providers_sells())[len(list(self.balance_providers_sells()))-1]['c'])
+        return 0
 
     def my_sector_penetration_client(self):
         return float(self.get_total_sector_sells())/float(self.balance_clients_payments_avg_sector()[len(self.balance_clients_payments_avg_sector())-1])
