@@ -162,7 +162,12 @@ def OpportunityProviderView(request):
 def CommercialProvidersRecommendationsView(request):
 	company_id = request.session.get('company')
 	empresa = Empresa.objects.filter(pk=company_id)
-	empresa = empresa.prefetch_related('estados_financieros','transfers__destination_reference', 'destination_reference__origin_reference')[0]
+	empresa = empresa.prefetch_related('estados_financieros','transfers__destination_reference', 'destination_reference__origin_reference',
+	Prefetch(
+        "transfers__destination_reference",
+        queryset=Empresa.objects.filter(transfers__destination_reference=empresa[0]).annotate(Count('name', distinct=True)),
+        to_attr="clients"
+    ))[0]
 	context = {
 		'company':empresa,
 		'balance_providers_buys_avg_sector': json.dumps(list(empresa.balance_providers_buys_avg_sector()), cls=DjangoJSONEncoder),
@@ -179,9 +184,9 @@ def CommercialProvidersRecommendationsView(request):
 def CommercialClientsRecommendationsView(request):
 	company_id = request.session.get('company')
 	empresa = Empresa.objects.filter(pk=company_id)
-	empresa = empresa.prefetch_related('transfers','estados_financieros')[0]
+	empresa = empresa.prefetch_related(None)
+	empresa = empresa.prefetch_related('transfers', 'destination_reference', 'destination_reference__origin_reference')[0]
 	print(empresa.__dict__)
-	print(empresa.clients.__dict__)
 
 	context = {
 		'company':empresa,

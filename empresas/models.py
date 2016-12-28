@@ -93,6 +93,7 @@ class Empresa(models.Model):
     temp_margen_comercial_providers = None
     temp_margen_comercial_sector_providers = None
     temp_average_transfer_to_provider = None
+    temp_balance_clients_ebitda_avg_sector = None
 
     def last_with_py(self, qs):
         print(list(qs))
@@ -330,7 +331,8 @@ class Empresa(models.Model):
             ebitda = self.balance_clients_ebitda_avg_sector().last().get('c', 0)
             ventas = self.balance_clients_sells_avg_sector().last().get('c', 0)
             if float(ventas-ebitda)==0:
-                return 0
+                self.temp_margen_comercial_sector_clientes = 0
+                return self.temp_margen_comercial_sector_clientes
             self.temp_margen_comercial_sector_clientes = float(ebitda)/float(ventas-ebitda)
         return self.temp_margen_comercial_sector_clientes
 
@@ -471,7 +473,9 @@ class Empresa(models.Model):
         return self.temp_balance_clients_ebitda
 
     def balance_clients_ebitda_avg_sector(self):
-        return EstadosFinancieros.objects.filter(empresa__in=Empresa.objects.filter(transfers__destination_reference__in=self.get_sector_companies())).values('ejercicio').annotate(c=Avg('ebitda')).order_by('ejercicio')
+        if self.temp_balance_clients_ebitda_avg_sector is None:
+            self.temp_balance_clients_ebitda_avg_sector = EstadosFinancieros.objects.filter(empresa__in=Empresa.objects.filter(transfers__destination_reference__in=self.get_sector_companies())).values('ejercicio').annotate(c=Avg('ebitda')).order_by('ejercicio')
+        return self.temp_balance_clients_ebitda_avg_sector
 
     def balance_providers_ebitda(self):
         if self.temp_balance_providers_ebitda is None:
