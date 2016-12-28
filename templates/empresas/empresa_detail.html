@@ -113,7 +113,7 @@
                   <div class="card-content white-text">
                     <span class="card-title">EBITDA</span>
                     {% if empresa.estados_financieros.last.ebitda %}
-                    <h5 class="align-right orange-text darken-1">{{empresa.estados_financieros.last.ebitda|floatformat|intcomma}}€</h5>
+                    <h5 class="align-right orange-text darken-1">{{empresa.estados_financieros.all|floatformat|intcomma}}€</h5>
                     {% else %}
                     <h5 class="align-right orange-text darken-1">-</h5>
                     {% endif %}
@@ -206,7 +206,7 @@
                 </div>
               </div>
           </div>
-          <h4 class="light">Indicadores de la empresa</h4>
+          <h4 class="light">Información adicional de interés</h4>
           <div class="divider"></div>
           <h5 class="light">¿Como es el portfolio de clientes y proveedores? ¿Cuan diversificado está?</h5>
           <div class="row">

@@ -50,7 +50,7 @@
     
     //Abril el formulario de filtros de clientes recommendados
     
-    $('#client_form_button').click(function() {
+    $('.client_form_button').click(function() {
       $('#modal_clients').modal('open');
     });
 
@@ -203,12 +203,12 @@
     });
 
     //entrada en tempos de en la landing de la Network B2B
-    $( ".fadding" ).fadeIn( 1500, function() {
-      $( ".fadding_2" ).fadeIn( 700, function() {
-        $( ".fadding_3" ).fadeIn( "slow", function() {
-        });
-      });
-    });
+    // $( ".fadding" ).fadeIn( 1500, function() {
+    //   $( ".fadding_2" ).fadeIn( 700, function() {
+    //     $( ".fadding_3" ).fadeIn( "slow", function() {
+    //     });
+    //   });
+    // });
     
   }); // end of document ready
 })(jQuery); // end of jQuery name space

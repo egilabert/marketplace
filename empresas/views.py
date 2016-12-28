@@ -30,26 +30,22 @@ from django.db.models import Prefetch
 """				EMPRESAS VIEWS 							  """
 """-------------------------------------------------------"""
 
-@method_decorator(login_required, name='dispatch')
-class HomeView(View):
-	def get(self, request, *args, **kwargs):
-		try:
-			del request.session['company']
-			del request.session['recommended_clients_page']
-		except:
-			pass
-		request.session.modified = True
-		queryset = Empresa.objects.all()
-		if request.session.get('company') is None: 
-			company = randint(0, queryset.count() - 1) ##1470 865 865-1 
-			request.session['company'] = company
-		else:
-			company_id = request.session.get('company')
-			company = Empresa.objects.filter(pk=company_id).first()
-		return render(request, "empresas/empresas_home.html", {'company': Empresa.objects.all()[company]})
-
-	def post(self, request, *args, **kwargs):
-		return HttpResponse('<h1>Home POST page</h1>')
+@login_required
+def HomeView(request):
+	try:
+		del request.session['company']
+		del request.session['recommended_clients_page']
+	except:
+		pass
+	request.session.modified = True
+	queryset = Empresa.objects.all()
+	if request.session.get('company') is None: 
+		company = randint(0, queryset.count() - 1) ##1470 865 865-1 
+		request.session['company'] = company
+	else:
+		company_id = request.session.get('company')
+		company = Empresa.objects.filter(pk=company_id).first()
+	return render(request, "empresas/empresas_home.html", {'company': Empresa.objects.all()[company]})
 
 @login_required
 def EmpresaDetailView(request, pk=None):
@@ -143,9 +139,12 @@ def OpportunityClientsView(request):
 def FinancialRiskRecommendationsView(request):
 	
 	company_id = request.session.get('company')
-	company = Empresa.objects.filter(pk=company_id).first()
+	company = Empresa.objects.filter(pk=company_id)
+	company = company.prefetch_related('estados_financieros')[0]
+	ultimos_eeff = company.estados_financieros.reverse()[0]
 	context = {
-		'company':company
+		'company':company,
+		'ultimos_eeff': ultimos_eeff
 		}
 	return render(request, 'empresas/financial_risk.html', context)
 
@@ -153,7 +152,7 @@ def FinancialRiskRecommendationsView(request):
 def OpportunityProviderView(request):
 	
 	company_id = request.session.get('company')
-	company = Empresa.objects.filter(pk=company_id).first()
+	company = Empresa.objects.filter(pk=company_id)
 	context = {
 		'company':company
 		}
@@ -163,14 +162,7 @@ def OpportunityProviderView(request):
 def CommercialProvidersRecommendationsView(request):
 	company_id = request.session.get('company')
 	empresa = Empresa.objects.filter(pk=company_id)
-	print(empresa)
-	print(empresa[0])
-	empresa = empresa.prefetch_related('estados_financieros','transfers__destination_reference', 'destination_reference__origin_reference',
-	Prefetch(
-        "transfers__destination_reference",
-        queryset=Empresa.objects.filter(transfers__destination_reference=empresa[0]).annotate(Count('name', distinct=True)),
-        to_attr="clients"
-    ))[0]
+	empresa = empresa.prefetch_related('estados_financieros','transfers__destination_reference', 'destination_reference__origin_reference')[0]
 	context = {
 		'company':empresa,
 		'balance_providers_buys_avg_sector': json.dumps(list(empresa.balance_providers_buys_avg_sector()), cls=DjangoJSONEncoder),
@@ -187,9 +179,9 @@ def CommercialProvidersRecommendationsView(request):
 def CommercialClientsRecommendationsView(request):
 	company_id = request.session.get('company')
 	empresa = Empresa.objects.filter(pk=company_id)
-	empresa = empresa.prefetch_related(None)
-	empresa = empresa.prefetch_related('transfers', 'destination_reference', 'destination_reference__origin_reference')[0]
+	empresa = empresa.prefetch_related('transfers','estados_financieros')[0]
 	print(empresa.__dict__)
+	print(empresa.clients.__dict__)
 
 	context = {
 		'company':empresa,

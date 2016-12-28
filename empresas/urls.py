@@ -22,7 +22,7 @@ from .views import (HomeView,
 
 urlpatterns = [
 
-    url(r'^$', HomeView.as_view(), name='empresas_home'),
+    url(r'^$', HomeView, name='empresas_home'),
     #url(r'^create/$', EmpresaDetailView, name='empresa_create'),
     url(r'^(?P<pk>\d+)/$', EmpresaDetailView, name='detail'),
     url(r'^empresas/client_opportunities/$', OpportunityClientsView, name='client_opportunities'),

@@ -178,6 +178,13 @@
       height: 500px;
 }
 
+.bottom_positioning {
+  position: fixed;
+  overflow: visible;
+  bottom: -100px;
+  left: 0;
+}
+
 .positioning {
   position: fixed;
   overflow: visible;
