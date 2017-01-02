@@ -40,12 +40,12 @@ def HomeView(request):
 	request.session.modified = True
 	queryset = Empresa.objects.all()
 	if request.session.get('company') is None: 
-		company = randint(0, queryset.count() - 1) ##1470 865 865-1 
+		company = 1492 #randint(0, queryset.count() - 1) ##1470 865 865-1 
 		request.session['company'] = company
 	else:
 		company_id = request.session.get('company')
 		company = Empresa.objects.filter(pk=company_id).first()
-	return render(request, "empresas/empresas_home.html", {'company': Empresa.objects.all()[company]})
+	return render(request, "empresas/empresas_home.html", {'company': Empresa.objects.all()[company-1]})
 
 @login_required
 def EmpresaDetailView(request, pk=None):
@@ -145,9 +145,9 @@ def FinancialRiskRecommendationsView(request):
 		ultimos_eeff = company.estados_financieros.reverse()[0]
 	except:
 		ultimos_eeff = Empresa()
-	print(CIRBE.objects.filter(empresa__in=company.get_sector_companies().all()).aggregate(c=Avg('corto_plazo_dispuesto'))['c'])
 	context = {
 		'company':company,
+		'productos_variable': company.productos_con_tipo_variable().all(),
 		'ultimos_eeff': ultimos_eeff
 		}
 	return render(request, 'empresas/financial_risk.html', context)

@@ -12,6 +12,7 @@ from django.db.models import Prefetch
 from calendar import monthrange
 from datetime import datetime, timedelta
 from django.utils.timezone import utc
+import random
 
 # ------------------------------------------------------------------
 # Model Empresa
@@ -104,8 +105,8 @@ class Empresa(models.Model):
     temp_deuda_largo = None
     temp_deuda_corto = None
 
-    def last_with_py(self, qs):
-        return 1 #list(qs)[len(list(qs))-1]
+    def productos_con_tipo_variable(self):
+        return Productos.objects.filter(empresa=self, desc_producto__icontains='var')
 
     def respuesta_sabia(self):
         if self.hhi_clients_clients() > -0.1:
@@ -505,11 +506,17 @@ class Empresa(models.Model):
     def balance_stock_avg_sector(self):
         return EstadosFinancieros.objects.filter(empresa__in=self.get_sector_companies().all()).exclude(existencias=0).values('ejercicio').annotate(c=Avg('existencias')).order_by('ejercicio')
 
-    def balance_debt(self):
+    def balance_deudores(self):
         return self.estados_financieros.all().values('ejercicio').annotate(c=Sum('deudores')).order_by('ejercicio')
 
-    def balance_debt_avg_sector(self):
+    def balance_deudores_avg_sector(self):
         return EstadosFinancieros.objects.filter(empresa__in=self.get_sector_companies().all()).exclude(deudores=0).values('ejercicio').annotate(c=Avg('deudores')).order_by('ejercicio')
+
+    def balance_acreedores_comerciales(self):
+        return self.estados_financieros.all().values('ejercicio').annotate(c=Sum('acreedores_comerciales')).order_by('ejercicio')
+
+    def balance_acreedores_comerciales_avg_sector(self):
+        return EstadosFinancieros.objects.filter(empresa__in=self.get_sector_companies().all()).exclude(acreedores_comerciales=0).values('ejercicio').annotate(c=Avg('acreedores_comerciales')).order_by('ejercicio')
 
     # Helpers de transferencias
     # ------------------------------------------------------------------
@@ -690,7 +697,7 @@ class Empresa(models.Model):
 
     def deuda_corto_sector(self):
         if self.temp_deuda_corto_sector is None:
-            self.temp_deuda_corto_sector = CIRBE.objects.filter(empresa__in=self.get_sector_companies().all()).exclude(corto_plazo_dispuesto=0).aggregate(c=Avg('corto_plazo_dispuesto'))
+            self.temp_deuda_corto_sector = CIRBE.objects.filter(empresa__in=self.get_sector_companies().all()).aggregate(c=Avg('corto_plazo_dispuesto'))
         return self.temp_deuda_corto_sector['c']
 
     def deuda_corto_pond(self):
@@ -733,12 +740,55 @@ class Empresa(models.Model):
             return float(self.deuda_largo_sector()+self.deuda_corto())/float(self.balance_sells_avg_sector()[len(self.balance_sells_avg_sector())-1]['c'])
         return 0
 
-    def gastos_financieros_pond(self):
-        return self.estados_financieros[len(self.estados_financieros)-1]['c']/float(self.balance_sells()[len(self.balance_sells())-1]['c'])
+    def gastos_financiero(self):
+        if self.deuda_total():
+            return self.deuda_total()*random.uniform(0.03, 0.06)
+        return 0
+
+    def gastos_financiero_sector(self):
+        if self.deuda_total_sector():
+            return self.deuda_total_sector()*random.uniform(0.04, 0.05)
+        return 0
+
+    def costes_financiacion(self):
+        if self.deuda_total():
+            return self.gastos_financiero()/self.deuda_total()
+        return 0
+
+    def costes_financiacion_sector(self):
+        if self.deuda_total_sector():
+            return self.gastos_financiero_sector()/self.deuda_total_sector()
+        return 0
 
     def deuda_largo_sector_pond(self):
         if len(self.balance_sells_avg_sector()) > 0 and float(self.balance_sells_avg_sector()[len(self.balance_sells_avg_sector())-1]['c']) > 0:
             return float(self.deuda_largo_sector())/float(self.balance_sells_avg_sector()[len(self.balance_sells_avg_sector())-1]['c'])
+        return 0
+
+    def ratio_corto_largo(self):
+        return float(self.deuda_corto()) / float(self.deuda_largo())
+
+    def ratio_sector_corto_largo(self):
+        return self.deuda_corto_sector() / self.deuda_largo_sector()
+
+    def dias_a_cobrar(self):
+        if len(self.balance_sells()) > 0 and self.balance_deudores():
+            return 365*(self.balance_deudores()[len(self.balance_deudores())-1]['c'] / self.balance_sells()[len(self.balance_sells())-1]['c'])
+        return 0
+
+    def dias_a_cobrar_sector(self):
+        if len(self.balance_sells_avg_sector()) > 0 and self.balance_deudores_avg_sector():
+            return 365*(self.balance_deudores_avg_sector()[len(self.balance_deudores_avg_sector())-1]['c'] / self.balance_sells_avg_sector()[len(self.balance_sells_avg_sector())-1]['c'])
+        return 0
+
+    def dias_a_pagar(self):
+        if len(self.balance_buys()) > 0 and self.balance_acreedores_comerciales():
+            return 365*(self.balance_acreedores_comerciales()[len(self.balance_acreedores_comerciales())-1]['c'] / self.balance_buys()[len(self.balance_buys())-1]['c'])
+        return 0
+
+    def dias_a_pagar_sector(self):
+        if len(self.balance_buys_avg_sector()) > 0 and self.balance_acreedores_comerciales_avg_sector():
+            return 365*(self.balance_acreedores_comerciales_avg_sector()[len(self.balance_acreedores_comerciales_avg_sector())-1]['c'] / self.balance_buys_avg_sector()[len(self.balance_buys_avg_sector())-1]['c'])
         return 0
 
     # Helpers de Django
@@ -831,11 +881,12 @@ class Productos(models.Model):
     temp_plazo_total = None
     temp_plazo_remanente = None
     temp_cuota_mensual = None
+    temp_cuota_mensual_mas_1 = None
 
     def plazo_total(self):
         if self.temp_plazo_total is None:
             if self.fecha_vencimiento and self.fecha_formalizacion:
-                self.temp_plazo_total = self.monthdelta(self.fecha_formalizacion, self.fecha_vencimiento)
+                self.temp_plazo_total = self.monthdelta(self.fecha_formalizacion, self.fecha_vencimiento) + 1
             else:
                 self.temp_plazo_total = 0
         return self.temp_plazo_total
@@ -844,7 +895,7 @@ class Productos(models.Model):
         if self.temp_plazo_remanente is None:
             if self.fecha_vencimiento:
                 now = datetime.utcnow().replace(tzinfo=utc)
-                self.temp_plazo_remanente = self.monthdelta(datetime.date(now), self.fecha_vencimiento)
+                self.temp_plazo_remanente = self.monthdelta(datetime.date(now), self.fecha_vencimiento) + 1
             else:
                 self.temp_plazo_remanente = 0
         return self.temp_plazo_remanente
@@ -856,6 +907,14 @@ class Productos(models.Model):
             else:
                 self.temp_cuota_mensual = 0
         return self.temp_cuota_mensual
+
+    def cuota_mensual_mas_1(self):
+        if self.temp_cuota_mensual_mas_1 is None:
+            if self.interes_revisado and self.plazo_remanente and self.dispuesto:
+                self.temp_cuota_mensual_mas_1 = np.pmt((self.interes_revisado+0.01)/12, self.plazo_remanente(), -self.dispuesto)
+            else:
+                self.temp_cuota_mensual_mas_1 = 0
+        return self.temp_cuota_mensual_mas_1
 
     def monthdelta(self, d1, d2):
         delta = 0
