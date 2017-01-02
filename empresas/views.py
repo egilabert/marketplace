@@ -8,7 +8,7 @@ from django.contrib.admin.views.decorators import staff_member_required
 from django.contrib.staticfiles.templatetags.staticfiles import static
 import pandas as pd
 from django.core.urlresolvers import reverse
-from .models import Empresa, Transfer, EstadosFinancieros, Productos
+from .models import Empresa, Transfer, EstadosFinancieros, Productos, CIRBE
 import dateutil.parser
 from .forms import TransferForm
 import datetime
@@ -116,7 +116,7 @@ def EmpresaDetailView(request, pk=None):
 		'depreciaciones': json.dumps(depreciaciones),
 		'clients_by_sector': json.dumps(list(empresa.clients_by_sector()), cls=DjangoJSONEncoder),
 		'clients_by_region': json.dumps(list(empresa.clients_by_region()), cls=DjangoJSONEncoder),
-		'monthly_sells': json.dumps(list(empresa.get_monthly_sells()), cls=DjangoJSONEncoder),
+		'monthly_sells': json.dumps(list(empresa.get_monthly_sells_amount()), cls=DjangoJSONEncoder),
 		'amortizaciones': json.dumps(amortizaciones),
 		'resultado_explotacion': json.dumps(resultado_explotacion),
 		'fechas': json.dumps(fechas),
@@ -140,8 +140,12 @@ def FinancialRiskRecommendationsView(request):
 	
 	company_id = request.session.get('company')
 	company = Empresa.objects.filter(pk=company_id)
-	company = company.prefetch_related('estados_financieros')[0]
-	ultimos_eeff = company.estados_financieros.reverse()[0]
+	company = company.prefetch_related('estados_financieros','cirbe','productos')[0]
+	try:
+		ultimos_eeff = company.estados_financieros.reverse()[0]
+	except:
+		ultimos_eeff = Empresa()
+	print(CIRBE.objects.filter(empresa__in=company.get_sector_companies().all()).aggregate(c=Avg('corto_plazo_dispuesto'))['c'])
 	context = {
 		'company':company,
 		'ultimos_eeff': ultimos_eeff
@@ -354,7 +358,7 @@ def ProviderView(request):
 """				DATA GENERATOR 							  """
 """-------------------------------------------------------"""
 
-@login_required
+@staff_member_required
 def EmpresasCreate(request):
 	# ===============================================================
 
@@ -406,7 +410,7 @@ def EmpresasCreate(request):
 	return HttpResponse("Empresas loaded")
 
 
-@login_required
+@staff_member_required
 def ProductosCreate(request):
 	fake = Factory.create('es_ES')
 
@@ -465,7 +469,7 @@ def ProductosCreate(request):
 	return HttpResponse("Productos loaded")
 
 
-@login_required
+@staff_member_required
 def EstadosCreate(request):
 	# ===============================================================
 	# Importantdo datos financieros
@@ -489,21 +493,58 @@ def EstadosCreate(request):
 			estados_financiero.fecha_balance = dateutil.parser.parse(row['ID_FCH_BALANCE'])
 		except:
 			pass
-		estados_financiero.ventas = float(row['VENTAS'])
-		estados_financiero.depreciaciones = float(row['DEPRECIACIONES'])
-		estados_financiero.amortizaciones = float(row['AMORTIZACIONES'])
-		estados_financiero.ebitda = float(row['EBITDA'])
-		estados_financiero.resultado_explotacion = float(row['RESULTADO_EXPLOTACION'])
-		estados_financiero.existencias = float(row['EXISTENCIAS'])
-		estados_financiero.deudores = float(row['DEUDORES_COMERCIALES'])
-		estados_financiero.periodificaciones_ac = float(row['PERIODIFICACIONES_AC'])
-		estados_financiero.provisiones_cp = float(row['PROVISIONES_CP'])
-		estados_financiero.acreedores_comerciales = float(row['ACREEDORES_COMERCIALES'])
-		estados_financiero.PERIODIFICACIONES_PC = float(row['PERIODIFICACIONES_PC'])
+		estados_financiero.ventas = float(row['VENTAS'] or 0)
+		estados_financiero.depreciaciones = float(row['DEPRECIACIONES'] or 0)
+		estados_financiero.amortizaciones = float(row['AMORTIZACIONES'] or 0)
+		estados_financiero.ebitda = float(row['EBITDA'] or 0)
+		estados_financiero.resultado_explotacion = float(row['RESULTADO_EXPLOTACION'] or 0)
+		estados_financiero.existencias = float(row['EXISTENCIAS'] or 0)
+		estados_financiero.deudores = float(row['DEUDORES_COMERCIALES'] or 0)
+		estados_financiero.periodificaciones_ac = float(row['PERIODIFICACIONES_AC'] or 0)
+		estados_financiero.provisiones_cp = float(row['PROVISIONES_CP'] or 0)
+		estados_financiero.acreedores_comerciales = float(row['ACREEDORES_COMERCIALES'] or 0)
+		estados_financiero.PERIODIFICACIONES_PC = float(row['PERIODIFICACIONES_PC'] or 0)
 		estados_financiero.save()
 	return HttpResponse("Estados financieros loaded")
 
-@login_required
+@staff_member_required
+def CirbeCreate(request):
+	# ===============================================================
+	# Importantdo datos financieros
+
+	link = settings.DATA_FOLDER+'cirbe.csv'
+	cirbe_data = pd.read_csv(link, sep=';', decimal=',', thousands='.', encoding='utf-8') # read empresas data
+	cirbe_data = cirbe_data.astype(object).where(pd.notnull(cirbe_data), None)
+	CIRBE.objects.all().delete()
+
+	for index, row in cirbe_data.iterrows():
+		cirbe = CIRBE()
+		try:
+			cirbe.empresa = Empresa.objects.get(fiscal_id=str(row['ID_IDEFISC']))
+			print(cirbe.empresa)
+		except Empresa.DoesNotExist:
+			print('================================= Allahu!!!! ==================================')
+			cirbe.empresa = None
+		cirbe.cirbe_concedido = int(row['CIRBE_CONCEDIDO'] or 0)
+		cirbe.cirbe_dispuesto = int(row['CIRBE_DISPUESTO'] or 0)
+		cirbe.largo_plazo_concedido = int(row['LP_C'] or 0)
+		cirbe.largo_plazo_dispuesto = int(row['LP_D'] or 0)
+		cirbe.corto_plazo_concedido = int(row['CP_C'] or 0)
+		cirbe.corto_plazo_dispuesto = int(row['CP_D'] or 0)
+		cirbe.d_concedido = int(row['D_C'] or 0)
+		cirbe.d_dispuesto = int(row['D_D'] or 0)
+		cirbe.avales_concedido = int(row['AV_CONCEDIDO'] or 0)
+		cirbe.avales_dispuesto = int(row['AV_D'] or 0)
+		cirbe.leasing_concedido = int(row['LEAS_CONCEDIDO'] or 0)
+		cirbe.leasing_dispuesto = int(row['L_D'] or 0)
+		cirbe.sr_concedido = int(row['SR_C'] or 0)
+		cirbe.sr_dispuesto = int(row['SR_D'] or 0)
+		cirbe.moroso = int(row['MOROSO'] or 0)
+		cirbe.save()
+
+	return HttpResponse("CIRBE loaded")
+
+@staff_member_required
 def TranfersCreate(request):
 	# ===============================================================
 	# Importantdo transferencias.......
@@ -534,7 +575,7 @@ def TranfersCreate(request):
 
 	return HttpResponse("Transferencias loaded")
 
-@login_required
+@staff_member_required
 def RecommendationsCreate(request):
 	# ===============================================================
 
@@ -556,7 +597,7 @@ def RecommendationsCreate(request):
 
 # =====================================================================================
 
-@method_decorator(login_required, name='dispatch')
+@method_decorator(staff_member_required, name='dispatch')
 class DataGenerator(View):
 
 	def get(self, request, *args, **kwargs):

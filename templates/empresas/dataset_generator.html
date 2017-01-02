@@ -10,11 +10,13 @@ Generación de datos
 
 <div class="row padding_full">
 	<h1 class="center">Generate the data</h1>
-		<div class="col s1 center">
-  		</div>
 		<div class="col s2 center">
 			<a class="waves-effect waves-light btn" id="empresas_button">Empresas</a>
 			<div id="empresa_response"></div>
+  		</div>
+  		<div class="col s1 center">
+			<a class="waves-effect waves-light btn" id="cirbe_button">CIRBE</a>
+			<div id="cirbe_response"></div>
   		</div>
 		<div class="col s2 center">
 			<a class="waves-effect waves-light btn" id="productos_button">Productos</a>
@@ -31,8 +33,6 @@ Generación de datos
 		<div class="col s2 center">
 			<a class="waves-effect waves-light btn" id="recommedations_button">Recommedations</a>
 			<div id="recommedations_response"></div>
-  		</div>
-		<div class="col s1 center">
   		</div>
 </div>
 
@@ -61,6 +61,25 @@ Generación de datos
 				.done( function (responseText) {
 		            // Triggered if response status code is 200 (OK)
 		            $('#empresa_response').html(responseText);
+		         })
+		         .fail( function (jqXHR, status, error) {
+		            // Triggered if response status code is NOT 200 (OK)
+		            alert(jqXHR.responseText);
+		         })
+		         .always( function() {
+		            // Always run after .done() or .fail()
+		            $('p:first').after('<p>Thank you.</p>');
+		         });
+
+	});
+
+	$( "#cirbe_button" ).click(function() {
+		$.ajax({
+			url: '/empresas/generatedata/cirbe/',
+			type: 'get'})
+				.done( function (responseText) {
+		            // Triggered if response status code is 200 (OK)
+		            $('#cirbe_response').html(responseText);
 		         })
 		         .fail( function (jqXHR, status, error) {
 		            // Triggered if response status code is NOT 200 (OK)

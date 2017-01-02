@@ -9,6 +9,9 @@ from django.conf import settings
 from django.db.models import Avg, Max, Min, Count, Sum, F
 from django.db.models.functions import TruncMonth
 from django.db.models import Prefetch
+from calendar import monthrange
+from datetime import datetime, timedelta
+from django.utils.timezone import utc
 
 # ------------------------------------------------------------------
 # Model Empresa
@@ -94,9 +97,14 @@ class Empresa(models.Model):
     temp_margen_comercial_sector_providers = None
     temp_average_transfer_to_provider = None
     temp_balance_clients_ebitda_avg_sector = None
+    temp_deuda_total = None
+    temp_deuda_total_sector = None
+    temp_deuda_corto_sector = None
+    temp_deuda_largo_sector = None
+    temp_deuda_largo = None
+    temp_deuda_corto = None
 
     def last_with_py(self, qs):
-        print(list(qs))
         return 1 #list(qs)[len(list(qs))-1]
 
     def respuesta_sabia(self):
@@ -385,63 +393,63 @@ class Empresa(models.Model):
         return self.estados_financieros.all().values('ejercicio').annotate(c=Sum('resultado_explotacion')).order_by('ejercicio')
 
     def resultado_explotacion_avg_sector(self):
-        return EstadosFinancieros.objects.filter(empresa__in=self.get_sector_companies().all()).values('ejercicio').annotate(c=Avg('resultado_explotacion')).order_by('ejercicio')
+        return EstadosFinancieros.objects.filter(empresa__in=self.get_sector_companies().all()).exclude(resultado_explotacion=0).values('ejercicio').annotate(c=Avg('resultado_explotacion')).order_by('ejercicio')
 
     def balance_clients_resultado(self):
-        return EstadosFinancieros.objects.filter(empresa__in=self.get_clients()).values('ejercicio').annotate(c=Avg('resultado_explotacion')).order_by('ejercicio')
+        return EstadosFinancieros.objects.filter(empresa__in=self.get_clients()).exclude(resultado_explotacion=0).values('ejercicio').annotate(c=Avg('resultado_explotacion')).order_by('ejercicio')
 
     def balance_clients_resultado_avg_sector(self):
-        return EstadosFinancieros.objects.filter(empresa__in=Empresa.objects.filter(transfers__destination_reference__in=self.get_sector_companies())).values('ejercicio').annotate(c=Avg('resultado_explotacion')).order_by('ejercicio')
+        return EstadosFinancieros.objects.filter(empresa__in=Empresa.objects.filter(transfers__destination_reference__in=self.get_sector_companies())).exclude(resultado_explotacion=0).values('ejercicio').annotate(c=Avg('resultado_explotacion')).order_by('ejercicio')
 
     def balance_providers_resultado(self):
-        return EstadosFinancieros.objects.filter(empresa__in=self.get_providers()).values('ejercicio').annotate(c=Avg('resultado_explotacion')).order_by('ejercicio')
+        return EstadosFinancieros.objects.filter(empresa__in=self.get_providers()).exclude(resultado_explotacion=0).values('ejercicio').annotate(c=Avg('resultado_explotacion')).order_by('ejercicio')
 
     def balance_providers_resultado_avg_sector(self):
-        return EstadosFinancieros.objects.filter(empresa__in=Empresa.objects.filter(transfers__origin_reference__in=self.get_sector_companies())).values('ejercicio').annotate(c=Avg('resultado_explotacion')).order_by('ejercicio')
+        return EstadosFinancieros.objects.filter(empresa__in=Empresa.objects.filter(transfers__origin_reference__in=self.get_sector_companies())).exclude(resultado_explotacion=0).values('ejercicio').annotate(c=Avg('resultado_explotacion')).order_by('ejercicio')
 
     def balance_clients_sells(self):
-        return EstadosFinancieros.objects.filter(empresa__in=self.get_clients()).values('ejercicio').annotate(c=Avg('ventas')).order_by('ejercicio')
+        return EstadosFinancieros.objects.filter(empresa__in=self.get_clients()).exclude(ventas=0).values('ejercicio').annotate(c=Avg('ventas')).order_by('ejercicio')
 
     def balance_clients_sells_avg_sector(self):
-        return EstadosFinancieros.objects.filter(empresa__in=Empresa.objects.filter(transfers__destination_reference__in=self.get_sector_companies())).values('ejercicio').annotate(c=Avg('ventas')).order_by('ejercicio')
+        return EstadosFinancieros.objects.filter(empresa__in=Empresa.objects.filter(transfers__destination_reference__in=self.get_sector_companies())).exclude(ventas=0).values('ejercicio').annotate(c=Avg('ventas')).order_by('ejercicio')
 
     def balance_providers_sells(self):
         if self.temp_balance_providers_sells is None:
-            self.temp_balance_providers_sells = EstadosFinancieros.objects.filter(empresa__in=self.get_providers()).values('ejercicio').annotate(c=Avg('ventas')).order_by('ejercicio')
+            self.temp_balance_providers_sells = EstadosFinancieros.objects.filter(empresa__in=self.get_providers()).exclude(ventas=0).values('ejercicio').annotate(c=Avg('ventas')).order_by('ejercicio')
         return self.temp_balance_providers_sells
 
     def balance_providers_sells_avg_sector(self):
-        return EstadosFinancieros.objects.filter(empresa__in=Empresa.objects.filter(transfers__origin_reference__in=self.get_sector_companies())).values('ejercicio').annotate(c=Avg('ventas')).order_by('ejercicio')
+        return EstadosFinancieros.objects.filter(empresa__in=Empresa.objects.filter(transfers__origin_reference__in=self.get_sector_companies())).exclude(ventas=0).values('ejercicio').annotate(c=Avg('ventas')).order_by('ejercicio')
 
     def balance_providers_buys(self):
-        return EstadosFinancieros.objects.filter(empresa__in=self.get_clients()).values('ejercicio').annotate(c=Avg(F('ventas')-F('ebitda'))).order_by('ejercicio')
+        return EstadosFinancieros.objects.filter(empresa__in=self.get_clients()).exclude(ventas=0).values('ejercicio').annotate(c=Avg(F('ventas')-F('ebitda'))).order_by('ejercicio')
 
     def balance_providers_buys_avg_sector(self):
-        return EstadosFinancieros.objects.filter(empresa__in=Empresa.objects.filter(transfers__destination_reference__in=self.get_sector_companies())).values('ejercicio').annotate(c=Avg(F('ventas')-F('ebitda'))).order_by('ejercicio')
+        return EstadosFinancieros.objects.filter(empresa__in=Empresa.objects.filter(transfers__destination_reference__in=self.get_sector_companies())).exclude(ventas=0).values('ejercicio').annotate(c=Avg(F('ventas')-F('ebitda'))).order_by('ejercicio')
 
     def balance_sells(self):
         return self.estados_financieros.all().values('ejercicio').annotate(c=Sum('ventas')).order_by('ejercicio')
 
     def balance_sells_avg_sector(self):
-        return EstadosFinancieros.objects.filter(empresa__in=self.get_sector_companies().all()).values('ejercicio').annotate(c=Avg('ventas')).order_by('ejercicio')
+        return EstadosFinancieros.objects.filter(empresa__in=self.get_sector_companies().all()).exclude(ventas=0).values('ejercicio').annotate(c=Avg('ventas')).order_by('ejercicio')
 
     def balance_buys(self):
         return self.estados_financieros.all().values('ejercicio').annotate(c=Sum(F('ventas')-F('ebitda'))).order_by('ejercicio')
 
     def balance_buys_avg_sector(self):
-        return EstadosFinancieros.objects.filter(empresa__in=self.get_sector_companies().all()).values('ejercicio').annotate(c=Avg(F('ventas')-F('ebitda'))).order_by('ejercicio')
+        return EstadosFinancieros.objects.filter(empresa__in=self.get_sector_companies().all()).exclude(ventas=0).values('ejercicio').annotate(c=Avg(F('ventas')-F('ebitda'))).order_by('ejercicio')
 
     def balance_depreciation(self):
         return self.estados_financieros.all().values('ejercicio').annotate(c=Sum('depreciaciones')).order_by('ejercicio')
 
     def balance_depreciation_avg_sector(self):
-        return EstadosFinancieros.objects.filter(empresa__in=self.get_sector_companies().all()).values('ejercicio').annotate(c=Avg('depreciaciones')).order_by('ejercicio')
+        return EstadosFinancieros.objects.filter(empresa__in=self.get_sector_companies().all()).exclude(depreciaciones=0).values('ejercicio').annotate(c=Avg('depreciaciones')).order_by('ejercicio')
 
     def balance_amortisation(self):
         return self.estados_financieros.all().values('ejercicio').annotate(c=Sum('amortizaciones')).order_by('ejercicio')
 
     def balance_amortisation_avg_sector(self):
-        return EstadosFinancieros.objects.filter(empresa__in=self.get_sector_companies().all()).values('ejercicio').annotate(c=Avg('amortizaciones')).order_by('ejercicio')
+        return EstadosFinancieros.objects.filter(empresa__in=self.get_sector_companies().all()).exclude(amortizaciones=0).values('ejercicio').annotate(c=Avg('amortizaciones')).order_by('ejercicio')
 
     def balance_clients_payments(self):
         if self.temp_balance_clients_payments is None:
@@ -465,59 +473,53 @@ class Empresa(models.Model):
         return self.estados_financieros.all().values('ejercicio').annotate(c=Sum('ebitda')).order_by('ejercicio')
 
     def balance_ebitda_avg_sector(self):
-        return EstadosFinancieros.objects.filter(empresa__in=self.get_sector_companies().all()).values('ejercicio').annotate(c=Avg('ebitda')).order_by('ejercicio')
+        return EstadosFinancieros.objects.filter(empresa__in=self.get_sector_companies().all()).exclude(ebitda=0).values('ejercicio').annotate(c=Avg('ebitda')).order_by('ejercicio')
     
     def balance_clients_ebitda(self):
         if self.temp_balance_clients_ebitda is None:
-            self.temp_balance_clients_ebitda = EstadosFinancieros.objects.filter(empresa__in=self.get_clients()).values('ejercicio').annotate(c=Avg('ebitda')).order_by('ejercicio')
+            self.temp_balance_clients_ebitda = EstadosFinancieros.objects.filter(empresa__in=self.get_clients()).exclude(ebitda=0).values('ejercicio').annotate(c=Avg('ebitda')).order_by('ejercicio')
         return self.temp_balance_clients_ebitda
 
     def balance_clients_ebitda_avg_sector(self):
         if self.temp_balance_clients_ebitda_avg_sector is None:
-            self.temp_balance_clients_ebitda_avg_sector = EstadosFinancieros.objects.filter(empresa__in=Empresa.objects.filter(transfers__destination_reference__in=self.get_sector_companies())).values('ejercicio').annotate(c=Avg('ebitda')).order_by('ejercicio')
+            self.temp_balance_clients_ebitda_avg_sector = EstadosFinancieros.objects.filter(empresa__in=Empresa.objects.filter(transfers__destination_reference__in=self.get_sector_companies())).exclude(ebitda=0).values('ejercicio').annotate(c=Avg('ebitda')).order_by('ejercicio')
         return self.temp_balance_clients_ebitda_avg_sector
 
     def balance_providers_ebitda(self):
         if self.temp_balance_providers_ebitda is None:
-            self.temp_balance_providers_ebitda = EstadosFinancieros.objects.filter(empresa__in=self.get_providers()).values('ejercicio').annotate(c=Avg('ebitda')).order_by('ejercicio')
+            self.temp_balance_providers_ebitda = EstadosFinancieros.objects.filter(empresa__in=self.get_providers()).exclude(ebitda=0).values('ejercicio').annotate(c=Avg('ebitda')).order_by('ejercicio')
         return self.temp_balance_providers_ebitda
 
     def balance_providers_ebitda_avg_sector(self):
         if self.temp_balance_providers_ebitda_avg_sector is None:
-            self.temp_balance_providers_ebitda_avg_sector = EstadosFinancieros.objects.filter(empresa__in=Empresa.objects.filter(transfers__origin_reference__in=self.get_sector_companies())).values('ejercicio').annotate(c=Avg('ebitda')).order_by('ejercicio')
+            self.temp_balance_providers_ebitda_avg_sector = EstadosFinancieros.objects.filter(empresa__in=Empresa.objects.filter(transfers__origin_reference__in=self.get_sector_companies())).exclude(ebitda=0).values('ejercicio').annotate(c=Avg('ebitda')).order_by('ejercicio')
         return self.temp_balance_providers_ebitda_avg_sector
 
     def balance_stock(self):
         return self.estados_financieros.all().values('ejercicio').annotate(c=Sum('existencias')).order_by('ejercicio')
 
     def balance_stock_avg_sector(self):
-        return EstadosFinancieros.objects.filter(empresa__in=self.get_sector_companies().all()).values('ejercicio').annotate(c=Avg('existencias')).order_by('ejercicio')
+        return EstadosFinancieros.objects.filter(empresa__in=self.get_sector_companies().all()).exclude(existencias=0).values('ejercicio').annotate(c=Avg('existencias')).order_by('ejercicio')
 
     def balance_debt(self):
         return self.estados_financieros.all().values('ejercicio').annotate(c=Sum('deudores')).order_by('ejercicio')
 
     def balance_debt_avg_sector(self):
-        return EstadosFinancieros.objects.filter(empresa__in=self.get_sector_companies().all()).values('ejercicio').annotate(c=Avg('deudores')).order_by('ejercicio')
-
-    def ebitda(self):
-        return self.estados_financieros.all().values('ejercicio').annotate(c=Sum('ebitda')).order_by('ejercicio')
-
-    def ebitda_avg_sector(self):
-        return EstadosFinancieros.objects.filter(empresa__in=self.get_sector_companies().all()).values('ejercicio').annotate(c=Sum('ebitda')).order_by('ejercicio')
+        return EstadosFinancieros.objects.filter(empresa__in=self.get_sector_companies().all()).exclude(deudores=0).values('ejercicio').annotate(c=Avg('deudores')).order_by('ejercicio')
 
     # Helpers de transferencias
     # ------------------------------------------------------------------
 
     def average_transfer_to_provider(self):
         if self.temp_average_transfer_to_provider is None:
-            group_by = self.transfers.all().aggregate(avg=Avg('amount'))
+            group_by = self.transfers.all().exclude(amount=0).aggregate(avg=Avg('amount'))
             self.temp_average_transfer_to_provider = group_by['avg']
             return self.temp_average_transfer_to_provider
         return self.temp_average_transfer_to_provider
 
     def average_transfer_from_client(self):
         if self.temp_average_transfer_from_client is None:
-            group_by = self.destination_reference.all().aggregate(avg=Avg('amount'))
+            group_by = self.destination_reference.all().exclude(amount=0).aggregate(avg=Avg('amount'))
             self.temp_average_transfer_from_client = group_by['avg']
         return self.temp_average_transfer_from_client
 
@@ -562,10 +564,14 @@ class Empresa(models.Model):
 
     def get_monthly_buys_amount(self):
         group_by = self.transfers.all().annotate(month=TruncMonth('operation_data')).values('month').annotate(c=Sum('amount')).order_by('month')
+        for month in group_by:
+            month['month'] = month.get('month', None).strftime("%b %Y") 
         return group_by
 
     def get_monthly_sells_amount(self):
         group_by = self.destination_reference.all().annotate(month=TruncMonth('operation_data')).values('month').annotate(c=Sum('amount')).order_by('month')
+        for month in group_by:
+            month['month'] = month.get('month', None).strftime("%b %Y") 
         return group_by
 
     def get_total_buys(self):
@@ -588,7 +594,7 @@ class Empresa(models.Model):
 
     def average_sector_buys(self):
         if self.temp_average_sector_buys is None:
-            total = Transfer.objects.filter(origin_reference__in=self.get_sector_companies().all()).aggregate(total=Avg('amount'))
+            total = Transfer.objects.filter(origin_reference__in=self.get_sector_companies().all()).exclude(amount=0).aggregate(total=Avg('amount'))
             self.temp_average_sector_buys = total['total']
         return self.temp_average_sector_buys
 
@@ -600,24 +606,24 @@ class Empresa(models.Model):
 
     def average_sector_sells(self):
         if self.temp_average_sector_sells is None:
-            total = Transfer.objects.filter(destination_reference__in=self.get_sector_companies().all()).aggregate(total=Avg('amount'))
+            total = Transfer.objects.filter(destination_reference__in=self.get_sector_companies().all()).exclude(amount=0).aggregate(total=Avg('amount'))
             self.temp_average_sector_sells = total['total']
         return self.temp_average_sector_sells
 
     def get_sector_avg_monthly_sells_amount(self):
-        group_by = Transfer.objects.filter(destination_reference__in=self.get_sector_companies().all()).annotate(month=TruncMonth('operation_data')).values('month').annotate(c=Avg('amount')).order_by('month')
+        group_by = Transfer.objects.filter(destination_reference__in=self.get_sector_companies().all()).annotate(month=TruncMonth('operation_data')).exclude(amount=0).values('month').annotate(c=Avg('amount')).order_by('month')
         return group_by
 
     def get_sector_avg_monthly_buys_amount(self):
-        group_by = Transfer.objects.filter(origin_reference__in=self.get_sector_companies().all()).annotate(month=TruncMonth('operation_data')).values('month').annotate(c=Avg('amount')).order_by('month')
+        group_by = Transfer.objects.filter(origin_reference__in=self.get_sector_companies().all()).annotate(month=TruncMonth('operation_data')).exclude(amount=0).values('month').annotate(c=Avg('amount')).order_by('month')
         return group_by
 
     def get_sector_total_monthly_sells_amount(self):
-        group_by = Transfer.objects.filter(destination_reference__in=self.get_sector_companies().all()).annotate(month=TruncMonth('operation_data')).values('month').annotate(c=Sum('amount')).order_by('month')
+        group_by = Transfer.objects.filter(destination_reference__in=self.get_sector_companies().all()).annotate(month=TruncMonth('operation_data')).exclude(amount=0).values('month').annotate(c=Sum('amount')).order_by('month')
         return group_by
 
     def get_sector_total_monthly_buys_amount(self):
-        group_by = Transfer.objects.filter(origin_reference__in=self.get_sector_companies().all()).annotate(month=TruncMonth('operation_data')).values('month').annotate(c=Sum('amount')).order_by('month')
+        group_by = Transfer.objects.filter(origin_reference__in=self.get_sector_companies().all()).annotate(month=TruncMonth('operation_data')).exclude(amount=0).values('month').annotate(c=Sum('amount')).order_by('month')
         return group_by
 
     def get_qs_clients(self,qs):
@@ -633,11 +639,11 @@ class Empresa(models.Model):
         return Empresa.objects.filter(destination_reference__origin_reference=self).all().values('territorial').annotate(c=Sum('transfers__amount'))
 
     def clients_by_sector(self):
-        print(Empresa.objects.filter(transfers__destination_reference=self).all().values('cnae').annotate(c=Sum('transfers__amount')))
         return Empresa.objects.filter(transfers__destination_reference=self).all().values('cnae').annotate(c=Sum('transfers__amount'))
 
     def providers_by_sector(self):
         return Empresa.objects.filter(destination_reference__origin_reference=self).all().values('cnae').annotate(c=Sum('transfers__amount'))
+    
     # General Helpers
     # ------------------------------------------------------------------
 
@@ -658,7 +664,79 @@ class Empresa(models.Model):
             self.temp_get_sector_companies = Empresa.objects.filter(cnae=self.cnae)
         return self.temp_get_sector_companies
 
-    
+    # Helpers de CIRBE
+    # ------------------------------------------------------------------
+
+    def deuda_total(self):
+        if self.temp_deuda_total is None:
+            self.temp_deuda_total = self.cirbe.largo_plazo_dispuesto + self.cirbe.corto_plazo_dispuesto
+        return self.temp_deuda_total
+
+    def deuda_total_sector(self):
+        if self.temp_deuda_total_sector is None:
+            self.temp_deuda_corto_sector = CIRBE.objects.filter(empresa__in=self.get_sector_companies().all()).exclude(corto_plazo_dispuesto=0).aggregate(c=Avg('corto_plazo_dispuesto'))
+            self.temp_deuda_largo_sector = CIRBE.objects.filter(empresa__in=self.get_sector_companies().all()).exclude(largo_plazo_dispuesto=0).aggregate(c=Avg('largo_plazo_dispuesto'))
+            self.temp_deuda_total_sector = self.temp_deuda_corto_sector['c'] + self.temp_deuda_largo_sector['c']
+        return self.temp_deuda_total_sector
+
+    def deuda_corto(self):
+        if self.temp_deuda_corto is None:
+            self.temp_deuda_corto = self.cirbe.corto_plazo_dispuesto
+        return self.temp_deuda_corto
+
+    def deuda_corto_sector(self):
+        if self.temp_deuda_corto_sector is None:
+            self.temp_deuda_corto_sector = CIRBE.objects.filter(empresa__in=self.get_sector_companies().all()).exclude(corto_plazo_dispuesto=0).aggregate(c=Avg('corto_plazo_dispuesto'))
+        return self.temp_deuda_corto_sector['c']
+
+    def deuda_corto_pond(self):
+        if len(self.balance_ebitda()) > 0:
+            return self.deuda_corto()/float(self.balance_ebitda()[len(self.balance_ebitda())-1]['c'])
+        return 0
+
+    def deuda_corto_sector_pond(self):
+        if len(self.balance_ebitda_avg_sector()) > 0:
+            return float(self.deuda_corto_sector())/float(self.balance_ebitda_avg_sector()[len(self.balance_ebitda_avg_sector())-1]['c'])
+        return 0
+
+    def deuda_largo(self):
+        if self.temp_deuda_largo is None:
+            self.temp_deuda_largo = self.cirbe.largo_plazo_dispuesto
+        return self.temp_deuda_largo
+
+    def deuda_largo_sector(self):
+        if self.temp_deuda_largo_sector is None:
+            self.temp_deuda_largo_sector = CIRBE.objects.filter(empresa__in=self.get_sector_companies().all()).exclude(largo_plazo_dispuesto=0).aggregate(c=Avg('largo_plazo_dispuesto'))
+        return self.temp_deuda_largo_sector['c']
+
+    def deuda_largo_pond(self):
+        if len(self.balance_sells()) > 0 and float(self.balance_sells()[len(self.balance_sells())-1]['c']) > 0:
+            return self.deuda_largo()/float(self.balance_sells()[len(self.balance_sells())-1]['c'])
+        return 0
+
+    def deuda_largo_sector_pond(self):
+        if len(self.balance_sells_avg_sector()) > 0 and float(self.balance_sells_avg_sector()[len(self.balance_sells_avg_sector())-1]['c']) > 0:
+            return float(self.deuda_largo_sector())/float(self.balance_sells_avg_sector()[len(self.balance_sells_avg_sector())-1]['c'])
+        return 0
+
+    def deuda_total_pond(self):
+        if len(self.balance_sells()) > 0 and float(self.balance_sells()[len(self.balance_sells())-1]['c']) > 0:
+            return (self.deuda_largo()+self.deuda_corto())/float(self.balance_sells()[len(self.balance_sells())-1]['c'])
+        return 0
+
+    def deuda_total_sector_pond(self):
+        if len(self.balance_sells_avg_sector()) > 0 and float(self.balance_sells_avg_sector()[len(self.balance_sells_avg_sector())-1]['c']) > 0:
+            return float(self.deuda_largo_sector()+self.deuda_corto())/float(self.balance_sells_avg_sector()[len(self.balance_sells_avg_sector())-1]['c'])
+        return 0
+
+    def gastos_financieros_pond(self):
+        return self.estados_financieros[len(self.estados_financieros)-1]['c']/float(self.balance_sells()[len(self.balance_sells())-1]['c'])
+
+    def deuda_largo_sector_pond(self):
+        if len(self.balance_sells_avg_sector()) > 0 and float(self.balance_sells_avg_sector()[len(self.balance_sells_avg_sector())-1]['c']) > 0:
+            return float(self.deuda_largo_sector())/float(self.balance_sells_avg_sector()[len(self.balance_sells_avg_sector())-1]['c'])
+        return 0
+
     # Helpers de Django
     # ------------------------------------------------------------------
 
@@ -721,7 +799,7 @@ class EstadosFinancieros(models.Model):
 # ------------------------------------------------------------------
 class Productos(models.Model):
 
-    empresa = models.ForeignKey(Empresa, related_name='productos', on_delete=models.CASCADE)
+    empresa = models.ForeignKey(Empresa, related_name='productos', null=True, blank=True, on_delete=models.CASCADE)
     numero_persona = models.IntegerField(null=True, blank=True)
     tipo_producto = models.CharField(max_length=5, null=True, blank=True)
     producto = models.CharField(max_length=128, null=True, blank=True)
@@ -746,8 +824,79 @@ class Productos(models.Model):
     segmento_gestion = models.CharField(max_length=128, null=True, blank=True)
     refinanciado = models.BooleanField()
 
+    temp_plazo_total = None
+    temp_plazo_remanente = None
+    temp_cuota_mensual = None
+
+    def plazo_total(self):
+        if self.temp_plazo_total is None:
+            if self.fecha_vencimiento and self.fecha_formalizacion:
+                self.temp_plazo_total = self.monthdelta(self.fecha_formalizacion, self.fecha_vencimiento)
+            else:
+                self.temp_plazo_total = 0
+        return self.temp_plazo_total
+
+    def plazo_remanente(self):
+        if self.temp_plazo_remanente is None:
+            if self.fecha_vencimiento:
+                now = datetime.utcnow().replace(tzinfo=utc)
+                self.temp_plazo_remanente = self.monthdelta(datetime.date(now), self.fecha_vencimiento)
+            else:
+                self.temp_plazo_remanente = 0
+        return self.temp_plazo_remanente
+
+    def cuota_mensual(self):
+        if self.temp_cuota_mensual is None:
+            if self.interes_revisado and self.plazo_remanente and self.dispuesto:
+                print(self.interes_revisado/12)
+                print(self.plazo_remanente)
+                print(self.dispuesto)
+                self.temp_cuota_mensual = np.pmt(self.interes_revisado/12, self.plazo_remanente(), self.dispuesto)
+            else:
+                self.temp_cuota_mensual = 0
+        return self.temp_cuota_mensual
+
+    def monthdelta(self, d1, d2):
+        delta = 0
+        while True:
+            mdays = monthrange(d1.year, d1.month)[1]
+            d1 += timedelta(days=mdays)
+            if d1 <= d2:
+                delta += 1
+            else:
+                break
+        return delta
+
+
+
     def __unicode__(self):
         return self.tipo_producto
+
+# ------------------------------------------------------------------
+# Model CIRBE
+# Tabla y funciones del model CIRBE (contratados por una empresa)
+# ------------------------------------------------------------------
+class CIRBE(models.Model):
+
+    empresa = models.OneToOneField(Empresa, related_name='cirbe', null=True, blank=True, on_delete=models.CASCADE)
+    cirbe_concedido = models.IntegerField(null=True, blank=True)
+    cirbe_dispuesto = models.IntegerField(null=True, blank=True)
+    largo_plazo_concedido = models.IntegerField(null=True, blank=True)
+    largo_plazo_dispuesto = models.IntegerField(null=True, blank=True)
+    largo_plazo_concedido = models.IntegerField(null=True, blank=True)
+    corto_plazo_dispuesto = models.IntegerField(null=True, blank=True)
+    d_concedido = models.IntegerField(null=True, blank=True)
+    d_dispuesto = models.IntegerField(null=True, blank=True)
+    avales_concedido = models.IntegerField(null=True, blank=True)
+    avales_dispuesto = models.IntegerField(null=True, blank=True)
+    leasing_concedido = models.IntegerField(null=True, blank=True)
+    leasing_dispuesto = models.IntegerField(null=True, blank=True)
+    sr_concedido = models.IntegerField(null=True, blank=True)
+    sr_dispuesto = models.IntegerField(null=True, blank=True)
+    moroso = models.IntegerField(null=True, blank=True)
+
+    def __unicode__(self):
+        return str(self.cirbe_concedido)
 
 # ------------------------------------------------------------------
 # Model RecommendedClients

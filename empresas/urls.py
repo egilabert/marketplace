@@ -15,6 +15,7 @@ from .views import (HomeView,
                     EmpresasCreate,
                     ProductosCreate,
                     EstadosCreate,
+                    CirbeCreate,
                     TranfersCreate,
                     RecommendationsCreate,
                     OpportunityClientsView,
@@ -45,6 +46,8 @@ urlpatterns = [
     url(r'^generatedata/estados/$', EstadosCreate, name='estados_create'),
     url(r'^generatedata/transfers/$', TranfersCreate, name='transfers_create'),
     url(r'^generatedata/recommendations/$', RecommendationsCreate, name='recommedations_create'),
+    url(r'^generatedata/cirbe/$', CirbeCreate, name='cirbe_create'),
+    
     
 
 ]
