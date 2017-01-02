@@ -218,11 +218,14 @@
 			    			<div class="card grey lighten-4">
 					            <div class="card-content grey-text darken-4">
 					            	<span class="card-title">Calendario aproximado de próximos pagos</span>
+					            	<ul>
 					            	{% for producto in company.productos.all %}
-					            		{{producto.plazo_total}}
-					            		{{producto.plazo_remanente}}
-					            		{{producto.cuota_mensual}}
+					            		<li>{{producto.plazo_total}}</li>
+					            		<li>{{producto.plazo_remanente}}</li>
+					            		<li>{{producto.cuota_mensual}}</li>
+					            		<li>{{producto.cuota}}</li>
 					            	{% endfor %}
+					            	</ul>
 					              	<canvas id="calendario_de_pagos" width="300" height="100"></canvas>
 					            </div>
 					        </div>

@@ -115,7 +115,8 @@ class Empresa(models.Model):
 
     def my_penetration_client(self):
         if self.balance_clients_payments():
-            return float(self.get_total_sells())/float(self.balance_clients_payments()[len(self.balance_clients_payments())-1])
+            if len(self.balance_clients_payments())>0:
+                return float(self.get_total_sells())/float(self.balance_clients_payments()[len(self.balance_clients_payments())-1])
         return 0
 
     def my_penetration_provider(self):
@@ -128,7 +129,9 @@ class Empresa(models.Model):
         return self.temp_my_penetration_provider
 
     def my_sector_penetration_client(self):
-        return float(self.get_total_sector_sells())/float(self.balance_clients_payments_avg_sector()[len(self.balance_clients_payments_avg_sector())-1])
+        if len(self.balance_clients_payments_avg_sector())>0:
+            return float(self.get_total_sector_sells())/float(self.balance_clients_payments_avg_sector()[len(self.balance_clients_payments_avg_sector())-1])
+        return 0
 
     def hhi_providers(self):
         if self.temp_hhi_providers is None:
@@ -457,7 +460,8 @@ class Empresa(models.Model):
             earnings = self.balance_clients_sells()
             payments = []
             for i, ejercicio in enumerate(ebitda):
-                payments.append(earnings[i].get('c', 0)-ebitda[i].get('c', 0))
+                if len(earnings)>=i+1:
+                    payments.append(earnings[i].get('c', 0)-ebitda[i].get('c', 0))
             self.temp_balance_clients_payments = payments
         return self.temp_balance_clients_payments
 
@@ -848,10 +852,7 @@ class Productos(models.Model):
     def cuota_mensual(self):
         if self.temp_cuota_mensual is None:
             if self.interes_revisado and self.plazo_remanente and self.dispuesto:
-                print(self.interes_revisado/12)
-                print(self.plazo_remanente)
-                print(self.dispuesto)
-                self.temp_cuota_mensual = np.pmt(self.interes_revisado/12, self.plazo_remanente(), self.dispuesto)
+                self.temp_cuota_mensual = np.pmt(self.interes_revisado/12, self.plazo_remanente(), -self.dispuesto)
             else:
                 self.temp_cuota_mensual = 0
         return self.temp_cuota_mensual
