@@ -104,6 +104,77 @@ class Empresa(models.Model):
     temp_deuda_largo_sector = None
     temp_deuda_largo = None
     temp_deuda_corto = None
+    temp_riesgo_impago_clientes_sector = None
+    temp_riesgo_impago_clientes = None
+
+    def riesgo_impago_clientes(self):
+        if self.temp_riesgo_impago_clientes is None:
+            group_by = self.get_clients().values('hats_alert').annotate(c=Sum('transfers__amount'))
+            total = 0
+            for alert in group_by:
+                total += alert['c']
+            print total
+            joined = False
+            found = False
+            key = ''
+            value = 0
+            ri = []
+            for alert in group_by:
+                alert['c'] = float(alert['c'])/float(total)
+                if (alert['hats_alert']=='SIN ALERTA' or alert['hats_alert']=='VERDE'):
+                    if found==False:
+                        value = alert['c']
+                        key = alert['hats_alert']
+                        found = True
+                    elif joined==False:
+                        alert['c'] += value
+                        alert['hats_alert'] = 'VERDE'
+                        ri.append(alert)
+                        joined = True
+                else:
+                    ri.append(alert)
+            self.temp_riesgo_impago_clientes = ri
+            return self.temp_riesgo_impago_clientes
+        return self.temp_riesgo_impago_clientes
+
+    def riesgo_impago_clientes_sector(self):
+        if self.temp_riesgo_impago_clientes_sector is None:
+            group_by = self.clients_of_sector_companies().values('hats_alert').annotate(c=Sum('transfers__amount'))
+            total = 0
+            for alert in group_by:
+                total += alert['c']
+            joined = False
+            found = False
+            key = ''
+            value = 0
+            ri = []
+            for alert in group_by:
+                alert['c'] = float(alert['c'])/float(total)
+                if (alert['hats_alert']=='SIN ALERTA' or alert['hats_alert']=='VERDE'):
+                    if found==False:
+                        value = alert['c']
+                        key = alert['hats_alert']
+                        found = True
+                    elif joined==False:
+                        alert['c'] += value
+                        alert['hats_alert'] = 'VERDE'
+                        ri.append(alert)
+                        joined = True
+                else:
+                    ri.append(alert)
+            self.temp_riesgo_impago_clientes_sector = ri
+            return self.temp_riesgo_impago_clientes_sector
+        return self.temp_riesgo_impago_clientes_sector
+
+    def clients_of_sector_companies(self):
+        if self.temp_get_sector_clients is None:
+            self.temp_get_sector_clients = Empresa.objects.filter(transfers__destination_reference__in=self.get_sector_companies()).annotate(Count('name', distinct=True))
+        return self.temp_get_sector_clients
+
+    def providers_of_sector_companies(self):
+        if self.temp_get_sector_providers is None:
+            self.temp_get_sector_providers = Empresa.objects.filter(destination_reference__origin_reference__in=self.get_sector_companies()).annotate(Count('name', distinct=True))
+        return self.temp_get_sector_providers
 
     def productos_con_tipo_variable(self):
         return Productos.objects.filter(empresa=self, desc_producto__icontains='var')
@@ -148,7 +219,7 @@ class Empresa(models.Model):
 
     def hhi_providers_sector(self):
         if self.temp_hhi_providers_sector is None:
-            groub_by = Empresa.objects.filter(transfers__origin_reference__in=self.get_sector_companies()).values('name').annotate(c=Sum('transfers__amount'))
+            groub_by = self.providers_of_sector_companies().values('name').annotate(c=Sum('transfers__amount'))
             total = self.get_total_sector_buys()
             hhi = 0
             for i, name in enumerate(groub_by):
@@ -172,7 +243,7 @@ class Empresa(models.Model):
 
     def hhi_clients_sector_clients(self):
         if self.temp_hhi_clients_sector_clients is None:
-            groub_by = Empresa.objects.filter(transfers__destination_reference__in=self.get_sector_companies()).values('name').annotate(c=Sum('transfers__amount'))
+            groub_by = self.clients_of_sector_companies().values('name').annotate(c=Sum('transfers__amount'))
             total = self.get_total_sector_sells()
             hhi = 0
             for i, name in enumerate(groub_by):
@@ -196,7 +267,7 @@ class Empresa(models.Model):
 
     def hhi_geografical_sector_clients(self):
         if self.temp_hhi_geografical_sector_clients is None:
-            groub_by = Empresa.objects.filter(transfers__destination_reference__in=self.get_sector_companies()).values('territorial').annotate(c=Sum('transfers__amount'))
+            groub_by = self.clients_of_sector_companies().values('territorial').annotate(c=Sum('transfers__amount'))
             total = self.get_total_sector_sells()
             hhi = 0
             for i, territorial in enumerate(groub_by):
@@ -220,7 +291,7 @@ class Empresa(models.Model):
 
     def hhi_geografical_sector_providers(self):
         if self.temp_hhi_geografical_sector_providers is None:
-            groub_by = Empresa.objects.filter(transfers__origin_reference__in=self.get_sector_companies()).values('territorial').annotate(c=Sum('transfers__amount'))
+            groub_by = self.providers_of_sector_companies().values('territorial').annotate(c=Sum('transfers__amount'))
             total = self.get_total_sector_buys()
             hhi = 0
             for i, territorial in enumerate(groub_by):
@@ -244,7 +315,7 @@ class Empresa(models.Model):
 
     def hhi_cnae_sector_clients(self):
         if self.temp_hhi_cnae_sector_clients is None:
-            groub_by = Empresa.objects.filter(transfers__destination_reference__in=self.get_sector_companies()).values('cnae').annotate(c=Sum('transfers__amount'))
+            groub_by = self.clients_of_sector_companies().values('cnae').annotate(c=Sum('transfers__amount'))
             total = self.get_total_sector_sells()
             hhi = 0
             for i, cnae in enumerate(groub_by):
@@ -268,7 +339,7 @@ class Empresa(models.Model):
 
     def hhi_cnae_sector_providers(self):
         if self.temp_hhi_cnae_sector_providers is None:
-            groub_by = Empresa.objects.filter(transfers__origin_reference__in=self.get_sector_companies()).values('cnae').annotate(c=Sum('transfers__amount'))
+            groub_by = self.providers_of_sector_companies().values('cnae').annotate(c=Sum('transfers__amount'))
             total = self.get_total_sector_buys()
             hhi = 0
             for i, cnae in enumerate(groub_by):
@@ -403,19 +474,19 @@ class Empresa(models.Model):
         return EstadosFinancieros.objects.filter(empresa__in=self.get_clients()).exclude(resultado_explotacion=0).values('ejercicio').annotate(c=Avg('resultado_explotacion')).order_by('ejercicio')
 
     def balance_clients_resultado_avg_sector(self):
-        return EstadosFinancieros.objects.filter(empresa__in=Empresa.objects.filter(transfers__destination_reference__in=self.get_sector_companies())).exclude(resultado_explotacion=0).values('ejercicio').annotate(c=Avg('resultado_explotacion')).order_by('ejercicio')
+        return EstadosFinancieros.objects.filter(empresa__in=self.clients_of_sector_companies()).exclude(resultado_explotacion=0).values('ejercicio').annotate(c=Avg('resultado_explotacion')).order_by('ejercicio')
 
     def balance_providers_resultado(self):
         return EstadosFinancieros.objects.filter(empresa__in=self.get_providers()).exclude(resultado_explotacion=0).values('ejercicio').annotate(c=Avg('resultado_explotacion')).order_by('ejercicio')
 
     def balance_providers_resultado_avg_sector(self):
-        return EstadosFinancieros.objects.filter(empresa__in=Empresa.objects.filter(transfers__origin_reference__in=self.get_sector_companies())).exclude(resultado_explotacion=0).values('ejercicio').annotate(c=Avg('resultado_explotacion')).order_by('ejercicio')
+        return EstadosFinancieros.objects.filter(empresa__in=self.providers_of_sector_companies()).exclude(resultado_explotacion=0).values('ejercicio').annotate(c=Avg('resultado_explotacion')).order_by('ejercicio')
 
     def balance_clients_sells(self):
         return EstadosFinancieros.objects.filter(empresa__in=self.get_clients()).exclude(ventas=0).values('ejercicio').annotate(c=Avg('ventas')).order_by('ejercicio')
 
     def balance_clients_sells_avg_sector(self):
-        return EstadosFinancieros.objects.filter(empresa__in=Empresa.objects.filter(transfers__destination_reference__in=self.get_sector_companies())).exclude(ventas=0).values('ejercicio').annotate(c=Avg('ventas')).order_by('ejercicio')
+        return EstadosFinancieros.objects.filter(empresa__in=self.clients_of_sector_companies()).exclude(ventas=0).values('ejercicio').annotate(c=Avg('ventas')).order_by('ejercicio')
 
     def balance_providers_sells(self):
         if self.temp_balance_providers_sells is None:
@@ -423,13 +494,13 @@ class Empresa(models.Model):
         return self.temp_balance_providers_sells
 
     def balance_providers_sells_avg_sector(self):
-        return EstadosFinancieros.objects.filter(empresa__in=Empresa.objects.filter(transfers__origin_reference__in=self.get_sector_companies())).exclude(ventas=0).values('ejercicio').annotate(c=Avg('ventas')).order_by('ejercicio')
+        return EstadosFinancieros.objects.filter(empresa__in=self.providers_of_sector_companies()).exclude(ventas=0).values('ejercicio').annotate(c=Avg('ventas')).order_by('ejercicio')
 
     def balance_providers_buys(self):
         return EstadosFinancieros.objects.filter(empresa__in=self.get_clients()).exclude(ventas=0).values('ejercicio').annotate(c=Avg(F('ventas')-F('ebitda'))).order_by('ejercicio')
 
     def balance_providers_buys_avg_sector(self):
-        return EstadosFinancieros.objects.filter(empresa__in=Empresa.objects.filter(transfers__destination_reference__in=self.get_sector_companies())).exclude(ventas=0).values('ejercicio').annotate(c=Avg(F('ventas')-F('ebitda'))).order_by('ejercicio')
+        return EstadosFinancieros.objects.filter(empresa__in=self.clients_of_sector_companies()).exclude(ventas=0).values('ejercicio').annotate(c=Avg(F('ventas')-F('ebitda'))).order_by('ejercicio')
 
     def balance_sells(self):
         return self.estados_financieros.all().values('ejercicio').annotate(c=Sum('ventas')).order_by('ejercicio')
@@ -487,7 +558,7 @@ class Empresa(models.Model):
 
     def balance_clients_ebitda_avg_sector(self):
         if self.temp_balance_clients_ebitda_avg_sector is None:
-            self.temp_balance_clients_ebitda_avg_sector = EstadosFinancieros.objects.filter(empresa__in=Empresa.objects.filter(transfers__destination_reference__in=self.get_sector_companies())).exclude(ebitda=0).values('ejercicio').annotate(c=Avg('ebitda')).order_by('ejercicio')
+            self.temp_balance_clients_ebitda_avg_sector = EstadosFinancieros.objects.filter(empresa__in=self.clients_of_sector_companies()).exclude(ebitda=0).values('ejercicio').annotate(c=Avg('ebitda')).order_by('ejercicio')
         return self.temp_balance_clients_ebitda_avg_sector
 
     def balance_providers_ebitda(self):
@@ -497,7 +568,7 @@ class Empresa(models.Model):
 
     def balance_providers_ebitda_avg_sector(self):
         if self.temp_balance_providers_ebitda_avg_sector is None:
-            self.temp_balance_providers_ebitda_avg_sector = EstadosFinancieros.objects.filter(empresa__in=Empresa.objects.filter(transfers__origin_reference__in=self.get_sector_companies())).exclude(ebitda=0).values('ejercicio').annotate(c=Avg('ebitda')).order_by('ejercicio')
+            self.temp_balance_providers_ebitda_avg_sector = EstadosFinancieros.objects.filter(empresa__in=self.providers_of_sector_companies()).exclude(ebitda=0).values('ejercicio').annotate(c=Avg('ebitda')).order_by('ejercicio')
         return self.temp_balance_providers_ebitda_avg_sector
 
     def balance_stock(self):
@@ -539,20 +610,10 @@ class Empresa(models.Model):
             self.temp_get_clients = Empresa.objects.filter(transfers__destination_reference=self).annotate(Count('name', distinct=True))
         return self.temp_get_clients
 
-    def get_sector_clients(self):
-        if self.temp_get_sector_clients is None:
-            self.temp_get_sector_clients = Empresa.objects.filter(transfers__destination_reference__in=self.get_sector_companies()).annotate(Count('name', distinct=True)).count()
-        return self.temp_get_sector_clients
-
     def get_providers(self):
         if self.temp_get_providers is None:
             self.temp_get_providers = Empresa.objects.filter(destination_reference__in=Transfer.objects.filter(origin_reference=self)).annotate(Count('name', distinct=True))
         return self.temp_get_providers
-
-    def get_sector_providers(self):
-        if self.temp_get_sector_providers is None:
-            self.temp_get_sector_providers = Empresa.objects.filter(transfers__origin_reference__in=self.get_sector_companies()).annotate(Count('name', distinct=True)).count()
-        return self.temp_get_sector_providers
 
     def get_monthly_buys(self):
         group_by = self.transfers.all().annotate(month=TruncMonth('operation_data')).values('month').annotate(c=Count('id')).order_by('month')
@@ -631,6 +692,8 @@ class Empresa(models.Model):
 
     def get_sector_total_monthly_sells_amount(self):
         group_by = Transfer.objects.filter(destination_reference__in=self.get_sector_companies().all()).annotate(month=TruncMonth('operation_data')).exclude(amount=0).values('month').annotate(c=Sum('amount')).order_by('month')
+        for month in group_by:
+            month['month'] = month.get('month', None).strftime("%b %Y") 
         return group_by
 
     def get_sector_total_monthly_buys_amount(self):
@@ -790,6 +853,12 @@ class Empresa(models.Model):
         if len(self.balance_buys_avg_sector()) > 0 and self.balance_acreedores_comerciales_avg_sector():
             return 365*(self.balance_acreedores_comerciales_avg_sector()[len(self.balance_acreedores_comerciales_avg_sector())-1]['c'] / self.balance_buys_avg_sector()[len(self.balance_buys_avg_sector())-1]['c'])
         return 0
+
+    def get_sector_clients(self):
+        return self.clients_of_sector_companies().count()
+
+    def get_sector_providers(self):
+        return self.providers_of_sector_companies().count()
 
     # Helpers de Django
     # ------------------------------------------------------------------

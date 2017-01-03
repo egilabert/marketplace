@@ -153,6 +153,27 @@ def FinancialRiskRecommendationsView(request):
 	return render(request, 'empresas/financial_risk.html', context)
 
 @login_required
+def ClientRiskRecommendationsView(request):
+	
+	company_id = request.session.get('company')
+	company = Empresa.objects.filter(pk=company_id)
+	company = company.prefetch_related('estados_financieros','cirbe','productos')[0]
+	try:
+		ultimos_eeff = company.estados_financieros.reverse()[0]
+	except:
+		ultimos_eeff = Empresa()
+	context = {
+		'company':company,
+		'riesgo_impago_clientes': json.dumps(list(company.riesgo_impago_clientes()), cls=DjangoJSONEncoder),
+		'riesgo_impago_clientes_sector': json.dumps(list(company.riesgo_impago_clientes_sector()), cls=DjangoJSONEncoder),
+		'get_monthly_sells': json.dumps(list(company.get_monthly_sells_amount()), cls=DjangoJSONEncoder),
+		'get_monthly_sector_avg_sells': json.dumps(list(company.get_sector_total_monthly_sells_amount()), cls=DjangoJSONEncoder),
+		'productos_variable': company.productos_con_tipo_variable().all(),
+		'ultimos_eeff': ultimos_eeff
+		}
+	return render(request, 'empresas/risk_client.html', context)
+
+@login_required
 def OpportunityProviderView(request):
 	
 	company_id = request.session.get('company')

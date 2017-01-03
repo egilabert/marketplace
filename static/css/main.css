@@ -3,6 +3,11 @@
 .padding_top {
   padding-top: 100px !important;
 }
+
+.alpha_back {
+  background-color: rgba(255,255,255,0.7) !important;
+}
+
 .title_conf {
   margin-top: 0;
   padding-top: 5px;
