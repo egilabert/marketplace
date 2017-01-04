@@ -658,6 +658,7 @@
             highlightFill: "rgba(220,220,220,0.75)",
             pointHoverBackgroundColor: "rgba(220,220,220,1)",
             showTooltip: false, //NEW OPTION DON"T NEED TO INCLUDE IT IF YOU WANT TO DISPLAY BUT WON"T HURT IF YOU DO
+            yAxisID: "y-axis-0",
             data: data1
         }, {
             label: "{{company.name|safe}}",
@@ -666,6 +667,7 @@
             highlightFill: "rgba(47,79,79,0.75)",
             pointHoverBackgroundColor: "rgba(47,79,79,1)",
             showTooltip: false, //NEW OPTION DON"T NEED TO INCLUDE IT IF YOU WANT TO DISPLAY BUT WON"T HURT IF YOU DO
+            yAxisID: "y-axis-1",
             data: data2
         }]},
         options: {
@@ -673,7 +675,16 @@
           pointDotRadius: 10,
           bezierCurve: false,
           scaleShowVerticalLines: false,
-          scaleGridLineColor: 'black'
+          scaleGridLineColor: 'black',
+          scales: {
+		      yAxes: [{
+		        position: "left",
+		        "id": "y-axis-0"
+		      }, {
+		        position: "right",
+		        "id": "y-axis-1"
+		      }]
+		  }
         }
     });
     }

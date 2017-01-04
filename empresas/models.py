@@ -108,7 +108,7 @@ class Empresa(models.Model):
     temp_riesgo_impago_clientes = None
 
     def respuesta_clientes_ventas_hint(self):
-        balance_sells_deviation = float(self.balance_clients_sells()[len(self.balance_clients_sells())-1]['c']-self.balance_clients_sells_avg_sector()[len(self.balance_clients_sells_avg_sector())-1]['c'])/float(self.balance_clients_sells_avg_sector()[len(self.balance_clients_sells_avg_sector())-1]['c'])
+        balance_sells_deviation = float(self.balance_clients_sells()[len(self.balance_clients_sells())-1].get('c', 0)-self.balance_clients_sells_avg_sector()[len(self.balance_clients_sells_avg_sector())-1].get('c', 0))/float(self.balance_clients_sells_avg_sector()[len(self.balance_clients_sells_avg_sector())-1].get('c', 0))
         if balance_sells_deviation > 0.5:
             return "Sigue así! Si buscas ampliar tu base de proveedores utiliza nuestro motor de recomendaciones."
         elif balance_sells_deviation > 0.1:
@@ -125,17 +125,17 @@ class Empresa(models.Model):
             group_by = self.get_clients().values('hats_alert').annotate(c=Sum('transfers__amount'))
             total = 0
             for alert in group_by:
-                total += alert['c']
+                total += alert.get('c', 0)
             joined = False
             found = False
             key = ''
             value = 0
             ri = []
             for alert in group_by:
-                alert['c'] = float(alert['c'])/float(total)
+                alert['c'] = float(alert.get('c', 0))/float(total)
                 if (alert['hats_alert']=='SIN ALERTA' or alert['hats_alert']=='VERDE'):
                     if found==False:
-                        value = alert['c']
+                        value = alert.get('c', 0)
                         key = alert['hats_alert']
                         found = True
                     elif joined==False:
@@ -154,17 +154,17 @@ class Empresa(models.Model):
             group_by = self.get_providers().values('hats_alert').annotate(c=Sum('transfers__amount'))
             total = 0
             for alert in group_by:
-                total += alert['c']
+                total += alert.get('c', 0)
             joined = False
             found = False
             key = ''
             value = 0
             ri = []
             for alert in group_by:
-                alert['c'] = float(alert['c'])/float(total)
+                alert['c'] = float(alert.get('c', 0))/float(total)
                 if (alert['hats_alert']=='SIN ALERTA' or alert['hats_alert']=='VERDE'):
                     if found==False:
-                        value = alert['c']
+                        value = alert.get('c', 0)
                         key = alert['hats_alert']
                         found = True
                     elif joined==False:
@@ -183,17 +183,17 @@ class Empresa(models.Model):
             group_by = self.clients_of_sector_companies().values('hats_alert').annotate(c=Sum('transfers__amount'))
             total = 0
             for alert in group_by:
-                total += alert['c']
+                total += alert.get('c', 0)
             joined = False
             found = False
             key = ''
             value = 0
             ri = []
             for alert in group_by:
-                alert['c'] = float(alert['c'])/float(total)
+                alert['c'] = float(alert.get('c', 0))/float(total)
                 if (alert['hats_alert']=='SIN ALERTA' or alert['hats_alert']=='VERDE'):
                     if found==False:
-                        value = alert['c']
+                        value = alert.get('c', 0)
                         key = alert['hats_alert']
                         found = True
                     elif joined==False:
@@ -212,17 +212,17 @@ class Empresa(models.Model):
             group_by = self.providers_of_sector_companies().values('hats_alert').annotate(c=Sum('transfers__amount'))
             total = 0
             for alert in group_by:
-                total += alert['c']
+                total += alert.get('c', 0)
             joined = False
             found = False
             key = ''
             value = 0
             ri = []
             for alert in group_by:
-                alert['c'] = float(alert['c'])/float(total)
+                alert['c'] = float(alert.get('c', 0))/float(total)
                 if (alert['hats_alert']=='SIN ALERTA' or alert['hats_alert']=='VERDE'):
                     if found==False:
-                        value = alert['c']
+                        value = alert.get('c', 0)
                         key = alert['hats_alert']
                         found = True
                     elif joined==False:
@@ -825,7 +825,7 @@ class Empresa(models.Model):
         if self.temp_deuda_total_sector is None:
             self.temp_deuda_corto_sector = CIRBE.objects.filter(empresa__in=self.get_sector_companies().all()).exclude(corto_plazo_dispuesto=0).aggregate(c=Avg('corto_plazo_dispuesto'))
             self.temp_deuda_largo_sector = CIRBE.objects.filter(empresa__in=self.get_sector_companies().all()).exclude(largo_plazo_dispuesto=0).aggregate(c=Avg('largo_plazo_dispuesto'))
-            self.temp_deuda_total_sector = self.temp_deuda_corto_sector['c'] + self.temp_deuda_largo_sector['c']
+            self.temp_deuda_total_sector = self.temp_deuda_corto_sector.get('c', 0) + self.temp_deuda_largo_sector.get('c', 0)
         return self.temp_deuda_total_sector
 
     def deuda_corto(self):
@@ -836,16 +836,16 @@ class Empresa(models.Model):
     def deuda_corto_sector(self):
         if self.temp_deuda_corto_sector is None:
             self.temp_deuda_corto_sector = CIRBE.objects.filter(empresa__in=self.get_sector_companies().all()).aggregate(c=Avg('corto_plazo_dispuesto'))
-        return self.temp_deuda_corto_sector['c']
+        return self.temp_deuda_corto_sector.get('c', 0)
 
     def deuda_corto_pond(self):
         if len(self.balance_ebitda()) > 0:
-            return self.deuda_corto()/float(self.balance_ebitda()[len(self.balance_ebitda())-1]['c'])
+            return self.deuda_corto()/float(self.balance_ebitda()[len(self.balance_ebitda())-1].get('c', 0))
         return 0
 
     def deuda_corto_sector_pond(self):
         if len(self.balance_ebitda_avg_sector()) > 0:
-            return float(self.deuda_corto_sector())/float(self.balance_ebitda_avg_sector()[len(self.balance_ebitda_avg_sector())-1]['c'])
+            return float(self.deuda_corto_sector())/float(self.balance_ebitda_avg_sector()[len(self.balance_ebitda_avg_sector())-1].get('c', 0))
         return 0
 
     def deuda_largo(self):
@@ -857,24 +857,24 @@ class Empresa(models.Model):
         if self.temp_deuda_largo_sector is None:
             self.temp_deuda_largo_sector = CIRBE.objects.filter(empresa__in=self.get_sector_companies().all()).exclude(largo_plazo_dispuesto=0).aggregate(c=Avg('largo_plazo_dispuesto'))
             if self.temp_deuda_largo_sector:
-                return self.temp_deuda_largo_sector['c']
+                return self.temp_deuda_largo_sector.get('c', 0)
             else:
                 return 0
-        return self.temp_deuda_largo_sector['c']
+        return self.temp_deuda_largo_sector.get('c', 0)
 
     def deuda_largo_pond(self):
-        if len(self.balance_sells()) > 0 and float(self.balance_sells()[len(self.balance_sells())-1]['c']) > 0:
-            return self.deuda_largo()/float(self.balance_sells()[len(self.balance_sells())-1]['c'])
+        if len(self.balance_sells()) > 0 and float(self.balance_sells()[len(self.balance_sells())-1].get('c', 0)) > 0:
+            return self.deuda_largo()/float(self.balance_sells()[len(self.balance_sells())-1].get('c', 0))
         return 0
 
     def deuda_largo_sector_pond(self):
-        if len(self.balance_sells_avg_sector()) > 0 and float(self.balance_sells_avg_sector()[len(self.balance_sells_avg_sector())-1]['c']) > 0:
-            return float(self.deuda_largo_sector())/float(self.balance_sells_avg_sector()[len(self.balance_sells_avg_sector())-1]['c'])
+        if len(self.balance_sells_avg_sector()) > 0 and float(self.balance_sells_avg_sector()[len(self.balance_sells_avg_sector())-1].get('c', 0)) > 0:
+            return float(self.deuda_largo_sector())/float(self.balance_sells_avg_sector()[len(self.balance_sells_avg_sector())-1].get('c', 0))
         return 0
 
     def deuda_total_pond(self):
-        if len(self.balance_sells()) > 0 and float(self.balance_sells()[len(self.balance_sells())-1]['c']) > 0:
-            return (self.deuda_largo()+self.deuda_corto())/float(self.balance_sells()[len(self.balance_sells())-1]['c'])
+        if len(self.balance_sells()) > 0 and float(self.balance_sells()[len(self.balance_sells())-1].get('c', 0)) > 0:
+            return (self.deuda_largo()+self.deuda_corto())/float(self.balance_sells()[len(self.balance_sells())-1].get('c', 0))
         return 0
 
     def deuda_total_sector_pond(self):
@@ -903,8 +903,8 @@ class Empresa(models.Model):
         return 0
 
     def deuda_largo_sector_pond(self):
-        if len(self.balance_sells_avg_sector()) > 0 and float(self.balance_sells_avg_sector()[len(self.balance_sells_avg_sector())-1]['c']) > 0:
-            return float(self.deuda_largo_sector())/float(self.balance_sells_avg_sector()[len(self.balance_sells_avg_sector())-1]['c'])
+        if len(self.balance_sells_avg_sector()) > 0 and float(self.balance_sells_avg_sector()[len(self.balance_sells_avg_sector())-1].get('c', 0)) > 0:
+            return float(self.deuda_largo_sector())/float(self.balance_sells_avg_sector()[len(self.balance_sells_avg_sector())-1].get('c', 0))
         return 0
 
     def ratio_corto_largo(self):
@@ -917,22 +917,30 @@ class Empresa(models.Model):
 
     def dias_a_cobrar(self):
         if len(self.balance_sells()) > 0 and self.balance_deudores():
-            return 365*(self.balance_deudores()[len(self.balance_deudores())-1]['c'] / self.balance_sells()[len(self.balance_sells())-1]['c'])
+            if self.balance_sells()[len(self.balance_sells())-1].get('c', 0) > 0:
+                return 365*(self.balance_deudores()[len(self.balance_deudores())-1].get('c', 0) / self.balance_sells()[len(self.balance_sells())-1].get('c', 0))
+            return 0
         return 0
 
     def dias_a_cobrar_sector(self):
         if len(self.balance_sells_avg_sector()) > 0 and self.balance_deudores_avg_sector():
-            return 365*(self.balance_deudores_avg_sector()[len(self.balance_deudores_avg_sector())-1]['c'] / self.balance_sells_avg_sector()[len(self.balance_sells_avg_sector())-1]['c'])
+            if self.balance_sells_avg_sector()[len(self.balance_sells_avg_sector())-1].get('c', 0) > 0:
+                return 365*(self.balance_deudores_avg_sector()[len(self.balance_deudores_avg_sector())-1].get('c', 0) / self.balance_sells_avg_sector()[len(self.balance_sells_avg_sector())-1].get('c', 0))
+            return 0
         return 0
 
     def dias_a_pagar(self):
         if len(self.balance_buys()) > 0 and self.balance_acreedores_comerciales():
-            return 365*(self.balance_acreedores_comerciales()[len(self.balance_acreedores_comerciales())-1]['c'] / self.balance_buys()[len(self.balance_buys())-1]['c'])
+            if self.balance_buys()[len(self.balance_buys())-1].get('c', 0) > 0:
+                return 365*(self.balance_acreedores_comerciales()[len(self.balance_acreedores_comerciales())-1].get('c', 0) / self.balance_buys()[len(self.balance_buys())-1].get('c', 0))
+            return 0
         return 0
 
     def dias_a_pagar_sector(self):
         if len(self.balance_buys_avg_sector()) > 0 and self.balance_acreedores_comerciales_avg_sector():
-            return 365*(self.balance_acreedores_comerciales_avg_sector()[len(self.balance_acreedores_comerciales_avg_sector())-1]['c'] / self.balance_buys_avg_sector()[len(self.balance_buys_avg_sector())-1]['c'])
+            if self.balance_buys_avg_sector()[len(self.balance_buys_avg_sector())-1].get('c', 0) > 0:
+                return 365*(self.balance_acreedores_comerciales_avg_sector()[len(self.balance_acreedores_comerciales_avg_sector())-1].get('c', 0) / self.balance_buys_avg_sector()[len(self.balance_buys_avg_sector())-1].get('c', 0))
+            return 0
         return 0
 
     def get_sector_clients(self):
