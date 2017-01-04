@@ -479,7 +479,7 @@ class Empresa(models.Model):
             ventas = self.balance_clients_sells().last()
             if (ebitda is None) or (ventas is None):
                 return 0
-            elif (float(ventas-ebitda)==0):
+            elif (float(ventas.get('c', 0)-ebitda.get('c', 0))==0):
                 return 0
             self.temp_margen_comercial_clientes = float(ebitda.get('c', 0))/float(ventas.get('c', 0)-ebitda.get('c', 0))
         return self.temp_margen_comercial_clientes
