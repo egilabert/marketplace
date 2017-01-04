@@ -107,13 +107,54 @@ class Empresa(models.Model):
     temp_riesgo_impago_clientes_sector = None
     temp_riesgo_impago_clientes = None
 
+    def respuesta_clientes_ventas_hint(self):
+        balance_sells_deviation = float(self.balance_clients_sells()[len(self.balance_clients_sells())-1]['c']-self.balance_clients_sells_avg_sector()[len(self.balance_clients_sells_avg_sector())-1]['c'])/float(self.balance_clients_sells_avg_sector()[len(self.balance_clients_sells_avg_sector())-1]['c'])
+        if balance_sells_deviation > 0.5:
+            return "Sigue así! Si buscas ampliar tu base de proveedores utiliza nuestro motor de recomendaciones."
+        elif balance_sells_deviation > 0.1:
+            return "Muy bien! Si buscas ampliar  tu base de proveedores utiliza nuestro motor de recomendaciones."
+        elif balance_sells_deviation > -0.1:
+            return "Bien! Si te interesa, puedes encontrar proveedores de mayor tamaño utilizando nuestro motor de recomendaciones."
+        elif balance_sells_deviation > -0.5:
+            return "Atención! Trabajar con proveedores más pequeños te da mayor poder de negociación pero puede aumentar el riesgo para tu empresa. Has probado con proveedores más grandes? Si buscas nuevas oportunidades comerciales utiliza nuestro motor de recomendaciones."
+        else:
+            return "Alerta! Trabajar con proveedores muy pequeños da mayor poder de negociación pero puede aumentar el riesgo para tu empresa. Has probado con proveedores más grandes? Si buscas ampliar  tu base de proveedores utiliza nuestro motor de recomendaciones."
+
     def riesgo_impago_clientes(self):
         if self.temp_riesgo_impago_clientes is None:
             group_by = self.get_clients().values('hats_alert').annotate(c=Sum('transfers__amount'))
             total = 0
             for alert in group_by:
                 total += alert['c']
-            print total
+            joined = False
+            found = False
+            key = ''
+            value = 0
+            ri = []
+            for alert in group_by:
+                alert['c'] = float(alert['c'])/float(total)
+                if (alert['hats_alert']=='SIN ALERTA' or alert['hats_alert']=='VERDE'):
+                    if found==False:
+                        value = alert['c']
+                        key = alert['hats_alert']
+                        found = True
+                    elif joined==False:
+                        alert['c'] += value
+                        alert['hats_alert'] = 'VERDE'
+                        ri.append(alert)
+                        joined = True
+                else:
+                    ri.append(alert)
+            self.temp_riesgo_impago_clientes = ri
+            return self.temp_riesgo_impago_clientes
+        return self.temp_riesgo_impago_clientes
+
+    def riesgo_impago_proveedores(self):
+        if self.temp_riesgo_impago_clientes is None:
+            group_by = self.get_providers().values('hats_alert').annotate(c=Sum('transfers__amount'))
+            total = 0
+            for alert in group_by:
+                total += alert['c']
             joined = False
             found = False
             key = ''
@@ -140,6 +181,35 @@ class Empresa(models.Model):
     def riesgo_impago_clientes_sector(self):
         if self.temp_riesgo_impago_clientes_sector is None:
             group_by = self.clients_of_sector_companies().values('hats_alert').annotate(c=Sum('transfers__amount'))
+            total = 0
+            for alert in group_by:
+                total += alert['c']
+            joined = False
+            found = False
+            key = ''
+            value = 0
+            ri = []
+            for alert in group_by:
+                alert['c'] = float(alert['c'])/float(total)
+                if (alert['hats_alert']=='SIN ALERTA' or alert['hats_alert']=='VERDE'):
+                    if found==False:
+                        value = alert['c']
+                        key = alert['hats_alert']
+                        found = True
+                    elif joined==False:
+                        alert['c'] += value
+                        alert['hats_alert'] = 'VERDE'
+                        ri.append(alert)
+                        joined = True
+                else:
+                    ri.append(alert)
+            self.temp_riesgo_impago_clientes_sector = ri
+            return self.temp_riesgo_impago_clientes_sector
+        return self.temp_riesgo_impago_clientes_sector
+
+    def riesgo_impago_providers_sector(self):
+        if self.temp_riesgo_impago_clientes_sector is None:
+            group_by = self.providers_of_sector_companies().values('hats_alert').annotate(c=Sum('transfers__amount'))
             total = 0
             for alert in group_by:
                 total += alert['c']
@@ -219,14 +289,17 @@ class Empresa(models.Model):
 
     def hhi_providers_sector(self):
         if self.temp_hhi_providers_sector is None:
-            groub_by = self.providers_of_sector_companies().values('name').annotate(c=Sum('transfers__amount'))
+            groub_by = self.providers_of_sector_companies().values('name').annotate(c=Sum('destination_reference__amount'))
             total = self.get_total_sector_buys()
             hhi = 0
+            total_by = 0
             for i, name in enumerate(groub_by):
                 one = float(name.get('c', 0))
+                total_by += one
                 total = float(total)
                 hhi += pow(one/total,2)
             self.temp_hhi_providers_sector = hhi
+
         return self.temp_hhi_providers_sector
 
     def hhi_clients_clients(self):
@@ -291,7 +364,7 @@ class Empresa(models.Model):
 
     def hhi_geografical_sector_providers(self):
         if self.temp_hhi_geografical_sector_providers is None:
-            groub_by = self.providers_of_sector_companies().values('territorial').annotate(c=Sum('transfers__amount'))
+            groub_by = self.providers_of_sector_companies().values('territorial').annotate(c=Sum('destination_reference__amount'))
             total = self.get_total_sector_buys()
             hhi = 0
             for i, territorial in enumerate(groub_by):
@@ -339,7 +412,7 @@ class Empresa(models.Model):
 
     def hhi_cnae_sector_providers(self):
         if self.temp_hhi_cnae_sector_providers is None:
-            groub_by = self.providers_of_sector_companies().values('cnae').annotate(c=Sum('transfers__amount'))
+            groub_by = self.providers_of_sector_companies().values('cnae').annotate(c=Sum('destination_reference__amount'))
             total = self.get_total_sector_buys()
             hhi = 0
             for i, cnae in enumerate(groub_by):
@@ -402,11 +475,13 @@ class Empresa(models.Model):
 
     def margen_comercial_clientes(self):
         if self.temp_margen_comercial_clientes is None:
-            ebitda = self.balance_clients_ebitda().last().get('c', 0)
-            ventas = self.balance_clients_sells().last().get('c', 0)
-            if float(ventas-ebitda)==0:
+            ebitda = self.balance_clients_ebitda().last()
+            ventas = self.balance_clients_sells().last()
+            if (ebitda is None) or (ventas is None):
                 return 0
-            self.temp_margen_comercial_clientes = float(ebitda)/float(ventas-ebitda)
+            elif (float(ventas-ebitda)==0):
+                return 0
+            self.temp_margen_comercial_clientes = float(ebitda.get('c', 0))/float(ventas.get('c', 0)-ebitda.get('c', 0))
         return self.temp_margen_comercial_clientes
 
     def margen_comercial_sector_clientes(self):
@@ -735,7 +810,7 @@ class Empresa(models.Model):
 
     def get_sector_companies(self):
         if self.temp_get_sector_companies is None:
-            self.temp_get_sector_companies = Empresa.objects.filter(cnae=self.cnae)
+            self.temp_get_sector_companies = Empresa.objects.filter(cnae=self.cnae).exclude(fiscal_id=self.fiscal_id)
         return self.temp_get_sector_companies
 
     # Helpers de CIRBE
@@ -781,6 +856,10 @@ class Empresa(models.Model):
     def deuda_largo_sector(self):
         if self.temp_deuda_largo_sector is None:
             self.temp_deuda_largo_sector = CIRBE.objects.filter(empresa__in=self.get_sector_companies().all()).exclude(largo_plazo_dispuesto=0).aggregate(c=Avg('largo_plazo_dispuesto'))
+            if self.temp_deuda_largo_sector:
+                return self.temp_deuda_largo_sector['c']
+            else:
+                return 0
         return self.temp_deuda_largo_sector['c']
 
     def deuda_largo_pond(self):
@@ -799,8 +878,8 @@ class Empresa(models.Model):
         return 0
 
     def deuda_total_sector_pond(self):
-        if len(self.balance_sells_avg_sector()) > 0 and float(self.balance_sells_avg_sector()[len(self.balance_sells_avg_sector())-1]['c']) > 0:
-            return float(self.deuda_largo_sector()+self.deuda_corto())/float(self.balance_sells_avg_sector()[len(self.balance_sells_avg_sector())-1]['c'])
+        if len(self.balance_sells_avg_sector()) > 0 and float(self.balance_sells_avg_sector()[len(self.balance_sells_avg_sector())-1].get('c', 0)) > 0:
+            return float(self.deuda_largo_sector()+self.deuda_corto())/float(self.balance_sells_avg_sector()[len(self.balance_sells_avg_sector())-1].get('c', 0))
         return 0
 
     def gastos_financiero(self):
@@ -829,7 +908,9 @@ class Empresa(models.Model):
         return 0
 
     def ratio_corto_largo(self):
-        return float(self.deuda_corto()) / float(self.deuda_largo())
+        if self.deuda_largo() != 0:
+            return float(self.deuda_corto()) / float(self.deuda_largo())
+        return 0
 
     def ratio_sector_corto_largo(self):
         return self.deuda_corto_sector() / self.deuda_largo_sector()

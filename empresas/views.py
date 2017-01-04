@@ -40,7 +40,7 @@ def HomeView(request):
 	request.session.modified = True
 	queryset = Empresa.objects.all()
 	if request.session.get('company') is None: 
-		company = 1492 #randint(0, queryset.count() - 1) ##1470 865 865-1 
+		company = randint(0, queryset.count() - 1) #1492 # ##1470 865 865-1 
 		request.session['company'] = company
 	else:
 		company_id = request.session.get('company')
@@ -174,6 +174,27 @@ def ClientRiskRecommendationsView(request):
 	return render(request, 'empresas/risk_client.html', context)
 
 @login_required
+def ProviderRiskRecommendationsView(request):
+	
+	company_id = request.session.get('company')
+	company = Empresa.objects.filter(pk=company_id)
+	company = company.prefetch_related('estados_financieros','cirbe','productos')[0]
+	try:
+		ultimos_eeff = company.estados_financieros.reverse()[0]
+	except:
+		ultimos_eeff = Empresa()
+	context = {
+		'company':company,
+		'riesgo_impago_proveedores': json.dumps(list(company.riesgo_impago_proveedores()), cls=DjangoJSONEncoder),
+		'riesgo_impago_providers_sector': json.dumps(list(company.riesgo_impago_providers_sector()), cls=DjangoJSONEncoder),
+		'get_monthly_sells': json.dumps(list(company.get_monthly_sells_amount()), cls=DjangoJSONEncoder),
+		'get_monthly_sector_avg_sells': json.dumps(list(company.get_sector_total_monthly_sells_amount()), cls=DjangoJSONEncoder),
+		'productos_variable': company.productos_con_tipo_variable().all(),
+		'ultimos_eeff': ultimos_eeff
+		}
+	return render(request, 'empresas/risk_providers.html', context)
+
+@login_required
 def OpportunityProviderView(request):
 	
 	company_id = request.session.get('company')
@@ -211,8 +232,6 @@ def CommercialClientsRecommendationsView(request):
 	empresa = Empresa.objects.filter(pk=company_id)
 	empresa = empresa.prefetch_related(None)
 	empresa = empresa.prefetch_related('transfers', 'destination_reference', 'destination_reference__origin_reference')[0]
-	print(empresa.__dict__)
-
 	context = {
 		'company':empresa,
 		'balance_sells_avg_sector': json.dumps(list(empresa.balance_clients_sells_avg_sector()), cls=DjangoJSONEncoder),
@@ -614,6 +633,13 @@ def RecommendationsCreate(request):
                           exact=False, trees=20,
                           use_native=True,
                           dtype=numpy.float64)
+	return HttpResponse("Recommendations loaded")
+
+@staff_member_required
+def CompaniesCleanning(request):
+	# ===============================================================
+	# Generando recomendaciones.......
+	empresas = Empresa.objects.all()
 	return HttpResponse("Recommendations loaded")
 
 # =====================================================================================
