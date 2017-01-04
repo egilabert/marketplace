@@ -131,21 +131,24 @@ class Empresa(models.Model):
             key = ''
             value = 0
             ri = []
-            for alert in group_by:
-                alert['c'] = float(alert.get('c', 0))/float(total)
-                if (alert['hats_alert']=='SIN ALERTA' or alert['hats_alert']=='VERDE'):
-                    if found==False:
-                        value = alert.get('c', 0)
-                        key = alert['hats_alert']
-                        found = True
-                    elif joined==False:
-                        alert['c'] += value
-                        alert['hats_alert'] = 'VERDE'
+            if total > 0:
+                for alert in group_by:
+                    alert['c'] = float(alert.get('c', 0))/float(total)
+                    if (alert['hats_alert']=='SIN ALERTA' or alert['hats_alert']=='VERDE'):
+                        if found==False:
+                            value = alert.get('c', 0)
+                            key = alert['hats_alert']
+                            found = True
+                        elif joined==False:
+                            alert['c'] += value
+                            alert['hats_alert'] = 'VERDE'
+                            ri.append(alert)
+                            joined = True
+                    else:
                         ri.append(alert)
-                        joined = True
-                else:
-                    ri.append(alert)
-            self.temp_riesgo_impago_clientes = ri
+                self.temp_riesgo_impago_clientes = ri
+            else:
+                self.temp_riesgo_impago_clientes = 0
             return self.temp_riesgo_impago_clientes
         return self.temp_riesgo_impago_clientes
 
@@ -160,21 +163,24 @@ class Empresa(models.Model):
             key = ''
             value = 0
             ri = []
-            for alert in group_by:
-                alert['c'] = float(alert.get('c', 0))/float(total)
-                if (alert['hats_alert']=='SIN ALERTA' or alert['hats_alert']=='VERDE'):
-                    if found==False:
-                        value = alert.get('c', 0)
-                        key = alert['hats_alert']
-                        found = True
-                    elif joined==False:
-                        alert['c'] += value
-                        alert['hats_alert'] = 'VERDE'
+            if total > 0:
+                for alert in group_by:
+                    alert['c'] = float(alert.get('c', 0))/float(total)
+                    if (alert['hats_alert']=='SIN ALERTA' or alert['hats_alert']=='VERDE'):
+                        if found==False:
+                            value = alert.get('c', 0)
+                            key = alert['hats_alert']
+                            found = True
+                        elif joined==False:
+                            alert['c'] += value
+                            alert['hats_alert'] = 'VERDE'
+                            ri.append(alert)
+                            joined = True
+                    else:
                         ri.append(alert)
-                        joined = True
-                else:
-                    ri.append(alert)
-            self.temp_riesgo_impago_clientes = ri
+                self.temp_riesgo_impago_clientes = ri
+            else:
+                self.temp_riesgo_impago_clientes = 0
             return self.temp_riesgo_impago_clientes
         return self.temp_riesgo_impago_clientes
 
@@ -189,21 +195,24 @@ class Empresa(models.Model):
             key = ''
             value = 0
             ri = []
-            for alert in group_by:
-                alert['c'] = float(alert.get('c', 0))/float(total)
-                if (alert['hats_alert']=='SIN ALERTA' or alert['hats_alert']=='VERDE'):
-                    if found==False:
-                        value = alert.get('c', 0)
-                        key = alert['hats_alert']
-                        found = True
-                    elif joined==False:
-                        alert['c'] += value
-                        alert['hats_alert'] = 'VERDE'
+            if total > 0:
+                for alert in group_by:
+                    alert['c'] = float(alert.get('c', 0))/float(total)
+                    if (alert['hats_alert']=='SIN ALERTA' or alert['hats_alert']=='VERDE'):
+                        if found==False:
+                            value = alert.get('c', 0)
+                            key = alert['hats_alert']
+                            found = True
+                        elif joined==False:
+                            alert['c'] += value
+                            alert['hats_alert'] = 'VERDE'
+                            ri.append(alert)
+                            joined = True
+                    else:
                         ri.append(alert)
-                        joined = True
-                else:
-                    ri.append(alert)
-            self.temp_riesgo_impago_clientes_sector = ri
+                self.temp_riesgo_impago_clientes_sector = ri
+            else:
+                self.temp_riesgo_impago_clientes = 0
             return self.temp_riesgo_impago_clientes_sector
         return self.temp_riesgo_impago_clientes_sector
 
@@ -218,21 +227,24 @@ class Empresa(models.Model):
             key = ''
             value = 0
             ri = []
-            for alert in group_by:
-                alert['c'] = float(alert.get('c', 0))/float(total)
-                if (alert['hats_alert']=='SIN ALERTA' or alert['hats_alert']=='VERDE'):
-                    if found==False:
-                        value = alert.get('c', 0)
-                        key = alert['hats_alert']
-                        found = True
-                    elif joined==False:
-                        alert['c'] += value
-                        alert['hats_alert'] = 'VERDE'
+            if total > 0:
+                for alert in group_by:
+                    alert['c'] = float(alert.get('c', 0))/float(total)
+                    if (alert['hats_alert']=='SIN ALERTA' or alert['hats_alert']=='VERDE'):
+                        if found==False:
+                            value = alert.get('c', 0)
+                            key = alert['hats_alert']
+                            found = True
+                        elif joined==False:
+                            alert['c'] += value
+                            alert['hats_alert'] = 'VERDE'
+                            ri.append(alert)
+                            joined = True
+                    else:
                         ri.append(alert)
-                        joined = True
-                else:
-                    ri.append(alert)
-            self.temp_riesgo_impago_clientes_sector = ri
+                self.temp_riesgo_impago_clientes_sector = ri
+            else:
+                self.temp_riesgo_impago_clientes = 0
             return self.temp_riesgo_impago_clientes_sector
         return self.temp_riesgo_impago_clientes_sector
 
@@ -257,21 +269,21 @@ class Empresa(models.Model):
 
     def my_penetration_client(self):
         if self.balance_clients_payments():
-            if len(self.balance_clients_payments())>0:
+            if len(self.balance_clients_payments())>0 and self.balance_clients_payments()[len(self.balance_clients_payments())-1] > 0:
                 return float(self.get_total_sells())/float(self.balance_clients_payments()[len(self.balance_clients_payments())-1])
         return 0
 
     def my_penetration_provider(self):
         if self.temp_my_penetration_provider is None:
-            if self.balance_providers_sells():
-                self.temp_my_penetration_provider = float(self.get_total_buys())/float(list(self.balance_providers_sells())[len(list(self.balance_providers_sells()))-1].get('c', 0))
+            if self.balance_providers_sells() and list(self.balance_providers_sells())[len(list(self.balance_providers_sells()))-1].get('c', 0)>0:
+                self.temp_my_penetration_provider = float(self.get_total_buys())/floatfloat(list(self.balance_providers_sells())[len(list(self.balance_providers_sells()))-1].get('c', 0))
                 return self.temp_my_penetration_provider
             self.temp_my_penetration_provider = 0
             return self.temp_my_penetration_provider
         return self.temp_my_penetration_provider
 
     def my_sector_penetration_client(self):
-        if len(self.balance_clients_payments_avg_sector())>0:
+        if len(self.balance_clients_payments_avg_sector())>0 and self.balance_clients_payments_avg_sector()[len(self.balance_clients_payments_avg_sector())-1]>0:
             return float(self.get_total_sector_sells())/float(self.balance_clients_payments_avg_sector()[len(self.balance_clients_payments_avg_sector())-1])
         return 0
 
@@ -280,11 +292,14 @@ class Empresa(models.Model):
             groub_by = self.get_providers().values('name').annotate(c=Sum('destination_reference__amount'))
             total = self.get_total_buys()
             hhi = 0
-            for i, name in enumerate(groub_by):
-                one = float(name.get('c', 0))
-                total = float(total)
-                hhi += pow(one/total,2)
-            self.temp_hhi_providers = hhi
+            if total > 0:
+                for i, name in enumerate(groub_by):
+                    one = float(name.get('c', 0))
+                    total = float(total)
+                    hhi += pow(one/total,2)
+                self.temp_hhi_providers = hhi
+            else:
+                self.temp_hhi_providers = 0
         return self.temp_hhi_providers
 
     def hhi_providers_sector(self):
@@ -293,13 +308,15 @@ class Empresa(models.Model):
             total = self.get_total_sector_buys()
             hhi = 0
             total_by = 0
-            for i, name in enumerate(groub_by):
-                one = float(name.get('c', 0))
-                total_by += one
-                total = float(total)
-                hhi += pow(one/total,2)
-            self.temp_hhi_providers_sector = hhi
-
+            if total>0:
+                for i, name in enumerate(groub_by):
+                    one = float(name.get('c', 0))
+                    total_by += one
+                    total = float(total)
+                    hhi += pow(one/total,2)
+                self.temp_hhi_providers_sector = hhi
+            else:
+                self.temp_hhi_providers_sector = 0
         return self.temp_hhi_providers_sector
 
     def hhi_clients_clients(self):
@@ -307,11 +324,14 @@ class Empresa(models.Model):
             groub_by = self.get_clients().values('name').annotate(c=Sum('transfers__amount'))
             total = self.get_total_sells()
             hhi = 0
-            for i, name in enumerate(groub_by):
-                one = float(name.get('c', 0))
-                total = float(total)
-                hhi += pow(one/total,2)
-            self.temp_hhi_clients_clients = hhi
+            if total > 0:
+                for i, name in enumerate(groub_by):
+                    one = float(name.get('c', 0))
+                    total = float(total)
+                    hhi += pow(one/total,2)
+                self.temp_hhi_clients_clients = hhi
+            else:
+                self.temp_hhi_clients_clients = 0
         return self.temp_hhi_clients_clients
 
     def hhi_clients_sector_clients(self):
@@ -319,11 +339,14 @@ class Empresa(models.Model):
             groub_by = self.clients_of_sector_companies().values('name').annotate(c=Sum('transfers__amount'))
             total = self.get_total_sector_sells()
             hhi = 0
-            for i, name in enumerate(groub_by):
-                one = float(name.get('c', 0))
-                total = float(total)
-                hhi += pow(one/total,2)
-            self.temp_hhi_clients_sector_clients = hhi
+            if total > 0:
+                for i, name in enumerate(groub_by):
+                    one = float(name.get('c', 0))
+                    total = float(total)
+                    hhi += pow(one/total,2)
+                self.temp_hhi_clients_sector_clients = hhi
+            else:
+                self.temp_hhi_clients_sector_clients = 0
         return self.temp_hhi_clients_sector_clients
 
     def hhi_geografical_clients(self):
@@ -331,11 +354,14 @@ class Empresa(models.Model):
             groub_by = self.get_clients().values('territorial').annotate(c=Sum('transfers__amount'))
             total = self.get_total_sells()
             hhi = 0
-            for i, territorial in enumerate(groub_by):
-                one = float(territorial.get('c', 0))
-                total = float(total)
-                hhi += pow(one/total,2)
-            self.temp_hhi_geografical_clients = hhi
+            if total > 0:
+                for i, territorial in enumerate(groub_by):
+                    one = float(territorial.get('c', 0))
+                    total = float(total)
+                    hhi += pow(one/total,2)
+                self.temp_hhi_geografical_clients = hhi
+            else:
+                self.temp_hhi_geografical_clients = 0
         return self.temp_hhi_geografical_clients
 
     def hhi_geografical_sector_clients(self):
@@ -343,11 +369,14 @@ class Empresa(models.Model):
             groub_by = self.clients_of_sector_companies().values('territorial').annotate(c=Sum('transfers__amount'))
             total = self.get_total_sector_sells()
             hhi = 0
-            for i, territorial in enumerate(groub_by):
-                one = float(territorial.get('c', 0))
-                total = float(total)
-                hhi += pow(one/total,2)
-            self.temp_hhi_geografical_sector_clients = hhi
+            if total>0:
+                for i, territorial in enumerate(groub_by):
+                    one = float(territorial.get('c', 0))
+                    total = float(total)
+                    hhi += pow(one/total,2)
+                self.temp_hhi_geografical_sector_clients = hhi
+            else:
+                self.temp_hhi_geografical_sector_clients = 0
         return self.temp_hhi_geografical_sector_clients
 
     def hhi_geografical_providers(self):
@@ -355,11 +384,14 @@ class Empresa(models.Model):
             groub_by = self.get_providers().values('territorial').annotate(c=Sum('destination_reference__amount'))
             total = self.get_total_buys()
             hhi = 0
-            for i, territorial in enumerate(groub_by):
-                one = float(territorial.get('c', 0))
-                total = float(total)
-                hhi += pow(one/total,2)
-            self.temp_hhi_geografical_providers = hhi
+            if total > 0:
+                for i, territorial in enumerate(groub_by):
+                    one = float(territorial.get('c', 0))
+                    total = float(total)
+                    hhi += pow(one/total,2)
+                self.temp_hhi_geografical_providers = hhi
+            else:
+                self.temp_hhi_geografical_providers = 0
         return self.temp_hhi_geografical_providers
 
     def hhi_geografical_sector_providers(self):
@@ -367,11 +399,14 @@ class Empresa(models.Model):
             groub_by = self.providers_of_sector_companies().values('territorial').annotate(c=Sum('destination_reference__amount'))
             total = self.get_total_sector_buys()
             hhi = 0
-            for i, territorial in enumerate(groub_by):
-                one = float(territorial.get('c', 0))
-                total = float(total)
-                hhi += pow(one/total,2)
-            self.temp_hhi_geografical_sector_providers = hhi
+            if total > 0:
+                for i, territorial in enumerate(groub_by):
+                    one = float(territorial.get('c', 0))
+                    total = float(total)
+                    hhi += pow(one/total,2)
+                self.temp_hhi_geografical_sector_providers = hhi
+            else:
+                self.temp_hhi_geografical_sector_providers = 0
         return self.temp_hhi_geografical_sector_providers
 
     def hhi_cnae_clients(self):
@@ -379,11 +414,14 @@ class Empresa(models.Model):
             groub_by = self.get_clients().values('cnae').annotate(c=Sum('transfers__amount'))
             total = self.get_total_sells()
             hhi = 0
-            for i, cnae in enumerate(groub_by):
-                one = float(cnae.get('c', 0))
-                total = float(total)
-                hhi += pow(one/total,2)
-            self.temp_hhi_cnae_clients = hhi
+            if total > 0:
+                for i, cnae in enumerate(groub_by):
+                    one = float(cnae.get('c', 0))
+                    total = float(total)
+                    hhi += pow(one/total,2)
+                self.temp_hhi_cnae_clients = hhi
+            else:
+                self.temp_hhi_cnae_clients = 0
         return self.temp_hhi_cnae_clients
 
     def hhi_cnae_sector_clients(self):
@@ -391,11 +429,14 @@ class Empresa(models.Model):
             groub_by = self.clients_of_sector_companies().values('cnae').annotate(c=Sum('transfers__amount'))
             total = self.get_total_sector_sells()
             hhi = 0
-            for i, cnae in enumerate(groub_by):
-                one = float(cnae.get('c', 0))
-                total = float(total)
-                hhi += pow(one/total,2)
-            self.temp_hhi_cnae_sector_clients = hhi
+            if total > 0:
+                for i, cnae in enumerate(groub_by):
+                    one = float(cnae.get('c', 0))
+                    total = float(total)
+                    hhi += pow(one/total,2)
+                self.temp_hhi_cnae_sector_clients = hhi
+            else:
+                self.temp_hhi_cnae_sector_clients = 0
         return self.temp_hhi_cnae_sector_clients
 
     def hhi_cnae_providers(self):
@@ -403,11 +444,14 @@ class Empresa(models.Model):
             groub_by = self.get_providers().values('cnae').annotate(c=Sum('destination_reference__amount'))
             total = self.get_total_buys()
             hhi = 0
-            for i, cnae in enumerate(groub_by):
-                one = float(cnae.get('c', 0))
-                total = float(total)
-                hhi += pow(one/total,2)
-            self.temp_hhi_cnae_providers = hhi
+            if total > 0:
+                for i, cnae in enumerate(groub_by):
+                    one = float(cnae.get('c', 0))
+                    total = float(total)
+                    hhi += pow(one/total,2)
+                self.temp_hhi_cnae_providers = hhi
+            else:
+                self.temp_hhi_cnae_providers = 0
         return self.temp_hhi_cnae_providers
 
     def hhi_cnae_sector_providers(self):
@@ -415,11 +459,14 @@ class Empresa(models.Model):
             groub_by = self.providers_of_sector_companies().values('cnae').annotate(c=Sum('destination_reference__amount'))
             total = self.get_total_sector_buys()
             hhi = 0
-            for i, cnae in enumerate(groub_by):
-                one = float(cnae.get('c', 0))
-                total = float(total)
-                hhi += pow(one/total,2)
-            self.temp_hhi_cnae_sector_providers = hhi
+            if total > 0:
+                for i, cnae in enumerate(groub_by):
+                    one = float(cnae.get('c', 0))
+                    total = float(total)
+                    hhi += pow(one/total,2)
+                self.temp_hhi_cnae_sector_providers = hhi
+            else:
+                self.temp_hhi_cnae_sector_providers = 0
         return self.temp_hhi_cnae_sector_providers
 
     def hhi_temporal_clients(self):
@@ -427,11 +474,14 @@ class Empresa(models.Model):
             groub_by = self.get_monthly_sells_amount()
             total = self.get_total_sells()
             hhi = 0
-            for i, cnae in enumerate(groub_by):
-                one = float(cnae.get('c', 0))
-                total = float(total)
-                hhi += pow(one/total,2)
-            self.temp_hhi_temporal_clients = hhi
+            if total > 0:
+                for i, cnae in enumerate(groub_by):
+                    one = float(cnae.get('c', 0))
+                    total = float(total)
+                    hhi += pow(one/total,2)
+                self.temp_hhi_temporal_clients = hhi
+            else:
+                self.temp_hhi_temporal_clients = 0
         return self.temp_hhi_temporal_clients
 
     def hhi_temporal_sector_clients(self):
@@ -439,11 +489,14 @@ class Empresa(models.Model):
             groub_by = self.get_sector_total_monthly_sells_amount()
             total = self.get_total_sector_sells()
             hhi = 0
-            for i, cnae in enumerate(groub_by):
-                one = float(cnae.get('c', 0))
-                total = float(total)
-                hhi += pow(one/total,2)
-            self.temp_hhi_temporal_sector_clients = hhi
+            if total > 0:
+                for i, cnae in enumerate(groub_by):
+                    one = float(cnae.get('c', 0))
+                    total = float(total)
+                    hhi += pow(one/total,2)
+                self.temp_hhi_temporal_sector_clients = hhi
+            else:
+                self.temp_hhi_temporal_sector_clients = 0
         return self.temp_hhi_temporal_sector_clients
 
     def hhi_temporal_providers(self):
@@ -451,11 +504,14 @@ class Empresa(models.Model):
             groub_by = self.get_monthly_buys_amount()
             total = self.get_total_buys()
             hhi = 0
-            for i, cnae in enumerate(groub_by):
-                one = float(cnae.get('c', 0))
-                total = float(total)
-                hhi += pow(one/total,2)
-            self.temp_hhi_temporal_providers = hhi
+            if total > 0:
+                for i, cnae in enumerate(groub_by):
+                    one = float(cnae.get('c', 0))
+                    total = float(total)
+                    hhi += pow(one/total,2)
+                self.temp_hhi_temporal_providers = hhi
+            else:
+                self.temp_hhi_temporal_providers = 0
         return self.temp_hhi_temporal_providers
 
     def hhi_temporal_sector_providers(self):
@@ -463,11 +519,14 @@ class Empresa(models.Model):
             groub_by = self.get_sector_total_monthly_buys_amount()
             total = self.get_total_sector_buys()
             hhi = 0
-            for i, cnae in enumerate(groub_by):
-                one = float(cnae.get('c', 0))
-                total = float(total)
-                hhi += pow(one/total,2)
-            self.temp_hhi_temporal_sector_providers = hhi
+            if total > 0:
+                for i, cnae in enumerate(groub_by):
+                    one = float(cnae.get('c', 0))
+                    total = float(total)
+                    hhi += pow(one/total,2)
+                self.temp_hhi_temporal_sector_providers = hhi
+            else:
+                self.temp_hhi_temporal_sector_providers = 0
         return self.temp_hhi_temporal_sector_providers
 
     # Helpers de los estados financieros
@@ -478,20 +537,25 @@ class Empresa(models.Model):
             ebitda = self.balance_clients_ebitda().last()
             ventas = self.balance_clients_sells().last()
             if (ebitda is None) or (ventas is None):
-                return 0
+                self.temp_margen_comercial_clientes = 0
+                return self.temp_margen_comercial_clientes
             elif (float(ventas.get('c', 0)-ebitda.get('c', 0))==0):
-                return 0
+                self.temp_margen_comercial_clientes = 0
+                return self.temp_margen_comercial_clientes
             self.temp_margen_comercial_clientes = float(ebitda.get('c', 0))/float(ventas.get('c', 0)-ebitda.get('c', 0))
         return self.temp_margen_comercial_clientes
 
     def margen_comercial_sector_clientes(self):
         if self.temp_margen_comercial_sector_clientes is None:
-            ebitda = self.balance_clients_ebitda_avg_sector().last().get('c', 0)
-            ventas = self.balance_clients_sells_avg_sector().last().get('c', 0)
-            if float(ventas-ebitda)==0:
+            ebitda = self.balance_clients_ebitda_avg_sector().last()
+            ventas = self.balance_clients_sells_avg_sector().last()
+            if (ebitda is None) or (ventas is None):
                 self.temp_margen_comercial_sector_clientes = 0
                 return self.temp_margen_comercial_sector_clientes
-            self.temp_margen_comercial_sector_clientes = float(ebitda)/float(ventas-ebitda)
+            elif float(ventas.get('c', 0)-ebitda.get('c', 0))==0:
+                self.temp_margen_comercial_sector_clientes = 0
+                return self.temp_margen_comercial_sector_clientes
+            self.temp_margen_comercial_sector_clientes = float(ebitda.get('c', 0))/float(ventas.get('c', 0)-ebitda.get('c', 0))
         return self.temp_margen_comercial_sector_clientes
 
     def margen_comercial_providers(self):
@@ -705,7 +769,10 @@ class Empresa(models.Model):
     def get_monthly_sector_avg_sells(self):
         group_by = Transfer.objects.filter(destination_reference__in=self.get_sector_companies().all()).annotate(month=TruncMonth('operation_data')).values('month').annotate(c=Count('id')).order_by('month')
         for month in group_by:
-            month['c'] = month.get('c', 0)/self.get_sector_companies().count()
+            if self.get_sector_companies().count()>0:
+                month['c'] = month.get('c', 0)/self.get_sector_companies().count()
+            else:
+                month['c'] = 0
             month['month'] = month.get('month', None).strftime("%b %Y")
         return group_by
 
@@ -840,12 +907,16 @@ class Empresa(models.Model):
 
     def deuda_corto_pond(self):
         if len(self.balance_ebitda()) > 0:
-            return self.deuda_corto()/float(self.balance_ebitda()[len(self.balance_ebitda())-1].get('c', 0))
+            if self.balance_ebitda()[len(self.balance_ebitda())-1].get('c', 0)>0:
+                return self.deuda_corto()/float(self.balance_ebitda()[len(self.balance_ebitda())-1].get('c', 0))
+            return 04
         return 0
 
     def deuda_corto_sector_pond(self):
         if len(self.balance_ebitda_avg_sector()) > 0:
-            return float(self.deuda_corto_sector())/float(self.balance_ebitda_avg_sector()[len(self.balance_ebitda_avg_sector())-1].get('c', 0))
+            if self.balance_ebitda_avg_sector()[len(self.balance_ebitda_avg_sector())-1].get('c', 0)>0:
+                return float(self.deuda_corto_sector())/float(self.balance_ebitda_avg_sector()[len(self.balance_ebitda_avg_sector())-1].get('c', 0))
+            return 0
         return 0
 
     def deuda_largo(self):
@@ -893,12 +964,12 @@ class Empresa(models.Model):
         return 0
 
     def costes_financiacion(self):
-        if self.deuda_total():
+        if self.deuda_total() and self.deuda_total() > 0:
             return self.gastos_financiero()/self.deuda_total()
         return 0
 
     def costes_financiacion_sector(self):
-        if self.deuda_total_sector():
+        if self.deuda_total_sector() and self.deuda_total_sector()>0:
             return self.gastos_financiero_sector()/self.deuda_total_sector()
         return 0
 
@@ -908,12 +979,14 @@ class Empresa(models.Model):
         return 0
 
     def ratio_corto_largo(self):
-        if self.deuda_largo() != 0:
+        if self.deuda_largo() > 0:
             return float(self.deuda_corto()) / float(self.deuda_largo())
         return 0
 
     def ratio_sector_corto_largo(self):
-        return self.deuda_corto_sector() / self.deuda_largo_sector()
+        if self.deuda_largo_sector() > 0:
+            return self.deuda_corto_sector() / self.deuda_largo_sector()
+        return 0
 
     def dias_a_cobrar(self):
         if len(self.balance_sells()) > 0 and self.balance_deudores():
