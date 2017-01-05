@@ -18,7 +18,7 @@
 				<a href="{% url 'empresas:recommendations_financial_risk' %}" id="download-button" class="btn-large waves-effect waves-light transparent pad_top white-text text-darken-3 border-grey">Riesgo financiero </a>
 			</div>
 			<div class="col m4 s3">
-				<a href="{% url 'empresas:recommendations_provider_risk' %}" id="download-button" class="btn-large waves-effect waves-light alpha_back pad_top orange-text text-darken-4 border-grey">Riesgo cliente  </a>
+				<a href="{% url 'empresas:recommendations_client_risk' %}" id="download-button" class="btn-large waves-effect waves-light alpha_back pad_top orange-text text-darken-4 border-grey">Riesgo cliente  </a>
 			</div>
 			<div class="col m4 s3">
 				<a href="{% url 'empresas:recommendations_provider_risk' %}" id="download-button" class="btn-large waves-effect waves-light transparent pad_top white-text text-darken-3 border-grey">Riesgo proveedor </a>
@@ -90,6 +90,7 @@
 				    </div>
 			    	<div class="row title_conf">
 			    	<!-- Resultado explotaciones -->
+			    	<div class="row">
 			    		<div class="col m6 s12">
 			    			<div class="card grey lighten-4">
 					            <div class="card-content grey-text darken-4">
@@ -110,7 +111,7 @@
 					        </div>
 			    		</div>
 			    	</div>
-
+			    	</div>
 			    	<!-- /////////////////////////////////////////////////////////////
 					 ////// ¿Como son mis clientes?
 					 ///////////////////////////////////////////////////////////// -->
@@ -120,7 +121,8 @@
 				    </div>
 				    <div class="row title_conf">
 			    	<!-- EBITDA -->
-			    		<div class="col m8 s12">
+			    	<div class="row">
+			    		<div class="col m6 s12">
 			    			<div class="card grey lighten-4">
 					            <div class="card-content grey-text darken-4">
 					            	<span class="card-title">Fidelización</span>
@@ -134,7 +136,7 @@
 						              				You
 						              			</div>
 						              			<div class="col s5">
-						              				<h4> 44 <small>días</small></h4>
+						              				<h5> 44 <small>días</small></h5>
 						              			</div>
 						              			<div class="col s3">
 						              				<span class="green-text text-darken-1"><i class="fa fa-sort-up" aria-hidden="true"></i><span class="card-title"> 34%</span></span> 
@@ -147,7 +149,7 @@
 						              				Your comparables
 						              			</div>
 						              			<div class="col s5">
-						              				<h4> 33 <small>días</small></h4>
+						              				<h5> 33 <small>días</small></h5>
 						              			</div>
 						              			<div class="col s3">
 						              				<span class="green-text text-darken-1"><i class="fa fa-sort-up" aria-hidden="true"></i><span class="card-title"> 10%</span></span> 
@@ -164,7 +166,7 @@
 						              				You
 						              			</div>
 						              			<div class="col s5">
-						              				<h4> 4,5 <small>años</small></h4>
+						              				<h5> 4,5 <small>años</small></h5>
 						              			</div>
 						              			<div class="col s3">
 						              				<span class="red-text text-darken-1"><i class="fa fa-sort-down" aria-hidden="true"></i><span class="card-title"> 2%</span></span> 
@@ -177,7 +179,7 @@
 						              				Your comparables
 						              			</div>
 						              			<div class="col s5">
-						              				<h4> 8,1 <small>años</small></h4>
+						              				<h5> 8,1 <small>años</small></h5>
 						              			</div>
 						              			<div class="col s3">
 						              				<span class="green-text text-darken-1"><i class="fa fa-sort-up" aria-hidden="true"></i><span class="card-title"> 1%</span></span> 
@@ -188,46 +190,48 @@
 					            </div>
 					        </div>
 			    		</div>
-			    		<div class="col m4 s12">
+			    		<div class="col m6 s12">
 			    			<div class="card grey lighten-4">
 					            <div class="card-content grey-text darken-4">
 					              <blockquote>
-					    				<p class="light"><i class="tiny material-icons indigo-text darken-4">live_help</i> Geographical clients measures the degree of internationalization and diversification by region</p>
-					    				<p class="light"><i class="tiny material-icons indigo-text darken-4">new_releases</i> <span class="bold"> Hint:</span> Try to overcome this concentration by finding more clients outside of your region. <a href="">Do you want us to find them for you?</a> </p>
-					    				<p class="light"><i class="tiny material-icons indigo-text darken-4">info</i> You are part of the 20% with the higher risk of geographical concentration of your sector </p>
+					    				<p class="light"><i class="tiny material-icons indigo-text darken-4">live_help</i> {{company.respuesta_riskcliente_fidelizacion_info}}</p>
+					    				<p class="light"><i class="tiny material-icons indigo-text darken-4">info</i> {{company.respuesta_riskcliente_fidelizacion_interacciones_interpretation}}</p>
+					    				<p class="light"><i class="tiny material-icons indigo-text darken-4">new_releases</i> {{company.respuesta_riskcliente_fidelizacion_interacciones_hint}} <a href="">Click aquí!</a> </p>
 					    			</blockquote>
 					            </div>
 					        </div>
 			    		</div>
-
+			    	</div>
 			    	<!-- EBITDA -->
-			    		<div class="col m8 s12">
+			    	<div class="row">
+			    		<div class="col m6 s12">
 			    			<div class="card grey lighten-4">
 					            <div class="card-content grey-text darken-4">
 					            	<span class="card-title">Frecuencia</span>
-					              	<canvas id="frecuencia_graph" width="300" height="100"></canvas>
+					              	<canvas id="frecuencia_graph" width="300" height="150"></canvas>
 					            </div>
 					        </div>
 			    		</div>
-			    		<div class="col m4 s12">
+			    		<div class="col m6 s12">
 			    			<div class="card grey lighten-4">
 					            <div class="card-content grey-text darken-4">
 					              <blockquote>
-					    				<p class="light"><i class="tiny material-icons indigo-text darken-4">live_help</i> Geographical clients measures the degree of internationalization and diversification by region</p>
-					    				<p class="light"><i class="tiny material-icons indigo-text darken-4">new_releases</i> <span class="bold"> Hint:</span> Try to overcome this concentration by finding more clients outside of your region. <a href="">Do you want us to find them for you?</a> </p>
-					    				<p class="light"><i class="tiny material-icons indigo-text darken-4">info</i> You are part of the 20% with the higher risk of geographical concentration of your sector </p>
+					    				<p class="light"><i class="tiny material-icons indigo-text darken-4">live_help</i> {{company.respuesta_riskcliente_frecuenca_info}}</p>
+					    				<p class="light"><i class="tiny material-icons indigo-text darken-4">info</i> {{company.respuesta_riskcliente_frecuencia_interpretation}}</p>
+					    				<p class="light"><i class="tiny material-icons indigo-text darken-4">new_releases</i> {{company.respuesta_riskcliente_frecuencia_hint}} <a href="">Click aquí!</a> </p>
 					    			</blockquote>
 					            </div>
 					        </div>
 			    		</div>
-
+			    	</div>
 			    	<!-- EBITDA -->
-			    		<div class="col m8 s12">
+			    	<div class="row">
+			    		<div class="col m7 s12">
 			    			<div class="col m6 s12">
 				    			<div class="card grey lighten-4">
 						            <div class="card-content grey-text darken-4">
 						            	<span class="card-title">Penetración</span>
-						            	<canvas id="penetration_graph" width="300" height="200"></canvas>
+						            	<canvas id="penetration_graph" width="300" height="300"></canvas>
 						            </div>
 						        </div>
 						    </div>
@@ -242,7 +246,7 @@
 					              				You
 					              			</div>
 					              			<div class="col s5">
-					              				<h4> 12<small>%</small></h4>
+					              				<h5> 12<small>%</small></h5>
 					              			</div>
 					              			<div class="col s3">
 					              				<span class="green-text text-darken-1"><i class="fa fa-sort-up" aria-hidden="true"></i><span class="card-title"> 34%</span></span> 
@@ -255,7 +259,7 @@
 					              				Your comparables
 					              			</div>
 					              			<div class="col s5">
-					              				<h4> 35<small>%</small></h4>
+					              				<h5> 35<small>%</small></h5>
 					              			</div>
 					              			<div class="col s3">
 					              				<span class="green-text text-darken-1"><i class="fa fa-sort-up" aria-hidden="true"></i><span class="card-title"> 10%</span></span> 
@@ -265,18 +269,19 @@
 				              	</div>
 						    </div>
 			    		</div>
-			    		<div class="col m4 s12">
+			    		<div class="col m5 s12">
 			    			<div class="card grey lighten-4">
 					            <div class="card-content grey-text darken-4">
-					              <blockquote>
-					    				<p class="light"><i class="tiny material-icons indigo-text darken-4">live_help</i> Geographical clients measures the degree of internationalization and diversification by region</p>
-					    				<p class="light"><i class="tiny material-icons indigo-text darken-4">new_releases</i> <span class="bold"> Hint:</span> Try to overcome this concentration by finding more clients outside of your region. <a href="">Do you want us to find them for you?</a> </p>
-					    				<p class="light"><i class="tiny material-icons indigo-text darken-4">info</i> You are part of the 20% with the higher risk of geographical concentration of your sector </p>
+					              	<blockquote>
+					    				<p class="light"><i class="tiny material-icons indigo-text darken-4">live_help</i> {{company.respuesta_riskcliente_penetracion_info}}</p>
+					    				<p class="light"><i class="tiny material-icons indigo-text darken-4">info</i> {{company.respuesta_riskcliente_penetracion_interpretation}}</p>
+					    				<p class="light"><i class="tiny material-icons indigo-text darken-4">new_releases</i> {{company.respuesta_riskcliente_penetracion_hint}} <a href="">Click aquí!</a> </p>
 					    			</blockquote>
 					            </div>
 					        </div>
 			    		</div>
 			    	</div>
+			    </div>
 			    	
 			    <!-- /////////////////////////////////////////////////////////////
 				 ////// ¿Cómo me relaciono con ellos?
@@ -305,7 +310,7 @@
 		              <div class="col s12 m6">
 		                <div class="card blue-grey lighten-1">
 		                  <div class="card-content white-text">
-		                    {{company.respuesta_sabia}}
+		                    {{company.respuesta_riskcliente_concentracion_clientes_hint}}
 		                  </div>
 		                </div>
 		              </div>
@@ -330,7 +335,7 @@
 		              <div class="col s12 m6">
 		                <div class="card blue-grey lighten-1">
 		                  <div class="card-content white-text">
-		                    {{company.respuesta_sabia}}
+		                    {{company.respuesta_riskcliente_concentracion_geografical_hint}}
 		                  </div>
 		                </div>
 		              </div>
@@ -355,7 +360,7 @@
 		              <div class="col s12 m6">
 		                <div class="card blue-grey lighten-1">
 		                  <div class="card-content white-text">
-		                    {{company.respuesta_sabia}}
+		                    {{company.respuesta_riskcliente_concentracion_cnae_hint}}
 		                  </div>
 		                </div>
 		              </div>
@@ -380,7 +385,7 @@
 		              <div class="col s12 m6">
 		                <div class="card blue-grey lighten-1">
 		                  <div class="card-content white-text">
-		                    {{company.respuesta_sabia}}
+		                    {{company.respuesta_riskcliente_concentracion_temporal_hint}}
 		                  </div>
 		                </div>
 		              </div>

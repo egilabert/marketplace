@@ -106,17 +106,27 @@ def EmpresaDetailView(request, pk=None):
 			resultado_explotacion.append(0)
 			amortizaciones.append(0)
 
+	if key=='client':
+		data = json.dumps(list(empresa.get_monthly_buys_amount()), cls=DjangoJSONEncoder)
+		titulo = 'Compras mensuales'
+	elif key=='provider':
+		data = json.dumps(list(empresa.get_monthly_sells_amount()), cls=DjangoJSONEncoder)
+		titulo = 'Ventas mensuales'
+	else:
+		data = 0
+
 	context = {
 		'referrer': key,
 		'company': company,
 		'empresa':empresa,
 		'form': form,
+		'titulo': titulo,
 		'ventas': json.dumps(ventas),
 		'ebitda': json.dumps(ebitda),
 		'depreciaciones': json.dumps(depreciaciones),
 		'clients_by_sector': json.dumps(list(empresa.clients_by_sector()), cls=DjangoJSONEncoder),
 		'clients_by_region': json.dumps(list(empresa.clients_by_region()), cls=DjangoJSONEncoder),
-		'monthly_sells': json.dumps(list(empresa.get_monthly_sells_amount()), cls=DjangoJSONEncoder),
+		'monthly_sells': data,
 		'amortizaciones': json.dumps(amortizaciones),
 		'resultado_explotacion': json.dumps(resultado_explotacion),
 		'fechas': json.dumps(fechas),
@@ -216,8 +226,10 @@ def CommercialProvidersRecommendationsView(request):
     ))[0]
 	context = {
 		'company':empresa,
-		'balance_providers_buys_avg_sector': json.dumps(list(empresa.balance_providers_buys_avg_sector()), cls=DjangoJSONEncoder),
-		'balance_providers_buys': json.dumps(list(empresa.balance_providers_buys()), cls=DjangoJSONEncoder),
+		'get_monthly_buys_amount': json.dumps(list(empresa.get_monthly_buys_amount()), cls=DjangoJSONEncoder),
+		'get_sector_total_monthly_buys_amount': json.dumps(list(empresa.get_sector_total_monthly_buys_amount()), cls=DjangoJSONEncoder),
+		'balance_providers_sells_avg_sector': json.dumps(list(empresa.balance_providers_sells_avg_sector()), cls=DjangoJSONEncoder),
+		'balance_providers_sells': json.dumps(list(empresa.balance_providers_sells()), cls=DjangoJSONEncoder),
 		'balance_providers_ebitda_avg_sector': json.dumps(list(empresa.balance_providers_ebitda_avg_sector()), cls=DjangoJSONEncoder),
 		'balance_providers_ebitda': json.dumps(list(empresa.balance_providers_ebitda()), cls=DjangoJSONEncoder),
 		'balance_providers_resultado_avg_sector': json.dumps(list(empresa.balance_providers_resultado_avg_sector()), cls=DjangoJSONEncoder),
@@ -234,6 +246,8 @@ def CommercialClientsRecommendationsView(request):
 	empresa = empresa.prefetch_related('transfers', 'destination_reference', 'destination_reference__origin_reference')[0]
 	context = {
 		'company':empresa,
+		'get_monthly_sells_amount': json.dumps(list(empresa.get_monthly_sells_amount()), cls=DjangoJSONEncoder),
+		'get_sector_total_monthly_sells_amount': json.dumps(list(empresa.get_sector_total_monthly_sells_amount()), cls=DjangoJSONEncoder),
 		'balance_sells_avg_sector': json.dumps(list(empresa.balance_clients_sells_avg_sector()), cls=DjangoJSONEncoder),
 		'balance_sells': json.dumps(list(empresa.balance_clients_sells()), cls=DjangoJSONEncoder),
 		'balance_ebitda_avg_sector': json.dumps(list(empresa.balance_clients_ebitda_avg_sector()), cls=DjangoJSONEncoder),

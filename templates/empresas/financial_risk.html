@@ -108,96 +108,100 @@
 				    </div>
 			    	<div class="row title_conf">
 			    	<!-- Resultado explotaciones -->
-			    		<div class="col m8 s12">
+			    	<div class="row">
+			    		<div class="col m6 s12">
 			    			<div class="card grey lighten-4">
 					            <div class="card-content grey-text darken-4">
 					            	<span class="card-title">Ratio de endeudamiento</span>
-					              <canvas id="ratio_endeudamiento_graph" width="300" height="100"></canvas>
+					              <canvas id="ratio_endeudamiento_graph" width="300" height="150"></canvas>
 					            </div>
 					        </div>
 			    		</div>
-			    		<div class="col m4 s12">
+			    		<div class="col m6 s12">
 			    			<div class="card grey lighten-4">
 					            <div class="card-content grey-text darken-4">
 					              <blockquote>
-					    				<p class="light"><i class="tiny material-icons indigo-text darken-4">live_help</i> Geographical clients measures the degree of internationalization and diversification by region</p>
-					    				<p class="light"><i class="tiny material-icons indigo-text darken-4">new_releases</i> <span class="bold"> Hint:</span> Try to overcome this concentration by finding more clients outside of your region. <a href="">Do you want us to find them for you?</a> </p>
-					    				<p class="light"><i class="tiny material-icons indigo-text darken-4">info</i> You are part of the 20% with the higher risk of geographical concentration of your sector </p>
+					    				<p class="light"><i class="tiny material-icons indigo-text darken-4">live_help</i> {{company.respuesta_finrisk_ratiodeuda_info}}</p>
+					    				<p class="light"><i class="tiny material-icons indigo-text darken-4">info</i> {{company.respuesta_finrisk_ratiodeuda_interpretation}}</p>
+					    				<p class="light"><i class="tiny material-icons indigo-text darken-4">new_releases</i> {{company.respuesta_finrisk_ratiodeuda_hint}} <a href="">Click aquí!</a> </p>
 					    			</blockquote>
 					            </div>
 					        </div>
 			    		</div>
-			    	
+			    	</div>
 			    	<!-- EBITDA -->
-			    		<div class="col m8 s12">
+			    	<div class="row">
+			    		<div class="col m6 s12">
 			    			<div class="card grey lighten-4">
 					            <div class="card-content grey-text darken-4">
-					            	<span class="card-title">Deuda total</span>
-					              <canvas id="deuda_largo_graph" width="300" height="100"></canvas>
+					            	<span class="card-title">Deuda total / EBITDA</span>
+					              <canvas id="deuda_largo_graph" width="300" height="150"></canvas>
 					            </div>
 					        </div>
 			    		</div>
-			    		<div class="col m4 s12">
+			    		<div class="col m6 s12">
 			    			<div class="card grey lighten-4">
 					            <div class="card-content grey-text darken-4">
 					              <blockquote>
-					    				<p class="light"><i class="tiny material-icons indigo-text darken-4">live_help</i> Geographical clients measures the degree of internationalization and diversification by region</p>
-					    				<p class="light"><i class="tiny material-icons indigo-text darken-4">new_releases</i> <span class="bold"> Hint:</span> Try to overcome this concentration by finding more clients outside of your region. <a href="">Do you want us to find them for you?</a> </p>
-					    				<p class="light"><i class="tiny material-icons indigo-text darken-4">info</i> You are part of the 20% with the higher risk of geographical concentration of your sector </p>
+					    				<p class="light"><i class="tiny material-icons indigo-text darken-4">live_help</i> {{company.respuesta_finrisk_deudatotal_info}}</p>
+					    				<p class="light"><i class="tiny material-icons indigo-text darken-4">info</i> {{company.respuesta_finrisk_deudatotal_interpretation}}</p>
+					    				<p class="light"><i class="tiny material-icons indigo-text darken-4">new_releases</i> {{company.respuesta_finrisk_deudatotal_hint}} <a href="">Click aquí!</a> </p>
 					    			</blockquote>
 					            </div>
 					        </div>
 			    		</div>
-
+			    	</div>
 			    	<!-- EBITDA -->
-			    		<div class="col m8 s12">
+			    	<div class="row">
+			    		<div class="col m6 s12">
 			    			<div class="card grey lighten-4">
 					            <div class="card-content grey-text darken-4">
 					            	<span class="card-title">Ratio deuda corto/largo plazo</span>
-					              <canvas id="ratio_corto_largo_graph" width="300" height="100"></canvas>
+					              <canvas id="ratio_corto_largo_graph" width="300" height="150"></canvas>
 					            </div>
 					        </div>
 			    		</div>
-			    		<div class="col m4 s12">
+			    		<div class="col m6 s12">
 			    			<div class="card grey lighten-4">
 					            <div class="card-content grey-text darken-4">
 					              <blockquote>
-					    				<p class="light"><i class="tiny material-icons indigo-text darken-4">live_help</i> Geographical clients measures the degree of internationalization and diversification by region</p>
-					    				<p class="light"><i class="tiny material-icons indigo-text darken-4">new_releases</i> <span class="bold"> Hint:</span> Try to overcome this concentration by finding more clients outside of your region. <a href="">Do you want us to find them for you?</a> </p>
-					    				<p class="light"><i class="tiny material-icons indigo-text darken-4">info</i> You are part of the 20% with the higher risk of geographical concentration of your sector </p>
+					    				<p class="light"><i class="tiny material-icons indigo-text darken-4">live_help</i> {{company.respuesta_finrisk_cortolargo_info}}</p>
+					    				<p class="light"><i class="tiny material-icons indigo-text darken-4">info</i> {{company.respuesta_finrisk_cortolargo_interpretation}}</p>
+					    				<p class="light"><i class="tiny material-icons indigo-text darken-4">new_releases</i> {{company.respuesta_finrisk_cortolargo_hint}} <a href="">Click aquí!</a> </p>
 					    			</blockquote>
 					            </div>
 					        </div>
 			    		</div>
-
+			    	</div>
 			    	<!-- EBITDA -->
-			    		<div class="col m8 s12">
+			    	<div class="row">
+			    		<div class="col m6 s12">
 			    			<div class="card grey lighten-4">
 					            <div class="card-content grey-text darken-4">
 					            	<span class="card-title">Coste de financiación</span>
-					              <canvas id="gasto_financiero_graph" width="300" height="100"></canvas>
+					              <canvas id="gasto_financiero_graph" width="300" height="150"></canvas>
 					            </div>
 					        </div>
 			    		</div>
-			    		<div class="col m4 s12">
+			    		<div class="col m6 s12">
 			    			<div class="card grey lighten-4">
 					            <div class="card-content grey-text darken-4">
 					              <blockquote>
-					    				<p class="light"><i class="tiny material-icons indigo-text darken-4">live_help</i> Geographical clients measures the degree of internationalization and diversification by region</p>
-					    				<p class="light"><i class="tiny material-icons indigo-text darken-4">new_releases</i> <span class="bold"> Hint:</span> Try to overcome this concentration by finding more clients outside of your region. <a href="">Do you want us to find them for you?</a> </p>
-					    				<p class="light"><i class="tiny material-icons indigo-text darken-4">info</i> You are part of the 20% with the higher risk of geographical concentration of your sector </p>
+					    				<p class="light"><i class="tiny material-icons indigo-text darken-4">live_help</i> {{company.respuesta_finrisk_costefin_info}}</p>
+					    				<p class="light"><i class="tiny material-icons indigo-text darken-4">info</i> {{company.respuesta_finrisk_costefin_interpretation}}</p>
+					    				<p class="light"><i class="tiny material-icons indigo-text darken-4">new_releases</i> {{company.respuesta_finrisk_costefin_hint}} <a href="">Click aquí!</a> </p>
 					    			</blockquote>
 					            </div>
 					        </div>
 			    		</div>
-
-			    		<!-- EBITDA -->
-			    		<div class="col m8 s12">
+			    	</div>
+			    	<!-- EBITDA -->
+			    	<div class="row">
+			    		<div class="col m7 s12">
 			    			<div class="card grey lighten-4">
 					            <div class="card-content grey-text darken-4">
 					            	<span class="card-title">Deuda por producto</span>
 					            	<div class="row center-align">
-
 						            		{% for producto in company.productos.all %}
 						            		<div class="col m4 s6">
 						            			<div class="card blue-grey lighten-3">
@@ -212,18 +216,18 @@
 					            </div>
 					        </div>
 			    		</div>
-			    		<div class="col m4 s12">
+			    		<div class="col m5 s12">
 			    			<div class="card grey lighten-4">
 					            <div class="card-content grey-text darken-4">
 					              <blockquote>
-					    				<p class="light"><i class="tiny material-icons indigo-text darken-4">live_help</i> Geographical clients measures the degree of internationalization and diversification by region</p>
-					    				<p class="light"><i class="tiny material-icons indigo-text darken-4">new_releases</i> <span class="bold"> Hint:</span> Try to overcome this concentration by finding more clients outside of your region. <a href="">Do you want us to find them for you?</a> </p>
-					    				<p class="light"><i class="tiny material-icons indigo-text darken-4">info</i> You are part of the 20% with the higher risk of geographical concentration of your sector </p>
+					    				<p class="light"><i class="tiny material-icons indigo-text darken-4">live_help</i> {{company.respuesta_finrisk_deudaproducto_info}}</p>
+					    				<p class="light"><i class="tiny material-icons indigo-text darken-4">info</i> </p>
+					    				<p class="light"><i class="tiny material-icons indigo-text darken-4">new_releases</i>  <a href="">Click aquí!</a> </p>
 					    			</blockquote>
 					            </div>
 					        </div>
 			    		</div>
-			    	
+			    	</div>
 			    	</div>
 
 			    <!-- /////////////////////////////////////////////////////////////
@@ -235,28 +239,30 @@
 			    </div>
 			    	<div class="row title_conf">
 			    	<!-- Facturación -->
-			    		<div class="col m8 s12">
+			    	<div class="row">
+			    		<div class="col m6 s12">
 			    			<div class="card grey lighten-4">
 					            <div class="card-content grey-text darken-4">
 					            	<span class="card-title">Deuda a corto</span>
-					              <canvas id="deuda_corto_graph" width="300" height="100"></canvas>
+					              <canvas id="deuda_corto_graph" width="300" height="150"></canvas>
 					            </div>
 					        </div>
 			    		</div>
-			    		<div class="col m4 s12">
+			    		<div class="col m6 s12">
 			    			<div class="card grey lighten-4">
 					            <div class="card-content grey-text darken-4">
 					              <blockquote>
-					    				<p class="light"><i class="tiny material-icons indigo-text darken-4">live_help</i> Geographical clients measures the degree of internationalization and diversification by region</p>
-					    				<p class="light"><i class="tiny material-icons indigo-text darken-4">new_releases</i> <span class="bold"> Hint:</span> Try to overcome this concentration by finding more clients outside of your region. <a href="">Do you want us to find them for you?</a> </p>
-					    				<p class="light"><i class="tiny material-icons indigo-text darken-4">info</i> You are part of the 20% with the higher risk of geographical concentration of your sector </p>
+					    				<p class="light"><i class="tiny material-icons indigo-text darken-4">live_help</i> {{company.respuesta_finrisk_cortoebitda_info}}</p>
+					    				<p class="light"><i class="tiny material-icons indigo-text darken-4">info</i> {{company.respuesta_finrisk_cortoebitda_interpretation}}</p>
+					    				<p class="light"><i class="tiny material-icons indigo-text darken-4">new_releases</i> {{company.respuesta_finrisk_cortoebitda_hint}} <a href="">Click aquí!</a> </p>
 					    			</blockquote>
 					            </div>
 					        </div>
 			    		</div>
-
+			    	</div>
 			    		
 			    	<!-- EBITDA -->
+			    	<div class="row">
 			    		<div class="col m8 s12">
 			    			<div class="card grey lighten-4">
 					            <div class="card-content grey-text darken-4">
@@ -269,15 +275,17 @@
 			    			<div class="card grey lighten-4">
 					            <div class="card-content grey-text darken-4">
 					              <blockquote>
-					    				<p class="light"><i class="tiny material-icons indigo-text darken-4">live_help</i> Geographical clients measures the degree of internationalization and diversification by region</p>
-					    				<p class="light"><i class="tiny material-icons indigo-text darken-4">new_releases</i> <span class="bold"> Hint:</span> Try to overcome this concentration by finding more clients outside of your region. <a href="">Do you want us to find them for you?</a> </p>
-					    				<p class="light"><i class="tiny material-icons indigo-text darken-4">info</i> You are part of the 20% with the higher risk of geographical concentration of your sector </p>
+					    				<p class="light"><i class="tiny material-icons indigo-text darken-4">live_help</i> {{company.respuesta_finrisk_calendario_info}}</p>
+					    				<p class="light"><i class="tiny material-icons indigo-text darken-4">info</i> </p>
+					    				<p class="light"><i class="tiny material-icons indigo-text darken-4">new_releases</i> <a href="">Click aquí!</a> </p>
 					    			</blockquote>
 					            </div>
 					        </div>
 			    		</div>
+			    	</div>
 			    	<!-- Resultado explotaciones -->
-			    		<div class="col m8 s12">
+			    	<div class="row">
+			    		<div class="col m6 s12">
 			    			<div class="col m6 s12">
 						    	<div class="card grey lighten-4">
 						    	<div class="card-content grey-text darken-4">
@@ -289,7 +297,7 @@
 					              				You
 					              			</div>
 					              			<div class="col s5">
-					              				<h4> {{company.dias_a_cobrar|floatformat:0|intcomma}}<small> días</small></h4>
+					              				<h5> {{company.dias_a_cobrar|floatformat:0|intcomma}}<small></small></h5>
 					              			</div>
 					              			<div class="col s3">
 					              				<span class="green-text text-darken-1"><i class="fa fa-sort-up" aria-hidden="true"></i><span class="card-title"> 34%</span></span> 
@@ -302,7 +310,7 @@
 					              				Your comparables
 					              			</div>
 					              			<div class="col s5">
-					              				<h4> {{company.dias_a_cobrar_sector|floatformat:0|intcomma}}<small> días</small></h4>
+					              				<h5> {{company.dias_a_cobrar_sector|floatformat:0|intcomma}}<small></small></h5>
 					              			</div>
 					              			<div class="col s3">
 					              				<span class="green-text text-darken-1"><i class="fa fa-sort-up" aria-hidden="true"></i><span class="card-title"> 10%</span></span> 
@@ -322,7 +330,7 @@
 					              				You
 					              			</div>
 					              			<div class="col s5">
-					              				<h4> {{company.dias_a_pagar|floatformat:0|intcomma}}<small> días</small></h4>
+					              				<h5> {{company.dias_a_pagar|floatformat:0|intcomma}}<small></small></h5>
 					              			</div>
 					              			<div class="col s3">
 					              				<span class="red-text text-darken-1"><i class="fa fa-sort-down" aria-hidden="true"></i><span class="card-title"> 5%</span></span> 
@@ -335,7 +343,7 @@
 					              				Your comparables
 					              			</div>
 					              			<div class="col s5">
-					              				<h4> {{company.dias_a_pagar_sector|floatformat:0|intcomma}}<small> días</small></h4>
+					              				<h5> {{company.dias_a_pagar_sector|floatformat:0|intcomma}}<small></small></h5>
 					              			</div>
 					              			<div class="col s3">
 					              				<span class="green-text text-darken-1"><i class="fa fa-sort-up" aria-hidden="true"></i><span class="card-title"> 1%</span></span> 
@@ -345,17 +353,18 @@
 				              	</div>
 						    </div>
 			    		</div>
-			    		<div class="col m4 s12">
+			    		<div class="col m6 s12">
 			    			<div class="card grey lighten-4">
 					            <div class="card-content grey-text darken-4">
 					              <blockquote>
-					    				<p class="light"><i class="tiny material-icons indigo-text darken-4">live_help</i> Geographical clients measures the degree of internationalization and diversification by region</p>
-					    				<p class="light"><i class="tiny material-icons indigo-text darken-4">new_releases</i> <span class="bold"> Hint:</span> Try to overcome this concentration by finding more clients outside of your region. <a href="">Do you want us to find them for you?</a> </p>
-					    				<p class="light"><i class="tiny material-icons indigo-text darken-4">info</i> You are part of the 20% with the higher risk of geographical concentration of your sector </p>
+					    				<p class="light"><i class="tiny material-icons indigo-text darken-4">live_help</i> {{company.respuesta_finrisk_workingcapital_info}}</p>
+					    				<p class="light"><i class="tiny material-icons indigo-text darken-4">info</i> {{company.respuesta_finrisk_workingcapital_interpretation}}</p>
+					    				<p class="light"><i class="tiny material-icons indigo-text darken-4">new_releases</i> {{company.respuesta_finrisk_workingcapital_hint}} <a href="">Click aquí!</a> </p>
 					    			</blockquote>
 					            </div>
 					        </div>
 			    		</div>
+			    	</div>
 			    </div>
 
 			    <!-- /////////////////////////////////////////////////////////////
@@ -364,7 +373,8 @@
 
 			    	<div class="row title_conf">
 			    	<!-- Resultado explotaciones -->
-			    		<div class="col m4 s12">
+			    	<div class="row">
+			    		<div class="col m3 s12">
 			    			<div class="card grey lighten-4">
 					            <div class="card-content grey-text darken-4">
 					            	<span class="card-title">Tipo de divisa</span>
@@ -412,17 +422,18 @@
 					            </div>
 					        </div>
 			    		</div>
-			    		<div class="col m4 s12">
+			    		<div class="col m5 s12">
 			    			<div class="card grey lighten-4">
 					            <div class="card-content grey-text darken-4">
 					              <blockquote>
-					    				<p class="light"><i class="tiny material-icons indigo-text darken-4">live_help</i> Geographical clients measures the degree of internationalization and diversification by region</p>
-					    				<p class="light"><i class="tiny material-icons indigo-text darken-4">new_releases</i> <span class="bold"> Hint:</span> Try to overcome this concentration by finding more clients outside of your region. <a href="">Do you want us to find them for you?</a> </p>
-					    				<p class="light"><i class="tiny material-icons indigo-text darken-4">info</i> You are part of the 20% with the higher risk of geographical concentration of your sector </p>
+					    				<p class="light"><i class="tiny material-icons indigo-text darken-4">live_help</i> {{company.respuesta_finrisk_divisa_info}}</p>
+					    				<p class="light"><i class="tiny material-icons indigo-text darken-4">info</i> {{company.respuesta_finrisk_divisa_interpretation}}</p>
+					    				<p class="light"><i class="tiny material-icons indigo-text darken-4">new_releases</i> {{company.respuesta_finrisk_divisa_hint}} <a href="">Click aquí!</a> </p>
 					    			</blockquote>
 					            </div>
 					        </div>
 			    		</div>
+			    	</div>
 			    </div>
 
 			    <!-- /////////////////////////////////////////////////////////////
@@ -431,7 +442,8 @@
 
 			    	<div class="row title_conf">
 			    	<!-- Facturación -->
-			    		<div class="col m8 s12">
+			    	<div class="row">
+			    		<div class="col m6 s12">
 			    			<div class="card grey lighten-4">
 					            <div class="card-content grey-text darken-4">
 					            	<span class="card-title">Tienes contratados {{productos_variable.count}} producto(s) con tipo de interés variable</span>
@@ -440,7 +452,7 @@
 						              	<div class="center-align">
 						            		<div class="col m4 s12">
 						            			<p>Cuota actual</p>
-						            			<h4>{{producto.cuota_mensual|floatformat:0|intcomma}} €</h4>
+						            			<h5>{{producto.cuota_mensual|floatformat:0|intcomma}} €</h5>
 						            		</div>
 						            		<div class="col m4 s12">
 						            			<p>En el escenario...</p>
@@ -448,9 +460,9 @@
 						            		</div>
 						            		<div class="col m4 s12">
 						            			<p>Aumento cuota mensual</p>
-						            			<h4 class="red-text"><i class="fa fa-sort-up" aria-hidden="true"></i> {{producto.cuota_mensual_mas_1|sub:producto.cuota_mensual|floatformat:2|intcomma}} €</h4>
+						            			<h5 class="red-text"><i class="fa fa-sort-up" aria-hidden="true"></i> {{producto.cuota_mensual_mas_1|sub:producto.cuota_mensual|floatformat:2|intcomma}} €</h5>
 						            			<p>Aumento cuota anual</p>
-						            			<h4 class="red-text"><i class="fa fa-sort-up" aria-hidden="true"></i> {{producto.cuota_mensual_mas_1|sub:producto.cuota_mensual|mul:12|floatformat:2|intcomma}} €</h4>
+						            			<h5 class="red-text"><i class="fa fa-sort-up" aria-hidden="true"></i> {{producto.cuota_mensual_mas_1|sub:producto.cuota_mensual|mul:12|floatformat:2|intcomma}} €</h5>
 						            		</div>
 										</div>
 										
@@ -459,19 +471,18 @@
 					            </div>
 					        </div>
 			    		</div>
-			    		<div class="col m4 s12">
+			    		<div class="col m6 s12">
 			    			<div class="card grey lighten-4">
 					            <div class="card-content grey-text darken-4">
 					              <blockquote>
-					    				<p class="light"><i class="tiny material-icons indigo-text darken-4">live_help</i> Geographical clients measures the degree of internationalization and diversification by region</p>
-					    				<p class="light"><i class="tiny material-icons indigo-text darken-4">new_releases</i> <span class="bold"> Hint:</span> Try to overcome this concentration by finding more clients outside of your region. <a href="">Do you want us to find them for you?</a> </p>
-					    				<p class="light"><i class="tiny material-icons indigo-text darken-4">info</i> You are part of the 20% with the higher risk of geographical concentration of your sector </p>
+					    				<p class="light"><i class="tiny material-icons indigo-text darken-4">live_help</i> {{company.respuesta_finrisk_interes_info}}</p>
+					    				<p class="light"><i class="tiny material-icons indigo-text darken-4">info</i> {{company.respuesta_finrisk_interes_interpretation}}</p>
+					    				<p class="light"><i class="tiny material-icons indigo-text darken-4">new_releases</i> {{company.respuesta_finrisk_interes_hint}} <a href="">Click aquí!</a> </p>
 					    			</blockquote>
 					            </div>
 					        </div>
 			    		</div>
-			    		
-			    	
+			    	</div>
 			    </div>
 	  </div>
 
