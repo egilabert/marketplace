@@ -13,13 +13,14 @@ from calendar import monthrange
 from datetime import datetime, timedelta
 from django.utils.timezone import utc
 import random
+import recommendations_clients, recommendations_providers
 
 # ------------------------------------------------------------------
 # Model Empresa
 # Tabla y funciones del model Empresa
 # ------------------------------------------------------------------
 
-class Empresa(models.Model):
+class Empresa(models.Model, recommendations_clients.Recommendations_clients, recommendations_providers.Recommendations_providers):
 
     fiscal_id = models.CharField(max_length=30)
     name = models.CharField(max_length=255)
@@ -276,7 +277,7 @@ class Empresa(models.Model):
     def my_penetration_provider(self):
         if self.temp_my_penetration_provider is None:
             if self.balance_providers_sells() and list(self.balance_providers_sells())[len(list(self.balance_providers_sells()))-1].get('c', 0)>0:
-                self.temp_my_penetration_provider = float(self.get_total_buys())/floatfloat(list(self.balance_providers_sells())[len(list(self.balance_providers_sells()))-1].get('c', 0))
+                self.temp_my_penetration_provider = float(self.get_total_buys())/float(list(self.balance_providers_sells())[len(list(self.balance_providers_sells()))-1].get('c', 0))
                 return self.temp_my_penetration_provider
             self.temp_my_penetration_provider = 0
             return self.temp_my_penetration_provider

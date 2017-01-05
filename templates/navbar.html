@@ -13,7 +13,7 @@
       <a id="logo-container" href="{% url 'landing' %}" class="brand-logo"><img src="{% static 'images/pillango_logo.png' %}" alt="Pillango data"></a>
       <ul class="right hide-on-med-and-down">
           <!-- Dropdown Trigger -->
-          <li><a href="#" class='modal-trigger'>Home</a></li>
+          <li><a href="{% url 'landing' %}" class='modal-trigger'>Home</a></li>
           <li><a href="{% url 'home' %}" rel="" id="anchor1" class="anchorLink modal-trigger">Pillstore</a></li>
           <li><a href="#about_anchor" rel="" id="anchor3" class="anchorLink modal-trigger">About</a></li>
           <li><a href="#contact_anchor" rel="" id="anchor4" class="anchorLink modal-trigger">Contact</a></li>

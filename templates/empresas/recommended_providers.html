@@ -80,7 +80,7 @@
 							      			<i class="fa fa-money left-align" aria-hidden="true"></i></i><span class="grey-text light text-darken-4"> Financing: 
 							      		</div>
 							      		<div class="col s6">
-							      			<span class="right-align flow-text" style="color: {% if obj.clientes_recomendados.estados_financieros.last.ebitda > 0 %}green{% else %}red{% endif %}"> {% if obj.clientes_recomendados.estados_financieros.last.ebitda > 0%} {{obj.clientes_recomendados.estados_financieros.last.ebitda|mul:0.2|floatformat:0|intcomma}}€{% else %}-{%endif%}</span></span>
+							      			<span class="right-align flow-text" style="color: {% if obj.clientes_recomendados.hats_alert == "ROJA" %}red{% elif obj.clientes_recomendados.hats_alert == "AMARILLA" %}yellow{% else %}green {% endif %}">{% if obj.clientes_recomendados.hats_alert == "SIN ALERTA" %}VERDE{% else %}{{obj.clientes_recomendados.hats_alert}}{%endif%}</span>
 							      		</div>
 							      	</div>
 								    <div class="card-action">
@@ -139,7 +139,7 @@
 							      			<i class="fa fa-money left-align" aria-hidden="true"></i></i><span class="grey-text light text-darken-4"> Financing: 
 							      		</div>
 							      		<div class="col s6">
-							      			<span class="right-align flow-text" style="color: {% if obj.clientes_recomendados.estados_financieros.last.ebitda > 0 %}green{% else %}red{% endif %}"> {% if obj.clientes_recomendados.estados_financieros.last.ebitda > 0%} {{obj.clientes_recomendados.estados_financieros.last.ebitda|mul:0.2|floatformat:0|intcomma }}€{% else %}-{%endif%}</span></span>
+							      			<span class="right-align flow-text" style="color: {% if obj.clientes_recomendados.hats_alert == "ROJA" %}red{% elif obj.clientes_recomendados.hats_alert == "AMARILLA" %}yellow{% else %}green {% endif %}">{% if obj.clientes_recomendados.hats_alert == "SIN ALERTA" %}VERDE{% else %}{{obj.clientes_recomendados.hats_alert}}{%endif%}</span>
 							      		</div>
 							      	</div>
 								    <div class="card-action">
@@ -196,7 +196,7 @@
 							      			<i class="fa fa-money left-align" aria-hidden="true"></i></i><span class="grey-text light text-darken-4"> Financing: 
 							      		</div>
 							      		<div class="col s6">
-							      			<span class="right-align flow-text" style="color: {% if obj.clientes_recomendados.estados_financieros.last.ebitda > 0 %}green{% else %}red{% endif %}"> {% if obj.clientes_recomendados.estados_financieros.last.ebitda > 0%} {{obj.clientes_recomendados.estados_financieros.last.ebitda|mul:0.2|floatformat:0|intcomma }}€{% else %}-{%endif%}</span></span>
+							      			<span class="right-align flow-text" style="color: {% if obj.clientes_recomendados.hats_alert == "ROJA" %}red{% elif obj.clientes_recomendados.hats_alert == "AMARILLA" %}yellow{% else %}green {% endif %}">{% if obj.clientes_recomendados.hats_alert == "SIN ALERTA" %}VERDE{% else %}{{obj.clientes_recomendados.hats_alert}}{%endif%}</span>
 							      		</div>
 							      	</div>
 								    <div class="card-action">
