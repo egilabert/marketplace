@@ -891,8 +891,8 @@ class Empresa(models.Model, recommendations_clients.Recommendations_clients, rec
 
     def deuda_total_sector(self):
         if self.temp_deuda_total_sector is None:
-            self.temp_deuda_corto_sector = CIRBE.objects.filter(empresa__in=self.get_sector_companies().all()).exclude(corto_plazo_dispuesto=0).aggregate(c=Avg('corto_plazo_dispuesto'))
-            self.temp_deuda_largo_sector = CIRBE.objects.filter(empresa__in=self.get_sector_companies().all()).exclude(largo_plazo_dispuesto=0).aggregate(c=Avg('largo_plazo_dispuesto'))
+            self.temp_deuda_corto_sector = CIRBE.objects.filter(empresa__in=self.get_sector_companies().all()).aggregate(c=Avg('corto_plazo_dispuesto'))
+            self.temp_deuda_largo_sector = CIRBE.objects.filter(empresa__in=self.get_sector_companies().all()).aggregate(c=Avg('largo_plazo_dispuesto'))
             self.temp_deuda_total_sector = self.temp_deuda_corto_sector.get('c', 0) + self.temp_deuda_largo_sector.get('c', 0)
         return self.temp_deuda_total_sector
 
