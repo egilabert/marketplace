@@ -13,18 +13,22 @@ from calendar import monthrange
 from datetime import datetime, timedelta
 from django.utils.timezone import utc
 import random
-import recommendations_clients, recommendations_providers, recommendations_financial_risk,recommendations_clients_risk, recommendations_providers_risk
+import recommendations.recommendations_clients as r_clients
+import recommendations.recommendations_providers as r_providers
+import recommendations.recommendations_financial_risk as r_fin_risk
+import recommendations.recommendations_clients_risk as r_client_risk
+import recommendations.recommendations_providers_risk as r_providers_risk
 
 # ------------------------------------------------------------------
 # Model Empresa
 # Tabla y funciones del model Empresa
 # ------------------------------------------------------------------
 
-class Empresa(models.Model, recommendations_clients.Recommendations_clients, 
-            recommendations_providers.Recommendations_providers, 
-            recommendations_financial_risk.Recommendations_financial_risk,
-            recommendations_clients_risk.Recommendations_clients_risk,
-            recommendations_providers_risk.Recommendations_providers_risk):
+class Empresa(models.Model, r_clients.Recommendations_clients, 
+            r_providers.Recommendations_providers, 
+            r_fin_risk.Recommendations_financial_risk,
+            r_client_risk.Recommendations_clients_risk,
+            r_providers_risk.Recommendations_providers_risk):
 
     fiscal_id = models.CharField(max_length=30)
     name = models.CharField(max_length=255)
@@ -137,19 +141,6 @@ class Empresa(models.Model, recommendations_clients.Recommendations_clients,
     temp_balance_buys = None
     temp_balance_buys_avg_sector = None
     temp_balance_clients_payments_avg_sector = None
-
-    def respuesta_clientes_ventas_hint(self):
-        balance_sells_deviation = float(self.balance_clients_sells()[len(self.balance_clients_sells())-1].get('c', 0)-self.balance_clients_sells_avg_sector()[len(self.balance_clients_sells_avg_sector())-1].get('c', 0))/float(self.balance_clients_sells_avg_sector()[len(self.balance_clients_sells_avg_sector())-1].get('c', 0))
-        if balance_sells_deviation > 0.5:
-            return "Sigue así! Si buscas ampliar tu base de proveedores utiliza nuestro motor de recomendaciones."
-        elif balance_sells_deviation > 0.1:
-            return "Muy bien! Si buscas ampliar  tu base de proveedores utiliza nuestro motor de recomendaciones."
-        elif balance_sells_deviation > -0.1:
-            return "Bien! Si te interesa, puedes encontrar proveedores de mayor tamaño utilizando nuestro motor de recomendaciones."
-        elif balance_sells_deviation > -0.5:
-            return "Atención! Trabajar con proveedores más pequeños te da mayor poder de negociación pero puede aumentar el riesgo para tu empresa. Has probado con proveedores más grandes? Si buscas nuevas oportunidades comerciales utiliza nuestro motor de recomendaciones."
-        else:
-            return "Alerta! Trabajar con proveedores muy pequeños da mayor poder de negociación pero puede aumentar el riesgo para tu empresa. Has probado con proveedores más grandes? Si buscas ampliar  tu base de proveedores utiliza nuestro motor de recomendaciones."
 
     def riesgo_impago_clientes(self):
         if self.temp_riesgo_impago_clientes is None:
