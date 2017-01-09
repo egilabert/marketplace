@@ -1,17 +1,6 @@
 (function($){
   $(function(){
 
-    function scrollToAnchor(aid){
-        var aTag = $("a[name='"+ aid +"']");
-        $('html,body').animate({scrollTop: aTag.offset().top},'slow');
-    }
-
-    $("#anchor3").click(function() {
-        console.log('Holaaaa')
-       scrollToAnchor('about_anchor');
-    });
-
-
     $( "#client_form" ).click(function(e) {
       e.preventDefault();
       form_filled_check = true;
@@ -63,10 +52,6 @@
     
     $('.client_form_button').click(function() {
       $('#modal_clients').modal('open');
-    });
-
-    $('#hamb').click(function() {
-      console.log('Hola hola!!')
     });
 
     $('.ajax_bar').hide();
