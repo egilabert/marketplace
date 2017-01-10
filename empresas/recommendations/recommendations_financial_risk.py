@@ -163,8 +163,8 @@ class Recommendations_financial_risk:
         return "Los días a pagar y  a cobrar son un indicador de tus necesidades de working capital. Para mejorarlo, ten en cuenta que disponemos de productos de financiación específicos o que también puedes optimizar tu rotación de existencias."
     
     def respuesta_finrisk_workingcapital_interpretation(self):
-        if len(self.balance_ebitda())>0:
-            working_capital_deviation = float(self.costes_financiacion()-self.costes_financiacion_sector())/float(self.costes_financiacion_sector())
+        if self.dias_a_pagar_sector()!=0:
+            working_capital_deviation = float(self.dias_a_pagar()-self.dias_a_pagar_sector())/float(self.dias_a_pagar_sector())
             if working_capital_deviation > 0.50:
                 return "Tus necesidades de working capital son sensiblemente superiores a la media de tu competencia"
             elif working_capital_deviation > -0.50:
@@ -175,8 +175,8 @@ class Recommendations_financial_risk:
             return "No disponemos de los estados financieros de tu competencia"
 
     def respuesta_finrisk_workingcapital_hint(self):
-        if len(self.balance_ebitda())>0:
-            working_capital_deviation = float(self.costes_financiacion()-self.costes_financiacion_sector())/float(self.costes_financiacion_sector())
+        if self.dias_a_pagar_sector()!=0:
+            working_capital_deviation = float(self.dias_a_pagar()-self.dias_a_pagar_sector())/float(self.dias_a_pagar_sector())
             if working_capital_deviation > 0.50:
                 return "Atención! Una elevada necesidad de working capital puede generar un problema de tesorería. Has probado a optimizar tus existencias o el cobro a tus clientes? Si quieres estabilizar tu tesorería dispones de nuestros productos de factoring"
             elif working_capital_deviation > -0.50:
@@ -207,9 +207,9 @@ class Recommendations_financial_risk:
         if len(self.balance_ebitda())>0:
             riesgo_divisa_deviation = float(self.costes_financiacion()-self.costes_financiacion_sector())/float(self.costes_financiacion_sector())
             if riesgo_divisa_deviation > 0.50:
-                return "Atención! Tu negocio está expuesto a variaciones en el mercado de divisas. Si quieres, contrata coberturas con nosotros"
+                return "Tu negocio está expuesto a variaciones en el mercado de divisas. Si quieres, contrata coberturas con nosotros"
             elif riesgo_divisa_deviation > -0.50:
-                return "Bien! Tu negocio está expuesto a variaciones en el mercado de divisas. Si quieres, contrata coberturas con nosotros"
+                return "Tu negocio está expuesto a variaciones en el mercado de divisas. Si quieres, contrata coberturas con nosotros"
             else:
                 return "Sigue así! Si en algún momento has pensado en cubrir el riesgo de cambio, conoce nuestros productos especializados"
         else:
@@ -237,9 +237,9 @@ class Recommendations_financial_risk:
         if len(self.balance_ebitda())>0:
             riesgo_interes_deviation = float(self.costes_financiacion()-self.costes_financiacion_sector())/float(self.costes_financiacion_sector())
             if riesgo_interes_deviation > 0.50:
-                return "Atención! Tu negocio está expuesto a variaciones en el tipo de interés. Si quieres, contrata coberturas con nosotros"
+                return "Tu negocio está expuesto a variaciones en el tipo de interés. Si quieres, contrata coberturas con nosotros"
             elif riesgo_interes_deviation > -0.50:
-                return "Bien! Tu negocio está expuesto a variaciones en el tipo de interés. Si quieres, contrata coberturas con nosotros"
+                return "Tu negocio está expuesto a variaciones en el tipo de interés. Si quieres, contrata coberturas con nosotros"
             else:
                 return "Sigue así! Si en algún momento has pensado en cubrir el riesgo de tipod e interés, conoce nuestros productos especializados"
         else:

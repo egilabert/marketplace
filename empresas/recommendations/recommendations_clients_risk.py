@@ -11,7 +11,7 @@ class Recommendations_clients_risk:
         return "La interacción media y años de antigüedad son métricas de fielización: miden la frecuencia con que interactuas con tus clientes a través de las transferencias realizadas y los años transcurridos desde vuestra primera interacción"
     
     def respuesta_riskcliente_fidelizacion_interacciones_interpretation(self):
-        if float(self.get_monthly_sector_avg_sells()[len(self.get_monthly_sector_avg_sells())-1].get('c',0)) == 0:
+        if float(self.get_monthly_sector_avg_sells()[len(self.get_monthly_sector_avg_sells())-1].get('c',0)) != 0:
             monthly_sells_deviation = float(self.get_monthly_sells()[len(self.get_monthly_sells())-1].get('c',0)-self.get_monthly_sector_avg_sells()[len(self.get_monthly_sector_avg_sells())-1].get('c',0))/float(self.get_monthly_sector_avg_sells()[len(self.get_monthly_sector_avg_sells())-1].get('c',0))
             if monthly_sells_deviation > 0.20:
                 return "En promedio, interactúas más veces con tus clientes que la competencia con los suyos."
@@ -23,7 +23,7 @@ class Recommendations_clients_risk:
             return "No disponemos de los datos de tu comptencia"
 
     def respuesta_riskcliente_fidelizacion_interacciones_hint(self):
-        if self.get_monthly_sector_avg_sells()[len(self.get_monthly_sector_avg_sells())-1].get('c',0) == 0 or self.get_monthly_sector_avg_sells()[len(self.get_monthly_sector_avg_sells())-1].get('c',0) is None:
+        if self.get_monthly_sector_avg_sells()[len(self.get_monthly_sector_avg_sells())-1].get('c',0) != 0 or self.get_monthly_sector_avg_sells()[len(self.get_monthly_sector_avg_sells())-1].get('c',0) is None:
             monthly_sells_deviation = float(self.get_monthly_sells()[len(self.get_monthly_sells())-1].get('c',0)-self.get_monthly_sector_avg_sells()[len(self.get_monthly_sector_avg_sells())-1].get('c',0))/float(self.get_monthly_sector_avg_sells()[len(self.get_monthly_sector_avg_sells())-1].get('c',0))
             if monthly_sells_deviation > 0.20:
                 return "Sigue así! Interactuar a menudo con los clientes es una buena métrica de fidelización, aunque tal vez implique mayor carga administrativa para tu empresa."
@@ -117,9 +117,9 @@ class Recommendations_clients_risk:
         # hhi_critic_deviation_high = Max(hhi_clients_clients_deviation,hhi_geografical_clients_deviation,hhi_cnae_clients_deviation,hhi_temporal_clients_deviation)
         # hhi_critic_deviation_low = Min(hhi_clients_clients_deviation,hhi_geografical_clients_deviation,hhi_cnae_clients_deviation,hhi_temporal_clients_deviation)
         #Solamente interpreto el hhi con desviación más positiva y con desviación más negativa respecto la competencia
-        if hhi_geografical_clients_deviation > 0.50:
+        if hhi_geografical_clients_deviation > 0.20:
             return "Atención! Un alto índice de concentración puede suponer riesgos para tu empresa. Puedes buscar nuevas oportunidades comerciales utilizando nuestro motor de recomendaciones, filtrando por tus prioridades de diversificación."
-        elif hhi_geografical_clients_deviation > -0.50:
+        elif hhi_geografical_clients_deviation > -0.20:
             return "Bien! Es recomendable mantener unos índices de concentración razonables. Puedes buscar nuevas oportunidades comerciales utilizando nuestro motor de recomendaciones, filtrando por tus prioridades de diversificación."
         else:
             return "Sigue así! Es recomendable mantener unos índices de concentración bajos, pero podrías analizar si tienes oportunidades de crecimiento específicas. Puedes buscar nuevas oportunidades comerciales utilizando nuestro motor de recomendaciones, filtrando por tus prioridades de diversificación."
