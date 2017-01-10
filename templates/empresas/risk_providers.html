@@ -35,7 +35,7 @@
 		      	  			<div class="center-align">
 				            <i class="fa fa-user-o" aria-hidden="true"></i><span class="card-title"> Tus proveedores</span>
 				            <h3 class="align-right orange-text darken-1">{{company.get_providers.count}}</h3>
-				            <span class="green-text text-darken-1"><i class="fa fa-sort-up" aria-hidden="true"></i><span class="card-title">34%</span></span> <span class="light">From last month</span>
+				            <span class="green-text text-darken-1"><i class="fa fa-sort-up" aria-hidden="true"></i><span class="card-title">34%</span></span> <span class="light">Desde el mes pasado</span>
 				            </div>
 				        </div>
 
@@ -43,7 +43,7 @@
 		      	  			<div class="center-align ">
 				            <i class="fa fa-users" aria-hidden="true"></i><span class="card-title"> Proveedores comp.</span>
 				            <h3 class="align-right orange-text darken-1">{{company.get_sector_providers|floatformat:0|intcomma}}</h3>
-				            <span class="green-text text-darken-1"><i class="fa fa-sort-up" aria-hidden="true"></i><span class="card-title">10%</span></span> <span class="light">From last month</span>
+				            <span class="green-text text-darken-1"><i class="fa fa-sort-up" aria-hidden="true"></i><span class="card-title">10%</span></span> <span class="light">Desde el mes pasado</span>
 				            </div>
 				        </div>
 
@@ -51,7 +51,7 @@
 		      	  			<div class="center-align ">
 				            <i class="fa fa-rocket" aria-hidden="true"></i><span class="card-title"> Su dependencia</span>
 				            <h3 class="align-right orange-text darken-1">{{company.my_penetration_provider|mul:100|floatformat:1|intcomma}}%</h3>
-				            <span class="green-text text-darken-1"><i class="fa fa-sort-up" aria-hidden="true"></i><span class="card-title">5%</span></span> <span class="light">From last month</span>
+				            <span class="green-text text-darken-1"><i class="fa fa-sort-up" aria-hidden="true"></i><span class="card-title">5%</span></span> <span class="light">Desde el mes pasado</span>
 				            </div>
 				        </div>
 
@@ -59,7 +59,7 @@
 		      	  			<div class="center-align ">
 				            <i class="fa fa-cubes" aria-hidden="true"></i><span class="card-title"> Empresas comparables</span>
 				            <h3 class="align-right orange-text darken-1">{{company.get_sector_companies.count}}</h3>
-				            <span class="red-text text-darken-1"><i class="fa fa-sort-down" aria-hidden="true"></i><span class="card-title">7%</span></span> <span class="light">From last month</span>
+				            <span class="red-text text-darken-1"><i class="fa fa-sort-down" aria-hidden="true"></i><span class="card-title">7%</span></span> <span class="light">Desde el mes pasado</span>
 				            </div>
 				        </div>
 
@@ -67,7 +67,7 @@
 		      	  			<div class="center-align ">
 				            <i class="fa fa-eur" aria-hidden="true"></i><span class="card-title"> Pagos acumulados</span>
 				            <h3 class="align-right orange-text darken-1">{{company.get_total_buys|floatformat:0|intcomma}}€</h3>
-				            <span class="red-text text-darken-1"><i class="fa fa-sort-down" aria-hidden="true"></i><span class="card-title">4%</span></span> <span class="light">From last month</span>
+				            <span class="red-text text-darken-1"><i class="fa fa-sort-down" aria-hidden="true"></i><span class="card-title">4%</span></span> <span class="light">Desde el mes pasado</span>
 				            </div>
 				        </div>
 
@@ -75,7 +75,7 @@
 		      	  			<div class="center-align ">
 				            <i class="fa fa-money" aria-hidden="true"></i><span class="card-title"> Pago promedio</span>
 				            <h3 class="align-right orange-text darken-1">{{company.average_transfer_to_provider|floatformat:0|intcomma}}€</h3>
-				            <span class="green-text text-darken-1"><i class="fa fa-sort-up" aria-hidden="true"></i><span class="card-title">1%</span></span> <span class="light">From last month</span>
+				            <span class="green-text text-darken-1"><i class="fa fa-sort-up" aria-hidden="true"></i><span class="card-title">1%</span></span> <span class="light">Desde el mes pasado</span>
 				            </div>
 				        </div>
 				    
@@ -104,9 +104,15 @@
 			    			<div class="card grey lighten-4">
 					            <div class="card-content grey-text darken-4">
 					              <blockquote>
-					    				<p class="light"><i class="tiny material-icons indigo-text darken-4">live_help</i> Geographical clients measures the degree of internationalization and diversification by region</p>
-					    				<p class="light"><i class="tiny material-icons indigo-text darken-4">new_releases</i> <span class="bold"> Hint:</span> Try to overcome this concentration by finding more clients outside of your region. <a href="">Do you want us to find them for you?</a> </p>
-					    				<p class="light"><i class="tiny material-icons indigo-text darken-4">info</i> You are part of the 20% with the higher risk of geographical concentration of your sector </p>
+					    				<p class="light"><i class="tiny material-icons indigo-text darken-4">live_help</i> Nuestra métrica de riesgo de impago clasifica tus proveedores según su probabilidad de entrar en problemas financieros en los próximos meses. Una alta concentración de proveedores en estado rojo podría ser preocupante para la evolución de tu negocio</p>
+					    				<p class="light"><i class="tiny material-icons indigo-text darken-4">new_releases</i> <span class="bold"> En promedio, el riesgo de impago de tus proveedores es parecido al de los de tu competencia</p>
+					    				<p class="light"><i class="tiny material-icons indigo-text darken-4">info</i> Puedes cubrir tu riesgo ampliando tu cartera de proveedores</p>
+					    				<div class="row">
+					    					<div class="col m5 s6"></div>
+					    					<div class="col m7 s6">
+					    						<span class="right-align"><a href="{% url 'empresas:providers' %}" id="download-button" target="_blank" class="btn waves-effect waves-light transparent grey-text text-darken-4 border-grey"> Nuevos proveedores </a> </span>
+					    					</div>
+					    				</div>
 					    			</blockquote>
 					            </div>
 					        </div>
@@ -141,6 +147,12 @@
 		                <div class="card blue-grey lighten-1">
 		                  <div class="card-content white-text">
 		                    {{company.respuesta_riskprovider_concentracion_provider_hint}}
+		                    <div class="row">
+		    					<div class="col m4 s4"></div>
+		    					<div class="col m8 s8">
+		    						<span class="right-align"><a href="{% url 'empresas:providers' %}" target="_blank" class="btn waves-effect waves-light transparent white-text text-darken-4 border-grey"> Encuentra nuevos proveedores </a> </span>
+		    					</div>
+		    				</div>
 		                  </div>
 		                </div>
 		              </div>
@@ -166,6 +178,12 @@
 		                <div class="card blue-grey lighten-1">
 		                  <div class="card-content white-text">
 		                    {{company.respuesta_riskprovider_concentracion_geografical_hint}}
+		                    <div class="row">
+		    					<div class="col m4 s4"></div>
+		    					<div class="col m8 s8">
+		    						<span class="right-align"><a href="{% url 'empresas:providers' %}" target="_blank" class="btn waves-effect waves-light transparent white-text text-darken-4 border-grey"> Encuentra nuevos proveedores </a> </span>
+		    					</div>
+		    				</div>
 		                  </div>
 		                </div>
 		              </div>
@@ -191,6 +209,12 @@
 		                <div class="card blue-grey lighten-1">
 		                  <div class="card-content white-text">
 		                    {{company.respuesta_riskprovider_concentracion_cnae_hint}}
+		                    <div class="row">
+		    					<div class="col m4 s4"></div>
+		    					<div class="col m8 s8">
+		    						<span class="right-align"><a href="{% url 'empresas:providers' %}" target="_blank" class="btn waves-effect waves-light transparent white-text text-darken-4 border-grey"> Encuentra nuevos proveedores </a> </span>
+		    					</div>
+		    				</div>
 		                  </div>
 		                </div>
 		              </div>
@@ -216,6 +240,12 @@
 		                <div class="card blue-grey lighten-1">
 		                  <div class="card-content white-text">
 		                    {{company.respuesta_riskprovider_concentracion_temporal_hint}}
+		                    <div class="row">
+		    					<div class="col m4 s4"></div>
+		    					<div class="col m8 s8">
+		    						<span class="right-align"><a href="{% url 'empresas:providers' %}" target="_blank" class="btn waves-effect waves-light transparent white-text text-darken-4 border-grey"> Encuentra nuevos proveedores </a> </span>
+		    					</div>
+		    				</div>
 		                  </div>
 		                </div>
 		              </div>

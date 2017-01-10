@@ -1,0 +1,387 @@
+{% extends "app_base.html" %}
+{% load static %}
+{% load humanize %}
+{% load mathfilters %}
+{% block page_title %}
+{{ company.name }}
+{% endblock %}
+
+{% block body_class %}background_grey{% endblock %}
+
+{% block content %}
+	
+	<!-- Dropdown Structure -->
+	<div class="parallax-container">
+		<h3 class="center-align grey-text text-darken-3 light">FAQs & Comments</h3>
+	    <div class="parallax"><img src="{% static 'images/faq_beach.png' %}"></div>
+	</div>
+	 <!-- /////////////////////////////////////////////////////////////
+	 ////// ¿Como son mis clientes?
+	 ///////////////////////////////////////////////////////////// -->
+	 <div class="row">
+		<div class="white_back title_conf">
+	    	<h3 class="flow-text">Descripción General</h3>
+	    </div>
+    	<div class="row title_conf">
+    		<p class="">Desde Pillangó creemos en la pequeña y mediana empresa y queremos facilitarle su día a día. Para hacerlo, ponemos todos nuestro conocimiento sobre el sector financiero (y todos nuestros esfuerzos) para convertir su información en servicios que puedan serte de utilidad.</p>
+    		<p class="">Nuestro producto Network B2B persigue un doble objetivo. Por un lado, nuestros motores de matching utilizan la información de tu empresa y sus movimientos para detectar potenciales partners para tu negocio, ya sean clientes o proveedores, facilitando y acelerando la interacción entre la red de empresas como tú. Por el otro lado, te presentamos algunos indicadores típicamente utilizados internamente en tus bancos de referencia y te la mostramos para que puedas ubicar mejor tu negocio y controlar mejor tus riesgos.</p>
+    		<p class="">¿Necesitas crecer? ¿No estás content0 con tus proveedores? ¿Tu estructura de financiación te preocupa? ¿Están los bancos cubriendo tus necesidades de financiación? ¿Cuáles son mis principales riesgos financieros? Los usuarios de Network B2B se han hecho ya las mismas preguntas y conocen más respuestas…</p>
+    	</div>
+			    	
+	  </div>
+
+	  <div class="row">
+		<div class="white_back title_conf">
+	    	<h3 class="flow-text">FAQs</h3>
+	    </div>
+    	<div class="row title_conf">
+    		<h5><b>¿Qué es Network B2B?</b></h5>
+    		<p class="">Network B2B es un servicio enfocado a la pequeña y mediana empresa que se dedica al B2B. Queremos que saques el máximo provecho a tu rastro digital y de la información que compartes con tus entidades financieras para ofrecerte servicios de valor añadido: encontrar nuevos clientes y proveedores de manera más eficaz, facilitar tu acceso a la financiación añadiendo transparencia al proceso o que puedas compararte con tu competencia o tu sector.</p>
+    	</div>
+    	<div class="row title_conf">
+    		<h5><b>¿Cómo funciona Network B2B?</b></h5>
+    		<p class="">Utilizamos la información de tus balances, tu posición global y tus movimientos; nuestra tecnología pone el resto. Observamos interacciones reales en la red de empresas y así podemos realizar recomendaciones de clientes y/o proveedores que más te convengan. Además, aprovechamos la información interna de tu entidad financiera para interpretar tus riesgos financieros y darte pautas sobre cómo mejorarlo, facilitando tu acceso a la financiación en el momento en que la requieras.</p>
+    	</div>
+    	<div class="row title_conf">
+    		<h5><b>¿Qué servicios me ofrece Network B2B?</b></h5>
+    		<p class="">Nuestra plataforma quiere cubrir unos pocos servicios fundamentales: poner en relación clientes y proveedores, poner en comparación tu empresa con tus competidores, facilitarte la gestión de tus riesgos financieros de manera integrada y fácil de interpretar y agilizar tu acceso a la financiación.</p>
+    	</div>
+    	<div class="row title_conf">
+    		<h5><b>¿Qué información utiliza Network B2B?</b></h5>
+    		<p class="">Utilizamos la información de tus balances, tu posición global (productos contratados) y tus movimientos. ¡Nada que tu entidad financiera no disponga ya! Pero creemos firmemente que facilitarte la gestión comercial y de riesgos, desde nuestra experiencia, es beneficioso para ti y para tu banco.</p>
+    	</div>
+    	<div class="row title_conf">
+    		<h5><b>¿Puedo contratar productos financieros desde la plataforma?</b></h5>
+    		<p class="">Actualmente nuestra plataforma NO está preparada para formalizar la contratación de productos financieros, por lo que te remitimos a tu gestor especialista o el entorno web apropiado dentro de la entidad.</p>
+    	</div>
+
+			    	
+	  </div>
+	  <div class="row">
+		<div class="white_back title_conf">
+	    	<h3 class="flow-text">Comments</h3>
+	    </div>
+	    <div class="row title_conf">
+	    	<p class="">Trabajamos para ti. Puedes proponer mejoras a través de este espacio. Las analizaremos y, a poder ser, incluiremos en futuros updates de la plataforma.</p>
+	    </div>
+
+      <div class="row">
+        <form class="col s12">
+          <div class="row">
+            <div class="input-field col s6">
+              <i class="material-icons prefix">account_circle</i>
+              <input id="icon_prefix" type="text" class="validate">
+              <label for="icon_prefix">Nombre de la empresa</label>
+            </div>
+            <div class="input-field col s6">
+              <i class="material-icons prefix">phone</i>
+              <input id="icon_telephone" type="tel" class="validate">
+              <label for="icon_telephone">Telephone (Opcional)</label>
+            </div>
+          </div>
+        </form>
+      </div>
+
+      <div class="row">
+        <form class="col s12">
+          <div class="row">
+            <div class="input-field col s12">
+              <textarea id="textarea1" class="materialize-textarea"></textarea>
+              <label for="textarea1">Comentario o sugerencia</label>
+            </div>
+          </div>
+          <div class="col m8 s8"></div>
+          <div class="col m4 s4 center-align">
+            <a href="{% url 'empresas:recommendations_providers' %}" id="download-button" class="btn-large waves-effect waves-light alpha_back pad_top grey-text text-darken-4 border-grey">Enviar </a>
+          </div>
+        </form>
+      </div>
+
+
+	    
+	  </div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.1.4/Chart.bundle.min.js"></script>
+
+<script type="text/javascript">
+
+	Chart.defaults.global.legend.display = false;
+	// And for a doughnut chart
+  	var my_geo_clients = document.getElementById("your_geo_concentration_clients");
+  	var mean_geo_clients = document.getElementById("mean_geo_concentration_clients");
+  	var my_geo_providers = document.getElementById("your_geo_concentration_providers");
+  	var mean_geo_providers = document.getElementById("mean_geo_concentration_providers");
+  	var your_sector_concentration_clients = document.getElementById("your_sector_concentration_clients");
+  	var your_sector_concentration_providers = document.getElementById("your_sector_concentration_providers");
+  	var mean_sector_concentration_clients = document.getElementById("mean_sector_concentration_clients");
+  	var mean_sector_concentration_providers = document.getElementById("mean_sector_concentration_providers");
+  	var your_timeseries_of_selling = document.getElementById("your_timeseries_of_selling");
+  	var sector_timeseries_of_selling = document.getElementById("sector_timeseries_of_selling");
+  	var your_ebitda = document.getElementById("your_ebitda");
+  	var mean_ebitda = document.getElementById("mean_ebitda");
+  	var your_resultado_explotacion = document.getElementById("your_resultado_explotacion");
+  	var mean_resultado_explotacion = document.getElementById("mean_resultado_explotacion");
+  	var facturacion_graph = document.getElementById("facturacion_graph");
+  	var resultado_graph = document.getElementById("resultado_graph");
+  	var frecuencia_graph = document.getElementById("frecuencia_graph");
+  	var penetration_graph = document.getElementById("penetration_graph");
+  	var penetracion_clientes = 0.05
+	var penetracion_clientes_sector = 0.07//{{company.my_sector_penetration}}
+
+  	// Como son mis clients
+  	LineGraph(facturacion_graph, {{balance_providers_sells_avg_sector|safe}}, {{balance_providers_sells|safe}});
+  	LineGraph(ebitda_graph, {{balance_providers_ebitda_avg_sector|safe}}, {{balance_providers_ebitda|safe}});
+  	LineGraph(resultado_graph, {{balance_providers_resultado_avg_sector|safe}}, {{balance_providers_resultado|safe}});
+  	BarGraph(frecuencia_graph, {{get_sector_total_monthly_buys_amount|safe}}, {{get_monthly_buys_amount|safe}});
+  	stackedbarchart(penetration_graph, 'hola_2', 'hola_2', penetracion_clientes, penetracion_clientes_sector, 'Penetration')
+  	// donut(my_geo_clients, {{ territoriales_clientes }}, ["In your region","Outside your region"]);
+  	// donut(mean_geo_clients, {{ territoriales_proveedores }}, ["In your region","Outside your region"]);
+  	// donut(mean_geo_concentration_clients, {{ sector_territoriales_clientes }}, ["In your region","Outside your region"]);
+  	// donut(mean_geo_concentration_providers, {{ sector_territoriales_proveedores }}, ["In your region","Outside your region"]);
+  	// donut(your_sector_concentration_clients, {{ counts_sectores_clients }}, {{sectores_clients|safe}});
+  	// donut(your_sector_concentration_providers, {{ counts_sectores_providers }}, {{sectores_providers|safe}});
+  	// donut(mean_sector_concentration_clients, {{ mean_counts_sectores_clients }}, {{mean_sectores_clients|safe}});
+  	// donut(mean_sector_concentration_providers, {{ mean_counts_sectores_providers }}, {{mean_sectores_providers|safe}});
+
+  	// barchart(your_timeseries_of_selling,{{your_monthly_sells_amount}},{{your_monthly_sells_month|safe}}, 'Tus Cobros del último año');
+  	// barchart(sector_timeseries_of_selling,{{sector_monthly_sells_amount}},{{sector_monthly_sells_month|safe}}, 'Media de Cobros del sector el último año');
+  	// barchart(your_ebitda,{{your_ebitda_amount}},{{your_ebitda_ejercicio|safe}}, 'Tu EBITDA');
+  	// barchart(mean_ebitda,{{sector_ebitda_amount}},{{sector_ebitda_ejercicio|safe}}, 'EBITDA medio del sector');
+  	// barchart(your_resultado_explotacion,{{your_resultado_explotacion_amount}},{{your_resultado_explotacion_ejercicio|safe}}, 'Tu resultado_explotacion');
+  	// barchart(mean_resultado_explotacion,{{sector_resultado_explotacion_amount}},{{sector_resultado_explotacion_ejercicio|safe}}, 'Resultado_explotacion medio del sector');
+
+  	// prepare data...
+  	function BarGraph(div, data_sector, data_you) {
+  		var labels_1 = [];
+  		var labels_2 = []; 
+  		var data_1=[];
+  		var data_2=[];
+  		var sector = data_sector
+  		var you = data_you
+  		sector.forEach(function(packet, i) {
+	      	labels_1.push(packet.month);
+	      	data_1.push(packet.c);
+	    });
+	    you.forEach(function(packet, i) {
+	    	if (labels_1.includes(packet.month)==true) {
+	    		labels_2.push(packet.month);
+	      		data_2.push(packet.c);
+	    	} else {
+	    		labels_2.push(labels_1[i]);
+	      		data_2.push(0);
+	    	}
+	    });
+	    barchart(div, labels_1, labels_2, data_2, data_1, 'Compras / mes')
+  	}
+
+  	// prepare data...
+  	function LineGraph(div, data_sector, data_you) {
+  		var labels_1 = [];
+  		var labels_2 = []; 
+  		var data_1=[];
+  		var data_2=[];
+  		var sector = data_sector
+  		var you = data_you
+  		sector.forEach(function(packet, i) {
+	      labels_1.push(packet.ejercicio);
+	      data_1.push(packet.c);
+	    });
+	    you.forEach(function(packet, i) {
+	    	console.log('Line Graphs')
+	    	console.log(labels_1)
+	    	console.log(packet.ejercicio)
+	    	console.log(labels_1.includes(packet.ejercicio))
+	      	if (labels_1.includes(packet.ejercicio)==true) {
+	    		labels_2.push(packet.ejercicio);
+	      		data_2.push(packet.c);
+	    	} else {
+	    		labels_2.push(labels_1[i]);
+	      		data_2.push(0);
+	    	}
+	    });
+	    line(div, labels_1, labels_2, data_1, data_2)
+  	}
+
+  	function barchart(div, labels_1, labels_2, data_1, data_2, title)
+        {
+        	var myChart = new Chart(div, {
+		        type: 'bar',
+		        data: {
+		            labels: labels_2,
+		            datasets: [{
+		                label: "{{company.name|safe}}",
+		                data: data_1,
+		                yAxisID: "y-axis-0",
+		                backgroundColor: 'rgba(47,79,79, 0.2)',
+		                borderColor: 'rgba(47,79,79, 1)',
+		                borderWidth: 2
+		            },
+		            {
+		                label: "Average comparables",
+		                data: data_2,
+		                yAxisID: "y-axis-1",
+		                backgroundColor: 'rgba(169,169,169, 0.2)',
+		                borderColor: 'rgba(169,169,169, 1)',
+		                borderWidth: 2
+		            }]
+		        },
+		        options: {
+		            legend: {
+		                display: false,
+		                labels: {
+		                    fontColor: 'rgb(255, 99, 132)'
+		                }
+		            },
+		            title: {
+		                display: true,
+		                text: title
+		            },
+		            responsive: true,
+		            scales: {
+					      yAxes: [{
+					        position: "left",
+					        "id": "y-axis-0"
+					      }, {
+					        position: "right",
+					        "id": "y-axis-1"
+					      }]
+					  }
+		        }
+		    });
+    	}
+
+    function stackedbarchart(div, labels_1, labels_2, data_1, data_2, title)
+        {
+        	if (data_1<1) {
+        		data_1x = data_1*100
+        	} else {
+        		data_1x = 100
+        	}
+        	if (data_2<1) {
+        		data_2x = data_2*100
+        	} else {
+        		data_2x = 100
+        	}
+        	var dataset_1 = [data_1x,data_2x]
+        	var dataset_2 = [100-data_1x,100-data_2x]
+        	console.log(dataset_1)
+        	console.log(dataset_2)
+        	var myChart = new Chart(div, {
+		        type: 'bar',
+		        data: {
+		            labels: ["You","Comparables"],
+		            datasets: [{
+		            	type: 'bar',
+		                label: "Penetration",
+		                data: dataset_1,
+		                backgroundColor: 'rgba(47,79,79, 0.2)',
+		                borderColor: 'rgba(47,79,79, 1)',
+		                borderWidth: 2
+		            },
+		            {
+		            	type: 'bar',
+		                label: "Rest of the market",
+		                data: dataset_2,
+		                backgroundColor: 'rgba(169,169,169, 0.2)',
+		                borderColor: 'rgba(169,169,169, 1)',
+		                borderWidth: 2
+		            }]
+		        },
+		        options: {
+		            legend: {
+		                display: false,
+		                labels: {
+		                    fontColor: 'rgb(255, 99, 132)'
+		                }
+		            },
+		            scales: {
+		                yAxes: [{
+						    stacked: true
+		                }],
+		                xAxes: [{
+					        stacked: true
+					    }]
+		            }
+		        }
+		    });
+    	}
+
+  	function donut(div, data, labels)
+        {
+           var myDoughnutChart = new Chart(div, {
+            type: 'doughnut',
+            data: {
+                labels: labels,
+                datasets: [
+                    {
+                        data: data,
+                        backgroundColor: [
+                            'rgba(128,128,128, 0.5)',
+                            'rgba(47,79,79, 0.5)',
+                            'rgba(119,136,153, 0.5)',
+                            'rgba(192,192,192, 0.5)',
+		                    'rgba(169,180,169, 0.5)',
+		                    'rgba(128,128,128, 0.5)',
+                    		'rgba(220,220,220, 0.5)',
+                        ],
+                        hoverBackgroundColor: [
+                            'rgba(128,128,128, 1)',
+                            'rgba(47,79,79, 1)',
+                            'rgba(119,136,153, 1)',
+                            'rgba(192,192,192, 1)',
+		                    'rgba(169,180,169, 1)',
+		                    'rgba(128,128,128, 1)',
+                    		'rgba(220,220,220, 1)',
+                        ]
+                    }]
+            },
+            animation:{
+                animateScale:true
+            }
+        });
+        }
+
+    function line(div, labels, labels2, data1, data2) {
+    	var scatterChart = new Chart(div, {
+        type: 'line',
+        data: {
+            labels: labels,
+            datasets: [{
+            label: "Avg Comparables sector providers",
+            backgroundColor: "rgba(220,220,220,0.5)",
+            borderColor: "rgba(220,220,220,0.8)",
+            highlightFill: "rgba(220,220,220,0.75)",
+            pointHoverBackgroundColor: "rgba(220,220,220,1)",
+            showTooltip: false, //NEW OPTION DON"T NEED TO INCLUDE IT IF YOU WANT TO DISPLAY BUT WON"T HURT IF YOU DO
+            data: data1
+        }, {
+            label: "Avg {{company.name|safe}} Providers",
+            backgroundColor: "rgba(47,79,79,0.5)",
+            borderColor: "rgba(47,79,79,0.8)",
+            highlightFill: "rgba(47,79,79,0.75)",
+            pointHoverBackgroundColor: "rgba(47,79,79,1)",
+            showTooltip: false, //NEW OPTION DON"T NEED TO INCLUDE IT IF YOU WANT TO DISPLAY BUT WON"T HURT IF YOU DO
+            data: data2
+        }]},
+        options: {
+          responsive: true,
+          pointDotRadius: 10,
+          bezierCurve: false,
+          scaleShowVerticalLines: false,
+          scaleGridLineColor: 'black'
+        }
+    });
+    }
+</script>
+{% endblock %}
+
+ {% block alt_js %}
+<script type="text/javascript">
+
+	$(document).ready(function(){
+
+	});
+
+
+</script>
+{% endblock alt_js %}

@@ -69,7 +69,7 @@
   {% include "side-nav.html" %}
 
   {% if buttons != False %}
-       <a href="#" data-activates="slide-out" class="button-collapse show-on-medium top-left" {% block hide %}{% endblock hide %}><i class="material-icons medium white-text">menu</i></a>
+       <a href="#" data-activates="slide-out" class="button-collapse show-on-medium top-left" {% block hide %}{% endblock hide %}><i class="material-icons medium white-text">menu</i> <small class="white-text"> Beta 0.1 Versión en fase de desarrollo</small></a> 
        <a label="Exit" href="{% url 'home' %}" class="show-on-medium positioning" {% block hide_2 %}{% endblock hide_2 %}><i class="material-icons medium white-text">power_settings_new</i></a>
   {% endif %}
 

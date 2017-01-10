@@ -271,14 +271,14 @@ class Recommendations_providers:
 
 # Como me relaciono con ellos? - Penetración
     def respuesta_providers_penetracion_info(self):
-        return "El porcentaje de penetración mide el volumen de tu facturación con tus clientes sobre el total de gasto de los clientes; su varianza, indica el cambio respecto al periodo anterior."
+        return "El porcentaje de penetración mide el volumen de tu facturación con tus proveedores sobre el total de ventas de los proveedores; su varianza, indica el cambio respecto al periodo anterior."
     
     def respuesta_providers_penetracion_interpretation(self):
         if len(self.balance_providers_ebitda())>0:
             #my_penetration_client_deviation = float(self.my_penetration_client()[len(self.my_penetration_client())-1]['c']-self.my_sector_penetration_client()[len(self.my_sector_penetration_client())-1]['c'])/float(self.my_sector_penetration_client()[len(self.my_sector_penetration_client())-1]['c'])
             my_penetration_providers_deviation = float(self.my_penetration_provider()-self.my_sector_penetration_provider())/float(self.my_sector_penetration_provider())
             if my_penetration_providers_deviation > 0.50:
-                return "En promedio, eres un clliente muy relevante para tus proveedores"
+                return "En promedio, eres un cliente muy relevante para tus proveedores"
             elif my_penetration_providers_deviation > -0.50:
                 return "En promedio, eres un cliente relevante para tus proveedores"
             else:

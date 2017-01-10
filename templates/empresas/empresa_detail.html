@@ -26,42 +26,48 @@
           <div class="col s12 m3">
 
               <div class="col s12 m12">
-              <div class="card card blue-grey lighten-1">
+              <div class="card blue-grey darken-1">
                 <div class="card-content white-text">
-                  <span class="card-title">New clients recommendations...</span>
-                  <p>We have selected for you several potencial clients that might fit your need and enlarge your customers portfolio.</p>
+                  <span class="card-title">Contacta con esta empresa... </span>
+                  <p>Ponemos a tu disposición los principales indicadores de esta empresa y sus datos de contacto para que puedas empezar a negociar con ella. Si te interesa la empresa, puedes guardar el contacto para gestionarlo a posteriori</p>
                 </div>
                 <div class="card-action">
-                  <a href="#" id="client_form_button">Filter recommendation</a>
+                  {% if referrer == 'client' %}
+                  <a href="#">GUARDAR CLIENTE</a>
+                  {% elif referrer == 'provider' %}
+                  <a href="#">GUARDAR PROVEEDOR</a>
+                  {% endif %}
+                  
                 </div>
               </div>
             </div>
 
             <div class="col s12 m12">
-              <div class="card card blue-grey lighten-1">
+              <div class="card blue-grey darken-1">
                 <div class="card-content white-text">
-                  <span class="card-title">... but, wait, how does it work?</span>
-                  <p>Using your payment transfers data and the ones from your competitors, we can recommend you highly personalized new customers opportunities.</p>
+                  <span class="card-title">…¿por qué te la recomendamos? </span>
+                  <p>Si estás viendo esta empresa es porque nuestro algoritmo de recomendación ha detectado una potencial interacción comercial. ¡Seguramente ya es cliente de empresas parecidas a ti o es una empresa parecida a tus clientes!</p>
                 </div>
                 <div class="card-action">
-                  <a href="#">Back to school</a>
+                  <a href="#">CONTACTA CON LA EMPRESA</a>
                 </div>
               </div>
             </div>
 
             <div class="col s12 m12">
-              <div class="card card blue-grey lighten-1">
+              <div class="card blue-grey darken-1">
                 <div class="card-content white-text">
-                  <span class="card-title">Extra</span>
-                  {% lorem 2 p random %}
+                  <span class="card-title">Aýudanos a mejorar</span>
+                  <p>Cada vez que interactúas con nuestra aplicación nos ayudas a mejorar. Por favor, puedes descartar o incluir empresas que ya conozcas, o compartir tus propuestas de mejora en nuestro apartado de comentarios</p>
                 </div>
                 <div class="card-action">
-                  <a href="#">Back to school</a>
+                  <a href="{% url 'empresas:faq' %}">Contáctanos</a>
                 </div>
               </div>
             </div>
 
           </div>
+
           <div class="col s12 m9">
           <div class="row">
               <div class="col s9">
@@ -71,13 +77,13 @@
                   {% if referrer == 'client' %}
                   <p>
                     <input type="checkbox" id="add_client" class="right large" name="opportunity" {% if checked_client == 1 %} checked="checked" {% endif %}/>
-                    <label for="add_client" class="valign">Interesting client</label>
+                    <label for="add_client" class="valign">Guardar cliente</label>
                     <span id="client_response"></span>
                   </p>
                   {% elif referrer == 'provider' %}
                   <p>
                     <input type="checkbox" id="add_provider" class="right large" name="opportunity" {% if checked_providers == 1 %} checked="checked" {% endif %}/>
-                    <label for="add_provider" class="valign">Interesting provider</label>
+                    <label for="add_provider" class="valign">Guardar proveedor</label>
                     <span id="provider_response"></span>
                   </p>
                   {% endif %}
@@ -142,7 +148,7 @@
 
           <div class="row">
               <div class="col s12 m6">
-                  <h5>Contact details</h5>
+                  <h5>Detalles de contacto</h5>
                   <div><i class="tiny material-icons">contacts</i> {{empresa.name}} | {{empresa.contact_person}}</div>  
                   <div><i class="tiny material-icons">email</i> {{empresa.email}}</div>
                   <div><i class="tiny material-icons">location_on</i>{{empresa.address}}</div>   
@@ -150,7 +156,7 @@
                   <div><i class="tiny material-icons">business</i> Sector: {{ empresa.sector }}</div>   
                   <div><i class="tiny material-icons">info</i> CNAE: {{ empresa.cnae_2 }}</div>  
                   <div><i class="tiny material-icons">schedule</i> Created in {{ empresa.creation_date }}</div>
-                  <div class="right-align"><a href="mailto:{{empresa.email}}?Subject=Hello%20{{empresa.name}}" target="_top" class="btn-large waves-effect waves-light right-align"><i class="material-icons right">email</i>Contact</a></div>
+                  <div class="right-align"><a href="mailto:{{empresa.email}}?Subject=Hello%20{{empresa.name}}" target="_top" class="btn-large waves-effect waves-light right-align"><i class="material-icons right">email</i>Contacto</a></div>
               </div>
               <div class="col s12 m6">
                   <div id="map"> </div>

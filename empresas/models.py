@@ -281,7 +281,7 @@ class Empresa(models.Model, r_clients.Recommendations_clients,
         return self.temp_get_sector_providers
 
     def productos_con_tipo_variable(self):
-        return Productos.objects.filter(empresa=self, desc_producto__icontains='var')
+        return Productos.objects.filter(empresa=self, producto__icontains='prest')
 
     def respuesta_sabia(self):
         if self.hhi_clients_clients() > -0.1:
@@ -1055,6 +1055,12 @@ class Empresa(models.Model, r_clients.Recommendations_clients,
             return float(self.deuda_largo_sector()+self.deuda_corto())/float(self.balance_sells_avg_sector()[len(self.balance_sells_avg_sector())-1].get('c', 0))
         return 0
 
+    def ratio_endeudamiento(self):
+        return 55
+
+    def ratio_endeudamiento_sector(self):
+        return 75
+
     def gastos_financiero(self):
         if self.deuda_total():
             return self.deuda_total()*random.uniform(0.03, 0.06)
@@ -1142,6 +1148,8 @@ class Empresa(models.Model, r_clients.Recommendations_clients,
 
     def get_absolute_url(self):
         return reverse("empresas:detail", kwargs={"pk": self.id})
+
+
 
 
 # ------------------------------------------------------------------
@@ -1310,6 +1318,12 @@ class RecommendedClients(models.Model):
     empresa = models.ForeignKey(Empresa, related_name='recommended', on_delete=models.CASCADE)
     similarity = models.FloatField()
     clientes_recomendados = models.ForeignKey(Empresa, related_name='clientes_recomendados', on_delete=models.CASCADE)
+
+    def factoring_preaprobado(self):
+        if self.clientes_recomendados.estados_financieros.last().ebitda > 0:
+            return int(self.clientes_recomendados.estados_financieros.last().ebitda * 0.1 / 1000)*1000
+        else:
+            return 0
 
     def __unicode__(self):
         return str(self.similarity)

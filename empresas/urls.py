@@ -21,7 +21,8 @@ from .views import (HomeView,
                     TranfersCreate,
                     RecommendationsCreate,
                     OpportunityClientsView,
-                    OpportunityProviderView)
+                    OpportunityProviderView,
+                    FAQView)
 
 urlpatterns = [
 
@@ -33,6 +34,7 @@ urlpatterns = [
     #url(r'^update/$', EmpresaDetailView, name='empresa_update'),
     #url(r'^delete/$', EmpresaDetailView, name='empresa_delete'),
     url(r'^empresa/(?P<empresa_id>[0-9]+)/transfer_create/$', TrasferCreateView, name='transfer_create'),
+    url(r'^faq/$', FAQView, name='faq'),
     
     url(r'^clients/$', ClientView, name='clients'),
     url(r'^providers/$', ProviderView, name='providers'),
@@ -51,7 +53,4 @@ urlpatterns = [
     url(r'^generatedata/transfers/$', TranfersCreate, name='transfers_create'),
     url(r'^generatedata/recommendations/$', RecommendationsCreate, name='recommedations_create'),
     url(r'^generatedata/cirbe/$', CirbeCreate, name='cirbe_create'),
-    
-    
-
 ]

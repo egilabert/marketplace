@@ -11,22 +11,28 @@ class Recommendations_clients_risk:
         return "La interacción media y años de antigüedad son métricas de fielización: miden la frecuencia con que interactuas con tus clientes a través de las transferencias realizadas y los años transcurridos desde vuestra primera interacción"
     
     def respuesta_riskcliente_fidelizacion_interacciones_interpretation(self):
-        monthly_sells_deviation = float(self.get_monthly_sells()[len(self.get_monthly_sells())-1]['c']-self.get_monthly_sector_avg_sells()[len(self.get_monthly_sector_avg_sells())-1]['c'])/float(self.get_monthly_sector_avg_sells()[len(self.get_monthly_sector_avg_sells())-1]['c'])
-        if monthly_sells_deviation > 0.20:
-            return "En promedio, interactúas más veces con tus clientes que la competencia con los suyos."
-        elif monthly_sells_deviation > -0.20:
-            return "En promedio, interactúas con tus clientes de manera parecida a tu competencia con los suyos."
+        if float(self.get_monthly_sector_avg_sells()[len(self.get_monthly_sector_avg_sells())-1].get('c',0)) == 0:
+            monthly_sells_deviation = float(self.get_monthly_sells()[len(self.get_monthly_sells())-1].get('c',0)-self.get_monthly_sector_avg_sells()[len(self.get_monthly_sector_avg_sells())-1].get('c',0))/float(self.get_monthly_sector_avg_sells()[len(self.get_monthly_sector_avg_sells())-1].get('c',0))
+            if monthly_sells_deviation > 0.20:
+                return "En promedio, interactúas más veces con tus clientes que la competencia con los suyos."
+            elif monthly_sells_deviation > -0.20:
+                return "En promedio, interactúas con tus clientes de manera parecida a tu competencia con los suyos."
+            else:
+                return "En promedio, interactúas menos veces con tus clientes que la competencia con los suyos."
         else:
-            return "En promedio, interactúas menos veces con tus clientes que la competencia con los suyos."
+            return "No disponemos de los datos de tu comptencia"
 
     def respuesta_riskcliente_fidelizacion_interacciones_hint(self):
-        monthly_sells_deviation = float(self.get_monthly_sells()[len(self.get_monthly_sells())-1]['c']-self.get_monthly_sector_avg_sells()[len(self.get_monthly_sector_avg_sells())-1]['c'])/float(self.get_monthly_sector_avg_sells()[len(self.get_monthly_sector_avg_sells())-1]['c'])
-        if monthly_sells_deviation > 0.20:
-            return "Sigue así! Interactuar a menudo con los clientes es una buena métrica de fidelización, aunque tal vez implique mayor carga administrativa para tu empresa."
-        elif monthly_sells_deviation > -0.20:
-            return "Bien! No apreciamos diferencias significativas con la media de tu sector."
+        if self.get_monthly_sector_avg_sells()[len(self.get_monthly_sector_avg_sells())-1].get('c',0) == 0 or self.get_monthly_sector_avg_sells()[len(self.get_monthly_sector_avg_sells())-1].get('c',0) is None:
+            monthly_sells_deviation = float(self.get_monthly_sells()[len(self.get_monthly_sells())-1].get('c',0)-self.get_monthly_sector_avg_sells()[len(self.get_monthly_sector_avg_sells())-1].get('c',0))/float(self.get_monthly_sector_avg_sells()[len(self.get_monthly_sector_avg_sells())-1].get('c',0))
+            if monthly_sells_deviation > 0.20:
+                return "Sigue así! Interactuar a menudo con los clientes es una buena métrica de fidelización, aunque tal vez implique mayor carga administrativa para tu empresa."
+            elif monthly_sells_deviation > -0.20:
+                return "Bien! No apreciamos diferencias significativas con la media de tu sector."
+            else:
+                return "Atención! Interactuar poco con los clientes suele aumentar el riesgo de fuga. Parece una buena estrategia realizar acciones de fidelización pero podrías buscar nuevas oportunidades comerciales utilizando nuestro motor de recomendaciones."
         else:
-            return "Atención! Interactuar poco con los clientes suele aumentar el riesgo de fuga. Parece una buena estrategia realizar acciones de fidelización pero podrías buscar nuevas oportunidades comerciales utilizando nuestro motor de recomendaciones."
+            return "No disponemos de los datos de tu comptencia"
     
     #####FALTAN LAS METRICAS DE ANTIGUEDAD, QUE SON FALSAS 
 

@@ -10,28 +10,28 @@ class Recommendations_financial_risk:
         return "El ratio de endeudamiento mide el total de tu deuda sobre el total de tu activo, y te permite valorar tu dependencia de la financiación y la posibilidad de nuevo enduedamiento para posibles inversiones."
     
     def respuesta_finrisk_ratiodeuda_interpretation(self):
-        if len(self.balance_ebitda())>0:
-            ratio_endeudamiento_deviation = float(self.margen_comercial_providers()-self.margen_comercial_sector_providers())/float(self.margen_comercial_sector_providers())
-            if ratio_endeudamiento_deviation > 0.50:
+        if self.ratio_endeudamiento_sector() > 0:
+            ratio_endeudamiento_deviation = float(self.ratio_endeudamiento()-self.ratio_endeudamiento_sector())/float(self.ratio_endeudamiento_sector())
+            if ratio_endeudamiento_deviation > 0.20:
                 return "Tu ratio de endeudamiento es sensiblemente superior a la media de tu competencia."
-            elif ratio_endeudamiento_deviation > -0.50:
+            elif ratio_endeudamiento_deviation > -0.20:
                 return "Tu ratio de endeudamiento es parecido a la media de tu competencia."
             else:
                 return "Tu ratio de endeudamiento es sensiblemente inferior a la media de tu competencia."
         else:
-            return "No disponemos de tus datos financieros"
+            return "No disponemos de los estados financieros de tu competencia"
 
     def respuesta_finrisk_ratiodeuda_hint(self):
-        if len(self.balance_ebitda())>0:
-            margen_comercial_providers_deviation = float(self.margen_comercial_providers()-self.margen_comercial_sector_providers())/float(self.margen_comercial_sector_providers())
-            if margen_comercial_providers_deviation > 0.50:
+        if self.ratio_endeudamiento_sector() > 0:
+            margen_comercial_providers_deviation = float(self.ratio_endeudamiento()-self.ratio_endeudamiento_sector())/float(self.ratio_endeudamiento_sector())
+            if margen_comercial_providers_deviation > 0.20:
                 return "Atención! Tener altos ratios de endeudamiento puede generar costes financieros elevados o dificultar tu acceso a la financiación. Además, limita tus posibilidades de inversión el corto plazo."
-            elif margen_comercial_providers_deviation > -0.50:
+            elif margen_comercial_providers_deviation > -0.20:
                 return "Bien! Te recordamos que tu ratio de endeudamiento puede tener efecto en el acceso a nueva financiación para futuras inversiones o necesidades de circulante.."
             else:
                 return "Sigue así! Tu bajo ratio de endeudamiento te favorece a la hora de buscar nueva financiación. Crees que es el momento de generar nueva inversión? Informate sobre nuestros productos de activo."
         else:
-            return "No disponemos de tus datos financieros"
+            return "No disponemos de los estados financieros de tu competencia"
     ### Falta actualizar el calculo del ratio de endeudamiento....Enric, lo ha calculado?
 
     # Ratio de deuda sobre EBITDA
@@ -48,7 +48,7 @@ class Recommendations_financial_risk:
             else:
                 return "Tu ratio de endeudamiento sobre ebitda es sensiblemente inferior a la media de tu competencia."
         else:
-            return "No disponemos de tus datos financieros"
+            return "No disponemos de los estados financieros de tu competencia"
 
     def respuesta_finrisk_deudatotal_hint(self):
         if self.deuda_total_sector_pond()>0:
@@ -60,7 +60,7 @@ class Recommendations_financial_risk:
             else:
                 return "Sigue así! Tu bajo ratio de endeudamiento te favorece a la hora de buscar nueva financiación. Crees que es el momento de generar nueva inversión? Informate sobre nuestros productos de activo."
         else:
-            return "No disponemos de tus datos financieros"
+            return "No disponemos de los estados financieros de tu competencia"
     ### Falta actualizar el calculo del ratio de endeudamiento sobre EBITDA....Enric, lo ha  calculado?
 
     # Ratio de corto sobre largo
@@ -77,7 +77,7 @@ class Recommendations_financial_risk:
             else:
                 return "Tu ratio corto / largo es sensiblemente inferior a la media de tu competencia."
         else:
-            return "No disponemos de tus datos financieros"
+            return "No disponemos de los estados financieros de tu competencia"
 
     def respuesta_finrisk_cortolargo_hint(self):
         if len(self.balance_ebitda())>0:
@@ -89,7 +89,7 @@ class Recommendations_financial_risk:
             else:
                 return "Sigue así! Tu bajo ratio corto/largo parece indicar que no tienes problemas de liquidez. Sin embargo, si tu ratio de endeudamiento es muy elevado debes tener en cuenta que el acceso a nueva financiación puede verse afectado."
         else:
-            return "No disponemos de tus datos financieros"
+            return "No disponemos de los estados financieros de tu competencia"
 
 
     # Coste de financiación
@@ -106,7 +106,7 @@ class Recommendations_financial_risk:
             else:
                 return "Tu coste de financiación es sensiblemente inferior a la media de tu competencia"
         else:
-            return "No disponemos de tus datos financieros"
+            return "No disponemos de los estados financieros de tu competencia"
 
     def respuesta_finrisk_costefin_hint(self):
         if len(self.balance_ebitda())>0:
@@ -118,7 +118,7 @@ class Recommendations_financial_risk:
             else:
                 return "Sigue así! Tus costes de financiación están muy controlados. Si tus ratios de endeudamiento son también reducidos podrías valorar la posbilidad de invertir en tu crecimiento. En tal caso, conoce nuestros productos de activo aquí"
         else:
-            return "No disponemos de tus datos financieros"
+            return "No disponemos de los estados financieros de tu competencia"
 
     # Distribución de deuda por producto.....falta que sea comparable!!
     def respuesta_finrisk_deudaproducto_info(self):
@@ -139,7 +139,7 @@ class Recommendations_financial_risk:
             else:
                 return "Tu ratio de endeudamiento en el corto plazo es sensiblemente inferior a la media de tu competencia"
         else:
-            return "No disponemos de tus datos financieros"
+            return "No disponemos de los estados financieros de tu competencia"
 
     def respuesta_finrisk_cortoebitda_hint(self):
         if self.deuda_corto_sector_pond() > 0:
@@ -151,7 +151,7 @@ class Recommendations_financial_risk:
             else:
                 return "Sigue así! Tener un ratio de endeudamiento a corto plazo bajo te permite mayor agilidad y acceso a financiación para cubrir potenciales riesgos de liquidez"
         else:
-            return "No disponemos de tus datos financieros"
+            return "No disponemos de los estados financieros de tu competencia"
     ### Falta actualizar el calculo del ratio de endeudamiento corto sobre EBITDA....Enric, lo ha  calculado?
 
     # Comentarios con el calendario
@@ -172,7 +172,7 @@ class Recommendations_financial_risk:
             else:
                 return "Tus necesidades de working capital son sensiblemente inferiores a la media de tu competencia"
         else:
-            return "No disponemos de tus datos financieros"
+            return "No disponemos de los estados financieros de tu competencia"
 
     def respuesta_finrisk_workingcapital_hint(self):
         if len(self.balance_ebitda())>0:
@@ -184,7 +184,7 @@ class Recommendations_financial_risk:
             else:
                 return "Sigue así! Si en algún momento necesitas financiación circulante, no dudes en conocer nuestros productos."
         else:
-            return "No disponemos de tus datos financieros"
+            return "No disponemos de los estados financieros de tu competencia"
     ### Falta crear una métrica que se llame working capital needs o algo aixi, i que posi en relacio els dias a cobrar vs dias a pagar.
 
     # Riesgo divisa
@@ -201,7 +201,7 @@ class Recommendations_financial_risk:
             else:
                 return "Tu riesgo de divisa es sensiblemente inferior al de tu comptencia"
         else:
-            return "No disponemos de tus datos financieros"
+            return "No disponemos de los estados financieros de tu competencia"
 
     def respuesta_finrisk_divisa_hint(self):
         if len(self.balance_ebitda())>0:
@@ -213,7 +213,7 @@ class Recommendations_financial_risk:
             else:
                 return "Sigue así! Si en algún momento has pensado en cubrir el riesgo de cambio, conoce nuestros productos especializados"
         else:
-            return "No disponemos de tus datos financieros"
+            return "No disponemos de los estados financieros de tu competencia"
     ## FALTA CALCULAR METRICA DE RIESGO DIVISA....o no lhe trobat mes avall.
 
 
@@ -231,7 +231,7 @@ class Recommendations_financial_risk:
             else:
                 return "Tu riesgo de tipo de interés es sensiblemente inferior al de tu comptencia"
         else:
-            return "No disponemos de tus datos financieros"
+            return "No disponemos de los estados financieros de tu competencia"
 
     def respuesta_finrisk_interes_hint(self):
         if len(self.balance_ebitda())>0:
@@ -243,5 +243,5 @@ class Recommendations_financial_risk:
             else:
                 return "Sigue así! Si en algún momento has pensado en cubrir el riesgo de tipod e interés, conoce nuestros productos especializados"
         else:
-            return "No disponemos de tus datos financieros"
+            return "No disponemos de los estados financieros de tu competencia"
     ## FALTA CALCULAR METRICA DE RIESGO TIPO INTERES...o no lhe trobat mes avall.

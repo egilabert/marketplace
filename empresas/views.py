@@ -40,7 +40,7 @@ def HomeView(request):
 	request.session.modified = True
 	queryset = Empresa.objects.all()
 	if request.session.get('company') is None: 
-		company = 1492 #randint(0, queryset.count() - 1) # # ##1470 865 865-1 
+		company = 990 #1492 #randint(0, queryset.count() - 1) # # ## 865 865-1 
 		request.session['company'] = company
 	else:
 		company_id = request.session.get('company')
@@ -113,7 +113,8 @@ def EmpresaDetailView(request, pk=None):
 		data = json.dumps(list(empresa.get_monthly_sells_amount()), cls=DjangoJSONEncoder)
 		titulo = 'Ventas mensuales'
 	else:
-		data = 0
+		data = json.dumps(list(empresa.get_monthly_buys_amount()), cls=DjangoJSONEncoder)
+		titulo = 'Compras mensuales'
 
 	context = {
 		'referrer': key,
@@ -163,6 +164,15 @@ def FinancialRiskRecommendationsView(request):
 	return render(request, 'empresas/financial_risk.html', context)
 
 @login_required
+def FAQView(request):
+	company_id = request.session.get('company')
+	company = Empresa.objects.filter(pk=company_id)
+	context = {
+		'company':company
+	}
+	return render(request, 'empresas/faq.html', context)
+
+@login_required
 def ClientRiskRecommendationsView(request):
 	
 	company_id = request.session.get('company')
@@ -176,8 +186,8 @@ def ClientRiskRecommendationsView(request):
 		'company':company,
 		'riesgo_impago_clientes': json.dumps(list(company.riesgo_impago_clientes()), cls=DjangoJSONEncoder),
 		'riesgo_impago_clientes_sector': json.dumps(list(company.riesgo_impago_clientes_sector()), cls=DjangoJSONEncoder),
-		'get_monthly_sells': json.dumps(list(company.get_monthly_sells_amount()), cls=DjangoJSONEncoder),
-		'get_monthly_sector_avg_sells': json.dumps(list(company.get_sector_total_monthly_sells_amount()), cls=DjangoJSONEncoder),
+		'get_monthly_buys': json.dumps(list(company.get_monthly_buys_amount()), cls=DjangoJSONEncoder),
+		'get_monthly_sector_avg_buys': json.dumps(list(company.get_sector_total_monthly_buys_amount()), cls=DjangoJSONEncoder),
 		'productos_variable': company.productos_con_tipo_variable().all(),
 		'ultimos_eeff': ultimos_eeff
 		}
