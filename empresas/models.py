@@ -175,6 +175,9 @@ class Empresa(models.Model, r_clients.Recommendations_clients,
         return self.temp_riesgo_impago_clientes
 
     def riesgo_impago_proveedores(self):
+        hats = [{'c': 0.33120333761746157, u'hats_alert': u'ROJA'}, {'c': 0.14506075785103653, u'hats_alert': u'AMARILLA'}, {'c': 0.5237359045315019, u'hats_alert': u'VERDE'}]
+        return hats
+
         if self.temp_riesgo_impago_clientes is None:
             group_by = self.get_providers().values('hats_alert').annotate(c=Sum('transfers__amount'))
             total = 0
@@ -239,6 +242,9 @@ class Empresa(models.Model, r_clients.Recommendations_clients,
         return self.temp_riesgo_impago_clientes_sector
 
     def riesgo_impago_providers_sector(self):
+        hats = [{'c': 0.3712609682294364, u'hats_alert': u'ROJA'}, {'c': 0.4888540483917215, u'hats_alert': u'VERDE'}, {'c': 0.13988498337884214, u'hats_alert': u'AMARILLA'}]
+        return hats
+        
         if self.temp_riesgo_impago_clientes_sector is None:
             group_by = self.providers_of_sector_companies().values('hats_alert').annotate(c=Sum('transfers__amount'))
             total = 0
@@ -264,6 +270,7 @@ class Empresa(models.Model, r_clients.Recommendations_clients,
                             joined = True
                     else:
                         ri.append(alert)
+                print(ri)
                 self.temp_riesgo_impago_clientes_sector = ri
             else:
                 self.temp_riesgo_impago_clientes = 0

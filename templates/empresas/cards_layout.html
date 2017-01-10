@@ -9,12 +9,12 @@
 							{% if  obj.similarity > 0 %}
 								{% if  forloop.counter|add:"-1"|divisibleby:3 %}
 								<div class="card blue-grey lighten-4 hoverable">
-								    <div class="card-image waves-effect waves-block waves-light">
-								      <img class="activator" src="{{ obj.clientes_recomendados.image}}">
-								    </div>
-								    <div class="card-content">
+							    <div class="card-image waves-effect waves-block waves-light">
+							      <img class="activator" src='{{ obj.clientes_recomendados.image}}'>
+							    </div>
+							    <div class="card-content">
 							    	<div class="row">
-							      		<span class="activator center-align grey-text text-darken-4">{{forloop.counter}}. {{ obj.clientes_recomendados.name}}</span>
+							      		<span class="activator center-align grey-text text-darken-4"> {{ obj.clientes_recomendados.name}}</span>
 							      	</div>
 							      	<div class="divider"></div>
 							      	<br>
@@ -29,28 +29,31 @@
 
 							      	<div class="row">
 							      		<div class="col s6">
-							      			<i class="fa fa-money left-align" aria-hidden="true"></i></i><span class="grey-text light text-darken-4"> Financing: 
+							      			<i class="fa fa-money left-align" aria-hidden="true"></i></i><span class="grey-text light text-darken-4"> Financing:
+							      			<br>
+							      			<small>¿Necesitarás financiar tus facturas?</small>	
 							      		</div>
 							      		<div class="col s6">
-							      			<span class="right-align flow-text" style="color: {% if obj.clientes_recomendados.estados_financieros.last.ebitda > 0 %}green{% else %}red{% endif %}"> {% if obj.clientes_recomendados.estados_financieros.last.ebitda > 0%} {{obj.clientes_recomendados.estados_financieros.last.ebitda|mul:0.2|floatformat:0|intcomma }}€{% else %}-{%endif%}</span></span>
+							      			<span class="right-align" style="color: {% if obj.factoring_preaprobado > 0 %}green{% else %}red{% endif %}"> {% if obj.factoring_preaprobado > 0 %} Te financiamos hasta  <a href="https://www.bancosantander.es/es/empresas-advance/productos-y-servicios/cobros/factoring" id="download-button" target="_blank" class="btn waves-effect waves-light transparent grey-text text-darken-4 border-grey"> {{ obj.factoring_preaprobado|floatformat|intcomma }}€ </a>  {% else %} Sin preaprobación {% endif %}</span>
 							      		</div>
 							      	</div>
 								    <div class="card-action">
-								    	<a class="blue-grey-text text-darken-3" href="{{ obj.clientes_recomendados.get_absolute_url }}">See details</a>
+								    	<a class="blue-grey-text text-darken-3" href="{{ obj.clientes_recomendados.get_absolute_url }}">Ver detalle</a>
 								      	<span ><i class="material-icons right activator center">more_vert</i></span>
 								    </div>
 							    </div>
-								    <div class="card-reveal">
-								    	<span class="card-title">Actividad:<i class="material-icons right">close</i></span>
-								    	<div class="row">
-								      		<p class="grey-text text-darken-4">{{ obj.clientes_recomendados.cnae }}</p>
-								      	</div>
-								      	<span class="card-title">Localización:</span>
-								      	<div class="row">
-								      		<p class="grey-text text-darken-4">{{ obj.clientes_recomendados.territorial }}</p>
-								      	</div>
-								    </div>
-								</div>
+							    <div class="card-reveal">
+							    	<span class="card-title">Actividad:<i class="material-icons right">close</i></span>
+							    	<div class="row">
+							      		<p class="grey-text text-darken-4">{{ obj.clientes_recomendados.cnae_2 }}</p>
+							      		<p class="grey-text text-darken-4">{{ obj.clientes_recomendados.cnae }}</p>
+							      	</div>
+							      	<span class="card-title">Localización:</span>
+							      	<div class="row">
+							      		<p class="grey-text text-darken-4">{{ obj.clientes_recomendados.territorial }}</p>
+							      	</div>
+							    </div>
+							</div>
 
 								{% endif %}
 						    {% endif %}
@@ -67,12 +70,12 @@
 								{% if forloop.counter|add:"-2"|divisibleby:3 %}
 
 								<div class="card blue-grey lighten-4 hoverable">
-								    <div class="card-image waves-effect waves-block waves-light">
-								      <img class="activator" src='{{ obj.clientes_recomendados.image}}'>
-								    </div>
-								    <div class="card-content">
+							    <div class="card-image waves-effect waves-block waves-light">
+							      <img class="activator" src='{{ obj.clientes_recomendados.image}}'>
+							    </div>
+							    <div class="card-content">
 							    	<div class="row">
-							      		<span class="activator center-align grey-text text-darken-4">{{forloop.counter}}. {{ obj.clientes_recomendados.name}}</span>
+							      		<span class="activator center-align grey-text text-darken-4"> {{ obj.clientes_recomendados.name}}</span>
 							      	</div>
 							      	<div class="divider"></div>
 							      	<br>
@@ -87,28 +90,31 @@
 
 							      	<div class="row">
 							      		<div class="col s6">
-							      			<i class="fa fa-money left-align" aria-hidden="true"></i></i><span class="grey-text light text-darken-4"> Financing: 
+							      			<i class="fa fa-money left-align" aria-hidden="true"></i></i><span class="grey-text light text-darken-4"> Financing:
+							      			<br>
+							      			<small>¿Necesitarás financiar tus facturas?</small>	
 							      		</div>
 							      		<div class="col s6">
-							      			<span class="right-align flow-text" style="color: {% if obj.clientes_recomendados.estados_financieros.last.ebitda > 0 %}green{% else %}red{% endif %}"> {% if obj.clientes_recomendados.estados_financieros.last.ebitda > 0%} {{obj.clientes_recomendados.estados_financieros.last.ebitda|mul:0.2|floatformat:0|intcomma }}€{% else %}-{%endif%}</span></span>
+							      			<span class="right-align" style="color: {% if obj.factoring_preaprobado > 0 %}green{% else %}red{% endif %}"> {% if obj.factoring_preaprobado > 0 %} Te financiamos hasta  <a href="https://www.bancosantander.es/es/empresas-advance/productos-y-servicios/cobros/factoring" id="download-button" target="_blank" class="btn waves-effect waves-light transparent grey-text text-darken-4 border-grey"> {{ obj.factoring_preaprobado|floatformat|intcomma }}€ </a>  {% else %} Sin preaprobación {% endif %}</span>
 							      		</div>
 							      	</div>
 								    <div class="card-action">
-								    	<a class="blue-grey-text text-darken-3" href="{{ obj.clientes_recomendados.get_absolute_url }}">See details</a>
+								    	<a class="blue-grey-text text-darken-3" href="{{ obj.clientes_recomendados.get_absolute_url }}">Ver detalle</a>
 								      	<span ><i class="material-icons right activator center">more_vert</i></span>
 								    </div>
 							    </div>
-								    <div class="card-reveal">
-								    	<span class="card-title">Actividad:<i class="material-icons right">close</i></span>
-								    	<div class="row">
-								      		<p class="grey-text text-darken-4">{{ obj.clientes_recomendados.cnae }}</p>
-								      	</div>
-								      	<span class="card-title">Localización:</span>
-								      	<div class="row">
-								      		<p class="grey-text text-darken-4">{{ obj.clientes_recomendados.territorial }}</p>
-								      	</div>
-								    </div>
-								</div>
+							    <div class="card-reveal">
+							    	<span class="card-title">Actividad:<i class="material-icons right">close</i></span>
+							    	<div class="row">
+							      		<p class="grey-text text-darken-4">{{ obj.clientes_recomendados.cnae_2 }}</p>
+							      		<p class="grey-text text-darken-4">{{ obj.clientes_recomendados.cnae }}</p>
+							      	</div>
+							      	<span class="card-title">Localización:</span>
+							      	<div class="row">
+							      		<p class="grey-text text-darken-4">{{ obj.clientes_recomendados.territorial }}</p>
+							      	</div>
+							    </div>
+							</div>
 
 								{% endif %}
 						    {% endif %}
@@ -123,12 +129,12 @@
 								{% if forloop.counter|add:"-3"|divisibleby:3 %}
 
 								<div class="card blue-grey lighten-4 hoverable">
-								    <div class="card-image waves-effect waves-block waves-light">
-								      <img class="activator" src='{{ obj.clientes_recomendados.image}}'>
-								    </div>
-								    <div class="card-content">
+							    <div class="card-image waves-effect waves-block waves-light">
+							      <img class="activator" src='{{ obj.clientes_recomendados.image}}'>
+							    </div>
+							    <div class="card-content">
 							    	<div class="row">
-							      		<span class="activator center-align grey-text text-darken-4">{{forloop.counter}}. {{ obj.clientes_recomendados.name}}</span>
+							      		<span class="activator center-align grey-text text-darken-4"> {{ obj.clientes_recomendados.name}}</span>
 							      	</div>
 							      	<div class="divider"></div>
 							      	<br>
@@ -143,28 +149,31 @@
 
 							      	<div class="row">
 							      		<div class="col s6">
-							      			<i class="fa fa-money left-align" aria-hidden="true"></i></i><span class="grey-text light text-darken-4"> Financing: 
+							      			<i class="fa fa-money left-align" aria-hidden="true"></i></i><span class="grey-text light text-darken-4"> Financing:
+							      			<br>
+							      			<small>¿Necesitarás financiar tus facturas?</small>	
 							      		</div>
 							      		<div class="col s6">
-							      			<span class="right-align flow-text" style="color: {% if obj.clientes_recomendados.estados_financieros.last.ebitda > 0 %}green{% else %}red{% endif %}"> {% if obj.clientes_recomendados.estados_financieros.last.ebitda > 0%} {{obj.clientes_recomendados.estados_financieros.last.ebitda|mul:0.2|floatformat:0|intcomma }}€{% else %}-{%endif%}</span></span>
+							      			<span class="right-align" style="color: {% if obj.factoring_preaprobado > 0 %}green{% else %}red{% endif %}"> {% if obj.factoring_preaprobado > 0 %} Te financiamos hasta  <a href="https://www.bancosantander.es/es/empresas-advance/productos-y-servicios/cobros/factoring" id="download-button" target="_blank" class="btn waves-effect waves-light transparent grey-text text-darken-4 border-grey"> {{ obj.factoring_preaprobado|floatformat|intcomma }}€ </a>  {% else %} Sin preaprobación {% endif %}</span>
 							      		</div>
 							      	</div>
 								    <div class="card-action">
-								    	<a class="blue-grey-text text-darken-3" href="{{ obj.clientes_recomendados.get_absolute_url }}">See details</a>
+								    	<a class="blue-grey-text text-darken-3" href="{{ obj.clientes_recomendados.get_absolute_url }}">Ver detalle</a>
 								      	<span ><i class="material-icons right activator center">more_vert</i></span>
 								    </div>
 							    </div>
-								    <div class="card-reveal">
-								    	<span class="card-title">Actividad:<i class="material-icons right">close</i></span>
-								    	<div class="row">
-								      		<p class="grey-text text-darken-4">{{ obj.clientes_recomendados.cnae }}</p>
-								      	</div>
-								      	<span class="card-title">Localización:</span>
-								      	<div class="row">
-								      		<p class="grey-text text-darken-4">{{ obj.clientes_recomendados.territorial }}</p>
-								      	</div>
-								    </div>
-								</div>
+							    <div class="card-reveal">
+							    	<span class="card-title">Actividad:<i class="material-icons right">close</i></span>
+							    	<div class="row">
+							      		<p class="grey-text text-darken-4">{{ obj.clientes_recomendados.cnae_2 }}</p>
+							      		<p class="grey-text text-darken-4">{{ obj.clientes_recomendados.cnae }}</p>
+							      	</div>
+							      	<span class="card-title">Localización:</span>
+							      	<div class="row">
+							      		<p class="grey-text text-darken-4">{{ obj.clientes_recomendados.territorial }}</p>
+							      	</div>
+							    </div>
+							</div>
 
 						    {% endif %}
 
@@ -178,5 +187,8 @@
 				{% else %}
 					</div>
 					</div>
-					<p class="flow-text">Uuupss... No clients found with the actual filtering criteria</p>
+					<div class="card-panel grey darken-2">
+			          <span class="white-text flow-text">Esto es un poco embarazoso... No hemos encontrado nuevos clientes recomendados con estos criterios de filtrado
+			          </span>
+			        </div>
 				{% endif %}

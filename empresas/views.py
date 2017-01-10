@@ -340,8 +340,10 @@ def ClientView(request):
 			if region=="true":
 				recommended_clients = company.recommended.filter(
 					clientes_recomendados__territorial=company.territorial)
-			if sector!="":
-				# clientes_recomendados__cnae_2=sector, 
+			else:
+				recommended_clients = company.recommended.exclude(
+					clientes_recomendados__territorial=company.territorial)
+			if sector != "":
 				recommended_clients = recommended_clients.filter(
 					clientes_recomendados__cnae_2=sector)
 			context = {
