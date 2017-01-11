@@ -238,7 +238,7 @@
                   <div class="card-content white-text">
                     {% if referrer == 'client' %}
                     El índice de Herfindahl es una medida, empleada en economía, que informa sobre la concentración económica de un mercado. En este caso, medimos la concentración de esta empresa en términos de ventas y compras o, lo que es lo mismo, te mostramos si tiene una cartera de clientes y proveedores bien diversificada.
-                    {% elif referrer == 'provider' %}
+                    {% else %}
                     El índice de Herfindahl es una medida, empleada en economía, que informa sobre la concentración económica de un mercado. En este caso, medimos la concentración de esta empresa en términos de ventas y compras o, lo que es lo mismo, te mostramos si tiene una cartera de clientes y proveedores bien diversificada.
                     {% endif %}
                   </div>
@@ -261,7 +261,7 @@
                   <div class="card-content white-text">
                   {% if referrer == 'client' %}
                     El histograma te muestra la actividad económica (compras) de la empresa a lo largo del año. De esta manera puedes interpretar cuales son los picos y momentos valle de actividad y, en consecuencia, cuando podría ser mejor momento para entablar relaciones comerciales (p.e. 3-6 meses antes de sus compras).
-                    {% elif referrer == 'provider' %}
+                    {% else %}
                     El histograma te muestra la actividad económica (ventas) de la empresa a lo largo del año. De esta manera puedes interpretar cuales son los picos y momentos valle de actividad y, en consecuencia, cuando podría ser mejor momento para entablar relaciones comerciales.
                     {% endif %}
                     
@@ -285,7 +285,7 @@
                   <div class="card-content white-text">
                     {% if referrer == 'client' %}
                     Este gráfico muestra dónde concentra geográficamente su actividad la empresa. Te permite entender hasta qué punto está acostumbrada at rabajar a nivel local, nacional o internacional.
-                    {% elif referrer == 'provider' %}
+                    {% else %}
                     Este gráfico muestra dónde concentra geográficamente su actividad la empresa. Te permite entender hasta qué punto está acostumbrada a trabajar a nivel local, nacional o internacional.
                     {% endif %}
                     
@@ -309,7 +309,7 @@
                   <div class="card-content white-text">
                     {% if referrer == 'client' %}
                     Este gráfico muestra dónde concentra sectorialmente sus compras la empresa. Te permite entender hasta qué punto está acostumbrada a trabajar con proveedores de tu sector por lo que puedes ajustar tu estrategia comercial acorde a tu poder de negociación.
-                    {% elif referrer == 'provider' %}
+                    {% else %}
                     Este gráfico muestra dónde concentra sectorialmente sus ventas la empresa. Te permite entender hasta qué punto está acostumbrada a trabajar con clientes de tu sector por lo que puedes ajustar tu estrategia comercial acorde a tu poder de negociación.
                     {% endif %}
                   </div>

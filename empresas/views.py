@@ -39,8 +39,11 @@ def HomeView(request):
 		pass
 	request.session.modified = True
 	queryset = Empresa.objects.all()
-	if request.session.get('company') is None: 
-		company = 990 #1492 #randint(0, queryset.count() - 1) # # ## 865 865-1 
+	if request.session.get('company') is None:
+		if request.user.username == "pmonras2":
+			company = 865
+		else:
+			company = 990 #1492 #randint(0, queryset.count() - 1) # # ## 865 865-1 
 		request.session['company'] = company
 	else:
 		company_id = request.session.get('company')
