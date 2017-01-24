@@ -1303,6 +1303,7 @@ class CIRBE(models.Model):
     largo_plazo_dispuesto = models.IntegerField(null=True, blank=True)
     largo_plazo_concedido = models.IntegerField(null=True, blank=True)
     corto_plazo_dispuesto = models.IntegerField(null=True, blank=True)
+    corto_plazo_concedido = models.IntegerField(null=True, blank=True)
     d_concedido = models.IntegerField(null=True, blank=True)
     d_dispuesto = models.IntegerField(null=True, blank=True)
     avales_concedido = models.IntegerField(null=True, blank=True)
