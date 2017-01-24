@@ -1,0 +1,41 @@
+{% extends "app_base.html" %}
+{% load staticfiles %}
+
+{% block page_title %}
+Marketplace - Pillango
+{% endblock %}
+
+{% block side-nav %}{% include "side-nav_cro.html" %}{% endblock %}
+
+{% block content %}
+	<div class="wrap_cro">
+		<div class="contents text-right">
+			<div class="container">
+          <h1 class="fadding light padding_cro_landing right-align">Zero line of defense</h1>
+          <p class="fadding_2 light right-align" >Gestión de riesgos desde el cliente</p>
+          <div class="row">
+          	<div class="col m7 s12"></div>
+	          	<div class="col m5 s12">
+		          <a href="{% url 'empresas:recommendations_financial_risk' %}" class="btn-large waves-effect waves-light transparent pad_top grey-text text-darken-3 border-grey">Clientes</a>
+		          <a href="{% url 'risk_cro:credit_risk' %}" class="btn-large waves-effect waves-light transparent pad_top grey-text text-darken-3 border-grey">No clientes</a>
+		        </div>
+          </div>
+          </div>
+        </div>
+	</div>
+{% endblock %}
+
+{% block alt_js %}
+<script type="text/javascript">
+
+	$(document).ready(function(){
+		// $( "#risk" ).click(function(e) {
+		// Materialize.toast('Still under construction... Coming soon!', 4000);
+		// })
+		
+	});
+
+
+</script>
+{% endblock alt_js %}
+

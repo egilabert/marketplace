@@ -48,6 +48,7 @@ INSTALLED_APPS = [
 
     #Personal apps
     'empresas',
+    'risk_cro',
     'business',
     'compressor',
 ]
@@ -71,7 +72,11 @@ ROOT_URLCONF = 'marketplace.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [os.path.join(BASE_DIR, 'templates'), os.path.join(BASE_DIR, 'templates')+"/empresas"],
+        'DIRS': [os.path.join(BASE_DIR, 'templates'), 
+                os.path.join(BASE_DIR, 'templates')+"/empresas",
+                os.path.join(BASE_DIR, 'templates')+"/accounts", 
+                os.path.join(BASE_DIR, 'templates')+"/helpers", 
+                os.path.join(BASE_DIR, 'templates')+"/risk_cro"],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [

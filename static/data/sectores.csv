@@ -1,0 +1,22 @@
+SECTOR;#;AGRUPACI_N
+Agricultura;1;MUY BUENO
+Ganaderia y Pesca;2;MUY BUENO
+Energia;3;MUY BUENO
+Construcción (no promoción);4;MALO
+Promocción Inmobiliaria;4,5;MALO
+Metalurgia y Maquinaria;5;REGULAR
+Fabricación Vehiculos a motor;6;REGULAR
+Química;7;REGULAR
+Mat.Construc. Y Transf. Pdtos Minerales;8;REGULAR
+Alimentación;9;BUENO
+Textil y Confección;10;REGULAR
+Cuero, Piel y calzado;11;REGULAR
+Otras Manufacturas;12;REGULAR
+Cio. Por mayor pdtos. Industriales;13;BUENO
+Cio. Por mayor pdtos consumo y manufacturas;14;BUENO
+Cio. Por menor;15;BUENO
+Transporte y Comunicaciones;16;BUENO
+Hosteleria, Turismo y Ocio;17;BUENO
+Servicios a empresas;18;MUY BUENO
+Alquileres;19;MUY BUENO
+Otros Servicios;20;MUY BUENO

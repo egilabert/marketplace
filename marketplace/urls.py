@@ -19,7 +19,7 @@ from django.conf import settings
 from django.conf.urls.static import static
 
 from empresas import views
-from empresas.views import HomeView
+from risk_cro import views
 from business.views import LandingView, AppsView, TestView
 from allauth.account.views import LoginView, SignupView
 
@@ -27,9 +27,10 @@ urlpatterns = [
     url(r'^$', LandingView.as_view(), name='landing'), #views.home
     url(r'^admin/', admin.site.urls),
     url(r'^test/$', TestView),
-    url(r'^accounts/profile/', AppsView.as_view(), name='home'),
+    url(r'^pillstore/', AppsView.as_view(), name='home'),
     url(r'^accounts/', include('allauth.urls')),
     url(r'^empresas/', include('empresas.urls', namespace='empresas')),
+    url(r'^cro/', include('risk_cro.urls', namespace='risk_cro')),
 ]
 
 if settings.DEBUG:

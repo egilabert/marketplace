@@ -5,6 +5,8 @@
 Marketplace - Pillango
 {% endblock %}
 
+{% block side-nav %}{% include "side-nav.html" %}{% endblock %}
+
 {% block content %}
 	<div class="wrap_register">
 		<div class="contents text-right">
@@ -16,10 +18,6 @@ Marketplace - Pillango
           <a href="{% url 'empresas:recommendations_financial_risk' %}" id="risk" class="waves-effect waves-teal btn-flat white-text fadding_3">Risk Manager</a>
         </div>
 	</div>
-
-	<a label="Exit" href="{% url 'landing' %}" class="show-on-medium bottom_positioning"><i class="material-icons medium white-text">power_settings_new</i></a>
-	
-   
 {% endblock %}
 
 {% block alt_js %}

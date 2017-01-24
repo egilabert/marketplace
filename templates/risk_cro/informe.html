@@ -1,0 +1,135 @@
+{% load static %}
+
+<h3>Autodiagnóstico financiero sectorial</h3>
+<h5>Sector económico: {{rate.sector}}</h5>
+
+<div class="row">
+      <div class="col s12 m12">
+        <div class="card-panel {% if rating_text == 'SITUACIÓN SECTORIAL MEJORABLE' %} yellow {% elif rating_text == 'SITUACIÓN SECTORIAL BUENA' %} grey {% elif rating_text == 'SITUACIÓN SECTORIAL EXCELENTE' %} green {% endif %}">
+          <h5 class="white-text">{{rating_text}}
+          </h5>
+        </div>
+      </div>
+</div>
+<div class="divider"></div>
+<h5>Resumen de la situación financiera para la empresa {{rate.name}}</h5>
+<div class="row">
+	<div class="col m6 s12">
+		<canvas id="myChart" width="200" height="200"></canvas>
+	</div>
+	<div class="col m6 s12">
+		<div class="row">
+		      <div class="col s12 m12">
+		        <div class="card-panel grey lighten-4">
+		          <div class="row">
+						<div class="col m6 s6">
+							<h6>Puntos a mejorar</h6>
+							<div class="divider"></div>
+							<ul>
+							{% for tramo in tramos %}
+								{% if tramo == 1 %}
+									{% if forloop.counter == 2 %}
+										<li>. Ratio Autonomia Financiera</li>
+									{% elif forloop.counter == 3 %}
+										<li>. Gastos Financieros / Ventas</li>
+									{% elif forloop.counter == 4 %}
+										<li>. Resultados / Ventas</li>
+									{% elif forloop.counter == 5 %}
+										<li>. Tu sector de actividad vive un momento difícil</li>
+									{% endif %}
+								{% elif tramo == 2 %}
+									{% if forloop.counter == 2 %}
+										<li>. Ratio Autonomia Financiera</li>
+									{% elif forloop.counter == 3 %}
+										<li>. Gastos Financieros / Ventas</li>
+									{% elif forloop.counter == 4 %}
+										<li>. Resultados / Ventas</li>
+									{% elif forloop.counter == 5 %}
+										<li>. Tu sector de actividad no vive el mejor momento</li>
+									{% endif %}
+								{% endif %}
+							{% endfor %}
+							</ul>
+
+						</div>
+						<div class="col m6 s6">
+							<h6>Puntos fuertes</h6>
+							<div class="divider"></div>
+							<ul>
+							{% for tramo in tramos %}
+								{% if tramo == 3 %}
+									{% if forloop.counter == 2 %}
+										<li>. Ratio Autonomia Financiera</li>
+									{% elif forloop.counter == 3 %}
+										<li>. Gastos Financieros / Ventas</li>
+									{% elif forloop.counter == 4 %}
+										<li>. Resultados / Ventas</li>
+									{% elif forloop.counter == 5 %}
+										<li>. Tu sector de actividad vive un buen momento</li>
+									{% endif %}
+								{% elif tramo == 4 %}
+									{% if forloop.counter == 2 %}
+										<li>. Ratio Autonomia Financiera</li>
+									{% elif forloop.counter == 3 %}
+										<li>. Gastos Financieros / Ventas</li>
+									{% elif forloop.counter == 4 %}
+										<li>. Resultados / Ventas</li>
+									{% elif forloop.counter == 5 %}
+										<li>. Tu sector de actividad está en un momento magnífico</li>
+									{% endif %}
+								{% endif %}
+							{% endfor %}
+							</ul>
+						</div>
+					</div>
+		        </div>
+		      </div>
+		</div>
+		
+	</div>
+</div>
+
+<script type="text/javascript">
+	var ctx = document.getElementById("myChart");
+
+	var data = {
+	    labels: ["Ratio Autonomia Financiera", "Gastos Financieros / Ventas", "Resultados / Ventas", "Grupo Sectorial"],
+	    datasets: [
+	        {
+	            label: "Media de sector",
+	            backgroundColor: "rgba(179,181,198,0.2)",
+	            borderColor: "rgba(179,181,198,1)",
+	            pointBackgroundColor: "rgba(179,181,198,1)",
+	            pointBorderColor: "#fff",
+	            pointHoverBackgroundColor: "#fff",
+	            pointHoverBorderColor: "rgba(179,181,198,1)",
+	            data: [2, 2, 2, 2]
+	        },
+	        {
+	            label: "Tu score",
+	            backgroundColor: "rgba(255,99,132,0.2)",
+	            borderColor: "rgba(255,99,132,1)",
+	            pointBackgroundColor: "rgba(255,99,132,1)",
+	            pointBorderColor: "#fff",
+	            pointHoverBackgroundColor: "#fff",
+	            pointHoverBorderColor: "rgba(255,99,132,1)",
+	            data: {{tramos_grafico}} //[70, 10, 60, 49]
+	        }
+	    ]
+	};
+
+	var myRadarChart = new Chart(ctx, {
+	    type: 'radar',
+	    data: data,
+	    options: {
+	            scale: {
+	                reverse: false,
+	                ticks: {
+	                    beginAtZero: true
+	                }
+	            }
+	    }
+	});
+
+
+</script>

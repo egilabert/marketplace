@@ -1,0 +1,70 @@
+						<div class="row">
+				         	<div class="col m6 s12">
+						      <div class="row">
+						        <div class="input-field col m12">
+						          <!-- <label for="company_name">Nombre de la compañía (opcional)</label> -->
+						          {{ form.name.errors }}
+						          <input id="id_name" name="name" type="text" maxlength="255" class="validate" required>
+								  <label for="{{ form.name.id_for_label }}">Nombre de la compañía (opcional)</label>
+								  <!-- {{ form.name }} -->
+						        </div>
+						      </div>
+						      <div class="row">
+						        <div class="input-field col m12">
+						        {{ form.antiguedad.errors }}
+						          <input id="id_antiguedad" name="antiguedad" type="number" class="validate" required>
+						          <label for="{{ form.antiguedad.id_for_label }}">Antigüedad de tu empresa</label>
+						        </div>
+						      </div>
+						      <div class="row">
+						        <div class="input-field col m12">
+						        {{ form.sector.errors }}
+						          	<select id="id_sector" name="sector" class="validate" required>
+								      	<option value="" disabled selected>Elije el sector de tu empresa</option>
+								      	<option value="Agricultura">Agricultura</option>
+								        <option value="Ganaderia y Pesca">Ganaderia y Pesca</option>
+								        <option value="Energia">Energia</option>
+								        <option value="Construcción (no promoción)">Construcción (no promoción)</option>
+								        <option value="Promocción Inmobiliaria">Promocción Inmobiliaria</option>
+								        <option value="Metalurgia y Maquinaria">Metalurgia y Maquinaria</option>
+								        <option value="Fabricación Vehiculos a motor">Fabricación Vehiculos a motor</option>
+								        <option value="Química">Química</option>
+								        <option value="Mat.Construc. Y Transf. Pdtos Minerales">Mat.Construc. Y Transf. Pdtos Minerales</option>
+								        <option value="Alimentación">Alimentación</option>
+								        <option value="Textil y Confección">Textil y Confección</option>
+								        <option value="Cuero, Piel y calzado">Cuero, Piel y calzado</option>
+								        <option value="Otras Manufacturas">Otras Manufacturas</option>
+								        <option value="Cio. Por mayor pdtos. Industriales">Cio. Por mayor pdtos. Industriales</option>
+								        <option value="Cio. Por mayor pdtos consumo y manufacturas">Cio. Por mayor pdtos consumo y manufacturas</option>
+								        <option value="Cio. Por menor">Cio. Por menor</option>
+								        <option value="Transporte y Comunicaciones">Transporte y Comunicaciones</option>
+								        <option value="Hosteleria, Turismo y Ocio">Hosteleria, Turismo y Ocio</option>
+								        <option value="Servicios a empresas">Servicios a empresas</option>
+								        <option value="Alquileres">Alquileres</option>
+								        <option value="Otros Servicios">Otros Servicios</option>
+								    </select>
+								    <label for="{{ form.sector.id_for_label }}">¿A qué sector pertenence?</label>
+						        </div>
+						      </div>
+						    </div>
+						    <div class="col m6 s12">
+						    	<h6 class="">Completando el formulario podràs conocer...</h6 class="flow-text">
+						    	<ul class="collapsible popout" data-collapsible="accordion">
+								    <li>
+								      <div class="collapsible-header"><i class="material-icons">payment</i>Calcular tu capacidad de financiación.</div>
+								      <div class="collapsible-body"><p>Rellena un sencillo formulario con datos básicos sobre tu empresa y averigua cuál es la capacidad de financiación de tu empresa.</p></div>
+								    </li>
+								    <li>
+								      <div class="collapsible-header"><i class="material-icons">trending_down</i>Conocer tus puntos fuertes y débiles</div>
+								      <div class="collapsible-body"><p>Descubre en qué puntos debes mejorar y obtén consejos sobre cómo aumentar la capacidad de financiación de tu empresa.</p></div>
+								    </li>
+								    <li>
+								      <div class="collapsible-header"><i class="material-icons">supervisor_account</i>Comparar tu empresa con el sector.</div>
+								      <div class="collapsible-body"><p>Podrás comparar la evolución de los ratios de tu empresa con la media de tu sector y descargarte el informe completo en pdf.</p></div>
+								    </li>
+								  </ul>
+						    </div>
+						  </div>
+				         <div class="step-actions">
+				            <button class="waves-effect waves-dark btn next-step">CONTINUAR</button>
+				         </div>

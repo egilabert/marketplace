@@ -1,0 +1,61 @@
+						<div class="row">
+				         	<div class="col m6 s12">
+				         	<div class="row">
+						        <div class="input-field col m12">
+						        {{ form.importe_neto_cifra_negocio.errors }}
+						          <input id="id_importe_neto_cifra_negocio" name="importe_neto_cifra_negocio" type="number" class="validate" required>
+								  <label for="{{ form.importe_neto_cifra_negocio.id_for_label }}">Importe neto de cifra de negocio</label>
+						        </div>
+						      </div>
+						      <div class="row">
+						        <div class="input-field col m12">
+						        {{ form.gastos_financieros.errors }}
+						          <input id="id_gastos_financieros" name="gastos_financieros" type="number" class="validate" required>
+								  <label for="{{ form.gastos_financieros.id_for_label }}">Gastos financieros</label>
+						        </div>
+						      </div>
+						      <div class="row">
+						        <div class="input-field col m12">
+						        {{ form.resultados_antes_impuestos.errors }}
+						          <input id="id_resultados_antes_impuestos" name="resultados_antes_impuestos" type="number" class="validate" required>
+								  <label for="{{ form.resultados_antes_impuestos.id_for_label }}">Resultado antes de impuesto</label>
+						        </div>
+						      </div>
+						    </div>
+						    <div class="col m6 s12">
+						    	<h6 class="">El scoring es una combinación de los siguientes factores...</h6 class="flow-text">
+						    	<canvas id="myChart2" width="200" height="190"></canvas>
+						    </div>
+						  </div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.1.4/Chart.bundle.min.js"></script>
+
+<script type="text/javascript">
+	var config = {
+		type: 'bar',
+	    data: {
+
+	        labels: ["Recursos/ventas", "Deuda/EBITDA", "Patrimonio/balance", "Deuda/activo", "Scoring"],
+	        datasets: [{
+	        	type: 'bar',
+	            label: "Tu score",
+	            backgroundColor: ["rgba(30,99,132,0.2)","rgba(30,99,132,0.2)","rgba(30,99,132,0.2)","rgba(30,99,132,0.2)","rgba(20,200,20,0.2)"],
+	            borderColor: ["rgba(30,99,132,1)","rgba(30,99,132,1)","rgba(30,99,132,1)","rgba(30,99,132,1)","rgba(20,200,20,1)"],
+	            hoverBackgroundColor: ["rgba(30,99,132,0.5)","rgba(30,99,132,0.5)","rgba(30,99,132,0.5)","rgba(30,99,132,0.5)","rgba(20,200,20,0.5)"],
+	            hoverBorderColor: ["rgba(30,99,132,1)","rgba(30,99,132,1)","rgba(30,99,132,1)","rgba(30,99,132,1)","rgba(20,200,20,1)"],
+	            data: [65, 59, 90, 81, 56],
+	        }, {
+	        	type: 'line',
+	            label: "Media del sector",
+	            backgroundColor: "rgba(54,162,235,0.2)",
+	            borderColor: "rgba(54,162,235,1)",
+	            hoverBackgroundColor: "rgba(54,162,235,0.5)",
+	            hoverBorderColor: "rgba(54,162,235,1)",
+	            data: [28, 19, 96, 27]
+	        }]
+	    }
+	};
+
+	var ctx = document.getElementById("myChart2").getContext("2d");
+	new Chart(ctx, config);
+</script>

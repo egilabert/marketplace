@@ -1,0 +1,32 @@
+  {% load compress %}
+  {% load staticfiles %}
+  {% load static %}
+
+  <ul id="slide-out" class="side-nav">
+      <li>
+        <div class="userView">
+          <div class="background">
+            <img src="{% static 'images/casa_mila.jpg' %}">
+          </div>
+          <a href="{{ company.get_absolute_url }}"><img class="circle" src="{{ company.image }}"></a>
+          <a href="{{ company.get_absolute_url }}"><span class="white-text name">{{ company.name }}</span></a>
+          <a href="{{ company.get_absolute_url }}"><span class="white-text email">{{ company.email }}</span></a>
+        </div>
+      </li>
+      <!-- <li class="">
+        <li><span class="center-text tiny light"><small>{{ company.cnae }}</small></span></li>
+      </li> -->
+      <li><a href="{% url 'empresas:empresas_home' %}"><i class="material-icons">airplay</i>Home</a></li>
+      <li><a href="{% url 'empresas:faq' %}"><i class="material-icons">info_outline</i>FAQ & Comentarios</a></li>
+      <li><div class="divider"></div></li>
+      <li><a class="subheader">Look & Find</a></li>
+      <li><a href="{% url 'empresas:recommendations_financial_risk' %}"><i class="material-icons">trending_down</i>Tus riesgos!</a></li>
+      
+      <!-- <li><a href="{% url 'empresas:recommendations' %}"><i class="material-icons">assessment</i>Commercial monitoring</a></li>
+      <li><a href="{% url 'empresas:recommendations_financial_risk' %}"><i class="material-icons">trending_down</i>Risk monitoring</a></li> -->
+    
+      <li><div class="divider"></div></li>
+      <li><a class="subheader">Opciones</a></li>
+      <li><a class="waves-effect" href="#!">Ajustes<i class="material-icons">lock_open</i></a></li>
+      <li><a class="waves-effect" href="{% url 'home' %}">Salir<i class="material-icons">input</i></a></li>
+    </ul>
