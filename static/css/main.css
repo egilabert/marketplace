@@ -70,6 +70,11 @@ li p {
 .white_back {
   background-color: white;
 }
+
+.grey_back {
+  background-color: #fafafa;
+}
+
 .line {
     position: relative;
 }

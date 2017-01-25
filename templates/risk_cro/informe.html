@@ -20,39 +20,44 @@
 	<div class="col m6 s12">
 		<div class="row">
 		      <div class="col s12 m12">
-		        <div class="card-panel grey lighten-4">
+		        <div class="card-panel green lighten-4">
 		          <div class="row">
-						<div class="col m6 s6">
-							<h6>Puntos a mejorar</h6>
-							<div class="divider"></div>
-							<ul>
-							{% for tramo in tramos %}
-								{% if tramo == 1 %}
-									{% if forloop.counter == 2 %}
-										<li>. Ratio Autonomia Financiera</li>
-									{% elif forloop.counter == 3 %}
-										<li>. Gastos Financieros / Ventas</li>
-									{% elif forloop.counter == 4 %}
-										<li>. Resultados / Ventas</li>
-									{% elif forloop.counter == 5 %}
-										<li>. Tu sector de actividad vive un momento difícil</li>
-									{% endif %}
-								{% elif tramo == 2 %}
-									{% if forloop.counter == 2 %}
-										<li>. Ratio Autonomia Financiera</li>
-									{% elif forloop.counter == 3 %}
-										<li>. Gastos Financieros / Ventas</li>
-									{% elif forloop.counter == 4 %}
-										<li>. Resultados / Ventas</li>
-									{% elif forloop.counter == 5 %}
-										<li>. Tu sector de actividad no vive el mejor momento</li>
-									{% endif %}
-								{% endif %}
-							{% endfor %}
-							</ul>
-
-						</div>
-						<div class="col m6 s6">
+					<h6>Puntos a mejorar</h6>
+					<div class="divider"></div>
+					<ul>
+					{% for tramo in tramos %}
+						{% if tramo == 1 %}
+							{% if forloop.counter == 2 %}
+								<li>. Ratio Autonomia Financiera</li>
+							{% elif forloop.counter == 3 %}
+								<li>. Gastos Financieros / Ventas</li>
+							{% elif forloop.counter == 4 %}
+								<li>. Resultados / Ventas</li>
+							{% elif forloop.counter == 5 %}
+								<li>. Tu sector de actividad vive un momento difícil</li>
+							{% endif %}
+						{% elif tramo == 2 %}
+							{% if forloop.counter == 2 %}
+								<li>. Ratio Autonomia Financiera</li>
+							{% elif forloop.counter == 3 %}
+								<li>. Gastos Financieros / Ventas</li>
+							{% elif forloop.counter == 4 %}
+								<li>. Resultados / Ventas</li>
+							{% elif forloop.counter == 5 %}
+								<li>. Tu sector de actividad no vive el mejor momento</li>
+							{% endif %}
+						{% endif %}
+					{% endfor %}
+					</ul>
+				</div>
+			</div>
+			</div>
+		</div>
+		<div class="row">
+		    <div class="col s12 m12">
+		    	<div class="card-panel grey lighten-4">
+		          <div class="row">
+						<div class="col m12 s12">
 							<h6>Puntos fuertes</h6>
 							<div class="divider"></div>
 							<ul>
@@ -81,13 +86,356 @@
 							{% endfor %}
 							</ul>
 						</div>
-					</div>
 		        </div>
 		      </div>
 		</div>
-		
+		</div>
 	</div>
 </div>
+<div class="divider"></div>
+<h4>Otros indicadores comparados con tu sector de actividad</h4>
+
+<!-- preparing a DOM with width and height for ECharts -->
+<div class="grey_back title_conf">
+	<h4 class="flow-text">Ratio de solvencia</h4>
+</div>
+<div class="row">
+	<div class="col s12 m6">
+		<div id="gauge" style="width: 400px;height:400px;"></div>
+	</div>
+	<div class="col s12 m6">
+		<div class="card grey lighten-4">
+            <div class="card-content grey-text darken-4">
+              <blockquote>
+    				<p class="light"><i class="tiny material-icons indigo-text darken-4">info</i> Mide la capacidad de una empresa para hacer frente sus obligaciones de pago. Este ratio lo podemos encontrar tanto de forma agregada, activo total entre pasivo total, o de forma desagregada, en función del activo y pasivo corriente o no corriente. Obviamente este es uno de los ratios que las entidades financieras tienen en consideración a la hora de analizar las operaciones de financiación que solicitan sus clientes.</p>
+    				<p class="light"><i class="tiny material-icons indigo-text darken-4">new_releases</i> <span class="bold"> -------- NOT YET ------------ </p>
+    			</blockquote>
+            </div>
+        </div>
+	</div>
+</div>
+
+<!-- preparing a DOM with width and height for ECharts -->
+<div class="grey_back title_conf">
+	<h4 class="flow-text">Ratio de endeudamiento</h4>
+</div>
+<div class="row">
+	<div class="col s12 m6">
+		<div id="gauge2" style="width: 400px;height:400px;"></div>
+	</div>
+	<div class="col s12 m6">
+		<div class="card grey lighten-4">
+            <div class="card-content grey-text darken-4">
+              <blockquote>
+    				<p class="light"><i class="tiny material-icons indigo-text darken-4">info</i> Mide la capacidad de una empresa para hacer frente sus obligaciones de pago. Este ratio lo podemos encontrar tanto de forma agregada, activo total entre pasivo total, o de forma desagregada, en función del activo y pasivo corriente o no corriente. Obviamente este es uno de los ratios que las entidades financieras tienen en consideración a la hora de analizar las operaciones de financiación que solicitan sus clientes.</p>
+    				<p class="light"><i class="tiny material-icons indigo-text darken-4">new_releases</i> <span class="bold"> -------- NOT YET ------------ </p>
+    			</blockquote>
+            </div>
+        </div>
+	</div>
+</div>
+
+<!-- preparing a DOM with width and height for ECharts -->
+<div class="grey_back title_conf">
+	<h4 class="flow-text">Ratio de endeudamiento corto plazo</h4>
+</div>
+<div class="row">
+	<div class="col s12 m6">
+		<div id="gauge3" style="width: 400px;height:400px;"></div>
+	</div>
+	<div class="col s12 m6">
+		<div class="card grey lighten-4">
+            <div class="card-content grey-text darken-4">
+              <blockquote>
+    				<p class="light"><i class="tiny material-icons indigo-text darken-4">info</i> Mide la capacidad de una empresa para hacer frente sus obligaciones de pago. Este ratio lo podemos encontrar tanto de forma agregada, activo total entre pasivo total, o de forma desagregada, en función del activo y pasivo corriente o no corriente. Obviamente este es uno de los ratios que las entidades financieras tienen en consideración a la hora de analizar las operaciones de financiación que solicitan sus clientes.</p>
+    				<p class="light"><i class="tiny material-icons indigo-text darken-4">new_releases</i> <span class="bold"> -------- NOT YET ------------ </p>
+    			</blockquote>
+            </div>
+        </div>
+	</div>
+</div>
+
+<!-- preparing a DOM with width and height for ECharts -->
+<div class="grey_back title_conf">
+	<h4 class="flow-text">Ratio de autonomia</h4>
+</div>
+<div class="row">
+	<div class="col s12 m6">
+		<div id="gauge4" style="width: 400px;height:400px;"></div>
+	</div>
+	<div class="col s12 m6">
+		<div class="card grey lighten-4">
+            <div class="card-content grey-text darken-4">
+              <blockquote>
+    				<p class="light"><i class="tiny material-icons indigo-text darken-4">info</i> Mide la capacidad de una empresa para hacer frente sus obligaciones de pago. Este ratio lo podemos encontrar tanto de forma agregada, activo total entre pasivo total, o de forma desagregada, en función del activo y pasivo corriente o no corriente. Obviamente este es uno de los ratios que las entidades financieras tienen en consideración a la hora de analizar las operaciones de financiación que solicitan sus clientes.</p>
+    				<p class="light"><i class="tiny material-icons indigo-text darken-4">new_releases</i> <span class="bold"> -------- NOT YET ------------ </p>
+    			</blockquote>
+            </div>
+        </div>
+	</div>
+</div>
+
+<!-- preparing a DOM with width and height for ECharts -->
+<div class="grey_back title_conf">
+	<h4 class="flow-text">Ratio de cobertura inmovilizado FFPP</h4>
+</div>
+<div class="row">
+	<div class="col s12 m6">
+		<div id="gauge5" style="width: 400px;height:400px;"></div>
+	</div>
+	<div class="col s12 m6">
+		<div class="card grey lighten-4">
+            <div class="card-content grey-text darken-4">
+              <blockquote>
+    				<p class="light"><i class="tiny material-icons indigo-text darken-4">info</i> Mide la capacidad de una empresa para hacer frente sus obligaciones de pago. Este ratio lo podemos encontrar tanto de forma agregada, activo total entre pasivo total, o de forma desagregada, en función del activo y pasivo corriente o no corriente. Obviamente este es uno de los ratios que las entidades financieras tienen en consideración a la hora de analizar las operaciones de financiación que solicitan sus clientes.</p>
+    				<p class="light"><i class="tiny material-icons indigo-text darken-4">new_releases</i> <span class="bold"> -------- NOT YET ------------ </p>
+    			</blockquote>
+            </div>
+        </div>
+	</div>
+</div>
+
+<!-- preparing a DOM with width and height for ECharts -->
+<div class="grey_back title_conf">
+	<h4 class="flow-text">Ratio de rentabilidad economica</h4>
+</div>
+<div class="row">
+	<div class="col s12 m6">
+		<div id="gauge6" style="width: 400px;height:400px;"></div>
+	</div>
+	<div class="col s12 m6">
+		<div class="card grey lighten-4">
+            <div class="card-content grey-text darken-4">
+              <blockquote>
+    				<p class="light"><i class="tiny material-icons indigo-text darken-4">info</i> Mide la capacidad de una empresa para hacer frente sus obligaciones de pago. Este ratio lo podemos encontrar tanto de forma agregada, activo total entre pasivo total, o de forma desagregada, en función del activo y pasivo corriente o no corriente. Obviamente este es uno de los ratios que las entidades financieras tienen en consideración a la hora de analizar las operaciones de financiación que solicitan sus clientes.</p>
+    				<p class="light"><i class="tiny material-icons indigo-text darken-4">new_releases</i> <span class="bold"> -------- NOT YET ------------ </p>
+    			</blockquote>
+            </div>
+        </div>
+	</div>
+</div>
+
+<!-- preparing a DOM with width and height for ECharts -->
+<div class="grey_back title_conf">
+	<h4 class="flow-text">Ratio de autonomia financiera</h4>
+</div>
+<div class="row">
+	<div class="col s12 m6">
+		<div id="gauge7" style="width: 400px;height:400px;"></div>
+	</div>
+	<div class="col s12 m6">
+		<div class="card grey lighten-4">
+            <div class="card-content grey-text darken-4">
+              <blockquote>
+    				<p class="light"><i class="tiny material-icons indigo-text darken-4">info</i> Mide la capacidad de una empresa para hacer frente sus obligaciones de pago. Este ratio lo podemos encontrar tanto de forma agregada, activo total entre pasivo total, o de forma desagregada, en función del activo y pasivo corriente o no corriente. Obviamente este es uno de los ratios que las entidades financieras tienen en consideración a la hora de analizar las operaciones de financiación que solicitan sus clientes.</p>
+    				<p class="light"><i class="tiny material-icons indigo-text darken-4">new_releases</i> <span class="bold"> -------- NOT YET ------------ </p>
+    			</blockquote>
+            </div>
+        </div>
+	</div>
+</div>
+
+<!-- preparing a DOM with width and height for ECharts -->
+<div class="grey_back title_conf">
+	<h4 class="flow-text">Ratio de dependencia financiera</h4>
+</div>
+<div class="row">
+	<div class="col s12 m6">
+		<div id="gauge8" style="width: 400px;height:400px;"></div>
+	</div>
+	<div class="col s12 m6">
+		<div class="card grey lighten-4">
+            <div class="card-content grey-text darken-4">
+              <blockquote>
+    				<p class="light"><i class="tiny material-icons indigo-text darken-4">info</i> Mide la capacidad de una empresa para hacer frente sus obligaciones de pago. Este ratio lo podemos encontrar tanto de forma agregada, activo total entre pasivo total, o de forma desagregada, en función del activo y pasivo corriente o no corriente. Obviamente este es uno de los ratios que las entidades financieras tienen en consideración a la hora de analizar las operaciones de financiación que solicitan sus clientes.</p>
+    				<p class="light"><i class="tiny material-icons indigo-text darken-4">new_releases</i> <span class="bold"> -------- NOT YET ------------ </p>
+    			</blockquote>
+            </div>
+        </div>
+	</div>
+</div>
+
+<!-- preparing a DOM with width and height for ECharts -->
+<div class="grey_back title_conf">
+	<h4 class="flow-text">Ratio de gastos financieros</h4>
+</div>
+<div class="row">
+	<div class="col s12 m6">
+		<div id="gauge9" style="width: 400px;height:400px;"></div>
+	</div>
+	<div class="col s12 m6">
+		<div class="card grey lighten-4">
+            <div class="card-content grey-text darken-4">
+              <blockquote>
+    				<p class="light"><i class="tiny material-icons indigo-text darken-4">info</i> Mide la capacidad de una empresa para hacer frente sus obligaciones de pago. Este ratio lo podemos encontrar tanto de forma agregada, activo total entre pasivo total, o de forma desagregada, en función del activo y pasivo corriente o no corriente. Obviamente este es uno de los ratios que las entidades financieras tienen en consideración a la hora de analizar las operaciones de financiación que solicitan sus clientes.</p>
+    				<p class="light"><i class="tiny material-icons indigo-text darken-4">new_releases</i> <span class="bold"> -------- NOT YET ------------ </p>
+    			</blockquote>
+            </div>
+        </div>
+	</div>
+</div>
+
+<!-- preparing a DOM with width and height for ECharts -->
+<div class="grey_back title_conf">
+	<h4 class="flow-text">Ratio de rentabilidad financiera</h4>
+</div>
+<div class="row">
+	<div class="col s12 m6">
+		<div id="gauge10" style="width: 400px;height:400px;"></div>
+	</div>
+	<div class="col s12 m6">
+		<div class="card grey lighten-4">
+            <div class="card-content grey-text darken-4">
+              <blockquote>
+    				<p class="light"><i class="tiny material-icons indigo-text darken-4">info</i> Mide la capacidad de una empresa para hacer frente sus obligaciones de pago. Este ratio lo podemos encontrar tanto de forma agregada, activo total entre pasivo total, o de forma desagregada, en función del activo y pasivo corriente o no corriente. Obviamente este es uno de los ratios que las entidades financieras tienen en consideración a la hora de analizar las operaciones de financiación que solicitan sus clientes.</p>
+    				<p class="light"><i class="tiny material-icons indigo-text darken-4">new_releases</i> <span class="bold"> -------- NOT YET ------------ </p>
+    			</blockquote>
+            </div>
+        </div>
+	</div>
+</div>
+
+<!-- preparing a DOM with width and height for ECharts -->
+<div class="grey_back title_conf">
+	<h4 class="flow-text">Ratio de rentabilidad inversion</h4>
+</div>
+<div class="row">
+	<div class="col s12 m6">
+		<div id="gauge11" style="width: 400px;height:400px;"></div>
+	</div>
+	<div class="col s12 m6">
+		<div class="card grey lighten-4">
+            <div class="card-content grey-text darken-4">
+              <blockquote>
+    				<p class="light"><i class="tiny material-icons indigo-text darken-4">info</i> Mide la capacidad de una empresa para hacer frente sus obligaciones de pago. Este ratio lo podemos encontrar tanto de forma agregada, activo total entre pasivo total, o de forma desagregada, en función del activo y pasivo corriente o no corriente. Obviamente este es uno de los ratios que las entidades financieras tienen en consideración a la hora de analizar las operaciones de financiación que solicitan sus clientes.</p>
+    				<p class="light"><i class="tiny material-icons indigo-text darken-4">new_releases</i> <span class="bold"> -------- NOT YET ------------ </p>
+    			</blockquote>
+            </div>
+        </div>
+	</div>
+</div>
+
+<!-- preparing a DOM with width and height for ECharts -->
+<div class="grey_back title_conf">
+	<h4 class="flow-text">Ratio de resultados sobre ventas</h4>
+</div>
+<div class="row">
+	<div class="col s12 m6">
+		<div id="gauge12" style="width: 400px;height:400px;"></div>
+	</div>
+	<div class="col s12 m6">
+		<div class="card grey lighten-4">
+            <div class="card-content grey-text darken-4">
+              <blockquote>
+    				<p class="light"><i class="tiny material-icons indigo-text darken-4">info</i> Mide la capacidad de una empresa para hacer frente sus obligaciones de pago. Este ratio lo podemos encontrar tanto de forma agregada, activo total entre pasivo total, o de forma desagregada, en función del activo y pasivo corriente o no corriente. Obviamente este es uno de los ratios que las entidades financieras tienen en consideración a la hora de analizar las operaciones de financiación que solicitan sus clientes.</p>
+    				<p class="light"><i class="tiny material-icons indigo-text darken-4">new_releases</i> <span class="bold"> -------- NOT YET ------------ </p>
+    			</blockquote>
+            </div>
+        </div>
+	</div>
+</div>
+
+<script src="{% static 'js/echarts.min.js' %}"></script>
+
+<script type="text/javascript">
+    // based on prepared DOM, initialize echarts instance
+    var gauge = echarts.init(document.getElementById('gauge'));
+    var gauge2 = echarts.init(document.getElementById('gauge2'));
+    var gauge3 = echarts.init(document.getElementById('gauge3'));
+    var gauge4 = echarts.init(document.getElementById('gauge4'));
+    var gauge5 = echarts.init(document.getElementById('gauge5'));
+    var gauge6 = echarts.init(document.getElementById('gauge6'));
+    var gauge7 = echarts.init(document.getElementById('gauge7'));
+    var gauge8 = echarts.init(document.getElementById('gauge8'));
+    var gauge9 = echarts.init(document.getElementById('gauge9'));
+    var gauge10 = echarts.init(document.getElementById('gauge10'));
+    var gauge11 = echarts.init(document.getElementById('gauge11'));
+    var gauge12 = echarts.init(document.getElementById('gauge12'));
+
+    // specify chart configuration item and data
+    function GaugeSettings(rating, tramo) {
+	    return option = {
+		    tooltip : {
+		        formatter: "{a} <br/>{b} : {c}%"
+		    },
+		    splitNumber: 10,             
+			
+			axisTick: {
+	            show: true,
+	            splitNumber: 5,
+	            length :8,
+	            lineStyle: {
+	                color: '#eee',
+	                width: 1,
+	                type: 'solid'
+	            }
+	        },
+	        axisLabel: {
+	            show: true,
+	            formatter: function(v){
+	                switch (v+''){
+	                    case '10': return 'A mejorar';
+	                    case '30': return 'Mejorable';
+	                    case '70': return 'Bueno';
+	                    case '90': return 'Excelente';
+	                    default: return '';
+	                }
+	            },
+	            textStyle: {
+	                color: '#333'
+	            }
+	        },
+		    toolbox: {
+		        show : true,
+		        feature : {
+		            mark : {show: true},
+		            restore : {show: true},
+		            saveAsImage : {show: true}
+		        }
+		    },
+		    series: [
+		        {
+		            name: 'Percentil aprox. en el sector',
+		            type: 'gauge',
+		            min:0,
+		            show: false,
+	            	max:100,
+	            	splitNumber:10,
+	            	axisLine: {            
+					  show: true,        
+					  lineStyle: {
+					      color: [[0.25, '#f44336'],[0.50, '#fb8c00'],[0.75, '#ffeb3b'],[1, '#4caf50']], 
+					      width: 10
+					  }
+					},
+					detail: {
+			            textStyle: {
+			                fontWeight: 'bolder',
+			                fontSize: 14,
+			                color: 'black'
+			            },
+			            offsetCenter: [0, '58%'],
+			            formatter: rating+'%'
+			        },
+		            data: [{value: tramo, name: ''}]
+		        }
+		    ]
+		};
+	};
+    // use configuration item and data specified to show chart
+    gauge.setOption(GaugeSettings({{ratio_solvencia|floatformat:1}}, {{ tramo_ratio_solvencia }}));
+    gauge2.setOption(GaugeSettings({{ratio_endeudamiento|floatformat:1}}, {{ tramo_ratio_endeudamiento }}));
+    gauge3.setOption(GaugeSettings({{ratio_endeudamiento_cp|floatformat:1}}, {{ tramo_ratio_endeudamiento_cp }}));
+    gauge4.setOption(GaugeSettings({{ratio_autonomia|floatformat:1}}, {{ tramo_ratio_autonomia }}));
+    gauge5.setOption(GaugeSettings({{ratio_cobertura_inmovilizado_FFPP|floatformat:1}}, {{ tramo_ratio_cobertura_inmovilizado_FFPP }}));
+    gauge6.setOption(GaugeSettings({{ratio_rentabilidad_economica|floatformat:1}}, {{ tramo_ratio_rentabilidad_economica }}));
+    gauge7.setOption(GaugeSettings({{ratio_autonomia_financiera|floatformat:1}}, {{ tramo_ratio_autonomia_financiera }}));
+    gauge8.setOption(GaugeSettings({{ratio_dependencia_financiera|floatformat:1}}, {{ tramo_ratio_dependencia_financiera }}));
+    gauge9.setOption(GaugeSettings({{ratio_gastos_financieros|floatformat:1}}, {{ tramo_ratio_gastos_financieros }}));
+    gauge10.setOption(GaugeSettings({{ratio_rentabilidad_financiera|floatformat:1}}, {{ tramo_ratio_rentabilidad_financiera }}));
+    gauge11.setOption(GaugeSettings({{ratio_rentabilidad_inversion|floatformat:1}}, {{ tramo_ratio_rentabilidad_inversion }}));
+    gauge12.setOption(GaugeSettings({{ratio_resultados_sobre_ventas|floatformat:1}}, {{ tramo_ratio_resultados_sobre_ventas }}));
+</script>
 
 <script type="text/javascript">
 	var ctx = document.getElementById("myChart");

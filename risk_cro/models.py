@@ -27,15 +27,15 @@ class Rating(models.Model):
     name = models.CharField(max_length=255)
     sector = models.CharField(max_length=255)
     antiguedad = models.CharField(max_length=255)
-    fondos_propios = models.IntegerField()
-    patrimonio = models.IntegerField()
-    activo_corriente = models.IntegerField()
-    activo_no_corriente = models.IntegerField()
-    pasivo_corriente = models.IntegerField()
-    pasivo_no_corriente = models.IntegerField()
-    importe_neto_cifra_negocio = models.IntegerField()
-    gastos_financieros = models.IntegerField()
-    resultados_antes_impuestos = models.IntegerField()
+    fondos_propios = models.BigIntegerField()
+    patrimonio = models.BigIntegerField()
+    activo_corriente = models.BigIntegerField()
+    activo_no_corriente = models.BigIntegerField()
+    pasivo_corriente = models.BigIntegerField()
+    pasivo_no_corriente = models.BigIntegerField()
+    importe_neto_cifra_negocio = models.BigIntegerField()
+    gastos_financieros = models.BigIntegerField()
+    resultados_antes_impuestos = models.BigIntegerField()
 
     # --- Parametros del modelo ---
     link = settings.DATA_FOLDER+'sectorial.csv'
@@ -112,6 +112,78 @@ class Rating(models.Model):
         
         self.rating = self.m_activo_corriente[tramo_activo_corriente-1] + self.m_ratio_autonomia_financiera[tramo_r_Autonomia_Financiera-1] + self.m_gastos_financiera_entre_ventas[tramo_gastos_fin_entre_ventas-1] + self.m_resultados_entre_ventas[tramo_resultados_entre_ventas-1] + self.m_grupo_sectorial[tramo_grupo_sectorial-1] + self.m_independiente
         return [self.rating, self.traduccion_rating(self.rating)]
+
+    def ratio_solvencia(self):
+        if (self.pasivo_corriente + self.pasivo_no_corriente) > 0:
+            return float(self.activo_corriente) / float(self.pasivo_corriente + self.pasivo_no_corriente)
+        else:
+            return 0
+
+    def ratio_endeudamiento(self):
+        if (self.fondos_propios) > 0:
+            return float(self.pasivo_corriente + self.pasivo_no_corriente) / float(self.fondos_propios)
+        else:
+            return 0
+
+    def ratio_endeudamiento_cp(self):
+        if (self.fondos_propios) > 0:
+            return float(self.pasivo_corriente) / float(self.fondos_propios)
+        else:
+            return 0
+
+    def ratio_autonomia(self):
+        if (self.pasivo_corriente + self.pasivo_no_corriente) > 0:
+            return float(self.fondos_propios) / float(self.pasivo_corriente + self.pasivo_no_corriente)
+        else:
+            return 0
+
+    def ratio_cobertura_inmovilizado_FFPP(self):
+        if (self.activo_no_corriente) > 0:
+            return float(self.fondos_propios) / float(self.activo_no_corriente)
+        else:
+            return 0
+
+    def ratio_rentabilidad_economica(self):
+        if (self.activo_corriente + self.activo_no_corriente) > 0:
+            return float(self.resultados_antes_impuestos) / float(self.activo_corriente + self.activo_no_corriente)
+        else:
+            return 0
+
+    def ratio_autonomia_financiera(self):
+        if (self.pasivo_corriente + self.pasivo_no_corriente + self.fondos_propios) > 0:
+            return float(self.fondos_propios) / float(self.pasivo_corriente + self.pasivo_no_corriente + self.fondos_propios)
+        else:
+            return 0
+
+    def ratio_dependencia_financiera(self):
+        if (self.pasivo_corriente + self.pasivo_no_corriente + self.fondos_propios) > 0:
+            return 1 - (float(self.fondos_propios) / float(self.pasivo_corriente + self.pasivo_no_corriente + self.fondos_propios))
+        else:
+            return 0
+
+    def ratio_gastos_financieros(self):
+        if (self.importe_neto_cifra_negocio) > 0:
+            return float(self.gastos_financieros) / float(self.importe_neto_cifra_negocio)
+        else:
+            return 0
+
+    def ratio_rentabilidad_financiera(self):
+        if (self.fondos_propios) > 0:
+            return float(self.resultados_antes_impuestos) / float(self.fondos_propios)
+        else:
+            return 0
+
+    def ratio_rentabilidad_inversion(self):
+        if (self.pasivo_corriente + self.pasivo_no_corriente) > 0:
+            return float(self.resultados_antes_impuestos) / float(self.pasivo_corriente + self.pasivo_no_corriente)
+        else:
+            return 0
+
+    def ratio_resultados_sobre_ventas(self):
+        if (self.importe_neto_cifra_negocio) > 0:
+            return float(self.resultados_antes_impuestos) / float(self.importe_neto_cifra_negocio)
+        else:
+            return 0
 
     def __unicode__(self):
         return self.name
