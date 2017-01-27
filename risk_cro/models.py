@@ -28,7 +28,6 @@ class Rating(models.Model):
     sector = models.CharField(max_length=255)
     antiguedad = models.CharField(max_length=255)
     fondos_propios = models.BigIntegerField()
-    patrimonio = models.BigIntegerField()
     activo_corriente = models.BigIntegerField()
     activo_no_corriente = models.BigIntegerField()
     pasivo_corriente = models.BigIntegerField()

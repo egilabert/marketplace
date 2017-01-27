@@ -70,7 +70,6 @@ def RaterView(request):
 			rater.sector = form.cleaned_data['sector']
 			rater.antiguedad = form.cleaned_data['antiguedad']
 			rater.fondos_propios = form.cleaned_data['fondos_propios']
-			rater.patrimonio = form.cleaned_data['patrimonio']
 			rater.activo_corriente = form.cleaned_data['activo_corriente']
 			rater.activo_no_corriente = form.cleaned_data['activo_no_corriente']
 			rater.pasivo_corriente = form.cleaned_data['pasivo_corriente']
