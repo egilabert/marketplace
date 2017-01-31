@@ -10,6 +10,7 @@ from empresas.models import Empresa
 from .models import Rating
 from .forms import RatingForm
 import json
+from django.core.serializers.json import DjangoJSONEncoder
 
 """-------------------------------------------------------"""
 """				EMPRESAS VIEWS 							  """
@@ -50,7 +51,7 @@ def CreditRaterView(request):
 	form = RatingForm()
 	context = {
 		'company': queryset[company-1], 
-		'menu': False,
+		'menu': True,
 		'form': form
 	}
 	return render(request, "credit_risk.html", context)
@@ -172,3 +173,62 @@ def RaterView(request):
             json.dumps({"nothing to see": "this isn't happening"}),
             content_type="application/json"
         )
+
+@login_required
+def ClientRiskView(request):
+	
+	company_id = request.session.get('company')
+	company = Empresa.objects.filter(pk=company_id)
+	company = company.prefetch_related('estados_financieros','cirbe','productos')[0]
+	try:
+		ultimos_eeff = company.estados_financieros.reverse()[0]
+	except:
+		ultimos_eeff = Empresa()
+	context = {
+		'company':company,
+		'productos_variable': company.productos_con_tipo_variable().all(),
+		'ultimos_eeff': ultimos_eeff
+		}
+	return render(request, 'risk_cro/financial_risk.html', context)
+
+@login_required
+def ClientRiskRecommendationsView(request):
+	
+	company_id = request.session.get('company')
+	company = Empresa.objects.filter(pk=company_id)
+	company = company.prefetch_related('estados_financieros','cirbe','productos')[0]
+	try:
+		ultimos_eeff = company.estados_financieros.reverse()[0]
+	except:
+		ultimos_eeff = Empresa()
+	context = {
+		'company':company,
+		'riesgo_impago_clientes': json.dumps(list(company.riesgo_impago_clientes()), cls=DjangoJSONEncoder),
+		'riesgo_impago_clientes_sector': json.dumps(list(company.riesgo_impago_clientes_sector()), cls=DjangoJSONEncoder),
+		'get_monthly_buys': json.dumps(list(company.get_monthly_buys_amount()), cls=DjangoJSONEncoder),
+		'get_monthly_sector_avg_buys': json.dumps(list(company.get_sector_total_monthly_buys_amount()), cls=DjangoJSONEncoder),
+		'productos_variable': company.productos_con_tipo_variable().all(),
+		'ultimos_eeff': ultimos_eeff
+		}
+	return render(request, 'risk_cro/risk_client.html', context)
+
+@login_required
+def ProviderRiskRecommendationsView(request):
+	
+	company_id = request.session.get('company')
+	company = Empresa.objects.filter(pk=company_id)
+	company = company.prefetch_related('estados_financieros','cirbe','productos')[0]
+	try:
+		ultimos_eeff = company.estados_financieros.reverse()[0]
+	except:
+		ultimos_eeff = Empresa()
+	context = {
+		'company':company,
+		'riesgo_impago_proveedores': json.dumps(list(company.riesgo_impago_proveedores()), cls=DjangoJSONEncoder),
+		'riesgo_impago_providers_sector': json.dumps(list(company.riesgo_impago_providers_sector()), cls=DjangoJSONEncoder),
+		'get_monthly_sells': json.dumps(list(company.get_monthly_sells_amount()), cls=DjangoJSONEncoder),
+		'get_monthly_sector_avg_sells': json.dumps(list(company.get_sector_total_monthly_sells_amount()), cls=DjangoJSONEncoder),
+		'productos_variable': company.productos_con_tipo_variable().all(),
+		'ultimos_eeff': ultimos_eeff
+		}
+	return render(request, 'risk_cro/risk_providers.html', context)
