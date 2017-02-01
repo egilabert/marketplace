@@ -63,15 +63,15 @@ def HomeView(request):
 def EmpresaDetailView(request, pk=None):
 	try:
 		referrer = request.META['HTTP_REFERER']
+		if int(pk) == int(request.session.get('company')):
+			key = 'self'
+		elif 'clients' in referrer:
+			key = 'client'
+		elif 'providers' in referrer:	
+			key = 'provider'
+		else:
+			key = 'none'
 	except:
-		key = 'none'
-	if int(pk) == int(request.session.get('company')):
-		key = 'self'
-	elif 'clients' in referrer:
-		key = 'client'
-	elif 'providers' in referrer:	
-		key = 'provider'
-	else:
 		key = 'none'
 
 	empresa = Empresa.objects.filter(pk=pk)
@@ -187,7 +187,7 @@ def FinancialRiskRecommendationsView(request):
 	company_id = request.session.get('company')
 	company = Empresa.objects.filter(pk=company_id)
 	company = company.prefetch_related('estados_financieros','cirbe','productos')[0]
-	
+
 	try:
 		ultimos_eeff = company.estados_financieros.reverse()[0]
 	except:
