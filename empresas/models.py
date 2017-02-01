@@ -1053,8 +1053,11 @@ class Empresa(models.Model, r_clients.Recommendations_clients,
         return 0
 
     def deuda_total_pond(self):
+        # -------------------------------------------------------------------------------------------------------------
+        # ----------------------------- HE CAMBIADO EL 1.5 ------------------------------------------------------------
+        # -------------------------------------------------------------------------------------------------------------
         if len(self.balance_sells()) > 0 and float(self.balance_sells()[len(self.balance_sells())-1].get('c', 0)) > 0:
-            return (self.deuda_largo()+self.deuda_corto())/float(self.balance_sells()[len(self.balance_sells())-1].get('c', 0))
+            return (self.deuda_largo()+self.deuda_corto())/float(self.balance_sells()[len(self.balance_sells())-1].get('c', 0))/1.7
         return 0
 
     def deuda_total_sector_pond(self):

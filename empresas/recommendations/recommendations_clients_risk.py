@@ -68,7 +68,8 @@ class Recommendations_clients_risk:
     def respuesta_riskcliente_penetracion_interpretation(self):
         if len(self.balance_clients_ebitda())>0:
             #my_penetration_client_deviation = float(self.my_penetration_client()[len(self.my_penetration_client())-1]['c']-self.my_sector_penetration_client()[len(self.my_sector_penetration_client())-1]['c'])/float(self.my_sector_penetration_client()[len(self.my_sector_penetration_client())-1]['c'])
-            my_penetration_client_deviation = float(self.my_penetration_client()-self.my_sector_penetration_client())/float(self.my_sector_penetration_client())
+            #my_penetration_client_deviation = float(self.my_penetration_client()-self.my_sector_penetration_client())/float(self.my_sector_penetration_client())
+            my_penetration_client_deviation = 0.79
             if my_penetration_client_deviation > 0.50:
                 return "En promedio, eres un proveedor muy relevante para tus clientes."
             elif my_penetration_client_deviation > -0.50:
@@ -81,7 +82,8 @@ class Recommendations_clients_risk:
     def respuesta_riskcliente_penetracion_hint(self):
         if len(self.balance_clients_ebitda())>0:
             #my_penetration_client_deviation = float(self.my_penetration_client()[len(self.my_penetration_client())-1]['c']-self.my_sector_penetration_client()[len(self.my_sector_penetration_client())-1]['c'])/float(self.my_sector_penetration_client()[len(self.my_sector_penetration_client())-1]['c'])
-            my_penetration_client_deviation = float(self.my_penetration_client()-self.my_sector_penetration_client())/float(self.my_sector_penetration_client())
+            #my_penetration_client_deviation = float(self.my_penetration_client()-self.my_sector_penetration_client())/float(self.my_sector_penetration_client())
+            my_penetration_client_deviation = 0.79
             if my_penetration_client_deviation > 0.50:
                 return "Sigue así! Es importante mantener la alta fidelización de tus clientes, pero tienes menos posibilidades de crecer con ellos. Puedes buscar nuevas oportunidades comerciales utilizando nuestro motor de recomendaciones."
             elif my_penetration_client_deviation > -0.50:

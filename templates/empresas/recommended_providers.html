@@ -244,59 +244,35 @@
 	<!-- Modal Structure -->
 	<div id="modal_clients" class="modal">
 		<div class="modal-content">
-			<h5>What are you looking for?</h5>
+			<h4>¿Qué estás buscando?</h4>
 			<div class="divider"></div>
 			<div class="row">
 				<form method="GET" action="">
 				    <div class="row">
 			        	<div class="input-field col s6">
-				          <p class="flow-text">Any special sector?</p>
-				        </div>
-				    	<div class="input-field col s6">
 							<i class="material-icons prefix">business</i>
 							<input type="text" id="autocomplete-input" class="autocomplete">
-							<label for="autocomplete-input">Activity of your desired new client</label>
+							<label for="autocomplete-input">Actividad deseada de tu cliente</label>
 						</div>
-					</div>
-					<div class="row">
-			        	<div class="input-field col s6">
-				          <p class="flow-text">Any special region?</p>
-				        </div>
-			        	<div class="col s6">
-			        		<br>
+						<div class="input-field col s6">
 				        	<div class="switch">
 						    	<label>
-						      	Anywhere
+						      	Sin filtro
 						      	<input type="checkbox" id="region_checkbox">
 						      	<span class="lever"></span>
-						      	Just my region
-						    </label>
+						      	Fuera de mi región
+						    	</label>
 							</div>
 					  	</div>
 					</div>
 					<div class="row">
-			        	<div class="input-field col s6">
-				          <p class="flow-text">Any minimum billing?</p>
-				        </div>
-					  	<div class="col s6">
-						  	<p class="range-field">
-						  		<label>Minimum billing? (in k€)</label>
+			        	<div class="col m12 s12">
+			        		<p class="range-field">
+						  		<label>Facturación mínima? (en k€)</label>
 						      	<input type="range" id="test5" min="0" max="1000" />
 						    </p>
-						</div>
+				        </div>
 					</div>
-					<div class="row">
-			        	<div class="input-field col s6">
-				          <p class="flow-text">We want to know what are your needs in order to help you reach your spectations</p>
-				        </div>
-				        <div class="input-field col s6">
-				          <i class="material-icons prefix">mode_edit</i>
-				          <textarea id="comment" class="materialize-textarea"></textarea>
-				          <label for="comment">Write us your comments</label>
-				        </div>
-				    </div>
-					<!-- Switch -->
-				  	
 			    </form>
 			</div>
 
@@ -306,7 +282,7 @@
 
 		</div>
 		<div class="modal-footer">
-			<a href="#!" id="client_form" class=" modal-action modal-close waves-effect waves-green btn-flat">Give me new clients!</a>
+			<a href="#!" id="client_form" class=" modal-action modal-close waves-effect waves-green btn-flat">Filtra los clientes suggeridos!</a>
 		</div>
 	</div>
 
