@@ -49,11 +49,11 @@ def HomeView(request):
 		company_id = request.session.get('company')
 		company = Empresa.objects.filter(pk=company_id).first()
 
-	checker = Empresa.objects.filter(name="FERNAN'S, S.A.").first()
+	checker = Empresa.objects.filter(name="CODINA DE TOUS S.L.").first()
 	checker.territorial = 'T.NORTE'
 	checker.save()
 
-	checker = Empresa.objects.filter(name="SAMOJOMA FRUIT SL").first()
+	checker = Empresa.objects.filter(name="CONFIPA, S.L.").first()
 	checker.territorial = 'T.NOROESTE'
 	checker.save()
 	
