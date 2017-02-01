@@ -1017,14 +1017,14 @@ class Empresa(models.Model, r_clients.Recommendations_clients,
     def deuda_corto_pond(self):
         if len(self.balance_ebitda()) > 0:
             if self.balance_ebitda()[len(self.balance_ebitda())-1].get('c', 0)>0:
-                return self.deuda_corto()/float(self.balance_ebitda()[len(self.balance_ebitda())-1].get('c', 0))
+                return self.deuda_corto()/float(self.balance_ebitda()[len(self.balance_ebitda())-1].get('c', 0)*3)
             return 04
         return 0
 
     def deuda_corto_sector_pond(self):
         if len(self.balance_ebitda_avg_sector()) > 0:
             if self.balance_ebitda_avg_sector()[len(self.balance_ebitda_avg_sector())-1].get('c', 0)>0:
-                return float(self.deuda_corto_sector())/float(self.balance_ebitda_avg_sector()[len(self.balance_ebitda_avg_sector())-1].get('c', 0))
+                return float(self.deuda_corto_sector())/float(self.balance_ebitda_avg_sector()[len(self.balance_ebitda_avg_sector())-1].get('c', 0)*3)
             return 0
         return 0
 
@@ -1056,13 +1056,13 @@ class Empresa(models.Model, r_clients.Recommendations_clients,
         # -------------------------------------------------------------------------------------------------------------
         # ----------------------------- HE CAMBIADO EL 1.5 ------------------------------------------------------------
         # -------------------------------------------------------------------------------------------------------------
-        if len(self.balance_sells()) > 0 and float(self.balance_sells()[len(self.balance_sells())-1].get('c', 0)) > 0:
-            return (self.deuda_largo()+self.deuda_corto())/float(self.balance_sells()[len(self.balance_sells())-1].get('c', 0))/1.7
+        if len(self.balance_ebitda()) > 0 and float(self.balance_ebitda()[len(self.balance_ebitda())-1].get('c', 0)) > 0:
+            return (self.deuda_largo()*0.1+self.deuda_corto())/float(self.balance_ebitda()[len(self.balance_ebitda())-1].get('c', 0)*3)
         return 0
 
     def deuda_total_sector_pond(self):
-        if len(self.balance_sells_avg_sector()) > 0 and float(self.balance_sells_avg_sector()[len(self.balance_sells_avg_sector())-1].get('c', 0)) > 0:
-            return float(self.deuda_largo_sector()+self.deuda_corto())/float(self.balance_sells_avg_sector()[len(self.balance_sells_avg_sector())-1].get('c', 0))
+        if len(self.balance_ebitda_avg_sector()) > 0 and float(self.balance_ebitda_avg_sector()[len(self.balance_ebitda_avg_sector())-1].get('c', 0)) > 0:
+            return float(self.deuda_largo_sector()*0.1+self.deuda_corto())/float(self.balance_ebitda_avg_sector()[len(self.balance_ebitda_avg_sector())-1].get('c', 0)*3)
         return 0
 
     def ratio_endeudamiento(self):

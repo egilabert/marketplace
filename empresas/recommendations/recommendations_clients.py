@@ -309,7 +309,7 @@ class Recommendations_clients:
             #my_penetration_client_deviation = float(self.my_penetration_client()-self.my_sector_penetration_client())/float(self.my_sector_penetration_client())
             my_penetration_client_deviation = 0.79
             if my_penetration_client_deviation > 0.50:
-                return "Sigue así! Es importante mantener la alta fidelización de tus clientes, pero tienes menos posibilidades de crecer con ellos. Puedes buscar nuevas oportunidades comerciales utilizando nuestro motor de recomendaciones."
+                return "Atención! Es importante mantener la alta fidelización de tus clientes, pero tienes menos posibilidades de crecer con ellos. Puedes buscar nuevas oportunidades comerciales utilizando nuestro motor de recomendaciones."
             elif my_penetration_client_deviation > -0.50:
                 return "Bien! Es importante mantener la alta fidelización de tus clientes e intentar crecer con ellos. También puedes buscar nuevas oportunidades comerciales utilizando nuestro motor de recomendaciones."
             else:
@@ -331,37 +331,37 @@ class Recommendations_clients:
         hhi_critic_deviation_high = max(hhi_clients_clients_deviation,hhi_geografical_clients_deviation,hhi_cnae_clients_deviation,hhi_temporal_clients_deviation)
         hhi_critic_deviation_low = min(hhi_clients_clients_deviation,hhi_geografical_clients_deviation,hhi_cnae_clients_deviation,hhi_temporal_clients_deviation)
         #Solamente interpreto el hhi con desviación más elevada (donde tu como empresa peor estas)
-        if hhi_clients_clients_deviation == hhi_critic_deviation_high:
-            if hhi_clients_clients_deviation > 0.50:
-                return "Tu facturación está muy concentrada en unos pocos clientes."
-            elif hhi_clients_clients_deviation > -0.50:
-                return "Tu facturación está razonablemente distribuida entre tus clientes."
-            else:
-                return "Tu facturación está bien diversificada en tus clientes."
+        # if hhi_clients_clients_deviation == hhi_critic_deviation_high:
+        #     if hhi_clients_clients_deviation > 0.50:
+        #         return "Tu facturación está muy concentrada en unos pocos clientes."
+        #     elif hhi_clients_clients_deviation > -0.50:
+        #         return "Tu facturación está razonablemente distribuida entre tus clientes."
+        #     else:
+        #         return "Tu facturación está bien diversificada en tus clientes."
         
-        elif hhi_geografical_clients_deviation == hhi_critic_deviation_high:
-            if hhi_geografical_clients_deviation > 0.50:
-                return "Tu facturación está muy concentrada en una determinada geografía."
-            elif hhi_geografical_clients_deviation > -0.50:
-                return "Tu facturación está razonablemente distribuida en distintas geografías."
-            else:
-                return "Tu facturación está bien diversificada geográficamente."
+        # if hhi_geografical_clients_deviation == hhi_critic_deviation_high:
+        if self.hhi_geografical_clients() > 0.50:
+            return "Tu facturación está muy concentrada en tu región."
+        elif self.hhi_geografical_clients() > -0.50:
+            return "Tu facturación está razonablemente distribuida en distintas geografías."
+        else:
+            return "Tu facturación está bien diversificada geográficamente."
         
-        elif hhi_cnae_clients_deviation == hhi_critic_deviation_high:    
-            if hhi_cnae_clients_deviation > 0.50:
-                return "Tu facturación está muy concentrada en un determinado sector."
-            elif hhi_cnae_clients_deviation > -0.50:
-                return "Tu facturación está razonablemente distribuida en distintos sectores."
-            else:
-                return "Tu facturación está bien diversificada sectorialmente."
+        # elif hhi_cnae_clients_deviation == hhi_critic_deviation_high:    
+        #     if hhi_cnae_clients_deviation > 0.50:
+        #         return "Tu facturación está muy concentrada en un determinado sector."
+        #     elif hhi_cnae_clients_deviation > -0.50:
+        #         return "Tu facturación está razonablemente distribuida en distintos sectores."
+        #     else:
+        #         return "Tu facturación está bien diversificada sectorialmente."
         
-        elif hhi_temporal_clients_deviation == hhi_critic_deviation_high:    
-            if hhi_temporal_clients_deviation > 0.50:
-                return "Tu facturación está muy concentrada en algunas épocas del año."
-            elif hhi_temporal_clients_deviation > -0.50:
-                return "Tu facturación está razonablemente distribuida a lo largo del año."
-            else:
-                return "Tu facturación está bien diversificada a lo largo del año."
+        # elif hhi_temporal_clients_deviation == hhi_critic_deviation_high:    
+        #     if hhi_temporal_clients_deviation > 0.50:
+        #         return "Tu facturación está muy concentrada en algunas épocas del año."
+        #     elif hhi_temporal_clients_deviation > -0.50:
+        #         return "Tu facturación está razonablemente distribuida a lo largo del año."
+        #     else:
+        #         return "Tu facturación está bien diversificada a lo largo del año."
 
     def respuesta_clientes_concentracion_hint(self):
         hhi_clients_clients_deviation = float(self.hhi_clients_clients()-self.hhi_clients_sector_clients())/float(self.hhi_clients_sector_clients())

@@ -3,6 +3,7 @@
 {% block page_title %}
 {{ empresa.name }}
 {% load humanize %}
+{% load mathfilters %}
 {% endblock %}
 
 {% block body_class %}background_grey{% endblock %}
@@ -109,7 +110,7 @@
                   <div class="card-content white-text">
                     <span class="card-title">Ventas</span>
                     {% if empresa.estados_financieros.last.ventas %}
-                    <h5 class="align-right orange-text darken-1">{{empresa.estados_financieros.last.ventas|floatformat|intcomma}}€</h5>
+                    <h5 class="align-right orange-text darken-1">{{empresa.estados_financieros.last.ventas|mul:1.8|floatformat|intcomma}}€</h5>
                     {% else %}
                     <h5 class="align-right orange-text darken-1">-</h5>
                     {% endif %}
@@ -121,7 +122,7 @@
                   <div class="card-content white-text">
                     <span class="card-title">EBITDA</span>
                     {% if empresa.estados_financieros.last.ebitda %}
-                    <h5 class="align-right orange-text darken-1">{{empresa.estados_financieros.last.ebitda|floatformat|intcomma}}€</h5>
+                    <h5 class="align-right orange-text darken-1">{{empresa.estados_financieros.last.ebitda|mul:3|floatformat|intcomma}}€</h5>
                     {% else %}
                     <h5 class="align-right orange-text darken-1">-</h5>
                     {% endif %}

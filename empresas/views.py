@@ -187,6 +187,7 @@ def FinancialRiskRecommendationsView(request):
 	company_id = request.session.get('company')
 	company = Empresa.objects.filter(pk=company_id)
 	company = company.prefetch_related('estados_financieros','cirbe','productos')[0]
+	
 	try:
 		ultimos_eeff = company.estados_financieros.reverse()[0]
 	except:
