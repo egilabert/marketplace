@@ -61,7 +61,10 @@ def HomeView(request):
 
 @login_required
 def EmpresaDetailView(request, pk=None):
-	referrer = request.META['HTTP_REFERER']
+	try:
+		referrer = request.META['HTTP_REFERER']
+	except:
+		key = 'none'
 	if int(pk) == int(request.session.get('company')):
 		key = 'self'
 	elif 'clients' in referrer:
@@ -106,7 +109,7 @@ def EmpresaDetailView(request, pk=None):
 	for i, estado in enumerate(empresa.estados_financieros.all()):
 		fechas.append(estado.ejercicio)
 		try:
-			if pk==company_id:
+			if (int(pk)==int(company_id)):
 				if i==0:
 					depreciaciones.append(estado.depreciaciones)
 					ebitda.append(estado.ebitda)
