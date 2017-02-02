@@ -394,7 +394,7 @@ def ClientView(request):
         to_attr="ultimos_estados_financieros"
     ))[0]
 
-	recommended_clients = company.recommended.all()
+	recommended_clients = company.get_recommended_clients() #company.recommended.all()
 	sector, region, min_bill, comment = request.GET.get("sector"), request.GET.get("region"), request.GET.get("min_bill"), request.GET.get("comment")
 
 	if request.session.get('recommended_clients_page') is None:
@@ -447,7 +447,7 @@ def ProviderView(request):
 	company = Empresa.objects.filter(pk=company_id)
 	company = company.prefetch_related('providers_recommended__clientes_recomendados__estados_financieros','transfers')[0] #'estados_financieros','recommended','recommended__clientes_recomendados'
 
-	recommended_clients = company.providers_recommended.all()
+	recommended_clients = company.get_recommended_providers()  #company.providers_recommended.all()
 	sector, region, min_bill, comment = request.GET.get("sector"), request.GET.get("region"), request.GET.get("min_bill"), request.GET.get("comment")
 
 	if request.session.get('recommended_providers_page') is None:
