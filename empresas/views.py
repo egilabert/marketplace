@@ -31,6 +31,10 @@ from django.db.models import Prefetch
 """-------------------------------------------------------"""
 
 @login_required
+def InformeView(request):
+	return HttpResponse('Que bueno que viniiiiiiiisteeee!!')
+
+@login_required
 def SearchView(request):
 	
 	autofilter = dict()
@@ -48,16 +52,13 @@ def SearchView(request):
 def HomeView(request):
 	if request.POST:
 		name = request.POST['company_name']
-
 	try:
 		del request.session['company']
 		del request.session['recommended_clients_page']
 	except:
 		pass
 	request.session.modified = True
-
 	#queryset = Empresa.objects.all()
-
 	if request.session.get('company') is None:
 		if request.user.username == "pmonras2":
 			company = 865
@@ -77,10 +78,12 @@ def HomeView(request):
 	checker.territorial = 'T.NOROESTE'
 	checker.save()
 	
-	return render(request, "empresas/journey.html", {'empresa': Empresa.objects.all()[company-1]})
+	return HttpResponseRedirect(str(got_it.pk))
+	#return render(request, "empresas/journey.html", {'empresa': Empresa.objects.all()[company-1]})
 
 @login_required
 def EmpresaDetailView(request, pk=None):
+
 	try:
 		referrer = request.META['HTTP_REFERER']
 		if int(pk) == int(request.session.get('company')):

@@ -2,7 +2,8 @@ from django.conf.urls import url
 from django.contrib import admin
 
 from .views import (HomeView, 
-                    EmpresaDetailView, 
+                    EmpresaDetailView,
+                    InformeView,
                     DataGenerator, 
                     ClientView, 
                     TransferListView, 
@@ -37,6 +38,7 @@ urlpatterns = [
     url(r'^empresa/(?P<empresa_id>[0-9]+)/transfer_create/$', TrasferCreateView, name='transfer_create'),
     url(r'^faq/$', FAQView, name='faq'),
     
+    url(r'^recomendaciones/$', InformeView, name='informe'),
     url(r'^search/$', SearchView, name='search'),
     url(r'^clients/$', ClientView, name='clients'),
     url(r'^providers/$', ProviderView, name='providers'),

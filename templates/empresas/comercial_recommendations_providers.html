@@ -12,6 +12,54 @@
 
 {% block content %}
 	
+<div class="mdl-card mdl-shadow--2dp">
+
+      <div class="mdl-card__supporting-text">
+
+        <div class="mdl-stepper-horizontal-alternative">
+          
+          <div class="mdl-stepper-step active-step step-done">
+            <a href="{% url 'empresas:detail' pk=company.pk %}">
+              <div class="mdl-stepper-circle"><span>1</span></div>
+              <div class="mdl-stepper-title">Revisión cliente</div>
+              <div class="mdl-stepper-bar-left"></div>
+              <div class="mdl-stepper-bar-right"></div>
+            </a>
+          </div>
+          
+          <div class="mdl-stepper-step active-step">
+            <a href="{% url 'empresas:recommendations' %}">
+              <div class="mdl-stepper-circle"><span>2</span></div>
+              <div class="mdl-stepper-title">Clientes/Proveedores</div>
+              <div class="mdl-stepper-optional">Comparativa</div>
+              <div class="mdl-stepper-bar-left"></div>
+              <div class="mdl-stepper-bar-right"></div>
+            </a>
+          </div>
+          <div class="mdl-stepper-step">
+            <a href="{% url 'empresas:recommendations_financial_risk' %}">
+              <div class="mdl-stepper-circle"><span>3</span></div>
+              <div class="mdl-stepper-title">Riesgos</div>
+              <div class="mdl-stepper-optional">Comparativa</div>
+              <div class="mdl-stepper-optional"></div>
+              <div class="mdl-stepper-bar-left"></div>
+              <div class="mdl-stepper-bar-right"></div>
+            </a>
+          </div>
+          <div class="mdl-stepper-step">
+            <a href="{% url 'empresas:informe' %}">
+              <div class="mdl-stepper-circle"><span>4</span></div>
+              <div class="mdl-stepper-title">Recomendaciones</div>
+              <div class="mdl-stepper-optional">Informe</div>
+              <div class="mdl-stepper-bar-left"></div>
+              <div class="mdl-stepper-bar-right"></div>
+            </a>
+          </div>
+        </div>
+
+      </div>
+
+  </div>
 	<!-- Dropdown Structure -->
 	<div class="parallax-container">
 		<h3 class="center-align grey-text text-darken-3 light">¿Cómo son tus proveedores?</h3>
