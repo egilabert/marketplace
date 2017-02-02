@@ -1,0 +1,86 @@
+{% extends "app_base.html" %}
+{% load static %}
+{% load humanize %}
+{% load mathfilters %}
+{% block page_title %}
+NetworkB2B
+{% endblock %}
+
+{% block body_class %}background_grey{% endblock %}
+
+{% block content %}
+<style type="text/css">
+  /* label color */
+   .input-field label {
+     color: #ffffff;
+   }
+   /* label focus color */
+   .input-field input[type=text]:focus + label {
+     color: #f6f9ff;
+   }
+   /* label underline focus color */
+   .input-field input[type=text]:focus {
+     border-bottom: 1px solid #ffffff;
+     box-shadow: 0 1px 0 0 #ffffff;
+   }
+   /* valid color */
+   .input-field input[type=text].valid {
+     border-bottom: 1px solid #000;
+     box-shadow: 0 1px 0 0 #000;
+   }
+   /* invalid color */
+   .input-field input[type=text].invalid {
+     border-bottom: 1px solid #000;
+     box-shadow: 0 1px 0 0 #000;
+   }
+   /* icon prefix focus color */
+   .input-field .prefix.active {
+     color: #ffffff;
+   }
+   /* icon prefix focus color */
+   .input-field .prefix {
+     color: #ffffff;
+   }
+</style>
+
+<div class="wrap_search">
+<div class="row">
+    <div class="col m3 s12"></div>
+    <div class="col m6 s12 padding_top">
+      <h4 class="white-text center-align">Nos basamos en la confianza</h4> <h4 class="flow-text center-align white-text">Déjanos ayudar!</h4>
+      <div class="row">
+      <form action="{% url 'empresas:empresas_home' %}" method="post">
+        {% csrf_token %}
+        <div class="input-field col s12">
+          <i class="material-icons prefix">search</i>
+          <input type="text" id="autocomplete-input-search" name="company_name" class="autocomplete_search">
+          <label for="autocomplete-input-search">Buscar el nombre del cliente...</label>
+        </div>
+      </form>
+      </div>
+    </div>
+    <div class="col m3 s12"></div>
+</div>
+</div>
+{% endblock %}
+
+{% block alt_js %}
+  <script type="text/javascript">
+  (function($){
+    $(function(){
+
+      $('input.autocomplete_search').autocomplete({
+        data: {{autofilter|safe}},
+        limit: 20, // The max amount of results that can be shown at once. Default: Infinity.
+      });
+
+    $("input").keypress(function(event) {
+      if (event.which == 13) {
+          event.preventDefault();
+          $("form").submit();
+      }
+  });
+    }); // end of document ready
+  })(jQuery); // end of jQuery name space
+  </script>
+{% endblock alt_js %}

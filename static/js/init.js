@@ -55,7 +55,7 @@
     });
 
     $('.ajax_bar').hide();
-
+      
     $('input.autocomplete').autocomplete({
       data: {
         "Otros servicios personales": null,

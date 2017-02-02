@@ -25,7 +25,7 @@
   {# use the CDN to get bootstrap css. can not be inside compress css block #}
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.8/css/materialize.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.0/css/materialize.min.css">
   {% block cdn_css %}{% endblock cdn_css %}
   <link rel="stylesheet" href="{% static 'css/materialize-stepper.min.css' %}">
   
@@ -72,7 +72,6 @@
   {% endif %}
 
   <!-- JavaScript at the bottom for fast page loading -->
-
   <!-- Grab Google CDN's jQuery, with a protocol relative URL; fall back to local if offline -->
   {% block cdn_js %}
   <script
@@ -81,11 +80,12 @@
   crossorigin="anonymous"></script>
   <script>window.jQuery || document.write('<script src="{{ STATIC_URL }}js/libs/jquery-2.1.1.min.js"><\/script>')</script>
   <!-- Compiled and minified JavaScript -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.8/js/materialize.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.0/js/materialize.min.js"></script>
   <!-- jQueryValidation Plugin (optional) -->
   <script src="https://ajax.aspnetcdn.com/ajax/jquery.validate/1.15.0/jquery.validate.min.js"></script>
   <!-- <script src="https://d3js.org/d3.v4.min.js"></script> -->
   {% endblock cdn_js %}
+
   <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/marked/0.3.6/marked.min.js"></script>
   <!-- scripts concatenated and minified via django-compressor -->
   {% compress js %}
@@ -93,11 +93,10 @@
     <script src="{% static 'js/main.js' %}"></script>
     <script src="{% static 'js/init.js' %}"></script>
   {% endblock js %}
-  {% endcompress %}
 
-  {% compress js %}
   {% block alt_js %}
   {% endblock alt_js %}
+
   {% endcompress %}
   <!-- end scripts -->
 

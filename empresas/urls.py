@@ -22,7 +22,8 @@ from .views import (HomeView,
                     RecommendationsCreate,
                     OpportunityClientsView,
                     OpportunityProviderView,
-                    FAQView)
+                    FAQView,
+                    SearchView)
 
 urlpatterns = [
 
@@ -36,6 +37,7 @@ urlpatterns = [
     url(r'^empresa/(?P<empresa_id>[0-9]+)/transfer_create/$', TrasferCreateView, name='transfer_create'),
     url(r'^faq/$', FAQView, name='faq'),
     
+    url(r'^search/$', SearchView, name='search'),
     url(r'^clients/$', ClientView, name='clients'),
     url(r'^providers/$', ProviderView, name='providers'),
     url(r'^recommendations/$', CommercialClientsRecommendationsView, name='recommendations'),

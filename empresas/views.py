@@ -30,20 +30,39 @@ from django.db.models import Prefetch
 """				EMPRESAS VIEWS 							  """
 """-------------------------------------------------------"""
 
+def SearchView(request):
+	
+	autofilter = dict()
+	company = Empresa.objects.filter(pk=990).first()
+	autofilter[company.name] = company.image
+	company = Empresa.objects.filter(pk=2632).first()
+	autofilter[company.name] = company.image
+	context = {
+		'autofilter': json.dumps(autofilter, cls=DjangoJSONEncoder),
+		'buttons': False
+	}
+	return render(request, "empresas/search_company.html", context)
+
 @login_required
 def HomeView(request):
+	if request.POST:
+		name = request.POST['company_name']
+
 	try:
 		del request.session['company']
 		del request.session['recommended_clients_page']
 	except:
 		pass
 	request.session.modified = True
-	queryset = Empresa.objects.all()
+
+	#queryset = Empresa.objects.all()
+
 	if request.session.get('company') is None:
 		if request.user.username == "pmonras2":
 			company = 865
 		else:
-			company = 990 #1492 #randint(0, queryset.count() - 1) # # ## 865 865-1 
+			got_it = Empresa.objects.filter(name=name).first()
+			company = got_it.pk #1492 #randint(0, queryset.count() - 1) # # ## 865 865-1 
 		request.session['company'] = company
 	else:
 		company_id = request.session.get('company')
