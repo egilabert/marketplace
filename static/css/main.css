@@ -15,6 +15,21 @@
     color: black;
 }
 
+.back_texture {
+  background-image: url("../images/bg-6-full.jpg")
+}
+
+.back_texture2 {
+  background: url("../images/bg-6-full.jpg") no-repeat center center fixed; 
+        -webkit-background-size: cover;
+        -moz-background-size: cover;
+        -o-background-size: cover;
+        background-size: cover;
+    padding: 1em 0em 5em 3em;
+    min-height: 43em; 
+    color: black;
+}
+
 .wrap_cr {
   background: url("../images/lapices4.jpg") no-repeat center center fixed; 
         -webkit-background-size: cover;

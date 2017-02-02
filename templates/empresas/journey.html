@@ -1,0 +1,157 @@
+{% extends "app_base.html" %}
+{% load staticfiles %}
+
+{% block page_title %}
+{{company.name}}
+{% endblock %}
+
+{% block side-nav %}{% include "side-nav.html" %}{% endblock %}
+
+{% block content %}
+	<div class="back_texture2">
+		<div class="row center-align" style="padding-top: 0px; padding-bottom: 0px; margin-bottom: 0px;">
+			<div class="col m12 "><h5>Revisión del cliente {{company.name}}</h5></div>
+		</div>
+		<div class="row">
+			<div class="col m12" id="informe">
+				<form action="{% url 'risk_cro:rater' %}" id="cro-form" method="POST">
+				{% csrf_token %}
+				<ul class="stepper horizontal linear" style="min-height:500px">
+				   <li class="step active">
+				      <div class="step-title waves-effect"><small>Revisión cliente</small></div>
+				      <div class="step-content">
+				         {% include "empresa_detail.html" %}
+				      </div>
+				   </li>
+				   <li class="step">
+				      <div class="step-title waves-effect"><small>Clientes/Proveedores</small></div>
+				      <div class="step-content">
+				         <div class="row">
+				            <div class="input-field col s12">
+				               {% include "step2.html" %}
+				            </div>
+				         </div>
+				         <div class="step-actions">
+				            <button class="waves-effect waves-dark btn next-step">CONTINUAR</button>
+				            <button class="waves-effect waves-dark btn-flat previous-step">ATRÁS</button>
+				         </div>
+				      </div>
+				   </li>
+				   <li class="step">
+				      <div class="step-title waves-effect"><small>Riesgos</small></div>
+				      <div class="step-content">
+				         <div class="row">
+				            <div class="input-field col s12">
+				               {% include "step2.html" %}
+				            </div>
+				         </div>
+				         <div class="step-actions">
+				            <button class="waves-effect waves-dark btn next-step">CONTINUAR</button>
+				            <button class="waves-effect waves-dark btn-flat previous-step">ATRÁS</button>
+				         </div>
+				      </div>
+				   </li>
+				   <li class="step">
+				      <div class="step-title waves-effect"><small>Recomendaciones</small></div>
+				      <div class="step-content">
+				         {% include "step4.html" %}
+				         <div class="step-actions">
+				            <button id="id_submit" class="waves-effect waves-dark btn" type="submit">CALCULAR</button>
+				         </div>
+				      </div>
+				   </li>
+				</ul>
+				</form>
+			</div>
+		</div>
+	</div>
+
+{% endblock %}
+
+{% block alt_js %}
+<!--Import Materialize-Stepper JavaScript -->
+<script type="text/javascript">
+var validation=$.isFunction($.fn.valid)?1:0;$.fn.isValid=function(){return!validation||this.valid()},validation&&$.validator.setDefaults({errorClass:"invalid",validClass:"valid",errorPlacement:function(a,b){b.is(":radio")||b.is(":checkbox")?a.insertBefore($(b).parent()):a.insertAfter(b)},success:function(a){$(a).closest("li").find("label.invalid:not(:empty)").length||$(a).closest("li").removeClass("wrong")}}),$.fn.getActiveStep=function(){return active=this.find(".step.active"),$(this.children(".step:visible")).index($(active))+1},$.fn.activateStep=function(){$(this).addClass("step").stop().slideDown(function(){$(this).css({height:"auto","margin-bottom":""})})},$.fn.deactivateStep=function(){$(this).removeClass("step").stop().slideUp(function(){$(this).css({height:"auto","margin-bottom":"10px"})})},$.fn.showError=function(a){if(validation){name=this.attr("name"),form=this.closest("form");var b={};b[name]=a,form.validate().showErrors(b),this.closest("li").addClass("wrong")}else this.removeClass("valid").addClass("invalid"),this.next().attr("data-error",a)},$.fn.activateFeedback=function(){active=this.find(".step.active:not(.feedbacking)").addClass("feedbacking").find(".step-content"),active.prepend('<div class="wait-feedback"> <div class="preloader-wrapper active"> <div class="spinner-layer spinner-blue"> <div class="circle-clipper left"> <div class="circle"></div></div><div class="gap-patch"> <div class="circle"></div></div><div class="circle-clipper right"> <div class="circle"></div></div></div><div class="spinner-layer spinner-red"> <div class="circle-clipper left"> <div class="circle"></div></div><div class="gap-patch"> <div class="circle"></div></div><div class="circle-clipper right"> <div class="circle"></div></div></div><div class="spinner-layer spinner-yellow"> <div class="circle-clipper left"> <div class="circle"></div></div><div class="gap-patch"> <div class="circle"></div></div><div class="circle-clipper right"> <div class="circle"></div></div></div><div class="spinner-layer spinner-green"> <div class="circle-clipper left"> <div class="circle"></div></div><div class="gap-patch"> <div class="circle"></div></div><div class="circle-clipper right"> <div class="circle"></div></div></div></div></div>')},$.fn.destroyFeedback=function(){return active=this.find(".step.active.feedbacking"),active&&(active.removeClass("feedbacking"),active.find(".step-content").find(".wait-feedback").remove()),!0},$.fn.resetStepper=function(a){return a||(a=1),form=$(this).closest("form"),$(form)[0].reset(),Materialize.updateTextFields(),$(this).openStep(a)},$.fn.submitStepper=function(a){form=this.closest("form"),form.isValid()&&form.submit()},$.fn.nextStep=function(a){return stepper=this,form=this.closest("form"),active=this.find(".step.active"),next=$(this.children(".step:visible")).index($(active))+2,feedback=$(active.find(".step-content").find(".step-actions").find(".next-step")).data("feedback"),form.isValid()?feedback&&a?(stepper.activateFeedback(),window[feedback].call()):(active.removeClass("wrong").addClass("done"),this.openStep(next),this.trigger("nextstep")):active.removeClass("done").addClass("wrong")},$.fn.prevStep=function(){return active=this.find(".step.active"),prev=$(this.children(".step:visible")).index($(active)),active.removeClass("wrong"),this.openStep(prev),this.trigger("prevstep")},$.fn.openStep=function(a,b){$this=this,step_num=a-1,a=this.find(".step:visible:eq("+step_num+")"),a.hasClass("active")||(active=this.find(".step.active"),prev_active=next=$(this.children(".step:visible")).index($(active)),order=step_num>prev_active?1:0,active.hasClass("feedbacking")&&$this.destroyFeedback(),active.closeAction(order),a.openAction(order,function(){$this.trigger("stepchange").trigger("step"+(step_num+1)),a.data("event")&&$this.trigger(a.data("event")),b&&b()}))},$.fn.closeAction=function(a,b){closable=this.removeClass("active").find(".step-content"),this.closest("ul").hasClass("horizontal")?1==a?closable.animate({left:"-100%"},function(){closable.css({display:"none",left:"0%"},b)}):closable.animate({left:"100%"},function(){closable.css({display:"none",left:"0%"},b)}):closable.stop().slideUp(300,"easeOutQuad",b)},$.fn.openAction=function(a,b){openable=this.removeClass("done").addClass("active").find(".step-content"),this.closest("ul").hasClass("horizontal")?1==a?openable.css({left:"100%",display:"block"}).animate({left:"0%"},b):openable.css({left:"-100%",display:"block"}).animate({left:"0%"},b):openable.slideDown(300,"easeOutQuad",b)},$.fn.activateStepper=function(){$(this).each(function(){var a=$(this);a.parents("form").length||(method=a.data("method"),action=a.data("action"),method=method?method:"GET",action=action?action:"?",a.wrap('<form action="'+action+'" method="'+method+'"></div>')),a.find("li.step.active").openAction(1),a.on("click",".step:not(.active)",function(){object=$(a.children(".step:visible")).index($(this)),a.hasClass("linear")?(active=a.find(".step.active"),$(a.children(".step:visible")).index($(active))+1==object?a.nextStep(!0):$(a.children(".step:visible")).index($(active))-1==object&&a.prevStep()):a.openStep(object+1)}).on("click",".next-step",function(b){b.preventDefault(),a.nextStep(!0)}).on("click",".previous-step",function(b){b.preventDefault(),a.prevStep()}).on("click","button:submit:not(.next-step, .previous-step)",function(b){b.preventDefault(),form=a.closest("form"),form.isValid()&&form.submit()})})};
+</script>
+
+<script type="text/javascript">
+
+	$(document).ready(function(){
+	// 	$( "#risk" ).click(function(e) {
+	// 	Materialize.toast('Still under construction... Coming soon!', 4000);
+	// })
+		$('.stepper').activateStepper();
+
+		// Submit post on submit
+		$('#cro-form').on('submit', function(event){
+		    event.preventDefault();
+		    console.log("form submitted!")  // sanity check
+		    create_post();
+		});
+
+		// AJAX for posting
+		function create_post() {
+		    console.log("create post is working!") // sanity check
+		    $.ajax({
+		        url : "{% url 'risk_cro:rater' %}", // the endpoint
+		        type : "POST", // http method
+		        data : {
+		        	name : $('#id_name').val(), 
+				    sector : $('#id_sector').val(), 
+				    antiguedad : $('#id_antiguedad').val(), 
+				    fondos_propios : $('#id_fondos_propios').val(), 
+				    patrimonio : $('#id_patrimonio').val(), 
+				    activo_corriente : $('#id_activo_corriente').val(), 
+				    activo_no_corriente : $('#id_activo_no_corriente').val(), 
+				    pasivo_corriente : $('#id_pasivo_corriente').val(), 
+				    pasivo_no_corriente : $('#id_pasivo_no_corriente').val(), 
+				    importe_neto_cifra_negocio : $('#id_importe_neto_cifra_negocio').val(), 
+				    gastos_financieros : $('#id_gastos_financieros').val(), 
+				    resultados_antes_impuestos : $('#id_resultados_antes_impuestos').val(),
+		        }, // data sent with the post request
+
+		        // handle a successful response
+		        success : function(data) {
+		            $('#informe').html(data); // remove the value from the input
+		            console.log(data); // log the returned json to the console
+		            console.log("success"); // another sanity check
+		        },
+
+		        // handle a non-successful response
+		        error : function(xhr,errmsg,err) {
+		            $('#results').html("<div class='alert-box alert radius' data-alert>Oops! We have encountered an error: "+errmsg+
+		                " <a href='#' class='close'>&times;</a></div>"); // add the error to the dom
+		            console.log(xhr.status + ": " + xhr.responseText); // provide a bit more info about the error to the console
+		        }
+		    });
+		};
+
+		$.ajaxSetup({ 
+		     beforeSend: function(xhr, settings) {
+		         function getCookie(name) {
+		             var cookieValue = null;
+		             if (document.cookie && document.cookie != '') {
+		                 var cookies = document.cookie.split(';');
+		                 for (var i = 0; i < cookies.length; i++) {
+		                     var cookie = jQuery.trim(cookies[i]);
+		                     // Does this cookie string begin with the name we want?
+		                     if (cookie.substring(0, name.length + 1) == (name + '=')) {
+		                         cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+		                         break;
+		                     }
+		                 }
+		             }
+		             return cookieValue;
+		         }
+		         if (!(/^http:.*/.test(settings.url) || /^https:.*/.test(settings.url))) {
+		             // Only send the token to relative URLs i.e. locally.
+		             xhr.setRequestHeader("X-CSRFToken", getCookie('csrftoken'));
+		         }
+		     } 
+		});
+	});
+
+
+</script>
+{% endblock alt_js %}
+

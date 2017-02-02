@@ -30,6 +30,7 @@ from django.db.models import Prefetch
 """				EMPRESAS VIEWS 							  """
 """-------------------------------------------------------"""
 
+@login_required
 def SearchView(request):
 	
 	autofilter = dict()
@@ -76,7 +77,7 @@ def HomeView(request):
 	checker.territorial = 'T.NOROESTE'
 	checker.save()
 	
-	return render(request, "empresas/empresas_home.html", {'company': Empresa.objects.all()[company-1]})
+	return render(request, "empresas/journey.html", {'empresa': Empresa.objects.all()[company-1]})
 
 @login_required
 def EmpresaDetailView(request, pk=None):
