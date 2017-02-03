@@ -12,7 +12,7 @@
 <div class="parallax-container">
 		<h3 class="center-align black-text light">¿Qué hemos detectado y como podemos ayudar?</h3>
 		<div class="row center black-text">{{company.name}}</div>
-	    <div class="parallax"><img src="{% static 'images/office.jpg' %}"></div>
+	    <div class="parallax"><img src="{% static 'images/hand_bw.jpg' %}"></div>
 	</div>
 	
 <div class="mdl-card mdl-shadow--2dp">
@@ -66,42 +66,244 @@
   
 	
 	<div class="row">
+				<div class="white_back title_conf">
+			    	<h3 class="flow-text">  Acciones a realizar</h3>
+			    </div>
+		    	<div class="row title_conf">
+		    		<div class="row">
+						  <div class="col s12 m1"></div>
+						  <div class="col s12 m5">
+						    <p class="flow-text center-align">Diagnóstico</p>
+						    <div class="card horizontal grey lighten-3 black-text">
+						      <div class="card-stacked">
+						        <div class="card-content">
+						          <p>{{company.name}} se encuentra en una situación de crecimiento sostenido, con buenos indicadores en sus resultados</p>
+						        </div>
+						        <div class="divider"></div>
+						        <div class="card-content">
+						          <p>{{company.name}} tiene un alto nivel de concentranción geogràfica en sus clientes</p>
+						        </div>
+						        <div class="divider"></div>
+						        <div class="card-content">
+						          <p>{{company.name}} tiene un alto nivel de penetración en sus clientes, muy por encima del de su competencia</p>
+						        </div>
+						        <div class="divider"></div>
+						        <div class="card-content">
+						          <p>{{company.name}} tiene un ratio de endeudamiento inferior al de su competencia</p>
+						        </div>
+						        <div class="divider"></div>
+						        <div class="card-content">
+						          <p>{{company.name}} tiene un ratio de endeudamiento a corto muy por debajo de su competencia</p>
+						        </div>
+						      </div>
+						    </div>
 
+						    <div class="card horizontal grey white-text">
+						      <div class="card-stacked">
+						        <div class="card-content">
+						          <p>Es momento de una expansión nacional para encontrar nuevas oportunidades de negocio</p>
+						        </div>
+						      </div>
+						    </div>
+						  </div>
+						  
+						  <div class="col s12 m5">
+						  <p class="flow-text center-align">Propuesta</p>
+						    <div class="card horizontal grey lighten-3 black-text">
+						      <div class="card-stacked">
+						        <div class="card-content">
+						          <p>El crecimiento sostenido permite, en caso de necesidad, ofrecer nuevos productos, y un incremento de los activos</p>
+						        </div>
+						        <div class="divider"></div>
+						        <div class="card-content">
+						          <p>Es importante ofrecer <strong>nuevos clientes</strong> que se encuentren fuera de su región para reducir la concentración</p>
+						        </div>
+						         <div class="card-content">
+						          <p>Penetraciones altas dificultan un crecimiento sostenido sin encontrar <strong>nuevas oportunidades comerciales</strong></p>
+						        </div>
+						        <div class="card-content">
+						          <p>Es posible indicar <strong>nuevos préstamos</strong> puesto que sus ratios de endeudamiento permiten margen</p>
+						        </div>
+						        <div class="card-content">
+						          <p>Para hacer frente a pagos o inversiones a corto, puede ser interessante ofrecerle algún <strong>producto de circulante</strong></p>
+						        </div>
+						        
+						      </div>
+						    </div>
+						  </div>
+						  <div class="col s12 m1"></div>
+						</div>
+		    	</div>
 				 <!-- /////////////////////////////////////////////////////////////
 				 ////// ¿Como son mis clientes?
 				 ///////////////////////////////////////////////////////////// -->
 
 					<div class="white_back title_conf">
-				    	<h3 class="flow-text">  Nuevas oportunidades comerciales</h3>
+				    	<h3 class="flow-text">  Nuevos clientes a recomendar</h3>
 				    </div>
 			    	<div class="row title_conf">
 			    	<!-- Resultado explotaciones -->
 			    	<div class="row">
-			    		<div class="col m6 s12">
-			    			<div class="card grey lighten-4">
-					            <div class="card-content grey-text darken-4">
-					            	<span class="card-title">Riesgo de incumplimiento</span>
-					              <canvas id="hats_graph" width="300" height="140"></canvas>
-					            </div>
-					        </div>
-			    		</div>
-			    		<div class="col m6 s12">
-			    			<div class="card grey lighten-4">
-					            <div class="card-content grey-text darken-4">
-					              <blockquote>
-					    				<p class="light"><i class="tiny material-icons indigo-text darken-4">live_help</i> Nuestra métrica de riesgo de impago clasifica tus proveedores según su probabilidad de entrar en problemas financieros en los próximos meses. Una alta concentración de proveedores en estado rojo podría ser preocupante para la evolución de tu negocio</p>
-					    				<p class="light"><i class="tiny material-icons indigo-text darken-4">new_releases</i> <span class="bold"> En promedio, el riesgo de impago de tus proveedores es parecido al de los de tu competencia</p>
-					    				<p class="light"><i class="tiny material-icons indigo-text darken-4">info</i> Puedes cubrir tu riesgo ampliando tu cartera de proveedores</p>
-					    				<div class="row">
-					    					<div class="col m5 s6"></div>
-					    					<div class="col m7 s6">
-					    						<span class="right-align"><a href="{% url 'empresas:providers' %}" id="download-button" target="_blank" class="btn waves-effect waves-light transparent grey-text text-darken-4 border-grey"> Nuevos proveedores </a> </span>
-					    					</div>
-					    				</div>
-					    			</blockquote>
-					            </div>
-					        </div>
-			    		</div>
+			    		<div id="cards_container">
+		    			<div class="row">
+				    		<div class="col s12 m4 cards-container">
+
+							{% for obj in recommended_clients %}
+
+								{% if  forloop.counter|add:"-1"|divisibleby:3 %}
+									<div class="card blue-grey lighten-4 hoverable">
+									    <div class="card-image waves-effect waves-block waves-light">
+									      <img class="activator" src="{{ obj.image}}">
+									    </div>
+									    <div class="card-content">
+									    	<div class="row">
+									      		<span class="activator center-align grey-text text-darken-4"> {{ obj.name}}</span>
+									      	</div>
+									      	<div class="divider"></div>
+									      	<div class="row">
+									      		<div class="col s6">
+									      			<span class="right-align flow-text" style="color: {% if obj.similarity > 0.7 %}green{% elif obj.similarity > 0.3 %} orange{% else %}red{% endif %}"> {{ obj.similarity|mul:10|floatformat }}</span>
+									      		</div>
+									      	</div>
+
+									      	<div class="row">
+									      		<div class="col s6">
+									      			<i class="fa fa-money left-align" aria-hidden="true"></i></i><span class="grey-text light text-darken-4"> Financing:
+									      			<br>
+									      			<small>¿Necesitarás financiar tus facturas?</small>	
+									      		</div>
+									      		<div class="col s6">
+									      			<span class="right-align" style="color: {% if obj.factoring_preaprobado > 0 %}green{% else %}red{% endif %}"> {% if obj.factoring_preaprobado > 0 %} Te financiamos hasta  <a href="https://www.bancosantander.es/es/empresas-advance/productos-y-servicios/cobros/factoring" id="download-button" target="_blank" class="btn waves-effect waves-light transparent grey-text text-darken-4 border-grey"> {{ obj.factoring_preaprobado|floatformat|intcomma }}€ </a>  {% else %} Sin preaprobación {% endif %}</span>
+									      		</div>
+									      	</div>
+										    <div class="card-action">
+										    	<a class="blue-grey-text text-darken-3" href="{{ obj.get_absolute_url }}">Ver detalle</a>
+										      	<span ><i class="material-icons right activator center">more_vert</i></span>
+										    </div>
+									    </div>
+									    <div class="card-reveal">
+									    	<span class="card-title">Actividad:<i class="material-icons right">close</i></span>
+									    	<div class="row">
+									      		<p class="grey-text text-darken-4">{{ obj.cnae_2 }}</p>
+									      		<p class="grey-text text-darken-4">{{ obj.cnae }}</p>
+									      	</div>
+									      	<span class="card-title">Localización:</span>
+									      	<div class="row">
+									      		<p class="grey-text text-darken-4">{{ obj.territorial }}</p>
+									      	</div>
+									    </div>
+									</div>
+
+								{% endif %}
+							{% endfor %}
+							</div>
+
+							<!-- =================== -->
+
+							<div class="col s12 m4 cards-container">
+								{% for obj in recommended_clients %}
+
+								{% if  forloop.counter|add:"-2"|divisibleby:3 %}
+									<div class="card blue-grey lighten-4 hoverable">
+									    <div class="card-image waves-effect waves-block waves-light">
+									      <img class="activator" src="{{ obj.image}}">
+									    </div>
+									    <div class="card-content">
+									    	<div class="row">
+									      		<span class="activator center-align grey-text text-darken-4"> {{ obj.name}}</span>
+									      	</div>
+									      	<div class="divider"></div>
+									      	<div class="row">
+									      		<div class="col s6">
+									      			<span class="right-align flow-text" style="color: {% if obj.similarity > 0.7 %}green{% elif obj.similarity > 0.3 %} orange{% else %}red{% endif %}"> {{ obj.similarity|mul:10|floatformat }}</span>
+									      		</div>
+									      	</div>
+
+									      	<div class="row">
+									      		<div class="col s6">
+									      			<i class="fa fa-money left-align" aria-hidden="true"></i></i><span class="grey-text light text-darken-4"> Financing:
+									      			<br>
+									      			<small>¿Necesitarás financiar tus facturas?</small>	
+									      		</div>
+									      		<div class="col s6">
+									      			<span class="right-align" style="color: {% if obj.factoring_preaprobado > 0 %}green{% else %}red{% endif %}"> {% if obj.factoring_preaprobado > 0 %} Te financiamos hasta  <a href="https://www.bancosantander.es/es/empresas-advance/productos-y-servicios/cobros/factoring" id="download-button" target="_blank" class="btn waves-effect waves-light transparent grey-text text-darken-4 border-grey"> {{ obj.factoring_preaprobado|floatformat|intcomma }}€ </a>  {% else %} Sin preaprobación {% endif %}</span>
+									      		</div>
+									      	</div>
+										    <div class="card-action">
+										    	<a class="blue-grey-text text-darken-3" href="{{ obj.get_absolute_url }}">Ver detalle</a>
+										      	<span ><i class="material-icons right activator center">more_vert</i></span>
+										    </div>
+									    </div>
+									    <div class="card-reveal">
+									    	<span class="card-title">Actividad:<i class="material-icons right">close</i></span>
+									    	<div class="row">
+									      		<p class="grey-text text-darken-4">{{ obj.cnae_2 }}</p>
+									      		<p class="grey-text text-darken-4">{{ obj.cnae }}</p>
+									      	</div>
+									      	<span class="card-title">Localización:</span>
+									      	<div class="row">
+									      		<p class="grey-text text-darken-4">{{ obj.territorial }}</p>
+									      	</div>
+									    </div>
+									</div>
+
+								{% endif %}
+							{% endfor %}
+							</div>
+
+							<div class="col s12 m4 cards-container">
+								{% for obj in recommended_clients %}
+
+								{% if  forloop.counter|add:"-3"|divisibleby:3 %}
+									<div class="card blue-grey lighten-4 hoverable">
+									    <div class="card-image waves-effect waves-block waves-light">
+									      <img class="activator" src="{{ obj.image}}">
+									    </div>
+									    <div class="card-content">
+									    	<div class="row">
+									      		<span class="activator center-align grey-text text-darken-4"> {{ obj.name}}</span>
+									      	</div>
+									      	<div class="divider"></div>
+									      	<div class="row">
+									      		<div class="col s6">
+									      			<span class="right-align flow-text" style="color: {% if obj.similarity > 0.7 %}green{% elif obj.similarity > 0.3 %} orange{% else %}red{% endif %}"> {{ obj.similarity|mul:10|floatformat }}</span>
+									      		</div>
+									      	</div>
+
+									      	<div class="row">
+									      		<div class="col s6">
+									      			<i class="fa fa-money left-align" aria-hidden="true"></i></i><span class="grey-text light text-darken-4"> Financing:
+									      			<br>
+									      			<small>¿Necesitarás financiar tus facturas?</small>	
+									      		</div>
+									      		<div class="col s6">
+									      			<span class="right-align" style="color: {% if obj.factoring_preaprobado > 0 %}green{% else %}red{% endif %}"> {% if obj.factoring_preaprobado > 0 %} Te financiamos hasta  <a href="https://www.bancosantander.es/es/empresas-advance/productos-y-servicios/cobros/factoring" id="download-button" target="_blank" class="btn waves-effect waves-light transparent grey-text text-darken-4 border-grey"> {{ obj.factoring_preaprobado|floatformat|intcomma }}€ </a>  {% else %} Sin preaprobación {% endif %}</span>
+									      		</div>
+									      	</div>
+										    <div class="card-action">
+										    	<a class="blue-grey-text text-darken-3" href="{{ obj.get_absolute_url }}">Ver detalle</a>
+										      	<span ><i class="material-icons right activator center">more_vert</i></span>
+										    </div>
+									    </div>
+									    <div class="card-reveal">
+									    	<span class="card-title">Actividad:<i class="material-icons right">close</i></span>
+									    	<div class="row">
+									      		<p class="grey-text text-darken-4">{{ obj.cnae_2 }}</p>
+									      		<p class="grey-text text-darken-4">{{ obj.cnae }}</p>
+									      	</div>
+									      	<span class="card-title">Localización:</span>
+									      	<div class="row">
+									      		<p class="grey-text text-darken-4">{{ obj.territorial }}</p>
+									      	</div>
+									    </div>
+									</div>
+
+								{% endif %}
+							{% endfor %}
+						</div>
+
+						</div>
+				    	</div>
 			    	</div>
 			    </div>
 			    <!-- /////////////////////////////////////////////////////////////
@@ -109,438 +311,177 @@
 				 ///////////////////////////////////////////////////////////// -->
 
 			    <div class="white_back title_conf">
-			    	<h3 class="flow-text">Riesgo de concentración</h3>
+			    	<h3 class="flow-text">  Nuevos proveedores a recomendar</h3>
 			    </div>
 		    	<div class="row title_conf">
-		            <div class="col s12 m3">
-		                <div class="card blue-grey lighten-1">
-		                  <div class="card-content white-text">
-		                    <h6 class="light">Clientes</h6>
-		                    <h4><i class="fa fa-user" aria-hidden="true"></i> {{company.hhi_providers|floatformat:2}}   <small style="color: red"><i class="fa fa-sort-down" aria-hidden="true"></i>  4%</small></h4>
-		                  </div>
-		                </div>
-		              </div>
-		              <div class="col s12 m3">
-		                <div class="card blue-grey lighten-1">
-		                  <div class="card-content white-text">
-		                    <h6 class="light">Clientes comparables</h6>
-		                    <h4><i class="fa fa-user" aria-hidden="true"></i> {{company.hhi_providers_sector|floatformat:2}}   <small style="color: green"><i class="fa fa-sort-up" aria-hidden="true"></i>  4%</small></h4>
-		                  </div>
-		                </div>
-		              </div>
-		              <div class="col s12 m6">
-		                <div class="card blue-grey lighten-1">
-		                  <div class="card-content white-text">
-		                    {{company.respuesta_riskprovider_concentracion_provider_hint}}
-		                    <div class="row">
-		    					<div class="col m4 s4"></div>
-		    					<div class="col m8 s8">
-		    						<span class="right-align"><a href="{% url 'empresas:providers' %}" target="_blank" class="btn waves-effect waves-light transparent white-text text-darken-4 border-grey"> Encuentra nuevos proveedores </a> </span>
-		    					</div>
-		    				</div>
-		                  </div>
-		                </div>
-		              </div>
-		    	</div>
-		    	<div class="row title_conf">
-		            <div class="col s12 m3">
-		                <div class="card blue-grey lighten-1">
-		                  <div class="card-content white-text">
-		                    <h6 class="light">Geografica</h6>
-		                    <h4><i class="fa fa-user" aria-hidden="true"></i> {{company.hhi_geografical_providers|floatformat:2}}   <small style="color: red"><i class="fa fa-sort-down" aria-hidden="true"></i>  4%</small></h4>
-		                  </div>
-		                </div>
-		              </div>
-		              <div class="col s12 m3">
-		                <div class="card blue-grey lighten-1">
-		                  <div class="card-content white-text">
-		                    <h6 class="light">Geografica comparables</h6>
-		                    <h4><i class="fa fa-user" aria-hidden="true"></i> {{company.hhi_geografical_sector_providers|floatformat:2}}   <small style="color: green"><i class="fa fa-sort-up" aria-hidden="true"></i>  4%</small></h4>
-		                  </div>
-		                </div>
-		              </div>
-		              <div class="col s12 m6">
-		                <div class="card blue-grey lighten-1">
-		                  <div class="card-content white-text">
-		                    {{company.respuesta_riskprovider_concentracion_geografical_hint}}
-		                    <div class="row">
-		    					<div class="col m4 s4"></div>
-		    					<div class="col m8 s8">
-		    						<span class="right-align"><a href="{% url 'empresas:providers' %}" target="_blank" class="btn waves-effect waves-light transparent white-text text-darken-4 border-grey"> Encuentra nuevos proveedores </a> </span>
-		    					</div>
-		    				</div>
-		                  </div>
-		                </div>
-		              </div>
-		    	</div>
-		    	<div class="row title_conf">
-		            <div class="col s12 m3">
-		                <div class="card blue-grey lighten-1">
-		                  <div class="card-content white-text">
-		                    <h6 class="light">Sector</h6>
-		                    <h4><i class="fa fa-user" aria-hidden="true"></i> {{company.hhi_cnae_providers|floatformat:2}}   <small style="color: red"><i class="fa fa-sort-down" aria-hidden="true"></i>  4%</small></h4>
-		                  </div>
-		                </div>
-		              </div>
-		              <div class="col s12 m3">
-		                <div class="card blue-grey lighten-1">
-		                  <div class="card-content white-text">
-		                    <h6 class="light">Sector comparables</h6>
-		                    <h4><i class="fa fa-user" aria-hidden="true"></i> {{company.hhi_cnae_sector_providers|floatformat:2}}   <small style="color: green"><i class="fa fa-sort-up" aria-hidden="true"></i>  4%</small></h4>
-		                  </div>
-		                </div>
-		              </div>
-		              <div class="col s12 m6">
-		                <div class="card blue-grey lighten-1">
-		                  <div class="card-content white-text">
-		                    {{company.respuesta_riskprovider_concentracion_cnae_hint}}
-		                    <div class="row">
-		    					<div class="col m4 s4"></div>
-		    					<div class="col m8 s8">
-		    						<span class="right-align"><a href="{% url 'empresas:providers' %}" target="_blank" class="btn waves-effect waves-light transparent white-text text-darken-4 border-grey"> Encuentra nuevos proveedores </a> </span>
-		    					</div>
-		    				</div>
-		                  </div>
-		                </div>
-		              </div>
-		    	</div>
-		    	<div class="row title_conf">
-		            <div class="col s12 m3">
-		                <div class="card blue-grey lighten-1">
-		                  <div class="card-content white-text">
-		                    <h6 class="light">Estacionalidad</h6>
-		                    <h4><i class="fa fa-user" aria-hidden="true"></i> {{company.hhi_temporal_providers|floatformat:2}}   <small style="color: red"><i class="fa fa-sort-down" aria-hidden="true"></i>  4%</small></h4>
-		                  </div>
-		                </div>
-		              </div>
-		              <div class="col s12 m3">
-		                <div class="card blue-grey lighten-1">
-		                  <div class="card-content white-text">
-		                    <h6 class="light">Estacionalidad comparables</h6>
-		                    <h4><i class="fa fa-user" aria-hidden="true"></i> {{company.hhi_temporal_sector_providers|floatformat:2}}   <small style="color: green"><i class="fa fa-sort-up" aria-hidden="true"></i>  4%</small></h4>
-		                  </div>
-		                </div>
-		              </div>
-		              <div class="col s12 m6">
-		                <div class="card blue-grey lighten-1">
-		                  <div class="card-content white-text">
-		                    {{company.respuesta_riskprovider_concentracion_temporal_hint}}
-		                    <div class="row">
-		    					<div class="col m4 s4"></div>
-		    					<div class="col m8 s8">
-		    						<span class="right-align"><a href="{% url 'empresas:providers' %}" target="_blank" class="btn waves-effect waves-light transparent white-text text-darken-4 border-grey"> Encuentra nuevos proveedores </a> </span>
-		    					</div>
-		    				</div>
-		                  </div>
-		                </div>
-		              </div>
-		    	</div>
-	  </div>
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.1.4/Chart.bundle.min.js"></script>
+		            <!-- Resultado explotaciones -->
+			    	<div class="row">
+			    		<div id="cards_container">
+		    			<div class="row">
+				    		<div class="col s12 m4 cards-container">
 
-<script type="text/javascript">
+							{% for obj in recommended_providers %}
 
-	Chart.defaults.global.legend.display = false;
-	// And for a doughnut chart
-  	var hats_graph = document.getElementById("hats_graph");
-  	var frecuencia_graph = document.getElementById("frecuencia_graph");
-  	var penetration_graph = document.getElementById("penetration_graph");
-  	var penetracion_clientes = 0.12
-	var penetracion_clientes_sector = 0.35//{{company.my_sector_penetration}}
-  	
-  	HatsBarGraph(hats_graph, {{riesgo_impago_proveedores|safe}}, {{riesgo_impago_providers_sector|safe}} )
-  	LineGraph(frecuencia_graph, {{get_monthly_sector_avg_sells|safe}}, {{get_monthly_sells|safe}});
-  	stackedbarchart(penetration_graph, 'hola_2', 'hola_2', penetracion_clientes, penetracion_clientes_sector, 'Penetration')
+								{% if  forloop.counter|add:"-1"|divisibleby:3 %}
+									
 
+									<div class="card blue-grey lighten-4 hoverable">
+									    <div class="card-image waves-effect waves-block waves-light">
+									      <img class="activator" src="{{ obj.image}}">
+									    </div>
+									    <div class="card-content">
+									    	<div class="row">
+									      		<span class="activator center-align grey-text text-darken-4"> {{ obj.name}}</span>
+									      	</div>
+									      	<div class="divider"></div>
+									      	<div class="row">
+									      		<div class="col s6">
+									      			<span class="right-align flow-text" style="color: {% if obj.similarity > 0.7 %}green{% elif obj.similarity > 0.3 %} orange{% else %}red{% endif %}"> {{ obj.similarity|mul:10|floatformat }}</span>
+									      		</div>
+									      	</div>
 
-  	// prepare data...
-  	function HatsBarGraph(div, data_you, data_sector) {//, data_sector, data_you) {
-  		var labels = [];
-  		var data_1=[];
-  		var data_2=[];
-  		var data_3=[];
-  		var sector = data_sector
-  		var you = data_you
-  		you.forEach(function(packet, i) {
-	      labels.push(packet.hats_alert);
-	      if (packet.hats_alert=='ROJA') {
-	      	data_1.push(packet.c);
-	      } else if (packet.hats_alert=='AMARILLA') {
-	      	data_2.push(packet.c);
-	      } else if (packet.hats_alert=='VERDE') {
-	      	data_3.push(packet.c);
-	      }
-	    });
-	    sector.forEach(function(packet, i) {
-	      if (packet.hats_alert=='ROJA') {
-	      	data_1.push(packet.c);
-	      } else if (packet.hats_alert=='AMARILLA') {
-	      	data_2.push(packet.c);
-	      } else if (packet.hats_alert=='VERDE') {
-	      	data_3.push(packet.c);
-	      }
-	    });
-	    hats_barchart(div, data_1, data_2, data_3, "Riesgo de impago") //barchart(div, labels_1, labels_2, data_1, data_2, '# Transferencias / mes')
-  	}
+									      	<div class="row">
+									      		<div class="col s6">
+									      			<i class="fa fa-money left-align" aria-hidden="true"></i></i><span class="grey-text light text-darken-4"> Financing:
+									      			<br>
+									      			<small>¿Necesitarás financiar tus facturas?</small>	
+									      		</div>
+									      		<div class="col s6">
+									      			<span class="right-align" style="color: {% if obj.factoring_preaprobado > 0 %}green{% else %}red{% endif %}"> {% if obj.factoring_preaprobado > 0 %} Te financiamos hasta  <a href="https://www.bancosantander.es/es/empresas-advance/productos-y-servicios/cobros/factoring" id="download-button" target="_blank" class="btn waves-effect waves-light transparent grey-text text-darken-4 border-grey"> {{ obj.factoring_preaprobado|floatformat|intcomma }}€ </a>  {% else %} Sin preaprobación {% endif %}</span>
+									      		</div>
+									      	</div>
+										    <div class="card-action">
+										    	<a class="blue-grey-text text-darken-3" href="{{ obj.get_absolute_url }}">Ver detalle</a>
+										      	<span ><i class="material-icons right activator center">more_vert</i></span>
+										    </div>
+									    </div>
+									    <div class="card-reveal">
+									    	<span class="card-title">Actividad:<i class="material-icons right">close</i></span>
+									    	<div class="row">
+									      		<p class="grey-text text-darken-4">{{ obj.cnae_2 }}</p>
+									      		<p class="grey-text text-darken-4">{{ obj.cnae }}</p>
+									      	</div>
+									      	<span class="card-title">Localización:</span>
+									      	<div class="row">
+									      		<p class="grey-text text-darken-4">{{ obj.territorial }}</p>
+									      	</div>
+									    </div>
+									</div>
 
-  	// prepare data...
-  	function LineGraph(div, data_sector, data_you) {
-  		var labels_1 = [];
-  		var labels_2 = []; 
-  		var data_1=[];
-  		var data_2=[];
-  		var sector = data_sector
-  		var you = data_you
-  		sector.forEach(function(packet, i) {
-	      labels_1.push(packet.month);
-	      data_1.push(packet.c);
-	    });
-	    you.forEach(function(packet, i) {
-	    	console.log('Line Graphs')
-	    	console.log(labels_1)
-	    	console.log(packet.month)
-	    	console.log(labels_1.includes(packet.month))
-	      	if (labels_1.includes(packet.month)==true) {
-	    		labels_2.push(packet.month);
-	      		data_2.push(packet.c);
-	    	} else {
-	    		labels_2.push(labels_1[i]);
-	      		data_2.push(0);
-	    	}
-	    });
-	    // console.log(facturacion_graph)
-	    // console.log(labels_1)
-	    // console.log(labels_2)
-	    // console.log(data_1)
-	    // console.log(data_2)
-	    line(div, labels_1, labels_2, data_1, data_2)
-  	}
+								{% endif %}
+							{% endfor %}
+							</div>
 
-  	function stackedbarchart(div, labels_1, labels_2, data_1, data_2, title)
-        {
-        	if (data_1<1) {
-        		data_1x = data_1*100
-        	} else {
-        		data_1x = 100
-        	}
-        	if (data_2<1) {
-        		data_2x = data_2*100
-        	} else {
-        		data_2x = 100
-        	}
-        	var dataset_1 = [data_1x,data_2x]
-        	var dataset_2 = [100-data_1x,100-data_2x]
-        	console.log(dataset_1)
-        	console.log(dataset_2)
-        	var myChart = new Chart(div, {
-		        type: 'bar',
-		        data: {
-		            labels: ["You","Comparables"],
-		            datasets: [{
-		            	type: 'bar',
-		                label: "Penetration",
-		                data: dataset_1,
-		                backgroundColor: 'rgba(47,79,79, 0.2)',
-		                borderColor: 'rgba(47,79,79, 1)',
-		                borderWidth: 2
-		            },
-		            {
-		            	type: 'bar',
-		                label: "Rest of the market",
-		                data: dataset_2,
-		                backgroundColor: 'rgba(169,169,169, 0.2)',
-		                borderColor: 'rgba(169,169,169, 1)',
-		                borderWidth: 2
-		            }]
-		        },
-		        options: {
-		            legend: {
-		                display: false,
-		                labels: {
-		                    fontColor: 'rgb(255, 99, 132)'
-		                }
-		            },
-		            scales: {
-		                yAxes: [{
-						    stacked: true
-		                }],
-		                xAxes: [{
-					        stacked: true
-					    }]
-		            }
-		        }
-		    });
-    	}
+							<!-- =================== -->
 
-    function hats_barchart(div, data_1, data_2, data_3, title)
-        {
-        	
-        	var myChart = new Chart(div, {
-		        type: 'bar',
-		        data: {
-		            labels: ["Tu","Comparables"],
-		            datasets: [{
-		            	type: 'bar',
-		                label: "Alerta Roja",
-		                data: data_1,
-		                backgroundColor: ['rgba(200,0,0,0.2)','rgba(200,0,0,0.2)'],
-		                borderColor: 'rgba(47,79,79, 1)',
-		                borderWidth: 2
-		            },{
-		            	type: 'bar',
-		                label: "Alerta Amarilla",
-		                data: data_2,
-		                backgroundColor: ['rgba(150,150,0,0.2)','rgba(150,150,0,0.2)'],
-		                borderColor: 'rgba(47,79,79, 1)',
-		                borderWidth: 2
-		            },{
-		            	type: 'bar',
-		                label: "Sin alerta",
-		                data: data_3,
-		                backgroundColor: ['rgba(0,200,0,0.2)','rgba(0,200,0,0.2)'],
-		                borderColor: 'rgba(47,79,79, 1)',
-		                borderWidth: 2
-		            }
-		            ]
-		        },
-		        options: {
-		            legend: {
-		                display: false,
-		                labels: {
-		                    fontColor: 'rgb(255, 99, 132)'
-		                }
-		            },
-		            scales: {
-		                yAxes: [{
-						    stacked: true,
-						    ticks: {
-				                beginAtZero: true
-				            }
-		                }],
-		                xAxes: [{
-					        stacked: true
-					    }]
-		            }
-		        }
-		    });
-    	}
+							<div class="col s12 m4 cards-container">
+								{% for obj in recommended_providers %}
 
-    function pie(div, data, labels)
-        {
-           var myDoughnutChart = new Chart(div, {
-            type: 'pie',
-            data: {
-                labels: labels,
-                datasets: [
-                    {
-                        data: data,
-                        backgroundColor: [
-                            'rgba(128,128,128, 0.5)',
-                            'rgba(47,79,79, 0.5)',
-                            'rgba(119,136,153, 0.5)',
-                            'rgba(192,192,192, 0.5)',
-		                    'rgba(169,180,169, 0.5)',
-		                    'rgba(128,128,128, 0.5)',
-                    		'rgba(220,220,220, 0.5)',
-                        ],
-                        hoverBackgroundColor: [
-                            'rgba(128,128,128, 1)',
-                            'rgba(47,79,79, 1)',
-                            'rgba(119,136,153, 1)',
-                            'rgba(192,192,192, 1)',
-		                    'rgba(169,180,169, 1)',
-		                    'rgba(128,128,128, 1)',
-                    		'rgba(220,220,220, 1)',
-                        ]
-                    }]
-            },
-            animation:{
-                animateScale:true
-            }
-        });
-        }
+								{% if  forloop.counter|add:"-2"|divisibleby:3 %}
+									<div class="card blue-grey lighten-4 hoverable">
+									    <div class="card-image waves-effect waves-block waves-light">
+									      <img class="activator" src="{{ obj.image}}">
+									    </div>
+									    <div class="card-content">
+									    	<div class="row">
+									      		<span class="activator center-align grey-text text-darken-4"> {{ obj.name}}</span>
+									      	</div>
+									      	<div class="divider"></div>
+									      	<div class="row">
+									      		<div class="col s6">
+									      			<span class="right-align flow-text" style="color: {% if obj.similarity > 0.7 %}green{% elif obj.similarity > 0.3 %} orange{% else %}red{% endif %}"> {{ obj.similarity|mul:10|floatformat }}</span>
+									      		</div>
+									      	</div>
 
-  	function donut(div, data, labels)
-        {
-           var myDoughnutChart = new Chart(div, {
-            type: 'doughnut',
-            data: {
-                labels: labels,
-                datasets: [
-                    {
-                        data: data,
-                        backgroundColor: [
-                            'rgba(128,128,128, 0.5)',
-                            'rgba(47,79,79, 0.5)',
-                            'rgba(119,136,153, 0.5)',
-                            'rgba(192,192,192, 0.5)',
-		                    'rgba(169,180,169, 0.5)',
-		                    'rgba(128,128,128, 0.5)',
-                    		'rgba(220,220,220, 0.5)',
-                        ],
-                        hoverBackgroundColor: [
-                            'rgba(128,128,128, 1)',
-                            'rgba(47,79,79, 1)',
-                            'rgba(119,136,153, 1)',
-                            'rgba(192,192,192, 1)',
-		                    'rgba(169,180,169, 1)',
-		                    'rgba(128,128,128, 1)',
-                    		'rgba(220,220,220, 1)',
-                        ]
-                    }]
-            },
-            animation:{
-                animateScale:true
-            }
-        });
-        }
+									      	<div class="row">
+									      		<div class="col s6">
+									      			<i class="fa fa-money left-align" aria-hidden="true"></i></i><span class="grey-text light text-darken-4"> Financing:
+									      			<br>
+									      			<small>¿Necesitarás financiar tus facturas?</small>	
+									      		</div>
+									      		<div class="col s6">
+									      			<span class="right-align" style="color: {% if obj.factoring_preaprobado > 0 %}green{% else %}red{% endif %}"> {% if obj.factoring_preaprobado > 0 %} Te financiamos hasta  <a href="https://www.bancosantander.es/es/empresas-advance/productos-y-servicios/cobros/factoring" id="download-button" target="_blank" class="btn waves-effect waves-light transparent grey-text text-darken-4 border-grey"> {{ obj.factoring_preaprobado|floatformat|intcomma }}€ </a>  {% else %} Sin preaprobación {% endif %}</span>
+									      		</div>
+									      	</div>
+										    <div class="card-action">
+										    	<a class="blue-grey-text text-darken-3" href="{{ obj.get_absolute_url }}">Ver detalle</a>
+										      	<span ><i class="material-icons right activator center">more_vert</i></span>
+										    </div>
+									    </div>
+									    <div class="card-reveal">
+									    	<span class="card-title">Actividad:<i class="material-icons right">close</i></span>
+									    	<div class="row">
+									      		<p class="grey-text text-darken-4">{{ obj.cnae_2 }}</p>
+									      		<p class="grey-text text-darken-4">{{ obj.cnae }}</p>
+									      	</div>
+									      	<span class="card-title">Localización:</span>
+									      	<div class="row">
+									      		<p class="grey-text text-darken-4">{{ obj.territorial }}</p>
+									      	</div>
+									    </div>
+									</div>
 
-    function line(div, labels, labels2, data1, data2) {
-    	var scatterChart = new Chart(div, {
-        type: 'line',
-        data: {
-            labels: labels,
-            datasets: [{
-            label: "Comparables",
-            backgroundColor: "rgba(220,220,220,0.5)",
-            borderColor: "rgba(220,220,220,0.8)",
-            highlightFill: "rgba(220,220,220,0.75)",
-            pointHoverBackgroundColor: "rgba(220,220,220,1)",
-            showTooltip: false, //NEW OPTION DON"T NEED TO INCLUDE IT IF YOU WANT TO DISPLAY BUT WON"T HURT IF YOU DO
-            yAxisID: "y-axis-0",
-            data: data1
-        }, {
-            label: "{{company.name|safe}}",
-            backgroundColor: "rgba(47,79,79,0.5)",
-            borderColor: "rgba(47,79,79,0.8)",
-            highlightFill: "rgba(47,79,79,0.75)",
-            pointHoverBackgroundColor: "rgba(47,79,79,1)",
-            showTooltip: false, //NEW OPTION DON"T NEED TO INCLUDE IT IF YOU WANT TO DISPLAY BUT WON"T HURT IF YOU DO
-            yAxisID: "y-axis-1",
-            data: data2
-        }]},
-        options: {
-          responsive: true,
-          pointDotRadius: 10,
-          bezierCurve: false,
-          scaleShowVerticalLines: false,
-          scaleGridLineColor: 'black',
-          scales: {
-		      yAxes: [{
-		        position: "left",
-		        "id": "y-axis-0",
-		        
-		      }, {
-		        position: "right",
-		        "id": "y-axis-1",
-		        
-		      }]
-		  }
-        }
-    });
-    }
-</script>
+								{% endif %}
+							{% endfor %}
+							</div>
+
+							<div class="col s12 m4 cards-container">
+								{% for obj in recommended_providers %}
+
+								{% if  forloop.counter|add:"-3"|divisibleby:3 %}
+									<div class="card blue-grey lighten-4 hoverable">
+									    <div class="card-image waves-effect waves-block waves-light">
+									      <img class="activator" src="{{ obj.image}}">
+									    </div>
+									    <div class="card-content">
+									    	<div class="row">
+									      		<span class="activator center-align grey-text text-darken-4"> {{ obj.name}}</span>
+									      	</div>
+									      	<div class="divider"></div>
+									      	<div class="row">
+									      		<div class="col s6">
+									      			<span class="right-align flow-text" style="color: {% if obj.similarity > 0.7 %}green{% elif obj.similarity > 0.3 %} orange{% else %}red{% endif %}"> {{ obj.similarity|mul:10|floatformat }}</span>
+									      		</div>
+									      	</div>
+
+									      	<div class="row">
+									      		<div class="col s6">
+									      			<i class="fa fa-money left-align" aria-hidden="true"></i></i><span class="grey-text light text-darken-4"> Financing:
+									      			<br>
+									      			<small>¿Necesitarás financiar tus facturas?</small>	
+									      		</div>
+									      		<div class="col s6">
+									      			<span class="right-align" style="color: {% if obj.factoring_preaprobado > 0 %}green{% else %}red{% endif %}"> {% if obj.factoring_preaprobado > 0 %} Te financiamos hasta  <a href="https://www.bancosantander.es/es/empresas-advance/productos-y-servicios/cobros/factoring" id="download-button" target="_blank" class="btn waves-effect waves-light transparent grey-text text-darken-4 border-grey"> {{ obj.factoring_preaprobado|floatformat|intcomma }}€ </a>  {% else %} Sin preaprobación {% endif %}</span>
+									      		</div>
+									      	</div>
+										    <div class="card-action">
+										    	<a class="blue-grey-text text-darken-3" href="{{ obj.get_absolute_url }}">Ver detalle</a>
+										      	<span ><i class="material-icons right activator center">more_vert</i></span>
+										    </div>
+									    </div>
+									    <div class="card-reveal">
+									    	<span class="card-title">Actividad:<i class="material-icons right">close</i></span>
+									    	<div class="row">
+									      		<p class="grey-text text-darken-4">{{ obj.cnae_2 }}</p>
+									      		<p class="grey-text text-darken-4">{{ obj.cnae }}</p>
+									      	</div>
+									      	<span class="card-title">Localización:</span>
+									      	<div class="row">
+									      		<p class="grey-text text-darken-4">{{ obj.territorial }}</p>
+									      	</div>
+									    </div>
+									</div>
+
+								{% endif %}
+							{% endfor %}
+						</div>
+
+						</div>
+				    	</div>
+			    	</div>
+	  			</div>
+
 {% endblock %}
 
  {% block alt_js %}

@@ -35,7 +35,9 @@ def InformeView(request):
 	company_id = request.session.get('company')
 	company = Empresa.objects.filter(pk=company_id)[0]
 	context = {
-		'company': company
+		'company': company,
+		'recommended_clients': company.recommended_clients.all(),
+		'recommended_providers': company.recommended_providers.all(),
 	}
 	return render(request, "empresas/journey.html", context)
 
