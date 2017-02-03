@@ -11,6 +11,23 @@
 {% block side-nav %}{% include "side-nav.html" %}{% endblock %}
 
 {% block content %}
+
+<!-- Dropdown Structure -->
+	<div class="parallax-container">
+		<h3 class="center-align grey-text text-darken-3 light">¿Cómo son tus proveedores?</h3>
+		<div class="row center grey-text text-darken-3">{{company.name}}</div>
+		<div class="row center">
+
+			<div class="col m4 s1"></div>
+			<div class="col m2 s4">
+				<a href="{% url 'empresas:recommendations' %}" id="download-button" class="btn-large waves-effect waves-light transparent pad_top grey-text text-darken-3 border-grey">Clientes  </a>
+			</div>
+			<div class="col m2 s4">
+				<a href="{% url 'empresas:recommendations_providers' %}" id="download-button" class="btn-large waves-effect waves-light alpha_back pad_top orange-text text-darken-4 border-grey">Proveedores  </a>
+			</div>
+        </div>
+	    <div class="parallax"><img src="{% static 'images/supplier.jpg' %}"></div>
+	</div>
 	
 <div class="mdl-card mdl-shadow--2dp">
 
@@ -60,22 +77,6 @@
       </div>
 
   </div>
-	<!-- Dropdown Structure -->
-	<div class="parallax-container">
-		<h3 class="center-align grey-text text-darken-3 light">¿Cómo son tus proveedores?</h3>
-		<div class="row center grey-text text-darken-3">{{company.name}}</div>
-		<div class="row center">
-
-			<div class="col m4 s1"></div>
-			<div class="col m2 s4">
-				<a href="{% url 'empresas:recommendations' %}" id="download-button" class="btn-large waves-effect waves-light transparent pad_top grey-text text-darken-3 border-grey">Clientes  </a>
-			</div>
-			<div class="col m2 s4">
-				<a href="{% url 'empresas:recommendations_providers' %}" id="download-button" class="btn-large waves-effect waves-light alpha_back pad_top orange-text text-darken-4 border-grey">Proveedores  </a>
-			</div>
-        </div>
-	    <div class="parallax"><img src="{% static 'images/supplier.jpg' %}"></div>
-	</div>
 
 	<div class="row">
 				<!-- {{company.ebitda_avg_sector}} -->

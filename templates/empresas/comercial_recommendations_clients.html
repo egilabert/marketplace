@@ -11,7 +11,23 @@
 {% block side-nav %}{% include "side-nav.html" %}{% endblock %}
 
 {% block content %}
-	
+
+
+	<div class="parallax-container">
+		<h3 class="center-align white-text text-darken-3 light">¿Cómo son tus clientes?</h3>
+		<div class="row center">{{company.name}}</div>
+		<div class="row center">
+
+			<div class="col m4 s1"></div>
+			<div class="col m2 s4">
+				<a href="{% url 'empresas:recommendations' %}" id="download-button" class="btn-large waves-effect waves-light alpha_back pad_top orange-text text-darken-4 border-grey">Clientes  </a>
+			</div>
+			<div class="col m2 s4">
+				<a href="{% url 'empresas:recommendations_providers' %}" id="download-button" class="btn-large waves-effect waves-light transparent pad_top border-white">Proveedores  </a>
+			</div>
+        </div>
+	    <div class="parallax"><img src="{% static 'images/testimonial-bg.jpg' %}"></div>
+	</div>
 <div class="mdl-card mdl-shadow--2dp">
 
       <div class="mdl-card__supporting-text">
@@ -67,9 +83,6 @@
   <div class="col s12 m5">
     <p class="flow-text center-align">Puntos fuertes</p>
     <div class="card horizontal green darken-3">
-      <div class="card-image">
-        <img src="{% static 'images/1_resized.jpg' %}">
-      </div>
       <div class="card-stacked">
         <div class="card-content white-text">
           <p>Los clientes de {{company.name}} estan en linia con la competencia en los principales indicadores</p>
@@ -81,31 +94,11 @@
   <div class="col s12 m5">
   <p class="flow-text center-align">Puntos a mejorar</p>
     <div class="card horizontal">
-      <div class="card-image">
-        <img src="{% static 'images/1_resized.jpg' %}">
-      </div>
       <div class="card-stacked">
         <div class="card-content">
-          <p>Tiene una alta penetración en tus clientes, impidiendo su crecimiento sin nuevos clientes</p>
+          <p>Tiene una penetración del 79% en sus clientes, una cifra muy superior a la de su competencia</p>
         </div>
-      </div>
-    </div>
-  </div>
-  <div class="col s12 m1"></div>
-</div>
-
-<div class="row">
-  <div class="col s12 m1"></div>
-  <div class="col s12 m5">
-    
-  </div>
-  
-  <div class="col s12 m5">
-    <div class="card horizontal">
-      <div class="card-image">
-        <img src="{% static 'images/2_resized.jpg' %}">
-      </div>
-      <div class="card-stacked">
+        <div class="divider"></div>
         <div class="card-content">
           <p>Los clientes de {{company.name}} tiene un margen comercial estrecho y un ratio de eficiencia mejorable.</p>
         </div>
@@ -115,22 +108,6 @@
   <div class="col s12 m1"></div>
 </div>
 
-
-	<div class="parallax-container">
-		<h3 class="center-align white-text text-darken-3 light">¿Cómo son tus clientes?</h3>
-		<div class="row center">{{company.name}}</div>
-		<div class="row center">
-
-			<div class="col m4 s1"></div>
-			<div class="col m2 s4">
-				<a href="{% url 'empresas:recommendations' %}" id="download-button" class="btn-large waves-effect waves-light alpha_back pad_top orange-text text-darken-4 border-grey">Clientes  </a>
-			</div>
-			<div class="col m2 s4">
-				<a href="{% url 'empresas:recommendations_providers' %}" id="download-button" class="btn-large waves-effect waves-light transparent pad_top border-white">Proveedores  </a>
-			</div>
-        </div>
-	    <div class="parallax"><img src="{% static 'images/testimonial-bg.jpg' %}"></div>
-	</div>
 
 	<div class="row">
 				<!-- {{company.ebitda_avg_sector}} -->

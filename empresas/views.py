@@ -32,7 +32,12 @@ from django.db.models import Prefetch
 
 @login_required
 def InformeView(request):
-	return HttpResponse('Que bueno que viniiiiiiiisteeee!!')
+	company_id = request.session.get('company')
+	company = Empresa.objects.filter(pk=company_id)[0]
+	context = {
+		'company': company
+	}
+	return render(request, "empresas/journey.html", context)
 
 @login_required
 def SearchView(request):

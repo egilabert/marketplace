@@ -10,7 +10,25 @@
 {% block side-nav %}{% include "side-nav.html" %}{% endblock %}
 
 {% block content %}
+<div class="parallax-container">
+		<h3 class="center-align white-text text-darken-3 light">El riesgo financiero... ¿Podré seguir pagando?</h3>
+		<div class="row center">{{company.name}}</div>
+		<div class="row center">
 
+			<div class="col m4 s3">
+				<a href="{% url 'empresas:recommendations_financial_risk' %}" id="download-button" class="btn-large waves-effect waves-light pad_top border-white alpha_back orange-text text-darken-4">Riesgo financiero </a>
+			</div>
+			<div class="col m4 s3">
+				<a href="{% url 'empresas:recommendations_client_risk' %}" id="download-button" class="btn-large waves-effect waves-light transparent pad_top border-white">Riesgo cliente  </a>
+			</div>
+			<div class="col m4 s3">
+				<a href="{% url 'empresas:recommendations_provider_risk' %}" id="download-button" class="btn-large waves-effect waves-light transparent pad_top border-white">Riesgo proveedor </a>
+			</div>
+			
+        </div>
+	    <div class="parallax"><img src="{% static 'images/super-powers.jpg' %}"></div>
+	</div>
+	
 <div class="mdl-card mdl-shadow--2dp">
 
       <div class="mdl-card__supporting-text">
@@ -60,24 +78,6 @@
 
   </div>
 
-	<div class="parallax-container">
-		<h3 class="center-align white-text text-darken-3 light">El riesgo financiero... ¿Podré seguir pagando?</h3>
-		<div class="row center">{{company.name}}</div>
-		<div class="row center">
-
-			<div class="col m4 s3">
-				<a href="{% url 'empresas:recommendations_financial_risk' %}" id="download-button" class="btn-large waves-effect waves-light pad_top border-white alpha_back orange-text text-darken-4">Riesgo financiero </a>
-			</div>
-			<div class="col m4 s3">
-				<a href="{% url 'empresas:recommendations_client_risk' %}" id="download-button" class="btn-large waves-effect waves-light transparent pad_top border-white">Riesgo cliente  </a>
-			</div>
-			<div class="col m4 s3">
-				<a href="{% url 'empresas:recommendations_provider_risk' %}" id="download-button" class="btn-large waves-effect waves-light transparent pad_top border-white">Riesgo proveedor </a>
-			</div>
-			
-        </div>
-	    <div class="parallax"><img src="{% static 'images/super-powers.jpg' %}"></div>
-	</div>
 	<div class="row">
 			    <div class="grey-bckg">
 			    	<div class="row grey-bckg padding_title">

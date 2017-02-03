@@ -9,7 +9,24 @@
 {% block body_class %}background_grey{% endblock %}
 {% block side-nav %}{% include "side-nav.html" %}{% endblock %}
 {% block content %}
+<div class="parallax-container">
+		<h3 class="center-align white-text text-darken-3 light">El riesgo cliente... Manteniene tus lazos</h3>
+		<div class="row center">{{company.name}}</div>
+		<div class="row center">
 
+			<div class="col m4 s3">
+				<a href="{% url 'empresas:recommendations_financial_risk' %}" id="download-button" class="btn-large waves-effect waves-light transparent pad_top white-text text-darken-3 border-grey">Riesgo financiero </a>
+			</div>
+			<div class="col m4 s3">
+				<a href="{% url 'empresas:recommendations_client_risk' %}" id="download-button" class="btn-large waves-effect waves-light alpha_back pad_top orange-text text-darken-4 border-grey">Riesgo cliente  </a>
+			</div>
+			<div class="col m4 s3">
+				<a href="{% url 'empresas:recommendations_provider_risk' %}" id="download-button" class="btn-large waves-effect waves-light transparent pad_top white-text text-darken-3 border-grey">Riesgo proveedor </a>
+			</div>
+			
+        </div>
+	    <div class="parallax"><img src="{% static 'images/broken-rope.jpg' %}"></div>
+	</div>
 <div class="mdl-card mdl-shadow--2dp">
 
       <div class="mdl-card__supporting-text">
@@ -59,24 +76,7 @@
 
   </div>
   
-	<div class="parallax-container">
-		<h3 class="center-align white-text text-darken-3 light">El riesgo cliente... Manteniene tus lazos</h3>
-		<div class="row center">{{company.name}}</div>
-		<div class="row center">
-
-			<div class="col m4 s3">
-				<a href="{% url 'empresas:recommendations_financial_risk' %}" id="download-button" class="btn-large waves-effect waves-light transparent pad_top white-text text-darken-3 border-grey">Riesgo financiero </a>
-			</div>
-			<div class="col m4 s3">
-				<a href="{% url 'empresas:recommendations_client_risk' %}" id="download-button" class="btn-large waves-effect waves-light alpha_back pad_top orange-text text-darken-4 border-grey">Riesgo cliente  </a>
-			</div>
-			<div class="col m4 s3">
-				<a href="{% url 'empresas:recommendations_provider_risk' %}" id="download-button" class="btn-large waves-effect waves-light transparent pad_top white-text text-darken-3 border-grey">Riesgo proveedor </a>
-			</div>
-			
-        </div>
-	    <div class="parallax"><img src="{% static 'images/broken-rope.jpg' %}"></div>
-	</div>
+	
 	<div class="row">
 			    <div class="grey-bckg">
 			    	<div class="row grey-bckg padding_title">
