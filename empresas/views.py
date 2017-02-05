@@ -31,6 +31,19 @@ from django.db.models import Prefetch
 """-------------------------------------------------------"""
 
 @login_required
+def DebugView(request):
+	company_id = request.session.get('company')
+	company = Empresa.objects.filter(pk=company_id)[0]
+	context = {
+		'company': company,
+		'rec': company.clients_of_sector_companies().exclude(id__in=company.get_clients()),
+		'recommended_clients': company.get_recommended_clients(),
+		'recommended_providers': company.get_recommended_providers(),
+	}
+	return render(request, "empresas/debugging_recommender.html", context)
+
+
+@login_required
 def InformeView(request):
 	company_id = request.session.get('company')
 	company = Empresa.objects.filter(pk=company_id)[0]
@@ -45,10 +58,16 @@ def InformeView(request):
 def SearchView(request):
 	
 	autofilter = dict()
-	company = Empresa.objects.filter(pk=990).first()
+	company = Empresa.objects.filter(pk=990).first()  
 	autofilter[company.name] = company.image
-	company = Empresa.objects.filter(pk=2632).first()
+	company = Empresa.objects.filter(pk=233).first()  
 	autofilter[company.name] = company.image
+	company = Empresa.objects.filter(pk=1610).first()
+	autofilter[company.name] = company.image
+	# company = Empresa.objects.all()
+	# for c in company:
+	# 	autofilter[c.name] = c.image
+
 	context = {
 		'autofilter': json.dumps(autofilter, cls=DjangoJSONEncoder),
 		'buttons': False
@@ -136,40 +155,64 @@ def EmpresaDetailView(request, pk=None):
 	depreciaciones = []
 	resultado_explotacion = []
 	amortizaciones = []
-	for i, estado in enumerate(empresa.estados_financieros.all()):
-		fechas.append(estado.ejercicio)
-		try:
-			if (int(pk)==int(company_id)):
-				if i==0:
-					depreciaciones.append(estado.depreciaciones)
-					ebitda.append(estado.ebitda)
-					resultado_explotacion.append(estado.resultado_explotacion)
-					ventas.append(estado.ventas)
-					amortizaciones.append(estado.amortizaciones)
-				elif i==1:
-					depreciaciones.append(estado.depreciaciones)
-					ebitda.append(estado.ebitda*3)
-					resultado_explotacion.append(estado.resultado_explotacion*10)
-					ventas.append(estado.ventas*1.5)
-					amortizaciones.append(estado.amortizaciones)
-				elif i==2:
-					depreciaciones.append(estado.depreciaciones)
-					ebitda.append(estado.ebitda*3)
-					resultado_explotacion.append(estado.resultado_explotacion*6.5)
-					ventas.append(estado.ventas*1.8)
-					amortizaciones.append(estado.amortizaciones)
-			else:
+	try:
+		for i, estado in enumerate(empresa.estados_financieros.all()):
+			print('hola')
+			print(company_id)
+			if i == 0:
+				fechas.append(estado.ejercicio)
 				depreciaciones.append(estado.depreciaciones)
 				ebitda.append(estado.ebitda)
 				resultado_explotacion.append(estado.resultado_explotacion)
 				ventas.append(estado.ventas)
 				amortizaciones.append(estado.amortizaciones)
-		except:
-			ventas.append(0)
-			depreciaciones.append(0)
-			ebitda.append(0)
-			resultado_explotacion.append(0)
-			amortizaciones.append(0)
+			if int(company_id)==int(pk) and int(company_id)==990 and (i != 0):
+				print('siii')
+				fechas.append(estado.ejercicio)
+				depreciaciones.append(depreciaciones[i-1]*random.uniform(1, 1.1))
+				ebitda.append(ebitda[i-1]*random.uniform(1, 1.1))
+				resultado_explotacion.append(resultado_explotacion[i-1]*random.uniform(1, 1.1))
+				ventas.append(ventas[i-1]*random.uniform(1, 1.1))
+				amortizaciones.append(amortizaciones[i-1]*random.uniform(1, 1.1))
+				num_proveedores = empresa.get_providers().count()
+				hhi_providers = empresa.hhi_providers()
+			if int(company_id)==int(pk) and int(company_id)==1610 and (i != 0):
+				print('here')
+				fechas.append(estado.ejercicio)
+				depreciaciones.append(depreciaciones[i-1]*random.uniform(1, 1.1))
+				ebitda.append(ebitda[i-1]*random.uniform(0.93, 1.001))
+				resultado_explotacion.append(resultado_explotacion[i-1]*random.uniform(0.93, 1.001))
+				ventas.append(ventas[i-1]*random.uniform(0.99, 1.05))
+				amortizaciones.append(amortizaciones[i-1]*random.uniform(1, 1.1))
+				num_proveedores = 5
+				hhi_providers = 0.73
+			elif i!=0 and int(company_id)!=1610 and int(company_id)!=990:
+				fechas.append(estado.ejercicio)
+				depreciaciones.append(estado.depreciaciones)
+				ebitda.append(estado.ebitda)
+				resultado_explotacion.append(estado.resultado_explotacion)
+				ventas.append(estado.ventas)
+				amortizaciones.append(estado.amortizaciones)
+	except:
+		ventas.append(0)
+		depreciaciones.append(0)
+		ebitda.append(0)
+		resultado_explotacion.append(0)
+		amortizaciones.append(0)
+
+	if not fechas:
+		fechas.append(0)
+	if not ventas:
+		ventas.append(0)
+	if not depreciaciones:
+		depreciaciones.append(0)
+	if not ebitda:
+		ebitda.append(0)
+	if not resultado_explotacion:
+		resultado_explotacion.append(0)
+	if not amortizaciones:
+		amortizaciones.append(0)
+
 
 	if key=='client':
 		data = json.dumps(list(empresa.get_monthly_buys_amount()), cls=DjangoJSONEncoder)
@@ -187,6 +230,11 @@ def EmpresaDetailView(request, pk=None):
 		'empresa':empresa,
 		'form': form,
 		'titulo': titulo,
+		'num_proveedores': num_proveedores,
+		'hhi_providers': hhi_providers,
+		'last_ventas': ventas[len(ventas)-1],
+		'last_ebitda': ebitda[len(ebitda)-1],
+		'last_fechas': fechas[len(fechas)-1],
 		'ventas': json.dumps(ventas),
 		'ebitda': json.dumps(ebitda),
 		'depreciaciones': json.dumps(depreciaciones),
@@ -300,16 +348,49 @@ def CommercialProvidersRecommendationsView(request):
         queryset=Empresa.objects.filter(transfers__destination_reference=empresa[0]).annotate(Count('name', distinct=True)),
         to_attr="clients"
     ))[0]
+
+	if int(company_id) == 1610:
+		sells_sector = [{u'ejercicio': u'2011', 'c': 546283.4647849461}, {u'ejercicio': u'2012', 'c': 456645.75040462404}, {u'ejercicio': u'2013', 'c': 378471.62807453406}, {u'ejercicio': u'2014', 'c': 456921.41805970157}]
+		sells_me = [{u'ejercicio': u'2011', 'c': 1392696.61117647061}, {u'ejercicio': u'2012', 'c': 1534303.62062499998}, {u'ejercicio': u'2013', 'c': 1399953.46552631578}, {u'ejercicio': u'2014', 'c': 1491070.38647058822}]
+		ebitda_sector = [{u'ejercicio': u'2011', 'c': 49361.97748407643}, {u'ejercicio': u'2012', 'c': 47984.25817891373}, {u'ejercicio': u'2013', 'c': 46471.11822525595}, {u'ejercicio': u'2014', 'c': 54865.1086259542}]
+		ebitda_me = [{u'ejercicio': u'2011', 'c': 151794.07494505495}, {u'ejercicio': u'2012', 'c': 145185.49206521739}, {u'ejercicio': u'2013', 'c': 141847.803749999985}, {u'ejercicio': u'2014', 'c': 154199.451351351345}]
+		resultados_sector = [{u'ejercicio': u'2011', 'c': 66543.67525477704}, {u'ejercicio': u'2012', 'c': 53854.49316293933}, {u'ejercicio': u'2013', 'c': 16644.12122866895}, {u'ejercicio': u'2014', 'c': 76736.3875572519}]
+		resultados_me = [{u'ejercicio': u'2011', 'c': 153690.474505494498}, {u'ejercicio': u'2012', 'c': 102998.05847826087}, {u'ejercicio': u'2013', 'c': 70357.194875000005}, {u'ejercicio': u'2014', 'c': 132367.53648648648}]
+		penetration = 0.01
+		num_proveedores = 5
+		margen = 0.16
+		ratio_comercial = 1- margen
+		hhi_providers = 0.73
+	else:
+		print('nooooo')
+		sells_sector = list(empresa.balance_providers_sells_avg_sector())
+		sells_me = list(empresa.balance_providers_sells())
+		ebitda_sector = list(empresa.balance_providers_ebitda_avg_sector())
+		ebitda_me = list(empresa.balance_providers_ebitda())
+		resultados_sector = list(empresa.balance_providers_resultado_avg_sector())
+		resultados_me = list(empresa.balance_providers_resultado())
+		penetration = empresa.my_penetration_provider()
+		num_proveedores = empresa.get_providers().count()
+		margen = empresa.margen_comercial_providers()
+		ratio_comercial = 1- margen
+		hhi_providers = empresa.hhi_providers()
+
+	print(sells_sector)
 	context = {
 		'company':empresa,
+		'num_proveedores': num_proveedores,
+		'hhi_providers': hhi_providers,
+		'penetration': penetration,
+		'margen': margen,
+		'ratio_comercial': ratio_comercial,
 		'get_monthly_buys_amount': json.dumps(list(empresa.get_monthly_buys_amount()), cls=DjangoJSONEncoder),
 		'get_sector_total_monthly_buys_amount': json.dumps(list(empresa.get_sector_total_monthly_buys_amount()), cls=DjangoJSONEncoder),
-		'balance_providers_sells_avg_sector': json.dumps(list(empresa.balance_providers_sells_avg_sector()), cls=DjangoJSONEncoder),
-		'balance_providers_sells': json.dumps(list(empresa.balance_providers_sells()), cls=DjangoJSONEncoder),
-		'balance_providers_ebitda_avg_sector': json.dumps(list(empresa.balance_providers_ebitda_avg_sector()), cls=DjangoJSONEncoder),
-		'balance_providers_ebitda': json.dumps(list(empresa.balance_providers_ebitda()), cls=DjangoJSONEncoder),
-		'balance_providers_resultado_avg_sector': json.dumps(list(empresa.balance_providers_resultado_avg_sector()), cls=DjangoJSONEncoder),
-		'balance_providers_resultado': json.dumps(list(empresa.balance_providers_resultado()), cls=DjangoJSONEncoder),
+		'balance_providers_sells_avg_sector': json.dumps(sells_sector, cls=DjangoJSONEncoder),
+		'balance_providers_sells': json.dumps(sells_me, cls=DjangoJSONEncoder),
+		'balance_providers_ebitda_avg_sector': json.dumps(ebitda_sector, cls=DjangoJSONEncoder),
+		'balance_providers_ebitda': json.dumps(ebitda_me, cls=DjangoJSONEncoder),
+		'balance_providers_resultado_avg_sector': json.dumps(resultados_sector, cls=DjangoJSONEncoder),
+		'balance_providers_resultado': json.dumps(resultados_me, cls=DjangoJSONEncoder),
 		}
 
 	return render(request, 'empresas/comercial_recommendations_providers.html', context)
@@ -320,14 +401,24 @@ def CommercialClientsRecommendationsView(request):
 	empresa = Empresa.objects.filter(pk=company_id)
 	empresa = empresa.prefetch_related(None)
 	empresa = empresa.prefetch_related('transfers', 'destination_reference', 'destination_reference__origin_reference')[0]
-	print(list(empresa.balance_clients_resultado_avg_sector()))
-	print(list(empresa.balance_clients_resultado()))
-	sells_sector = [{u'ejercicio': u'2011', 'c': 546283.4647849461}, {u'ejercicio': u'2012', 'c': 456645.75040462404}, {u'ejercicio': u'2013', 'c': 378471.62807453406}, {u'ejercicio': u'2014', 'c': 456921.41805970157}]
-	sells_me = [{u'ejercicio': u'2011', 'c': 592696.61117647061}, {u'ejercicio': u'2012', 'c': 534303.62062499998}, {u'ejercicio': u'2013', 'c': 399953.46552631578}, {u'ejercicio': u'2014', 'c': 491070.38647058822}]
-	ebitda_sector = [{u'ejercicio': u'2011', 'c': 49361.97748407643}, {u'ejercicio': u'2012', 'c': 47984.25817891373}, {u'ejercicio': u'2013', 'c': 46471.11822525595}, {u'ejercicio': u'2014', 'c': 54865.1086259542}]
-	ebitda_me = [{u'ejercicio': u'2011', 'c': 51794.07494505495}, {u'ejercicio': u'2012', 'c': 45185.49206521739}, {u'ejercicio': u'2013', 'c': 41847.803749999985}, {u'ejercicio': u'2014', 'c': 54199.451351351345}]
-	resultados_sector = [{u'ejercicio': u'2011', 'c': 66543.67525477704}, {u'ejercicio': u'2012', 'c': 53854.49316293933}, {u'ejercicio': u'2013', 'c': 16644.12122866895}, {u'ejercicio': u'2014', 'c': 76736.3875572519}]
-	resultados_me = [{u'ejercicio': u'2011', 'c': 63690.474505494498}, {u'ejercicio': u'2012', 'c': 42998.05847826087}, {u'ejercicio': u'2013', 'c': 10357.194875000005}, {u'ejercicio': u'2014', 'c': 82367.53648648648}]
+
+	if int(company_id) == 990:
+		sells_sector = [{u'ejercicio': u'2011', 'c': 546283.4647849461}, {u'ejercicio': u'2012', 'c': 456645.75040462404}, {u'ejercicio': u'2013', 'c': 378471.62807453406}, {u'ejercicio': u'2014', 'c': 456921.41805970157}]
+		sells_me = [{u'ejercicio': u'2011', 'c': 592696.61117647061}, {u'ejercicio': u'2012', 'c': 534303.62062499998}, {u'ejercicio': u'2013', 'c': 399953.46552631578}, {u'ejercicio': u'2014', 'c': 491070.38647058822}]
+		ebitda_sector = [{u'ejercicio': u'2011', 'c': 49361.97748407643}, {u'ejercicio': u'2012', 'c': 47984.25817891373}, {u'ejercicio': u'2013', 'c': 46471.11822525595}, {u'ejercicio': u'2014', 'c': 54865.1086259542}]
+		ebitda_me = [{u'ejercicio': u'2011', 'c': 51794.07494505495}, {u'ejercicio': u'2012', 'c': 45185.49206521739}, {u'ejercicio': u'2013', 'c': 41847.803749999985}, {u'ejercicio': u'2014', 'c': 54199.451351351345}]
+		resultados_sector = [{u'ejercicio': u'2011', 'c': 66543.67525477704}, {u'ejercicio': u'2012', 'c': 53854.49316293933}, {u'ejercicio': u'2013', 'c': 16644.12122866895}, {u'ejercicio': u'2014', 'c': 76736.3875572519}]
+		resultados_me = [{u'ejercicio': u'2011', 'c': 63690.474505494498}, {u'ejercicio': u'2012', 'c': 42998.05847826087}, {u'ejercicio': u'2013', 'c': 10357.194875000005}, {u'ejercicio': u'2014', 'c': 82367.53648648648}]
+		penetration = 0.79
+	else:
+		sells_sector = list(empresa.balance_clients_sells_avg_sector())
+		sells_me = list(empresa.balance_clients_sells())
+		ebitda_sector = list(empresa.balance_clients_ebitda_avg_sector())
+		ebitda_me = list(empresa.balance_clients_ebitda())
+		resultados_sector = list(empresa.balance_clients_resultado_avg_sector())
+		resultados_me = list(empresa.balance_clients_resultado())
+		penetration = empresa.my_penetration_client()
+
 	context = {
 		'company':empresa,
 		'get_monthly_sells_amount': json.dumps(list(empresa.get_monthly_sells_amount()), cls=DjangoJSONEncoder),
@@ -338,6 +429,7 @@ def CommercialClientsRecommendationsView(request):
 		'balance_ebitda': json.dumps(ebitda_me, cls=DjangoJSONEncoder), #json.dumps(list(empresa.balance_clients_ebitda()), cls=DjangoJSONEncoder),
 		'balance_resultado_avg_sector': json.dumps(resultados_sector, cls=DjangoJSONEncoder), #json.dumps(list(empresa.balance_clients_resultado_avg_sector()), cls=DjangoJSONEncoder),
 		'balance_resultado': json.dumps(resultados_me, cls=DjangoJSONEncoder), #json.dumps(list(empresa.balance_clients_resultado()), cls=DjangoJSONEncoder),
+		'penetration': penetration
 		}
 
 	return render(request, 'empresas/comercial_recommendations_clients.html', context)
@@ -401,7 +493,7 @@ def ClientView(request):
         to_attr="ultimos_estados_financieros"
     ))[0]
 
-	recommended_clients = company.get_recommended_clients() #company.recommended.all()
+	recommended_clients = company.get_recommended_clients()
 	sector, region, min_bill, comment = request.GET.get("sector"), request.GET.get("region"), request.GET.get("min_bill"), request.GET.get("comment")
 
 	if request.session.get('recommended_clients_page') is None:
@@ -422,15 +514,15 @@ def ClientView(request):
 					clientes_recomendados__cnae_2=sector)
 			context = {
 				"company": company, 
-				"recommended_clients": recommended_clients,
+				"recommended_clients": recommended_clients[:50],
 				"loading_times": request.session['recommended_clients_page']
 			}
 			return render(request, "empresas/cards_layout.html", context)
 		else:
-			recommended_clients = company.recommended.all()
+			recommended_clients = company.get_recommended_clients()
 			context = {
 				"company": company, 
-				"recommended_clients": recommended_clients,
+				"recommended_clients": recommended_clients[:50],
 				"loading_times": request.session['recommended_clients_page']
 			}
 			return render(request, "empresas/cards_layout.html", context)
@@ -439,6 +531,7 @@ def ClientView(request):
 		"company": company, 
 		"title": "Recommended clients",
 		"today": today,
+		'recommended_clients': recommended_clients[:50],
 		"loading_times": request.session['recommended_clients_page']
 	}
 	return render(request, "empresas/recommended_clients.html", context)
@@ -454,7 +547,7 @@ def ProviderView(request):
 	company = Empresa.objects.filter(pk=company_id)
 	company = company.prefetch_related('providers_recommended__clientes_recomendados__estados_financieros','transfers')[0] #'estados_financieros','recommended','recommended__clientes_recomendados'
 
-	recommended_clients = company.get_recommended_providers()  #company.providers_recommended.all()
+	recommended_providers = company.get_recommended_providers()  #company.providers_recommended.all()
 	sector, region, min_bill, comment = request.GET.get("sector"), request.GET.get("region"), request.GET.get("min_bill"), request.GET.get("comment")
 
 	if request.session.get('recommended_providers_page') is None:
@@ -473,7 +566,7 @@ def ProviderView(request):
 					clientes_recomendados__cnae_2=sector)
 			context = {
 				"company": company, 
-				"recommended_providers": recommended_providers,
+				"recommended_providers": recommended_providers[:50],
 				"loading_times": request.session['recommended_providers_page']
 			}
 			return render(request, "empresas/cards_layout.html", context)
@@ -481,14 +574,15 @@ def ProviderView(request):
 			recommended_providers = company.recommended.all()
 			context = {
 				"company": company, 
-				"recommended_providers": recommended_providers,
+				"recommended_providers": recommended_providers[:50],
 				"loading_times": request.session['recommended_providers_page']
 			}
 			return render(request, "empresas/cards_layout.html", context)
-
+	print(recommended_providers)
 	context = {
 		"company": company, 
 		"title": "Recommended providers",
+		"recommended_providers": recommended_providers[:50],
 		"today": today,
 		"loading_times": request.session['recommended_providers_page']
 	}

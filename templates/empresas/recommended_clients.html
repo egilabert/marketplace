@@ -11,6 +11,11 @@
 {% block side-nav %}{% include "side-nav.html" %}{% endblock %}
 {% block content %}
 
+<div class="parallax-container">
+		<!-- <h3 class="center-align grey-text text-darken-3 light">Rocky clients are not all the same</h3> -->
+		<h3 class="center-align grey-text text-darken-3 light">No todos los clientes son iguales</h3>
+	    <div class="parallax"><img src="{% static 'images/rocks.jpg' %}"></div>
+	</div>
 <div class="mdl-card mdl-shadow--2dp">
 
       <div class="mdl-card__supporting-text">
@@ -59,11 +64,7 @@
       </div>
 
   </div>
-	<div class="parallax-container">
-		<!-- <h3 class="center-align grey-text text-darken-3 light">Rocky clients are not all the same</h3> -->
-		<h3 class="center-align grey-text text-darken-3 light">No todos los clientes son iguales</h3>
-	    <div class="parallax"><img src="{% static 'images/rocks.jpg' %}"></div>
-	</div>
+	
     <h5 class="center title light padding_title"><a href='{{ company.get_absolute_url }}'>{{company.name}}</a>, has hablado antes con estos potenciales clientes?</h5>
     <h5 class="center title light">Ayúdanos a entender qué estás buscando - <a href="#" class="client_form_button">Búsqueda avanzada</a></h5>
       <div class="row">

@@ -67,7 +67,7 @@
 		    	<div class="row">
 		    		<div class="col s12 m4 cards-container">
 
-					{% for obj in company.recommended_providers.all %}
+					{% for obj in recommended_providers %}
 							{% if  forloop.counter|add:"-1"|divisibleby:3 %}
 							<div class="card brown lighten-3 hoverable">
 							    <div class="card-image waves-effect waves-block waves-light">
@@ -120,7 +120,7 @@
 					<!-- =================== -->
 
 					<div class="col s12 m4 cards-container">
-						{% for obj in company.recommended_providers.all %}
+						{% for obj in recommended_providers %}
 						
 							{% if forloop.counter|add:"-2"|divisibleby:3 %}
 
@@ -173,7 +173,7 @@
 					</div>
 
 					<div class="col s12 m4 cards-container">
-						{% for obj in company.recommended_providers.all %}
+						{% for obj in recommended_providers %}
 
 							{% if forloop.counter|add:"-3"|divisibleby:3 %}
 

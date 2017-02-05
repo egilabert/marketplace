@@ -1,0 +1,51 @@
+{% extends "app_base.html" %}
+{% load static %}
+{% block page_title %}
+{{ empresa.name }}
+{% load humanize %}
+{% load mathfilters %}
+{% endblock %}
+
+{% block content %}
+		<h4>{{company.name}} - {{company.cnae}}</h4>
+		
+		<div class="row">
+			<div class="col m6">
+			<h4>Clientes</h4>
+			<div class="divider"></div>
+			{% for c in company.get_clients %}
+				<p>{{c.name}}</p><p>{{c.cnae}}</p>
+				<div class="divider"></div>
+			{% endfor %}
+			</div>
+			<div class="col m6">
+			<h4>Recommended clients</h4>
+			<div class="divider"></div>
+			{% for c in rec %}
+				<p>{{c.name}}</p><p>{{c.cnae}}</p>
+				<div class="divider"></div>
+			{% endfor %}
+			</div>
+		</div>
+
+
+		<div class="row">
+			<div class="col m6">
+			<h4>Competencia</h4>
+			<div class="divider"></div>
+			{% for c in company.get_sector_companies %}
+				<p>{{c.name}} - {{c.recommended.similarity}}</p><p>{{c.cnae}}</p>
+				<div class="divider"></div>
+			{% endfor %}
+			</div>
+			<div class="col m6">
+			<h4>Clientes competencia</h4>
+			<div class="divider"></div>
+			{% for c in company.clients_of_sector_companies %}
+				<p>{{c.name}}</p><p>{{c.cnae}}</p>
+				<div class="divider"></div>
+			{% endfor %}
+			</div>
+		</div>
+
+{% endblock %}

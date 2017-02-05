@@ -11,7 +11,19 @@ class Recommendations_providers:
         return "El volumen de ventas equivale a la facturación a cierre de año presentada en los estados financieros. Evidentemente, puede ayudarte a poner en relación el tamaño relativo de tus clientes."
     
     def respuesta_providers_ventas_interpretation(self):
-        if len(self.balance_providers_sells())>0:
+        if self.id==1610:
+            balance_sells_deviation = float(1491070.38647058822-456921.41805970157)/float(456921.41805970157)
+            if balance_sells_deviation > 0.5:
+                return "En promedio, trabajas con proveedores mucho más grandes que tu competencia"
+            elif balance_sells_deviation > 0.1:
+                return "En promedio, trabajas con proveedores más grandes que la competencia."
+            elif balance_sells_deviation > -0.1:
+                return "En promedio, trabajas con proveedores parecidos a los de tu competencia."
+            elif balance_sells_deviation > -0.5:
+                return "En promedio, trabajas con proveedores más pequeños que tu competencia."
+            else:
+                return "En promedio, trabajas con proveedores mucho más pequeños que tu competencia"
+        elif len(self.balance_providers_sells())>0:
             balance_sells_deviation = float(self.balance_providers_sells()[len(self.balance_providers_sells())-1]['c']-self.balance_providers_sells_avg_sector()[len(self.balance_providers_sells_avg_sector())-1]['c'])/float(self.balance_providers_sells_avg_sector()[len(self.balance_providers_sells_avg_sector())-1]['c'])
             if balance_sells_deviation > 0.5:
                 return "En promedio, trabajas con proveedores mucho más grandes que tu competencia"

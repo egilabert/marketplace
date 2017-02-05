@@ -77,7 +77,7 @@
 
 </div>
 
-
+{% if company.id == 990 %}
 <div class="row">
   <div class="col s12 m1"></div>
   <div class="col s12 m5">
@@ -96,7 +96,7 @@
     <div class="card horizontal grey lighten-3 black-text">
       <div class="card-stacked">
         <div class="card-content">
-          <p>Tiene una penetración del 79% en sus clientes, una cifra muy superior a la de su competencia</p>
+          <p>Tiene una penetración del {{penetration|mul:100|floatformat:0}}% en sus clientes, una cifra muy superior a la de su competencia</p>
         </div>
         <div class="divider"></div>
         <div class="card-content">
@@ -107,7 +107,37 @@
   </div>
   <div class="col s12 m1"></div>
 </div>
-
+{% elif company.id == 1610 %}
+<div class="row">
+  <div class="col s12 m1"></div>
+  <div class="col s12 m5">
+    <p class="flow-text center-align">Puntos fuertes</p>
+    <div class="card horizontal green lighten-2 black-text">
+      <div class="card-stacked">
+        <div class="card-content">
+          <p>Los clientes de {{company.name}} estan en linia con la competencia en los principales indicadores</p>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <div class="col s12 m5">
+  <p class="flow-text center-align">Puntos a mejorar</p>
+    <div class="card horizontal grey lighten-3 black-text">
+      <div class="card-stacked">
+        <!-- <div class="card-content">
+          <p>Tiene una penetración del {{penetration|mul:100|floatformat:0}}% en sus clientes, una cifra inferior a la de su competencia</p>
+        </div> -->
+        <div class="divider"></div>
+        <div class="card-content">
+          <p>Los clientes de {{company.name}} tiene un margen comercial estrecho y un ratio de eficiencia mejorable.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="col s12 m1"></div>
+</div>
+{% endif %}
 
 	<div class="row">
 				<!-- {{company.ebitda_avg_sector}} -->
@@ -132,7 +162,7 @@
 				        <div class="col s12 m2 line">
 		      	  			<div class="center-align ">
 				            <i class="fa fa-rocket" aria-hidden="true"></i><span class="card-title"> Tu penetración</span>
-				            <h3 class="align-right orange-text darken-1">79%</h3>
+				            <h3 class="align-right orange-text darken-1">{{penetration|mul:100|floatformat:0}}%</h3>
 				            <span class="green-text text-darken-1"><i class="fa fa-sort-up" aria-hidden="true"></i><span class="card-title">34%</span></span> <span class="light">Desde el mes pasado</span>
 				            </div>
 				        </div>
@@ -442,7 +472,7 @@
 					              				Tú
 					              			</div>
 					              			<div class="col s5">
-					              				<h5> 79<small>%</small></h5>
+					              				<h5> {{penetration|mul:100|floatformat:0}}<small>%</small></h5>
 					              			</div>
 					              			<div class="col s3">
 					              				<span class="green-text text-darken-1"><i class="fa fa-sort-up" aria-hidden="true"></i><span class="card-title"> 34%</span></span> 
@@ -688,7 +718,7 @@
   	var resultado_graph = document.getElementById("resultado_graph");
   	var frecuencia_graph = document.getElementById("frecuencia_graph");
   	var penetration_graph = document.getElementById("penetration_graph");
-  	var penetracion_clientes = 0.79
+  	var penetracion_clientes = {{penetration}}
 	var penetracion_clientes_sector = 0.35//{{company.my_sector_penetration}}
   	// Como son mis clients
   	LineGraph(facturacion_graph, {{balance_sells_avg_sector|safe}}, {{balance_sells|safe}});
