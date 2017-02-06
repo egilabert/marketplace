@@ -70,6 +70,7 @@
 			    	<h3 class="flow-text">  Acciones a realizar</h3>
 			    </div>
 		    	<div class="row title_conf">
+		    	{% if company.id == 990 %}
 		    		<div class="row">
 						  <div class="col s12 m1"></div>
 						  <div class="col s12 m5">
@@ -126,6 +127,64 @@
 						  </div>
 						  <div class="col s12 m1"></div>
 						</div>
+				{% elif company.id == 1610 %}
+		    		<div class="row">
+						  <div class="col s12 m1"></div>
+						  <div class="col s12 m5">
+						    <p class="flow-text center-align">Diagnóstico</p>
+						    <div class="card horizontal grey lighten-3 black-text">
+						      <div class="card-stacked">
+						        <div class="card-content">
+						          <p>{{company.name}} se encuentra en una situación de crecimiento sostenido, pero con resultados a la baja</p>
+						        </div>
+						        <div class="divider"></div>
+						        <div class="card-content">
+						          <p>{{company.name}} tiene un alto nivel de concentranción en sus proveedores</p>
+						        </div>
+						        <div class="divider"></div>
+						        <div class="card-content">
+						          <p>Los proveedores de {{company.name}} tiene un bajo nivel de dependencia, muy por debajo del de su competencia</p>
+						        </div>
+						        <div class="divider"></div>
+						        <div class="card-content">
+						          <p>{{company.name}} tiene un ratio de endeudamiento inferior al de su competencia</p>
+						        </div>
+						        <div class="divider"></div>
+						        <div class="card-content">
+						          <p>{{company.name}} tiene unas necesidades de working capital superiores a la media de su competencia</p>
+						        </div>
+						      </div>
+						    </div>
+
+						  </div>
+						  
+						  <div class="col s12 m5">
+						  <p class="flow-text center-align">Propuesta</p>
+						    <div class="card horizontal grey lighten-3 black-text">
+						      <div class="card-stacked">
+						        <div class="card-content">
+						          <p>El crecimiento sostenido permite, en caso de necesidad, ofrecer nuevos productos, y un incremento de los activos</p>
+						        </div>
+						        <div class="divider"></div>
+						        <div class="card-content">
+						          <p>Es importante ofrecer <strong>nuevos proveedores</strong> para reducir la concentración</p>
+						        </div>
+						         <div class="card-content">
+						          <p>Dependencias muy bajas dificultan el poder de negociación sin buscar <strong>nuevos proveedores</strong></p>
+						        </div>
+						        <div class="card-content">
+						          <p>Es posible indicar <strong>nuevos préstamos</strong> puesto que sus ratios de endeudamiento permiten margen</p>
+						        </div>
+						        <div class="card-content">
+						          <p>Para hacer frente a pagos o inversiones a corto, puede ser interessante ofrecerle <strong>lineas de confirming</strong></p>
+						        </div>
+						        
+						      </div>
+						    </div>
+						  </div>
+						  <div class="col s12 m1"></div>
+						</div>
+					{% endif %}
 		    	</div>
 				 <!-- /////////////////////////////////////////////////////////////
 				 ////// ¿Como son mis clientes?
