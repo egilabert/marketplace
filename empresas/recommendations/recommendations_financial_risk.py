@@ -68,7 +68,19 @@ class Recommendations_financial_risk:
         return "El ratio de deuda a corto plazo sobre deuda a largo plazo da una idea del equilibrio de tu estructura financiera, pudiendo significar problemas en el cotro plazo u oportunidades en el largo."
     
     def respuesta_finrisk_cortolargo_interpretation(self):
-        if len(self.balance_ebitda())>0:
+        if self.id==1610:
+            deuda_ebitda = 0.3133
+            deuda_largo = 154199.451351351345 * deuda_ebitda * 0.8
+            deuda_corto = 154199.451351351345 * deuda_ebitda * 0.2
+            ratio_cortolargo = deuda_corto / deuda_largo
+            ratio_cortolargo_deviation = float(ratio_cortolargo-self.ratio_sector_corto_largo())/float(self.ratio_sector_corto_largo())
+            if ratio_cortolargo_deviation > 0.50:
+                return "Tu ratio corto / largo es sensiblemente superior a la media de tu competencia."
+            elif ratio_cortolargo_deviation > -0.50:
+                return "Tu ratio corto / largo es parecido a la media de tu competencia."
+            else:
+                return "Tu ratio corto / largo es sensiblemente inferior a la media de tu competencia."
+        elif len(self.balance_ebitda())>0:
             ratio_cortolargo_deviation = float(self.ratio_corto_largo()-self.ratio_sector_corto_largo())/float(self.ratio_sector_corto_largo())
             if ratio_cortolargo_deviation > 0.50:
                 return "Tu ratio corto / largo es sensiblemente superior a la media de tu competencia."
@@ -80,7 +92,19 @@ class Recommendations_financial_risk:
             return "No disponemos de los estados financieros de tu competencia"
 
     def respuesta_finrisk_cortolargo_hint(self):
-        if len(self.balance_ebitda())>0:
+        if self.id==1610:
+            deuda_ebitda = 0.3133
+            deuda_largo = 154199.451351351345 * deuda_ebitda * 0.8
+            deuda_corto = 154199.451351351345 * deuda_ebitda * 0.2
+            ratio_cortolargo = deuda_corto / deuda_largo
+            ratio_cortolargo_deviation = float(ratio_cortolargo-self.ratio_sector_corto_largo())/float(self.ratio_sector_corto_largo())
+            if ratio_cortolargo_deviation > 0.50:
+                return "Atención! Tener altos ratios de endeudamiento puede generar costes financieros elevados o dificultar tu acceso a la financiación circulante. Has pensado en restructurar tu deuda? Si quieres, puedes hablar con tu gestor."
+            elif ratio_cortolargo_deviation > -0.50:
+                return "Bien! Estás en línea con tu competencia. Si quieres información sobre productos de financiación puedes contactar con tu gestor."
+            else:
+                return "Sigue así! Tu bajo ratio corto/largo parece indicar que no tienes problemas de liquidez. Sin embargo, si tu ratio de endeudamiento es muy elevado debes tener en cuenta que el acceso a nueva financiación puede verse afectado."
+        elif len(self.balance_ebitda())>0:
             ratio_cortolargo_deviation = float(self.ratio_corto_largo()-self.ratio_sector_corto_largo())/float(self.ratio_sector_corto_largo())
             if ratio_cortolargo_deviation > 0.50:
                 return "Atención! Tener altos ratios de endeudamiento puede generar costes financieros elevados o dificultar tu acceso a la financiación circulante. Has pensado en restructurar tu deuda? Si quieres, puedes hablar con tu gestor."

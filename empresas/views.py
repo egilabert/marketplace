@@ -156,9 +156,9 @@ def EmpresaDetailView(request, pk=None):
 	resultado_explotacion = []
 	amortizaciones = []
 	try:
+		num_proveedores = empresa.get_providers().count()
+		hhi_providers = empresa.hhi_providers()
 		for i, estado in enumerate(empresa.estados_financieros.all()):
-			print('hola')
-			print(company_id)
 			if i == 0:
 				fechas.append(estado.ejercicio)
 				depreciaciones.append(estado.depreciaciones)
@@ -199,6 +199,8 @@ def EmpresaDetailView(request, pk=None):
 		ebitda.append(0)
 		resultado_explotacion.append(0)
 		amortizaciones.append(0)
+		num_proveedores = empresa.get_providers().count()
+		hhi_providers = empresa.hhi_providers()
 
 	if not fechas:
 		fechas.append(0)
@@ -266,12 +268,29 @@ def FinancialRiskRecommendationsView(request):
 	company = Empresa.objects.filter(pk=company_id)
 	company = company.prefetch_related('estados_financieros','cirbe','productos')[0]
 
+	if int(company_id)==1610:
+		deuda_ebitda = 0.3133
+		deuda_largo = 154199.451351351345 * deuda_ebitda * 0.8
+		deuda_corto = 154199.451351351345 * deuda_ebitda * 0.2
+		ratio_corto_largo = deuda_corto / deuda_largo
+		deuda_corto_pond = deuda_corto / 154199.451351351345
+	else:
+		deuda_ebitda = company.deuda_total_pond()
+		deuda_largo = company.cirbe.largo_plazo_dispuesto
+		deuda_corto = company.cirbe.corto_plazo_dispuesto
+		ratio_corto_largo = company.ratio_corto_largo()
+		deuda_corto_pond = company.deuda_corto_pond()
 	try:
 		ultimos_eeff = company.estados_financieros.reverse()[0]
 	except:
 		ultimos_eeff = Empresa()
 	context = {
 		'company':company,
+		'deuda_corto_pond': deuda_corto_pond,
+		'deuda_ebitda': deuda_ebitda,
+		'deuda_largo': deuda_largo,
+		'ratio_corto_largo': ratio_corto_largo,
+		'deuda_corto': deuda_corto,
 		'productos_variable': company.productos_con_tipo_variable().all(),
 		'ultimos_eeff': ultimos_eeff
 		}
