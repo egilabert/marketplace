@@ -274,12 +274,16 @@ def FinancialRiskRecommendationsView(request):
 		deuda_corto = 154199.451351351345 * deuda_ebitda * 0.2
 		ratio_corto_largo = deuda_corto / deuda_largo
 		deuda_corto_pond = deuda_corto / 154199.451351351345
+		dias_a_cobrar = 175
+		dias_a_pagar = 35
 	else:
 		deuda_ebitda = company.deuda_total_pond()
 		deuda_largo = company.cirbe.largo_plazo_dispuesto
 		deuda_corto = company.cirbe.corto_plazo_dispuesto
 		ratio_corto_largo = company.ratio_corto_largo()
 		deuda_corto_pond = company.deuda_corto_pond()
+		dias_a_cobrar = company.dias_a_cobrar()
+		dias_a_pagar = company.dias_a_pagar()
 	try:
 		ultimos_eeff = company.estados_financieros.reverse()[0]
 	except:
@@ -287,6 +291,8 @@ def FinancialRiskRecommendationsView(request):
 	context = {
 		'company':company,
 		'deuda_corto_pond': deuda_corto_pond,
+		'dias_a_pagar': dias_a_pagar,
+		'dias_a_cobrar': dias_a_cobrar,
 		'deuda_ebitda': deuda_ebitda,
 		'deuda_largo': deuda_largo,
 		'ratio_corto_largo': ratio_corto_largo,
@@ -315,8 +321,13 @@ def ClientRiskRecommendationsView(request):
 		ultimos_eeff = company.estados_financieros.reverse()[0]
 	except:
 		ultimos_eeff = Empresa()
+	if int(company_id)==990:
+		penetracion = 0.79
+	else:
+		penetracion = company.my_penetration_client()
 	context = {
 		'company':company,
+		'penetracion': penetracion,
 		'riesgo_impago_clientes': json.dumps(list(company.riesgo_impago_clientes()), cls=DjangoJSONEncoder),
 		'riesgo_impago_clientes_sector': json.dumps(list(company.riesgo_impago_clientes_sector()), cls=DjangoJSONEncoder),
 		'get_monthly_buys': json.dumps(list(company.get_monthly_buys_amount()), cls=DjangoJSONEncoder),
@@ -336,8 +347,19 @@ def ProviderRiskRecommendationsView(request):
 		ultimos_eeff = company.estados_financieros.reverse()[0]
 	except:
 		ultimos_eeff = Empresa()
+	if int(company_id)==1610:
+		dependencia = 0.01
+		hhi_providers = 0.73
+		proveedores = 5
+	else:
+		dependencia = company.my_penetration_provider()
+		hhi_providers = company.hhi_providers()
+		proveedores = company.get_providers().count()
 	context = {
 		'company':company,
+		'dependencia': dependencia,
+		'proveedores': proveedores,
+		'hhi_providers': hhi_providers,
 		'riesgo_impago_proveedores': json.dumps(list(company.riesgo_impago_proveedores()), cls=DjangoJSONEncoder),
 		'riesgo_impago_providers_sector': json.dumps(list(company.riesgo_impago_providers_sector()), cls=DjangoJSONEncoder),
 		'get_monthly_sells': json.dumps(list(company.get_monthly_sells_amount()), cls=DjangoJSONEncoder),

@@ -117,7 +117,7 @@
       <div class="card horizontal green lighten-2">
         <div class="card-stacked">
           <div class="card-content black-text">
-            <p>{{company.name}} es una empresa con un aumento en las ventas continuado</p>
+            <p>{{company.name}} tiene un ratio de endeudamiento sensiblemente inferior al de su competencia</p>
           </div>
         </div>
       </div>
@@ -128,11 +128,7 @@
       <div class="card horizontal grey lighten-3">
         <div class="card-stacked">
           <div class="card-content black-text">
-            <p>El EBITDA y los resultados de explotación tienen un tendencia a la baja en los últimos ejercicios</p>
-          </div>
-          <div class="divider"></div>
-          <div class="card-content black-text">
-            <p>Tiene una alta concentracion en los proveedroes que puede incrementar los riesgos</p>
+            <p>Las necesidades de working capital de {{company.name}} son muy superiores a las de la competencia</p>
           </div>
         </div>
       </div>
@@ -433,7 +429,7 @@
 					              				Tú
 					              			</div>
 					              			<div class="col s5">
-					              				<h5> {{company.dias_a_cobrar|floatformat:0|intcomma}}<small></small></h5>
+					              				<h5> {{dias_a_cobrar|floatformat:0|intcomma}}<small></small></h5>
 					              			</div>
 					              			<div class="col s3">
 					              				<span class="green-text text-darken-1"><i class="fa fa-sort-up" aria-hidden="true"></i><span class="card-title"> 34%</span></span> 
@@ -466,7 +462,7 @@
 					              				Tú
 					              			</div>
 					              			<div class="col s5">
-					              				<h5> {{company.dias_a_pagar|floatformat:0|intcomma}}<small></small></h5>
+					              				<h5> {{dias_a_pagar|floatformat:0|intcomma}}<small></small></h5>
 					              			</div>
 					              			<div class="col s3">
 					              				<span class="red-text text-darken-1"><i class="fa fa-sort-down" aria-hidden="true"></i><span class="card-title"> 5%</span></span> 

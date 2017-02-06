@@ -187,7 +187,9 @@ class Recommendations_financial_risk:
         return "Los días a pagar y  a cobrar son un indicador de tus necesidades de working capital. Para mejorarlo, ten en cuenta que disponemos de productos de financiación específicos o que también puedes optimizar tu rotación de existencias."
     
     def respuesta_finrisk_workingcapital_interpretation(self):
-        if self.dias_a_pagar_sector()!=0:
+        if self.id==1610:
+            return "Tus necesidades de working capital son sensiblemente superiores a la media de tu competencia"
+        elif self.dias_a_pagar_sector()!=0:
             working_capital_deviation = float(self.dias_a_pagar()-self.dias_a_pagar_sector())/float(self.dias_a_pagar_sector())
             if working_capital_deviation > 0.50:
                 return "Tus necesidades de working capital son sensiblemente superiores a la media de tu competencia"
@@ -199,7 +201,9 @@ class Recommendations_financial_risk:
             return "No disponemos de los estados financieros de tu competencia"
 
     def respuesta_finrisk_workingcapital_hint(self):
-        if self.dias_a_pagar_sector()!=0:
+        if self.id==1610:
+            return "Atención! Una elevada necesidad de working capital puede generar un problema de tesorería. Has probado a optimizar tus existencias o el cobro a tus clientes? Si quieres estabilizar tu tesorería dispones de nuestros productos de factoring"
+        elif self.dias_a_pagar_sector()!=0:
             working_capital_deviation = float(self.dias_a_pagar()-self.dias_a_pagar_sector())/float(self.dias_a_pagar_sector())
             if working_capital_deviation > 0.50:
                 return "Atención! Una elevada necesidad de working capital puede generar un problema de tesorería. Has probado a optimizar tus existencias o el cobro a tus clientes? Si quieres estabilizar tu tesorería dispones de nuestros productos de factoring"
