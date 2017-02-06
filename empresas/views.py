@@ -441,6 +441,10 @@ def CommercialProvidersRecommendationsView(request):
 		margen = empresa.margen_comercial_providers()
 		ratio_comercial = 1- margen
 		hhi_providers = empresa.hhi_providers()
+		diff_sells = (sells_me[len(sells_me)-1]['c'] - sells_sector[len(sells_sector)-1]['c'])/sells_sector[len(sells_sector)-1]['c']
+		diff_ebitda = (ebitda_me[len(ebitda_me)-1]['c'] - ebitda_sector[len(ebitda_sector)-1]['c'])/ebitda_sector[len(ebitda_sector)-1]['c']
+		diff_resultados = (resultados_me[len(resultados_me)-1]['c'] - resultados_sector[len(resultados_sector)-1]['c'])/resultados_sector[len(resultados_sector)-1]['c']
+		
 
 	if len(sells_me)>1:
 		delta_ventas = (sells_me[len(sells_me)-1]['c'] - sells_me[len(sells_me)-2]['c'])/sells_me[len(sells_me)-2]['c']
