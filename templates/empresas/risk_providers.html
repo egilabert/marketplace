@@ -86,7 +86,7 @@
     <div class="card horizontal green lighten-2 black-text">
       <div class="card-stacked">
         <div class="card-content">
-          <p>Los clientes de {{company.name}} estan en linia con la competencia en riesgo de impago</p>
+          <p>Alta <strong>diversificación en proveedores</strong> con un índice de concentración del {{company.hhi_providers|floatformat:2}}</p>
         </div>
       </div>
     </div>
@@ -97,11 +97,12 @@
     <div class="card horizontal grey lighten-3 black-text">
       <div class="card-stacked">
         <div class="card-content">
-          <p>Tiene una penetración del {{dependencia|mul:100|floatformat:0}}% en sus clientes, una cifra muy superior a la de su competencia</p>
+          <p>Tiene una dependencia del {{dependencia|mul:100|floatformat:0}}% en sus clientes, una cifra muy superior a la de su competencia</p>
         </div>
         <div class="divider"></div>
         <div class="card-content">
-          <p>{{company.name}} tiene una alta concentración geogràfica en sus clientes</p>
+          <p>Alta <strong>concentración geográfica en proveedores</strong> con un índice de concentración del {{company.hhi_geografical_providers|floatformat:2}}</p>
+        </div>
         </div>
       </div>
     </div>
@@ -116,7 +117,10 @@
     <div class="card horizontal green lighten-2 black-text">
       <div class="card-stacked">
         <div class="card-content">
-          <p>Los proveedores de {{company.name}} estan en linia con la competencia en riesgo de impago</p>
+          <p>Alta <strong>diversificación sectorial</strong> con un índice de concentración del {{company.hhi_cnae_providers|floatformat:2}}</p>
+        </div>
+        <div class="card-content">
+          <p>Bajo nivel <strong>de estacionalidad </strong> con un índice de concentración temporal del {{company.hhi_temporal_providers|floatformat:2}}</p>
         </div>
       </div>
     </div>
@@ -127,11 +131,15 @@
     <div class="card horizontal grey lighten-3 black-text">
       <div class="card-stacked">
         <div class="card-content">
-          <p>Tiene una dependencia del {{dependencia|mul:100|floatformat:0}}% en sus proveedores, una cifra muy inferior a la de su competencia</p>
+          <p>Los proveedores tienen una <strong>baja dependencia</strong> ({{dependencia|mul:100|floatformat:0}}%), una cifra muy inferior a la de su competencia</p>
         </div>
         <div class="divider"></div>
         <div class="card-content">
-          <p>{{company.name}} tiene una concentración en sus proveedores muy superior a la de su competencia</p>
+          <p>Alta <strong>concentración de proveedores</strong> con un índice de concentración del {{hhi_providers|floatformat:2}}</p>
+        </div>
+        <div class="divider"></div>
+        <div class="card-content">
+          <p>Alta <strong>concentración geográfica</strong> con un índice de concentración del {{company.hhi_geografical_providers|floatformat:2}}</p>
         </div>
       </div>
     </div>

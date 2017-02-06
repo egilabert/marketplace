@@ -119,7 +119,7 @@ class Recommendations_providers:
             else:
                 return "En promedio, trabajas con proveedores mucho más débiles que tu competencia."
         elif len(self.balance_providers_ebitda())>0:
-            balance_ebitda_deviation = float(self.balance_providers_ebitda()[len(self.balance_providers_ebitda())-1]['c']-self.balance_providers_ebitda_avg_sector()[len(self.balance_providers_ebitda_avg_sector())-1]['c'])/float(self.balance_providers_ebitda_avg_sector()[len(self.balance_providers_ebitda_avg_sector())-1]['c'])
+            balance_ebitda_deviation = float(self.balance_providers_ebitda()[len(self.balance_providers_ebitda())-1]['c']-self.balance_providers_ebitda_avg_sector()[len(self.balance_providers_ebitda_avg_sector())-1]['c'])/abs(float(self.balance_providers_ebitda_avg_sector()[len(self.balance_providers_ebitda_avg_sector())-1]['c']))
             if balance_ebitda_deviation > 0.5:
                 return "En promedio, trabajas con proveedores mucho más fuertes que tu competencia."
             elif balance_ebitda_deviation > 0.1:
@@ -147,7 +147,7 @@ class Recommendations_providers:
             else:
                 return "Alerta! Trabajar con proveedores en dificultades supone un riesgo para tu negocio. Has probado con proveedores más fuertes? Si buscas ampliar  tu base de proveedores utiliza nuestro motor de recomendaciones ."
         elif len(self.balance_providers_ebitda())>0:
-            balance_ebitda_deviation = float(self.balance_providers_ebitda()[len(self.balance_providers_ebitda())-1]['c']-self.balance_providers_ebitda_avg_sector()[len(self.balance_providers_ebitda_avg_sector())-1]['c'])/float(self.balance_providers_ebitda_avg_sector()[len(self.balance_providers_ebitda_avg_sector())-1]['c'])
+            balance_ebitda_deviation = float(self.balance_providers_ebitda()[len(self.balance_providers_ebitda())-1]['c']-self.balance_providers_ebitda_avg_sector()[len(self.balance_providers_ebitda_avg_sector())-1]['c'])/abs(float(self.balance_providers_ebitda_avg_sector()[len(self.balance_providers_ebitda_avg_sector())-1]['c']))
             if balance_ebitda_deviation > 0.5:
                 return "Sigue así! Si buscas ampliar  tu base de proveedores utiliza nuestro motor de recomendaciones ."
             elif balance_ebitda_deviation > 0.1:
@@ -201,7 +201,7 @@ class Recommendations_providers:
     
     def respuesta_providers_resultado_interpretation(self):
         if len(self.balance_providers_resultado())>0:
-            balance_resultado_deviation = float(self.balance_providers_resultado()[len(self.balance_providers_resultado())-1]['c']-self.balance_providers_resultado_avg_sector()[len(self.balance_providers_resultado_avg_sector())-1]['c'])/float(self.balance_providers_resultado_avg_sector()[len(self.balance_providers_resultado_avg_sector())-1]['c'])
+            balance_resultado_deviation = float(self.balance_providers_resultado()[len(self.balance_providers_resultado())-1]['c']-self.balance_providers_resultado_avg_sector()[len(self.balance_providers_resultado_avg_sector())-1]['c'])/abs(float(self.balance_providers_resultado_avg_sector()[len(self.balance_providers_resultado_avg_sector())-1]['c']))
             if balance_resultado_deviation > 0.5:
                 return "En promedio, trabajas con proveedores con mucho mejores resultados que tu competencia."
             elif balance_resultado_deviation > 0.1:
@@ -217,7 +217,7 @@ class Recommendations_providers:
 
     def respuesta_providers_resultado_hint(self):
         if len(self.balance_providers_resultado())>0:
-            balance_resultado_deviation = float(self.balance_providers_resultado()[len(self.balance_providers_resultado())-1]['c']-self.balance_providers_resultado_avg_sector()[len(self.balance_providers_resultado_avg_sector())-1]['c'])/float(self.balance_providers_resultado_avg_sector()[len(self.balance_providers_resultado_avg_sector())-1]['c'])
+            balance_resultado_deviation = float(self.balance_providers_resultado()[len(self.balance_providers_resultado())-1]['c']-self.balance_providers_resultado_avg_sector()[len(self.balance_providers_resultado_avg_sector())-1]['c'])/abs(float(self.balance_providers_resultado_avg_sector()[len(self.balance_providers_resultado_avg_sector())-1]['c']))
             if balance_resultado_deviation > 0.5:
                 return "Sigue así! Si buscas ampliar  tu base de proveedores utiliza nuestro motor de recomendaciones."
             elif balance_resultado_deviation > 0.1:

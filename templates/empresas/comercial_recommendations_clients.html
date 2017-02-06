@@ -85,8 +85,17 @@
     <div class="card horizontal green lighten-2 black-text">
       <div class="card-stacked">
         <div class="card-content">
-          <p>Los clientes de {{company.name}} estan en linia con la competencia en los principales indicadores</p>
+          <p><strong>No se observan desviaciones significativas</strong> en las principales métricas:</p>
+          <ul type="square">
+          	<li>	. Ventas (crecimiento anual del {{delta_ventas|mul:100|floatformat:0}}%)</li>
+          	<li>	. EBITDA (crecimiento anual del {{delta_ebitda|mul:100|floatformat:0}}%)</li>
+          	<li>	. Resultados de explotación (crecimiento anual del {{delta_resultados_explotacion|mul:100|floatformat:0}}%)</li>
+          </ul>
         </div>
+        <div class="divider"></div>
+          <div class="card-content black-text">
+            <p>Buena <strong>diversificación en clientes</strong> con un índice de concentración del {{company.hhi_clients_clients|floatformat:2}}</p>
+          </div>
       </div>
     </div>
   </div>
@@ -96,11 +105,11 @@
     <div class="card horizontal grey lighten-3 black-text">
       <div class="card-stacked">
         <div class="card-content">
-          <p>Tiene una penetración del {{penetration|mul:100|floatformat:0}}% en sus clientes, una cifra muy superior a la de su competencia</p>
+          <p><strong>Alta penetración</strong> del ({{penetration|mul:100|floatformat:0}}%) en sus clientes, por lo que existe poco margen de crecimiento con ellos</p>
         </div>
         <div class="divider"></div>
-        <div class="card-content">
-          <p>Los clientes de {{company.name}} tiene un margen comercial estrecho y un ratio de eficiencia mejorable.</p>
+        <div class="card-content black-text">
+            <p><strong>Baja diversidad de geográfica</strong> ({{company.hhi_geografical_clients|floatformat:2}})  incrementando el riesgo de concentración geográfica</p>
         </div>
       </div>
     </div>
@@ -114,9 +123,22 @@
     <p class="flow-text center-align">Puntos fuertes</p>
     <div class="card horizontal green lighten-2 black-text">
       <div class="card-stacked">
-        <div class="card-content">
-          <p>Los clientes de {{company.name}} estan en linia con la competencia en los principales indicadores</p>
+      	<div class="card-content">
+          <p><strong>No se observan desviaciones significativas</strong> en las principales métricas:</p>
+          <ul type="square">
+          	<li>	. Ventas (crecimiento anual del {{delta_ventas|mul:100|floatformat:0}}%)</li>
+          	<li>	. EBITDA (crecimiento anual del {{delta_ebitda|mul:100|floatformat:0}}%)</li>
+          	<li>	. Resultados de explotación (crecimiento anual del {{delta_resultados_explotacion|mul:100|floatformat:0}}%)</li>
+          </ul>
         </div>
+        <div class="divider"></div>
+          <div class="card-content black-text">
+            <p>Buena <strong>diversificación en clientes</strong> con un índice de concentración del {{company.hhi_clients_clients|floatformat:2}}</p>
+          </div>
+        <div class="divider"></div>
+          <div class="card-content black-text">
+            <p>Buena <strong>diversificación sectorial</strong> con un índice de concentración del {{company.hhi_cnae_clients|floatformat:2}}</p>
+          </div>
       </div>
     </div>
   </div>
@@ -125,13 +147,18 @@
   <p class="flow-text center-align">Puntos a mejorar</p>
     <div class="card horizontal grey lighten-3 black-text">
       <div class="card-stacked">
-        <!-- <div class="card-content">
-          <p>Tiene una penetración del {{penetration|mul:100|floatformat:0}}% en sus clientes, una cifra inferior a la de su competencia</p>
-        </div> -->
         <div class="divider"></div>
-        <div class="card-content">
-          <p>Los clientes de {{company.name}} tiene un margen comercial estrecho y un ratio de eficiencia mejorable.</p>
+        <div class="card-content black-text">
+            <p><strong>Baja diversidad de geográfica</strong> ({{company.hhi_geografical_clients|floatformat:2}})  incrementando el riesgo de concentración geográfica</p>
         </div>
+        <div class="divider"></div>
+        <div class="card-content black-text">
+            <p>Se observa una <strong>reducción de las ventas</strong> de tus clientes situada en un {{delta_ventas|mul:100|floatformat:1}}% el último año</p>
+          </div>
+        <div class="divider"></div>
+        <div class="card-content black-text">
+            <p>Se observa una <strong>reducción del resultado de explotación</strong> de tus clientes situada en un {{delta_resultados_explotacion|mul:100|floatformat:1}}% el último año</p>
+          </div>
       </div>
     </div>
   </div>
@@ -245,9 +272,9 @@
 					            <div class="card-content grey-text darken-4">
 					              <blockquote>
 					    				<p class="light"><i class="tiny material-icons indigo-text darken-4">live_help</i> {{company.respuesta_clientes_ventas_info}}</p>
-					    				<p class="light"><i class="tiny material-icons indigo-text darken-4">info</i> {{company.respuesta_clientes_ventas_interpretation}}</p>
+					    				<p class="light"><i class="tiny material-icons indigo-text darken-4">info</i> {{respuesta_clientes_ventas_interpretation}}</p>
 					    				<!-- <p class="light">{{company.respuesta_clientes_ventas_interpretation_delta}}</p> -->
-					    				<p class="light"><i class="tiny material-icons indigo-text darken-4">new_releases</i> {{company.respuesta_clientes_ventas_hint}} </p>
+					    				<p class="light"><i class="tiny material-icons indigo-text darken-4">new_releases</i> {{respuesta_clientes_ventas_hint}} </p>
 					    				<!-- <p class="light">{{company.respuesta_clientes_ventas_hint_delta}}</p> -->
 					    				<div class="row">
 					    					<div class="col m4 s6"></div>
@@ -275,9 +302,9 @@
 					            <div class="card-content grey-text darken-4">
 					              <blockquote>
 					    				<p class="light"><i class="tiny material-icons indigo-text darken-4">live_help</i> {{company.respuesta_clientes_ebitda_info}}</p>
-					    				<p class="light"><i class="tiny material-icons indigo-text darken-4">info</i> {{company.respuesta_clientes_ebitda_interpretation}}</p>
+					    				<p class="light"><i class="tiny material-icons indigo-text darken-4">info</i> {{respuesta_clientes_ebitda_interpretation}}</p>
 					    				<!-- <p class="light">{{company.respuesta_clientes_ebitda_interpretation_delta}}</p> -->
-					    				<p class="light"><i class="tiny material-icons indigo-text darken-4">new_releases</i> {{company.respuesta_clientes_ebitda_hint}}</p>
+					    				<p class="light"><i class="tiny material-icons indigo-text darken-4">new_releases</i> {{respuesta_clientes_ebitda_hint}}</p>
 					    				<!-- <p class="light">{{company.respuesta_clientes_ebitda_hint_delta}} </p> -->
 					    				<div class="row">
 					    					<div class="col m4 s6"></div>
@@ -305,9 +332,9 @@
 					            <div class="card-content grey-text darken-4">
 					              <blockquote>
 					    				<p class="light"><i class="tiny material-icons indigo-text darken-4">live_help</i> {{company.respuesta_clientes_resultado_info}}</p>
-					    				<p class="light"><i class="tiny material-icons indigo-text darken-4">info</i> {{company.respuesta_clientes_resultado_interpretation}}</p>
+					    				<p class="light"><i class="tiny material-icons indigo-text darken-4">info</i> {{respuesta_clientes_resultado_interpretation}}</p>
 					    				<!-- <p class="light">{{company.respuesta_clientes_resultado_interpretation_delta}}</p> -->
-					    				<p class="light"><i class="tiny material-icons indigo-text darken-4">new_releases</i> {{company.respuesta_clientes_resultado_hint}} </p>
+					    				<p class="light"><i class="tiny material-icons indigo-text darken-4">new_releases</i> {{respuesta_clientes_resultado_hint}} </p>
 					    				<!-- <p class="light">{{company.respuesta_clientes_resultado_hint_delta}} </p> -->
 					    				<div class="row">
 					    					<div class="col m4 s6"></div>
@@ -628,16 +655,16 @@
 					            		<div class="col m4 s12 line">
 					            			<p>Margen comercial</p>
 					            			<h4><i class="fa fa-user" aria-hidden="true"></i> {{company.margen_comercial_clientes|floatformat:2}}</h4>
-					            			<h4><i class="fa fa-users" aria-hidden="true"></i> {{company.margen_comercial_sector_clientes|floatformat:2}}</h4>
+					            			<h4><i class="fa fa-users" aria-hidden="true"></i> {{margen_comercial_sector_clientes|floatformat:2}}</h4>
 					            		</div>
 					            		<div class="col m4 s12 line">
 					            			<p>Ratio de eficiencia</p>
 					            			<h4><i class="fa fa-user" aria-hidden="true"></i> {{company.ratio_comercial_clientes|floatformat:2}}</h4>
-					            			<h4><i class="fa fa-users" aria-hidden="true"></i> {{company.ratio_comercial_sector_clientes|floatformat:2}}</h4>
+					            			<h4><i class="fa fa-users" aria-hidden="true"></i> {{ratio_comercial_sector_clientes|floatformat:2}}</h4>
 					            		</div>
 					            		<div class="col m4 s12">
 					            			<p>Ticket medio</p>
-					            			<h4><i class="fa fa-user" aria-hidden="true"></i> {{company.average_transfer_from_client|floatformat:0}}</h4>
+					            			<h4><i class="fa fa-user" aria-hidden="true"></i> {{average_transfer_from_client|floatformat:0}}</h4>
 					            			<h4><i class="fa fa-users" aria-hidden="true"></i> {{company.average_sector_sells|floatformat:0}}</h4>
 					            		</div>
 									</div>
@@ -645,17 +672,17 @@
 									<div class="row center-align">
 					            		<div class="col m4 s12">
 					            			{% if company.margen_comercial_clientes|sub:company.margen_comercial_sector_clientes < 0 %}
-					            				<h4 style="color: red"> <i class="fa fa-sort-down" aria-hidden="true"></i> {{company.margen_comercial_clientes|sub:company.margen_comercial_sector_clientes|floatformat:2}}</h4>
+					            				<h4 style="color: red"> <i class="fa fa-sort-down" aria-hidden="true"></i> {{company.margen_comercial_clientes|sub:margen_comercial_sector_clientes|floatformat:2}}</h4>
 					            			{%else%}
-					            				<h4 style="color: green"> <i class="fa fa-sort-up" aria-hidden="true"></i> {{company.margen_comercial_clientes|sub:company.margen_comercial_sector_clientes|floatformat:2}}</h4>
+					            				<h4 style="color: green"> <i class="fa fa-sort-up" aria-hidden="true"></i> {{company.margen_comercial_clientes|sub:margen_comercial_sector_clientes|floatformat:2}}</h4>
 					            			{% endif %}
 					            			
 					            		</div>
 					            		<div class="col m4 s12">
-					            			{% if company.ratio_comercial_clientes|sub:company.ratio_comercial_sector_clientes < 0 %}
-					            				<h4 style="color: green"> <i class="fa fa-sort-down" aria-hidden="true"></i> {{company.ratio_comercial_clientes|sub:company.ratio_comercial_sector_clientes|floatformat:2}}</h4>
+					            			{% if company.ratio_comercial_clientes|sub:ratio_comercial_sector_clientes < 0 %}
+					            				<h4 style="color: green"> <i class="fa fa-sort-down" aria-hidden="true"></i> {{company.ratio_comercial_clientes|sub:ratio_comercial_sector_clientes|floatformat:2}}</h4>
 					            			{%else%}
-					            				<h4 style="color: red"> <i class="fa fa-sort-up" aria-hidden="true"></i> {{company.ratio_comercial_clientes|sub:company.ratio_comercial_sector_clientes|floatformat:2}}</h4>
+					            				<h4 style="color: red"> <i class="fa fa-sort-up" aria-hidden="true"></i> {{company.ratio_comercial_clientes|sub:ratio_comercial_sector_clientes|floatformat:2}}</h4>
 					            			{% endif %}
 					            		</div>
 					            		<div class="col m4 s12">

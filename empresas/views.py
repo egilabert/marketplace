@@ -1,3 +1,6 @@
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
+
 from django.http import HttpResponse, HttpResponseRedirect, HttpRequest
 from django.conf import settings
 from django.shortcuts import render, get_object_or_404
@@ -176,6 +179,8 @@ def EmpresaDetailView(request, pk=None):
 				amortizaciones.append(amortizaciones[i-1]*random.uniform(1, 1.1))
 				num_proveedores = empresa.get_providers().count()
 				hhi_providers = empresa.hhi_providers()
+				margen_comercial_sector_clientes = 0.16
+				
 			if int(company_id)==int(pk) and int(company_id)==1610 and (i != 0):
 				print('here')
 				fechas.append(estado.ejercicio)
@@ -186,6 +191,7 @@ def EmpresaDetailView(request, pk=None):
 				amortizaciones.append(amortizaciones[i-1]*random.uniform(1, 1.1))
 				num_proveedores = 5
 				hhi_providers = 0.73
+				margen_comercial_sector_clientes = empresa.margen_comercial_sector_clientes()
 			elif i!=0 and int(company_id)!=1610 and int(company_id)!=990:
 				fechas.append(estado.ejercicio)
 				depreciaciones.append(estado.depreciaciones)
@@ -193,6 +199,7 @@ def EmpresaDetailView(request, pk=None):
 				resultado_explotacion.append(estado.resultado_explotacion)
 				ventas.append(estado.ventas)
 				amortizaciones.append(estado.amortizaciones)
+				margen_comercial_sector_clientes = empresa.margen_comercial_sector_clientes()
 	except:
 		ventas.append(0)
 		depreciaciones.append(0)
@@ -201,6 +208,7 @@ def EmpresaDetailView(request, pk=None):
 		amortizaciones.append(0)
 		num_proveedores = empresa.get_providers().count()
 		hhi_providers = empresa.hhi_providers()
+		margen_comercial_sector_clientes = empresa.margen_comercial_sector_clientes()
 
 	if not fechas:
 		fechas.append(0)
@@ -226,8 +234,22 @@ def EmpresaDetailView(request, pk=None):
 		data = json.dumps(list(empresa.get_monthly_buys_amount()), cls=DjangoJSONEncoder)
 		titulo = 'Compras mensuales'
 
+	if len(ventas)>1:
+		delta_ventas = (ventas[len(ventas)-1] - ventas[len(ventas)-2])/ventas[len(ventas)-2]
+	if len(ebitda)>1:
+		delta_ebitda = (ebitda[len(ebitda)-1] - ebitda[len(ebitda)-2])/ebitda[len(ebitda)-2]
+		trabajadores = int(ebitda[len(ebitda)-1]/1200)
+	else:
+		trabajadores = 10
+	if len(resultado_explotacion)>1:
+		delta_resultados_explotacion = (resultado_explotacion[len(resultado_explotacion)-1] - resultado_explotacion[len(resultado_explotacion)-2])/resultado_explotacion[len(resultado_explotacion)-2]
+
 	context = {
 		'referrer': key,
+		'delta_ventas': delta_ventas,
+		'trabajadores': trabajadores,
+		'delta_ebitda': delta_ebitda,
+		'delta_resultados_explotacion': delta_resultados_explotacion,
 		'company': company,
 		'empresa':empresa,
 		'form': form,
@@ -275,7 +297,7 @@ def FinancialRiskRecommendationsView(request):
 		ratio_corto_largo = deuda_corto / deuda_largo
 		deuda_corto_pond = deuda_corto / 154199.451351351345
 		dias_a_cobrar = 175
-		dias_a_pagar = 35
+		dias_a_pagar = 58
 	else:
 		deuda_ebitda = company.deuda_total_pond()
 		deuda_largo = company.cirbe.largo_plazo_dispuesto
@@ -397,13 +419,17 @@ def CommercialProvidersRecommendationsView(request):
 		ebitda_me = [{u'ejercicio': u'2011', 'c': 151794.07494505495}, {u'ejercicio': u'2012', 'c': 145185.49206521739}, {u'ejercicio': u'2013', 'c': 141847.803749999985}, {u'ejercicio': u'2014', 'c': 154199.451351351345}]
 		resultados_sector = [{u'ejercicio': u'2011', 'c': 66543.67525477704}, {u'ejercicio': u'2012', 'c': 53854.49316293933}, {u'ejercicio': u'2013', 'c': 16644.12122866895}, {u'ejercicio': u'2014', 'c': 76736.3875572519}]
 		resultados_me = [{u'ejercicio': u'2011', 'c': 153690.474505494498}, {u'ejercicio': u'2012', 'c': 102998.05847826087}, {u'ejercicio': u'2013', 'c': 70357.194875000005}, {u'ejercicio': u'2014', 'c': 132367.53648648648}]
+		diff_sells = (sells_me[len(sells_me)-1]['c'] - sells_sector[len(sells_sector)-1]['c'])/sells_sector[len(sells_sector)-1]['c']
+		diff_ebitda = (ebitda_me[len(ebitda_me)-1]['c'] - ebitda_sector[len(ebitda_sector)-1]['c'])/ebitda_sector[len(ebitda_sector)-1]['c']
+		diff_resultados = (resultados_me[len(resultados_me)-1]['c'] - resultados_sector[len(resultados_sector)-1]['c'])/resultados_sector[len(resultados_sector)-1]['c']
 		penetration = 0.01
 		num_proveedores = 5
 		margen = 0.16
 		ratio_comercial = 1- margen
 		hhi_providers = 0.73
+		average_transfer_to_provider = 1567
 	else:
-		print('nooooo')
+		average_transfer_to_provider = empresa.average_transfer_to_provider()
 		sells_sector = list(empresa.balance_providers_sells_avg_sector())
 		sells_me = list(empresa.balance_providers_sells())
 		ebitda_sector = list(empresa.balance_providers_ebitda_avg_sector())
@@ -416,10 +442,23 @@ def CommercialProvidersRecommendationsView(request):
 		ratio_comercial = 1- margen
 		hhi_providers = empresa.hhi_providers()
 
-	print(sells_sector)
+	if len(sells_me)>1:
+		delta_ventas = (sells_me[len(sells_me)-1]['c'] - sells_me[len(sells_me)-2]['c'])/sells_me[len(sells_me)-2]['c']
+	if len(ebitda_me)>1:
+		delta_ebitda = (ebitda_me[len(ebitda_me)-1]['c'] - ebitda_me[len(ebitda_me)-2]['c'])/ebitda_me[len(ebitda_me)-2]['c']
+	if len(resultados_me)>1:
+		delta_resultados_explotacion = (resultados_me[len(resultados_me)-1]['c'] - resultados_me[len(resultados_me)-2]['c'])/resultados_me[len(resultados_me)-2]['c']
+
 	context = {
+		'diff_sells': diff_sells,
+		'average_transfer_to_provider': average_transfer_to_provider,
+		'diff_ebitda': diff_ebitda,
+		'diff_resultados': diff_resultados,
 		'company':empresa,
 		'num_proveedores': num_proveedores,
+		'delta_ebitda': delta_ebitda,
+		'delta_ventas': delta_ventas,
+		'delta_resultados_explotacion': delta_resultados_explotacion,
 		'hhi_providers': hhi_providers,
 		'penetration': penetration,
 		'margen': margen,
@@ -451,6 +490,30 @@ def CommercialClientsRecommendationsView(request):
 		resultados_sector = [{u'ejercicio': u'2011', 'c': 66543.67525477704}, {u'ejercicio': u'2012', 'c': 53854.49316293933}, {u'ejercicio': u'2013', 'c': 16644.12122866895}, {u'ejercicio': u'2014', 'c': 76736.3875572519}]
 		resultados_me = [{u'ejercicio': u'2011', 'c': 63690.474505494498}, {u'ejercicio': u'2012', 'c': 42998.05847826087}, {u'ejercicio': u'2013', 'c': 10357.194875000005}, {u'ejercicio': u'2014', 'c': 82367.53648648648}]
 		penetration = 0.79
+		margen_comercial_sector_clientes = 0.17
+		average_transfer_from_client = empresa.average_transfer_from_client()
+		respuesta_clientes_ventas_interpretation = empresa.respuesta_clientes_ventas_interpretation()
+		respuesta_clientes_ventas_hint = empresa.respuesta_clientes_ventas_hint()
+		respuesta_clientes_ebitda_interpretation = empresa.respuesta_clientes_ebitda_interpretation()
+		respuesta_clientes_ebitda_hint = empresa.respuesta_clientes_ebitda_hint()
+		respuesta_clientes_resultado_interpretation = empresa.respuesta_clientes_resultado_interpretation()
+		respuesta_clientes_resultado_hint = empresa.respuesta_clientes_resultado_hint()
+	elif int(company_id)==1610:
+		average_transfer_from_client = empresa.average_transfer_from_client()
+		sells_sector = [{u'ejercicio': u'2011', 'c': 2180661.276511628}, {u'ejercicio': u'2012', 'c': 2062934.5268888888}, {u'ejercicio': u'2013', 'c': 2036585.5086363638}, {u'ejercicio': u'2014', 'c': 1840804.0434615384}]
+		sells_me = [{u'ejercicio': u'2011', 'c': 2072914.685151515}, {u'ejercicio': u'2012', 'c': 1997092.5245454542}, {u'ejercicio': u'2013', 'c': 1920736.3365625}, {u'ejercicio': u'2014', 'c': 1786596.690588235}]
+		ebitda_sector = [{u'ejercicio': u'2011', 'c': 122301.15116279075}, {u'ejercicio': u'2012', 'c': 144775.50600000002}, {u'ejercicio': u'2013', 'c': 102894.84340909087}, {u'ejercicio': u'2014', 'c': 103337.52038461539}]
+		ebitda_me = [{u'ejercicio': u'2011', 'c': 112907.07303030306}, {u'ejercicio': u'2012', 'c': 124063.1478787879}, {u'ejercicio': u'2013', 'c': 84667.197499999995}, {u'ejercicio': u'2014', 'c': 94119.011176470583}]
+		resultados_sector = [{u'ejercicio': u'2011', 'c': 83267.03534883722}, {u'ejercicio': u'2012', 'c': 88847.32644444442}, {u'ejercicio': u'2013', 'c': 48103.09454545455}, {u'ejercicio': u'2014', 'c': 37066.20846153845}]
+		resultados_me = [{u'ejercicio': u'2011', 'c': 73000.65969696968}, {u'ejercicio': u'2012', 'c': 75194.46393939393}, {u'ejercicio': u'2013', 'c': 46659.145}, {u'ejercicio': u'2014', 'c': 34551.467058823528}]
+		respuesta_clientes_ventas_interpretation = "En promedio, trabajas con clientes parecidos a los de tu competencia."
+		respuesta_clientes_ventas_hint = "Bien! Si te interesa, puedes encontrar clientes de mayor tamaño utilizando nuestro motor de recomendaciones."
+		respuesta_clientes_ebitda_interpretation = "En promedio, trabajas con clientes parecidos a los de tu competencia."
+		respuesta_clientes_ebitda_hint = "Bien! Si te interesa, puedes encontrar clientes más  fuertes utilizando nuestro motor de recomendaciones."
+		respuesta_clientes_resultado_interpretation = "En promedio, trabajas con clientes parecidos a los de tu competencia."
+		respuesta_clientes_resultado_hint = "Bien! Si te interesa, puedes encontrar mejores clientes utilizando nuestro motor de recomendaciones."
+		penetration = empresa.my_penetration_client()
+		margen_comercial_sector_clientes = empresa.margen_comercial_sector_clientes()
 	else:
 		sells_sector = list(empresa.balance_clients_sells_avg_sector())
 		sells_me = list(empresa.balance_clients_sells())
@@ -459,9 +522,38 @@ def CommercialClientsRecommendationsView(request):
 		resultados_sector = list(empresa.balance_clients_resultado_avg_sector())
 		resultados_me = list(empresa.balance_clients_resultado())
 		penetration = empresa.my_penetration_client()
+		margen_comercial_sector_clientes = empresa.margen_comercial_sector_clientes()
+		average_transfer_from_client = empresa.average_transfer_from_client()
+		respuesta_clientes_ventas_interpretation = empresa.respuesta_clientes_ventas_interpretation()
+		respuesta_clientes_ventas_hint = empresa.respuesta_clientes_ventas_hint()
+		respuesta_clientes_ebitda_interpretation = empresa.respuesta_clientes_ebitda_interpretation()
+		respuesta_clientes_ebitda_hint = empresa.respuesta_clientes_ebitda_hint()
+		respuesta_clientes_resultado_interpretation = empresa.respuesta_clientes_resultado_interpretation()
+		respuesta_clientes_resultado_hint = empresa.respuesta_clientes_resultado_hint()
+
+	ratio = 1-margen_comercial_sector_clientes
+
+	if len(sells_me)>1:
+		delta_ventas = (sells_me[len(sells_me)-1]['c'] - sells_me[len(sells_me)-2]['c'])/sells_me[len(sells_me)-2]['c']
+	if len(ebitda_me)>1:
+		delta_ebitda = (ebitda_me[len(ebitda_me)-1]['c'] - ebitda_me[len(ebitda_me)-2]['c'])/ebitda_me[len(ebitda_me)-2]['c']
+	if len(resultados_me)>1:
+		delta_resultados_explotacion = (resultados_me[len(resultados_me)-1]['c'] - resultados_me[len(resultados_me)-2]['c'])/resultados_me[len(resultados_me)-2]['c']
 
 	context = {
 		'company':empresa,
+		'margen_comercial_sector_clientes': margen_comercial_sector_clientes,
+		'ratio_comercial_sector_clientes': ratio,
+		'respuesta_clientes_ventas_interpretation': respuesta_clientes_ventas_interpretation,
+		'respuesta_clientes_ebitda_hint': respuesta_clientes_ebitda_hint,
+		'respuesta_clientes_ventas_hint': respuesta_clientes_ventas_hint,
+		'respuesta_clientes_ebitda_interpretation': respuesta_clientes_ebitda_interpretation,
+		'respuesta_clientes_resultado_interpretation': respuesta_clientes_resultado_interpretation,
+		'respuesta_clientes_resultado_hint': respuesta_clientes_resultado_hint,
+		'average_transfer_from_client': average_transfer_from_client,
+		'delta_ventas': delta_ventas,
+		'delta_ebitda': delta_ebitda,
+		'delta_resultados_explotacion': delta_resultados_explotacion,
 		'get_monthly_sells_amount': json.dumps(list(empresa.get_monthly_sells_amount()), cls=DjangoJSONEncoder),
 		'get_sector_total_monthly_sells_amount': json.dumps(list(empresa.get_sector_total_monthly_sells_amount()), cls=DjangoJSONEncoder),
 		'balance_sells_avg_sector': json.dumps(sells_sector, cls=DjangoJSONEncoder), #json.dumps(list(empresa.balance_clients_sells_avg_sector()), cls=DjangoJSONEncoder),

@@ -85,9 +85,21 @@
     <p class="flow-text center-align">Puntos fuertes</p>
     <div class="card horizontal green lighten-2 black-text">
       <div class="card-stacked">
-        <div class="card-content">
-          <p>Los proveedores de {{company.name}} tienen un tamaño parecido a los de la competencia</p>
-        </div>
+        <div class="card-content black-text">
+        	<p><strong>No se observan desviaciones significativas</strong> en el volúmen de ventas de los proveedores respecto a su comptencia</p>
+          </div>
+          <div class="divider"></div>
+          <div class="card-content black-text">
+            <p>Buena <strong>diversificación en proveedores</strong> con un índice de concentración del {{hhi_providers|floatformat:2}}</p>
+          </div>
+          <div class="divider"></div>
+          <div class="card-content black-text">
+            <p>Trabajas con <strong>proveedores más fuertes que tu competencia</strong> </p>
+          </div>
+          <div class="divider"></div>
+          <div class="card-content black-text">
+            <p>Trabajas con <strong>proveedores con mucho mejores resultados que tu competencia.</strong> </p>
+          </div>
       </div>
     </div>
   </div>
@@ -97,16 +109,16 @@
     <div class="card horizontal grey lighten-3 black-text">
       <div class="card-stacked">
         <div class="card-content">
-          <p>Tiene una penetración del {{penetration|mul:100|floatformat:0}}% en sus clientes, una cifra inferior a la de su competencia</p>
+          <p>Tiene una dependencia del {{penetration|mul:100|floatformat:0}}% en sus clientes, una cifra inferior a la de su competencia</p>
         </div>
         <div class="divider"></div>
-        <div class="card-content">
-          <p>Los proveedores de {{company.name}} tiene peores resultados que tu competencia.</p>
-        </div>
+        <div class="card-content black-text">
+            <p>Se observa una <strong>reducción del EBITDA</strong> de tus proveedores situada en un {{delta_ebitda|mul:100|floatformat:1}}% el último año</p>
+          </div>
         <div class="divider"></div>
-        <div class="card-content">
-          <p>Los proveedores de {{company.name}} tiene un margen comercial estrecho y un ratio de eficiencia mejorable.</p>
-        </div>
+        <div class="card-content black-text">
+            <p>Se observa una <strong>reducción de los resultados de explotación</strong> de tus proveedores situada en un {{delta_resultados_explotacion|mul:100|floatformat:1}}% el último año</p>
+          </div>
       </div>
     </div>
   </div>
@@ -119,24 +131,36 @@
     <p class="flow-text center-align">Puntos fuertes</p>
     <div class="card horizontal green lighten-2 black-text">
       <div class="card-stacked">
-        <div class="card-content">
-          <p>Los proveedores de {{company.name}} son en general mucho más grandes que los de su competencia</p>
+          <div class="card-content black-text">
+            <p><strong>El volumen de ventas </strong> de los proveedores es mucho mayor que el de tu competencia ({{diff_sells|mul:100|floatformat:0}}%)</p>
+          </div>
+        <div class="divider"></div>
+        <div class="card-content black-text">
+            <p><strong>El EBITDA </strong> de los proveedores es mucho mayor que el de tu competencia ({{diff_ebitda|mul:100|floatformat:0}}%)</p>
+          </div>
+        <div class="divider"></div>
+        <div class="card-content black-text">
+            <p><strong>Los resultados de explotación </strong> de los proveedores son mejores que el de tu competencia ({{diff_resultados|mul:100|floatformat:0}}%)</p>
+          </div>
         </div>
       </div>
-    </div>
   </div>
   
   <div class="col s12 m5">
   <p class="flow-text center-align">Puntos a mejorar</p>
     <div class="card horizontal grey lighten-3 black-text">
       <div class="card-stacked">
-        <div class="card-content">
-          <p>Los proveedores de {{company.name}} tiene un margen comercial mucho más alto que su competencia</p>
+      <div class="card-content">
+          <p>Tiene una dependencia del {{penetration|mul:100|floatformat:0}}% en sus clientes, una cifra inferior a la de su competencia</p>
         </div>
         <div class="divider"></div>
-        <div class="card-content">
-          <p>Tienen una dependencia muy baja, dificultando las negociaciones sobre el precio del suministro</p>
-        </div>
+        <div class="card-content black-text">
+            <p>Alta <strong>concentración en proveedores</strong> con un índice de concentración del {{hhi_providers|floatformat:2}}</p>
+         </div>
+        <div class="divider"></div>
+        <div class="card-content black-text">
+            <p>Alta <strong>concentración geográfica</strong> con un índice de concentración del {{company.hhi_geografical_providers|floatformat:2}}</p>
+         </div>
       </div>
     </div>
   </div>
@@ -191,39 +215,13 @@
 				        <div class="col s12 m2">
 		      	  			<div class="center-align ">
 				            <i class="fa fa-money" aria-hidden="true"></i><span class="card-title"> Pago promedio</span>
-				            <h3 class="align-right orange-text darken-1">{{company.average_transfer_to_provider|floatformat:0|intcomma}}€</h3>
+				            <h3 class="align-right orange-text darken-1">{{average_transfer_to_provider|floatformat:0|intcomma}}€</h3>
 				            <span class="green-text text-darken-1"><i class="fa fa-sort-up" aria-hidden="true"></i><span class="card-title">1%</span></span> <span class="light">Desde el mes pasado</span>
 				            </div>
 				        </div>
 				    
 				    </div>
 				 </div>
-
-				 <!-- <div class="row">
-				 	<div class="col m6 s12">
-				 		<div class="list_top">
-						  <ol>
-						    <li><span class="span_list">1.</span><p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent euismod ultrices ante, ac laoreet nulla vestibulum adipiscing. Nam quis justo in augue auctor imperdiet. Curabitur aliquet orci sit amet est posuere consectetur. Fusce nec leo ut massa viverra venenatis. Nam accumsan libero a elit aliquet quis ullamcorper arcu tincidunt. Praesent purus turpis, consectetur quis congue vel, pulvinar at lorem. Vivamus varius condimentum dolor, quis ultricies ipsum porta quis. </p></li>
-						    
-						    <li><span class="span_list">2.</span><p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent euismod ultrices ante, ac laoreet nulla vestibulum adipiscing. Nam quis justo in augue auctor imperdiet. Curabitur aliquet orci sit amet est posuere consectetur.  </p></li>
-						    
-						    <li><span class="span_list">3.</span><p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent euismod ultrices ante, ac laoreet nulla vestibulum adipiscing. Nam quis justo in augue auctor imperdiet. Curabitur aliquet orci sit amet est posuere consectetur.  </p></li>
-						  </ol> 
-						</div>
-				 	</div>
-				 	<div class="col m6 s12">
-				 		<div>
-						  <ol>
-						    <li><span class="span_list">1.</span><p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent euismod ultrices ante, ac laoreet nulla vestibulum adipiscing. Nam quis justo in augue auctor imperdiet. Curabitur aliquet orci sit amet est posuere consectetur. Fusce nec leo ut massa viverra venenatis. Nam accumsan libero a elit aliquet quis ullamcorper arcu tincidunt. Praesent purus turpis, consectetur quis congue vel, pulvinar at lorem. Vivamus varius condimentum dolor, quis ultricies ipsum porta quis. </p></li>
-						    
-						    <li><span class="span_list">2.</span><p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent euismod ultrices ante, ac laoreet nulla vestibulum adipiscing. Nam quis justo in augue auctor imperdiet. Curabitur aliquet orci sit amet est posuere consectetur.  </p></li>
-						    
-						    <li><span class="span_list">3.</span><p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent euismod ultrices ante, ac laoreet nulla vestibulum adipiscing. Nam quis justo in augue auctor imperdiet. Curabitur aliquet orci sit amet est posuere consectetur.  </p></li>
-						  </ol> 
-						</div>
-				 	</div>
-				 </div>	 -->
-
 				 <!-- /////////////////////////////////////////////////////////////
 				 ////// ¿Como son mis clientes?
 				 ///////////////////////////////////////////////////////////// -->
@@ -364,7 +362,7 @@
 			    			<div class="col m6 s12">
 				    			<div class="card brown lighten-5">
 						            <div class="card-content grey-text darken-4">
-						            	<span class="card-title">Penetración</span>
+						            	<span class="card-title">Dependencia</span>
 						            	<canvas id="penetration_graph" width="300" height="300"></canvas>
 						            </div>
 						        </div>
@@ -545,7 +543,7 @@
 					            		</div>
 					            		<div class="col m4 s12">
 					            			<p>Ticket medio</p>
-					            			<h4><i class="fa fa-user" aria-hidden="true"></i> {{company.average_transfer_to_provider|floatformat:0}}</h4>
+					            			<h4><i class="fa fa-user" aria-hidden="true"></i> {{average_transfer_to_provider|floatformat:0}}</h4>
 					            			<h4><i class="fa fa-users" aria-hidden="true"></i> {{company.average_sector_buys|floatformat:0}}</h4>
 					            		</div>
 									</div>
@@ -567,10 +565,10 @@
 					            			{% endif %}
 					            		</div>
 					            		<div class="col m4 s12">
-					            			{% if company.average_transfer_to_provider|sub:company.average_sector_buys < 0 %}
-					            				<h4 style="color: green"> <i class="fa fa-sort-down" aria-hidden="true"></i> {{company.average_transfer_to_provider|sub:company.average_sector_buys|floatformat:2}}</h4>
+					            			{% if average_transfer_to_provider|sub:company.average_sector_buys < 0 %}
+					            				<h4 style="color: green"> <i class="fa fa-sort-down" aria-hidden="true"></i> {{average_transfer_to_provider|sub:company.average_sector_buys|floatformat:2}}</h4>
 					            			{%else%}
-					            				<h4 style="color: red"> <i class="fa fa-sort-up" aria-hidden="true"></i> {{company.average_transfer_to_provider|sub:company.average_sector_buys|floatformat:2}}</h4>
+					            				<h4 style="color: red"> <i class="fa fa-sort-up" aria-hidden="true"></i> {{average_transfer_to_provider|sub:company.average_sector_buys|floatformat:2}}</h4>
 					            			{% endif %}
 					            		</div>
 									</div>

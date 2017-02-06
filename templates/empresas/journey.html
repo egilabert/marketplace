@@ -77,9 +77,9 @@
 						    <p class="flow-text center-align">Diagnóstico</p>
 						    <div class="card horizontal grey lighten-3 black-text">
 						      <div class="card-stacked">
-						        <div class="card-content">
+						        <!-- <div class="card-content">
 						          <p>{{company.name}} se encuentra en una situación de crecimiento sostenido, con buenos indicadores en sus resultados</p>
-						        </div>
+						        </div> -->
 						        <div class="divider"></div>
 						        <div class="card-content">
 						          <p>{{company.name}} tiene un alto nivel de concentranción geogràfica en sus clientes</p>
@@ -102,25 +102,27 @@
 						  </div>
 						  
 						  <div class="col s12 m5">
-						  <p class="flow-text center-align">Propuesta</p>
+						  <p class="flow-text center-align">Acción</p>
 						    <div class="card horizontal grey lighten-3 black-text">
 						      <div class="card-stacked">
-						        <div class="card-content">
+						        <!-- <div class="card-content">
 						          <p>El crecimiento sostenido permite, en caso de necesidad, ofrecer nuevos productos, y un incremento de los activos</p>
+						        </div> -->
+						        <div class="divider"></div>
+						        <div class="card-content">
+						          <p>Encontrar <strong>nuevos clientes</strong> en otras geografia para mitigar riesgos de concentración</p>
+						        </div>
+						        <div class="divider"></div>
+						         <div class="card-content">
+						          <p>Encontrar <strong>nuevos clientes</strong> por escaso margen de crecimiento en los clientes actuales con gran penetración</p>
 						        </div>
 						        <div class="divider"></div>
 						        <div class="card-content">
-						          <p>Es importante ofrecer <strong>nuevos clientes</strong> que se encuentren fuera de su región para reducir la concentración</p>
+						          <p>Solvencia contrastada <strong>para preaprobación de lineas de circulante</strong></p>
 						        </div>
-						         <div class="card-content">
-						          <p>Penetraciones altas dificultan un crecimiento sostenido sin encontrar <strong>nuevas oportunidades comerciales</strong></p>
-						        </div>
-						        <div class="card-content">
-						          <p>Es posible indicar <strong>nuevos préstamos</strong> puesto que sus ratios de endeudamiento permiten margen</p>
-						        </div>
-						        <div class="card-content">
+						        <!-- <div class="card-content">
 						          <p>Para hacer frente a pagos o inversiones a corto, puede ser interessante ofrecerle algún <strong>producto de circulante</strong></p>
-						        </div>
+						        </div> -->
 						        
 						      </div>
 						    </div>
@@ -153,32 +155,37 @@
 						        <div class="card-content">
 						          <p>{{company.name}} tiene unas necesidades de working capital superiores a la media de su competencia</p>
 						        </div>
+						        <div class="divider"></div>
+						        <div class="card-content">
+						          <p>{{company.name}} tiene un ticket medio más alto que su competencia</p>
+						        </div>
 						      </div>
 						    </div>
 
 						  </div>
 						  
 						  <div class="col s12 m5">
-						  <p class="flow-text center-align">Propuesta</p>
+						  <p class="flow-text center-align">Acción</p>
 						    <div class="card horizontal grey lighten-3 black-text">
 						      <div class="card-stacked">
 						        <div class="card-content">
 						          <p>El crecimiento sostenido permite, en caso de necesidad, ofrecer nuevos productos, y un incremento de los activos</p>
 						        </div>
-						        <div class="divider"></div>
 						        <div class="card-content">
-						          <p>Es importante ofrecer <strong>nuevos proveedores</strong> para reducir la concentración</p>
+						          <p>Es importante ofrecer <strong>nuevos proveedores</strong> para reducir la concentración.</p>
 						        </div>
+						        <div class="divider"></div>
 						         <div class="card-content">
 						          <p>Dependencias muy bajas dificultan el poder de negociación sin buscar <strong>nuevos proveedores</strong></p>
 						        </div>
+						        <div class="divider"></div>
 						        <div class="card-content">
-						          <p>Es posible indicar <strong>nuevos préstamos</strong> puesto que sus ratios de endeudamiento permiten margen</p>
+						          <p>Solvencia contrastada <strong>con preaprobación de nuevas lineas de credito</strong></p>
 						        </div>
+						        <div class="divider"></div>
 						        <div class="card-content">
-						          <p>Para hacer frente a pagos o inversiones a corto, puede ser interessante ofrecerle <strong>lineas de confirming</strong></p>
+						          <p>Para hacer frente a pagos, puede ser interessante ofrecerle <strong>lineas de confirming</strong></p>
 						        </div>
-						        
 						      </div>
 						    </div>
 						  </div>
@@ -186,6 +193,18 @@
 						</div>
 					{% endif %}
 		    	</div>
+		    	<div class="row">
+					<div class="col m2 s12"></div>
+					<div class="col m3 s12">
+						<span class="right-align"><a href="{% url 'empresas:clients' %}" id="download-button" target="_blank" class="btn waves-effect waves-light transparent grey-text text-darken-4 border-grey"> Nuevos clientes </a> </span>
+					</div>
+					<div class="col m3 s12">
+						<span class="right-align"><a href="{% url 'empresas:providers' %}" id="download-button" target="_blank" class="btn waves-effect waves-light transparent grey-text text-darken-4 border-grey"> Nuevos proveedores </a> </span>
+					</div>
+					<div class="col m3 s12">
+						<span class="right-align"><a href="https://www.bancosantander.es/es/empresas-advance/financiacion/financiacion-a-corto-plazo/financiacion-a-corto-plazo" id="download-button" target="_blank" class="btn waves-effect waves-light transparent grey-text text-darken-4 border-grey"> Accede a tu financiación </a> </span>
+					</div>
+				</div>
 				 <!-- /////////////////////////////////////////////////////////////
 				 ////// ¿Como son mis clientes?
 				 ///////////////////////////////////////////////////////////// -->

@@ -87,11 +87,19 @@
       <div class="card horizontal green lighten-2">
         <div class="card-stacked">
           <div class="card-content black-text">
-            <p>{{company.name}} tiene un ratio de endeudamiento sensiblemente inferior al de su competencia</p>
+            <p><strong>Ratio de endeudamiento</strong> sensiblemente inferior al de su competencia ({{company.ratio_endeudamiento|sub:company.ratio_endeudamiento_sector|div:company.ratio_endeudamiento_sector|mul:100|floatformat:0}}%)</p>
           </div>
           <div class="divider"></div>
           <div class="card-content black-text">
-            <p>El ratio de deuda a corto plazo entre el EBITDA es muy inferior al de su competencia</p>
+            <p><strong>Ratio de deuda entre EBITDA</strong> sensiblemente inferior al de su competencia ({{deuda_ebitda|sub:company.deuda_total_sector_pond|div:company.deuda_total_sector_pond|mul:100|floatformat:0}}%)</p>
+          </div>
+          <div class="divider"></div>
+          <div class="card-content black-text">
+            <p><strong>Ratio de deuda a corto plazo entre EBITDA</strong> sensiblemente inferior al de su competencia ({{deuda_corto_pond|sub:company.deuda_corto_sector_pond|div:company.deuda_corto_sector_pond|mul:100|floatformat:0}}%)</p>
+          </div>
+          <div class="divider"></div>
+          <div class="card-content black-text">
+            <p><strong>Buena salud financiera</strong> según los modelos de riesgo internos de la entidad</p>
           </div>
         </div>
       </div>
@@ -101,9 +109,9 @@
     <p class="flow-text center-align">Puntos a mejorar</p>
       <div class="card horizontal grey lighten-3">
         <div class="card-stacked">
-          <div class="card-content black-text">
+          <!-- <div class="card-content black-text">
             <p>{{company.name}} tiene un riesgo no cubierto al tipo de cambio frente al dollar</p>
-          </div>
+          </div> -->
         </div>
       </div>
     </div>
@@ -117,7 +125,19 @@
       <div class="card horizontal green lighten-2">
         <div class="card-stacked">
           <div class="card-content black-text">
-            <p>{{company.name}} tiene un ratio de endeudamiento sensiblemente inferior al de su competencia</p>
+            <p><strong>Ratio de endeudamiento</strong> sensiblemente inferior al de su competencia ({{company.ratio_endeudamiento|sub:company.ratio_endeudamiento_sector|div:company.ratio_endeudamiento_sector|mul:100|floatformat:0}}%)</p>
+          </div>
+          <div class="divider"></div>
+          <div class="card-content black-text">
+            <p><strong>Ratio de deuda entre EBITDA</strong> sensiblemente inferior al de su competencia ({{deuda_ebitda|sub:company.deuda_total_sector_pond|div:company.deuda_total_sector_pond|mul:100|floatformat:0}}%)</p>
+          </div>
+          <div class="divider"></div>
+          <div class="card-content black-text">
+            <p><strong>Ratio de deuda a corto plazo entre EBITDA</strong> sensiblemente inferior al de su competencia ({{deuda_corto_pond|sub:company.deuda_corto_sector_pond|div:company.deuda_corto_sector_pond|mul:100|floatformat:0}}%)</p>
+          </div>
+          <div class="divider"></div>
+          <div class="card-content black-text">
+            <p><strong>Buena salud financiera</strong> según los modelos de riesgo internos de la entidad</p>
           </div>
         </div>
       </div>
@@ -128,7 +148,7 @@
       <div class="card horizontal grey lighten-3">
         <div class="card-stacked">
           <div class="card-content black-text">
-            <p>Las necesidades de working capital de {{company.name}} son muy superiores a las de la competencia</p>
+            <p>Las necesidades de working capital son muy superiores a las de la competencia</p>
           </div>
         </div>
       </div>
@@ -530,7 +550,7 @@
 					              			<h6>Depreciación del 1%:</h6>
 					              		</div>
 					              		<div class="col m6 s6">
-					              			<h5 class="red-text">{{company.get_total_sells|mul:0.2|mul:-0.01|floatformat:1|intcomma}} €</h5>
+					              			<h5 class="red-text">{{company.get_total_sells|mul:0.01|mul:-0.01|floatformat:1|intcomma}} €</h5>
 					              		</div>
 					              		</div>
 					              		<div class="row">
@@ -538,7 +558,7 @@
 					              			<h6>Depreciación del 10%:</h6>
 					              		</div>
 					              		<div class="col m6 s6">
-					              			<h5 class="red-text">{{company.get_total_sells|mul:0.2|mul:-0.1|floatformat:1|intcomma}} €</h5>
+					              			<h5 class="red-text">{{company.get_total_sells|mul:0.01|mul:-0.1|floatformat:1|intcomma}} €</h5>
 					              		</div>
 					              		</div>
 					              		<div class="row">
@@ -546,7 +566,7 @@
 					              			<h6>Apreciación del 1%:</h6>
 					              		</div>
 					              		<div class="col m6 s6">
-					              			<h5 class="green-text">{{company.get_total_sells|mul:0.2|mul:0.01|floatformat:1|intcomma}} €</h5>
+					              			<h5 class="green-text">{{company.get_total_sells|mul:0.01|mul:0.01|floatformat:1|intcomma}} €</h5>
 					              		</div>
 					              		</div>
 					              		<div class="row">
@@ -554,7 +574,7 @@
 					              			<h6>Apreciación del 5%:</h6>
 					              		</div>
 					              		<div class="col m6 s6">
-					              			<h5 class="green-text">{{company.get_total_sells|mul:0.2|mul:0.05|floatformat:1|intcomma}} €</h5>
+					              			<h5 class="green-text">{{company.get_total_sells|mul:0.01|mul:0.05|floatformat:1|intcomma}} €</h5>
 					              		</div>
 					              		</div>
 					            </div>
@@ -656,7 +676,7 @@
   	stackedbarchart(ratio_corto_largo_graph, 'hola_2', 'hola_2', {{ratio_corto_largo}}, {{company.ratio_sector_corto_largo}}, 'Ratio corto/largo')
   	stackedbarchart(gasto_financiero_graph, 'hola_2', 'hola_2', {{company.costes_financiacion}}, {{company.costes_financiacion_sector}}, 'Gasto financiero')
   	stackedbarchart(ratio_endeudamiento_graph, 'hola_2', 'hola_2', {{company.ratio_endeudamiento}}, {{company.ratio_endeudamiento_sector}}, 'Ratio de endeudamiento')
-  	pie(volumen_por_divisa_graph, [{{company.get_total_sells|mul:0.2}},{{company.get_total_sells|mul:0.8}}], ['Dollar', 'Euro'])
+  	pie(volumen_por_divisa_graph, [{{company.get_total_sells|mul:0.01}},{{company.get_total_sells|mul:0.8}}], ['Dollar', 'Euro'])
   	// prepare data...
   	function BarGraph(div, data) {//, data_sector, data_you) {
   		// var labels_1 = [];

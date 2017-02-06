@@ -84,7 +84,15 @@
     <div class="card horizontal green lighten-2 black-text">
       <div class="card-stacked">
         <div class="card-content">
-          <p>Los clientes de {{company.name}} estan en linia con la competencia en riesgo de impago</p>
+          <p>El <strong>riesgo de impago</strong> de los clientes esta en linia con la competencia</p>
+        </div>
+        <div class="divider"></div>
+        <div class="card-content">
+          <p>Alta <strong>diversificación en clientes</strong> con un índice de concentración del {{company.hhi_clients_clients|floatformat:2}}</p>
+        </div>
+        <div class="divider"></div>
+        <div class="card-content">
+          <p>Alta <strong>diversificación en estacionalidad</strong> con un índice de concentración del {{company.hhi_temporal_clients|floatformat:2}}</p>
         </div>
       </div>
     </div>
@@ -95,11 +103,11 @@
     <div class="card horizontal grey lighten-3 black-text">
       <div class="card-stacked">
         <div class="card-content">
-          <p>Tiene una penetración del {{penetracion|mul:100|floatformat:0}}% en sus clientes, una cifra muy superior a la de su competencia</p>
+          <p><strong>Alta penetración</strong> del ({{penetracion|mul:100|floatformat:0}}%) en sus clientes, por lo que existe poco margen de crecimiento con ellos</p>
         </div>
         <div class="divider"></div>
         <div class="card-content">
-          <p>{{company.name}} tiene una alta concentración geogràfica en sus clientes</p>
+          <p>Alta <strong>concentración geográfica</strong> con un índice de concentración del {{company.hhi_geografical_clients|floatformat:2}}</p>
         </div>
       </div>
     </div>
@@ -113,8 +121,16 @@
     <p class="flow-text center-align">Puntos fuertes</p>
     <div class="card horizontal green lighten-2 black-text">
       <div class="card-stacked">
+      	<div class="card-content">
+          <p>El riesgo de impago de los clientes està en linia con el de la competencia</p>
+        </div>
+        <div class="divider"></div>
         <div class="card-content">
-          <p>Los clientes de {{company.name}} estan en linia con la competencia en riesgo de impago</p>
+          <p>Alta <strong>diversificación en clientes</strong> con un índice de concentración del {{company.hhi_clients_clients|floatformat:2}}</p>
+        </div>
+        <div class="divider"></div>
+        <div class="card-content">
+          <p>Alta <strong>diversificación en estacionalidad</strong> con un índice de concentración del {{company.hhi_temporal_clients|floatformat:2}}</p>
         </div>
       </div>
     </div>
@@ -125,11 +141,7 @@
     <div class="card horizontal grey lighten-3 black-text">
       <div class="card-stacked">
         <div class="card-content">
-          <p>Tiene una penetración del {{penetracion|mul:100|floatformat:0}}% en sus clientes, una cifra muy superior a la de su competencia</p>
-        </div>
-        <div class="divider"></div>
-        <div class="card-content">
-          <p>{{company.name}} tiene una concentración geogràfica en sus clientes superior a la de su competencia</p>
+          <p>Alta <strong>concentración geográfica</strong> con un índice de concentración del {{company.hhi_geografical_clients|floatformat:2}}</p>
         </div>
       </div>
     </div>

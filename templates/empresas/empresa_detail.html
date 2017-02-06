@@ -84,11 +84,23 @@
       <div class="card horizontal green lighten-2">
         <div class="card-stacked">
           <div class="card-content black-text">
-            <p>{{company.name}} es una empresa en crecimiento con un aumento en las ventas continuado</p>
+            <p>Se observa un <strong>crecimiento de las ventas</strong> continuado situado en un {{delta_ventas|mul:100|floatformat:1}}% el último año</p>
           </div>
           <div class="divider"></div>
           <div class="card-content black-text">
-            <p>El EBITDA y los resultados de explotación han crecido duranto los últimos 3 años</p>
+            <p>Se observa un <strong>crecimiento del EBITDA</strong> continuado situado en un {{delta_ebitda|mul:100|floatformat:1}}% el último año</p>
+          </div>
+          <div class="divider"></div>
+          <div class="card-content black-text">
+            <p>Se observa un <strong>crecimiento de los resultados de explotación</strong> continuado situado en un {{delta_resultados_explotacion|mul:100|floatformat:1}}% el último año</p>
+          </div>
+          <div class="divider"></div>
+          <div class="card-content black-text">
+            <p>Buena <strong>diversificación en clientes</strong> con un índice de concentración del {{empresa.hhi_clients_clients|floatformat:2}}</p>
+          </div>
+          <div class="divider"></div>
+          <div class="card-content black-text">
+            <p>Buena <strong>diversificación en proveedores</strong> con un índice de concentración del {{empresa.hhi_providers|floatformat:2}}</p>
           </div>
         </div>
       </div>
@@ -99,10 +111,14 @@
       <div class="card horizontal grey lighten-3">
         <div class="card-stacked">
           <div class="card-content black-text">
-            <p>Tiene una alta concentracion geográfica y sectorial que puede incrementar los riesgos</p>
+            <p><strong>Baja diversidad de geográfica</strong> ({{empresa.hhi_geografical_clients|floatformat:2}})  incrementando el riesgo de concentración geográfica</p>
+          </div>
+          <div class="divider"></div>
+          <div class="card-content black-text">
+            <p><strong>Baja diversidad de sectorial</strong> ({{empresa.hhi_cnae_clients|floatformat:2}})  incrementando el riesgo de concentración sectorial</p>
+          </div>
           </div>
         </div>
-      </div>
     </div>
     <div class="col s12 m1"></div>
   </div>
@@ -114,7 +130,11 @@
       <div class="card horizontal green lighten-2">
         <div class="card-stacked">
           <div class="card-content black-text">
-            <p>{{company.name}} es una empresa con un aumento en las ventas continuado</p>
+            <p>Se observa un <strong>crecimiento de las ventas</strong> continuado situado en un {{delta_ventas|mul:100|floatformat:1}}% el último año</p>
+          </div>
+          <div class="divider"></div>
+          <div class="card-content black-text">
+            <p>Buena <strong>diversificación en clientes</strong> con un índice de concentración del {{empresa.hhi_clients_clients|floatformat:2}}</p>
           </div>
         </div>
       </div>
@@ -125,11 +145,15 @@
       <div class="card horizontal grey lighten-3">
         <div class="card-stacked">
           <div class="card-content black-text">
-            <p>El EBITDA y los resultados de explotación tienen un tendencia a la baja en los últimos ejercicios</p>
+            <p>Se observa una <strong>reducción del EBITDA</strong> continuado situado en un {{delta_ebitda|mul:100|floatformat:1}}% el último año</p>
           </div>
           <div class="divider"></div>
           <div class="card-content black-text">
-            <p>Tiene una alta concentracion en los proveedroes que puede incrementar los riesgos</p>
+            <p>Se observa una <strong>reducción de los resultados de explotación</strong> continuado situado en un {{delta_resultados_explotacion|mul:100|floatformat:1}}% el último año</p>
+          </div>
+          <div class="divider"></div>
+          <div class="card-content black-text">
+            <p>Baja <strong>diversificación en proveedores</strong> con un índice de concentración del {{hhi_providers|floatformat:2}}</p>
           </div>
         </div>
       </div>
@@ -314,7 +338,7 @@
               <div class="col s12 m4">
                 <div class="card blue-grey darken-1">
                   <div class="card-content white-text">
-                    <span class="card-title"># Clients</span>
+                    <span class="card-title"># Clientes</span>
                     <h3 class="align-right orange-text darken-1">{{empresa.get_clients.count}}</h3>
                   </div>
                 </div>
@@ -322,7 +346,7 @@
               <div class="col s12 m4">
                 <div class="card blue-grey darken-1">
                   <div class="card-content white-text">
-                    <span class="card-title"># Providers</span>
+                    <span class="card-title"># Proveedores</span>
                     <h3 class="align-right orange-text darken-1">{{num_proveedores}}</h3>
                   </div>
                 </div>
@@ -330,8 +354,8 @@
               <div class="col s12 m4">
                 <div class="card blue-grey darken-1">
                   <div class="card-content white-text">
-                    <span class="card-title"># Employees</span>
-                    <h3 class="align-right orange-text darken-1">10</h3>
+                    <span class="card-title"># Trabajadores</span>
+                    <h3 class="align-right orange-text darken-1">{{trabajadores}}</h3>
                   </div>
                 </div>
               </div>
