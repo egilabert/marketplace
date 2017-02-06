@@ -63,8 +63,8 @@ def SearchView(request):
 	autofilter = dict()
 	company = Empresa.objects.filter(pk=990).first()  
 	autofilter[company.name] = company.image
-	company = Empresa.objects.filter(pk=233).first()  
-	autofilter[company.name] = company.image
+	# company = Empresa.objects.filter(pk=233).first()  
+	# autofilter[company.name] = company.image
 	company = Empresa.objects.filter(pk=1610).first()
 	autofilter[company.name] = company.image
 	# company = Empresa.objects.all()
