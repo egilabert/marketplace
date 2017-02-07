@@ -35,14 +35,14 @@ from django.db.models import Prefetch
 
 @login_required
 def DebugView(request):
-	empresas = Empresa.objects.all()
-	for e in empresas:
-		rand = randint(0,1)
-		if rand > 0.3:
-			e.own_client = 'SÍ'
-		else:
-			e.own_client = 'NO'
-		e.save()
+	# empresas = Empresa.objects.all()
+	# for e in empresas:
+	# 	rand = randint(0,1)
+	# 	if rand > 0.3:
+	# 		e.own_client = 'SÍ'
+	# 	else:
+	# 		e.own_client = 'NO'
+	# 	e.save()
 
 	company_id = request.session.get('company')
 	company = Empresa.objects.filter(pk=company_id)[0]
