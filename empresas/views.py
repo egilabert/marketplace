@@ -35,6 +35,15 @@ from django.db.models import Prefetch
 
 @login_required
 def DebugView(request):
+	empresas = Empresa.objects.all()
+	for e in empresas:
+		rand = randint(0,1)
+		if rand > 0.3:
+			e.own_client = 'SÍ'
+		else:
+			e.own_client = 'NO'
+		e.save()
+
 	company_id = request.session.get('company')
 	company = Empresa.objects.filter(pk=company_id)[0]
 	context = {
@@ -236,13 +245,18 @@ def EmpresaDetailView(request, pk=None):
 
 	if len(ventas)>1:
 		delta_ventas = (ventas[len(ventas)-1] - ventas[len(ventas)-2])/ventas[len(ventas)-2]
+	else:
+		delta_ventas = 0
 	if len(ebitda)>1:
 		delta_ebitda = (ebitda[len(ebitda)-1] - ebitda[len(ebitda)-2])/ebitda[len(ebitda)-2]
 		trabajadores = int(ebitda[len(ebitda)-1]/1200)
 	else:
 		trabajadores = 10
+		delta_ebitda = 0
 	if len(resultado_explotacion)>1:
 		delta_resultados_explotacion = (resultado_explotacion[len(resultado_explotacion)-1] - resultado_explotacion[len(resultado_explotacion)-2])/resultado_explotacion[len(resultado_explotacion)-2]
+	else:
+		delta_resultados_explotacion = 0
 
 	context = {
 		'referrer': key,
@@ -535,6 +549,9 @@ def CommercialClientsRecommendationsView(request):
 		respuesta_clientes_resultado_interpretation = empresa.respuesta_clientes_resultado_interpretation()
 		respuesta_clientes_resultado_hint = empresa.respuesta_clientes_resultado_hint()
 
+	diff_sells = (sells_me[len(sells_me)-1]['c'] - sells_sector[len(sells_sector)-1]['c'])/sells_sector[len(sells_sector)-1]['c']
+	diff_ebitda = (ebitda_me[len(ebitda_me)-1]['c'] - ebitda_sector[len(ebitda_sector)-1]['c'])/ebitda_sector[len(ebitda_sector)-1]['c']
+	diff_resultados = (resultados_me[len(resultados_me)-1]['c'] - resultados_sector[len(resultados_sector)-1]['c'])/resultados_sector[len(resultados_sector)-1]['c']
 	ratio = 1-margen_comercial_sector_clientes
 
 	if len(sells_me)>1:
@@ -544,6 +561,7 @@ def CommercialClientsRecommendationsView(request):
 	if len(resultados_me)>1:
 		delta_resultados_explotacion = (resultados_me[len(resultados_me)-1]['c'] - resultados_me[len(resultados_me)-2]['c'])/resultados_me[len(resultados_me)-2]['c']
 
+	hhi_clients_clients = empresa.hhi_clients_clients()
 	context = {
 		'company':empresa,
 		'margen_comercial_sector_clientes': margen_comercial_sector_clientes,
@@ -557,6 +575,9 @@ def CommercialClientsRecommendationsView(request):
 		'average_transfer_from_client': average_transfer_from_client,
 		'delta_ventas': delta_ventas,
 		'delta_ebitda': delta_ebitda,
+		'diff_sells': diff_sells,
+		'diff_ebitda': diff_ebitda,
+		'diff_resultados': diff_resultados,
 		'delta_resultados_explotacion': delta_resultados_explotacion,
 		'get_monthly_sells_amount': json.dumps(list(empresa.get_monthly_sells_amount()), cls=DjangoJSONEncoder),
 		'get_sector_total_monthly_sells_amount': json.dumps(list(empresa.get_sector_total_monthly_sells_amount()), cls=DjangoJSONEncoder),

@@ -59,6 +59,7 @@ class Empresa(models.Model, r_clients.Recommendations_clients,
     image = models.CharField(max_length=255, null=True, blank=True)
     created_at = models.DateTimeField(auto_now=False, auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True, auto_now_add=False)
+    own_client = models.CharField(max_length=16)
     
     clients = models.ManyToManyField("self", blank=True)
     providers = models.ManyToManyField("self", blank=True)
@@ -1337,12 +1338,22 @@ class RecommendedClients(models.Model):
     empresa = models.ForeignKey(Empresa, related_name='recommended', on_delete=models.CASCADE)
     similarity = models.FloatField()
     clientes_recomendados = models.ForeignKey(Empresa, related_name='clientes_recomendados', on_delete=models.CASCADE)
+    temp_factoring_preaprobado = None
 
     def factoring_preaprobado(self):
-        if self.clientes_recomendados.estados_financieros.last().ebitda > 0:
-            return int(self.clientes_recomendados.estados_financieros.last().ebitda * 0.1 / 1000)*1000
+        if self.temp_factoring_preaprobado is None:
+            if self.clientes_recomendados.estados_financieros.last():
+                if int(self.clientes_recomendados.estados_financieros.last().ebitda * 0.15) > 5000:
+                    self.temp_factoring_preaprobado = int(self.clientes_recomendados.estados_financieros.last().ebitda * 0.15 / 1000)*1000
+                    return self.temp_factoring_preaprobado
+                else:
+                    self.temp_factoring_preaprobado = 5000
+                    return self.temp_factoring_preaprobado
+            else:
+                self.temp_factoring_preaprobado = 5000
+                return self.temp_factoring_preaprobado
         else:
-            return 0
+            return self.temp_factoring_preaprobado
 
     def __unicode__(self):
         return str(self.similarity)

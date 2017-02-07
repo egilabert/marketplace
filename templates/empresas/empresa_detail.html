@@ -96,11 +96,12 @@
           </div>
           <div class="divider"></div>
           <div class="card-content black-text">
-            <p>Buena <strong>diversificación en clientes</strong> con un índice de concentración del {{empresa.hhi_clients_clients|floatformat:2}}</p>
-          </div>
+            <p>Buena <strong>diversificación en clientes</strong> con un índice de concentración de 1/10</p>
+          </div> <!-- {{empresa.hhi_clients_clients|floatformat:2}} -->
           <div class="divider"></div>
           <div class="card-content black-text">
-            <p>Buena <strong>diversificación en proveedores</strong> con un índice de concentración del {{empresa.hhi_providers|floatformat:2}}</p>
+            <p>Buena <strong>diversificación en proveedores</strong> con un índice de concentración del 1/10</p> 
+            <!-- {{empresa.hhi_providers|floatformat:2}} -->
           </div>
         </div>
       </div>
@@ -111,11 +112,11 @@
       <div class="card horizontal grey lighten-3">
         <div class="card-stacked">
           <div class="card-content black-text">
-            <p><strong>Baja diversificación geográfica</strong> ({{empresa.hhi_geografical_clients|floatformat:2}})  incrementando el riesgo de concentración geográfica</p>
+            <p><strong>Baja diversificación geográfica</strong> con un índice de concentración de ({{empresa.hhi_geografical_clients|floatformat:2}}) incrementando el riesgo de concentración geográfica</p>
           </div>
           <div class="divider"></div>
           <div class="card-content black-text">
-            <p><strong>Baja diversificación sectorial</strong> ({{empresa.hhi_cnae_clients|floatformat:2}})  incrementando el riesgo de concentración sectorial</p>
+            <p><strong>Baja diversificación sectorial</strong> con un índice de concentración de ({{empresa.hhi_cnae_clients|floatformat:2}}) incrementando el riesgo de concentración sectorial</p>
           </div>
           </div>
         </div>
@@ -134,8 +135,9 @@
           </div>
           <div class="divider"></div>
           <div class="card-content black-text">
-            <p>Buena <strong>diversificación en clientes</strong> con un índice de concentración del {{empresa.hhi_clients_clients|floatformat:2}}</p>
+            <p>Buena <strong>diversificación en clientes</strong> con un índice de concentración de 1/10</p>
           </div>
+          <!-- {{empresa.hhi_clients_clients|floatformat:2}} -->
         </div>
       </div>
     </div>
@@ -153,8 +155,9 @@
           </div>
           <div class="divider"></div>
           <div class="card-content black-text">
-            <p>Baja <strong>diversificación en proveedores</strong> con un índice de concentración del {{hhi_providers|floatformat:2}}</p>
+            <p>Baja <strong>diversificación en proveedores</strong> con un índice de concentración de 7/10</p>
           </div>
+          <!-- {{hhi_providers|floatformat:2}} -->
         </div>
       </div>
     </div>
