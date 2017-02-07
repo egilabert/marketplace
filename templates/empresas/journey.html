@@ -78,23 +78,27 @@
 						    <div class="card horizontal grey lighten-3 black-text">
 						      <div class="card-stacked">
 						        <div class="card-content">
-						          <p>{{company.name}} se encuentra en una situación de crecimiento sostenido, con buenos indicadores en sus resultados</p>
+						          <p>{{company.name}} se encuentra en una situación de <strong>crecimiento sostenido</strong>, con buenos indicadores en sus resultados</p>
+						        </div>
+						        <div class="divider"></div>
+						        <div class="card-content black-text">
+						            <p><strong>Buena salud financiera</strong> según los modelos de riesgo internos de la entidad</p>
+						          </div>
+						        <div class="divider"></div>
+						        <div class="card-content">
+						          <p>Tiene un alto nivel de <strong>concentranción geogràfica</strong> en sus clientes</p>
 						        </div>
 						        <div class="divider"></div>
 						        <div class="card-content">
-						          <p>Tiene un alto nivel de concentranción geogràfica en sus clientes</p>
+						          <p>Tiene un <strong>alto nivel de penetración en sus clientes</strong>, muy por encima del de su competencia</p>
 						        </div>
 						        <div class="divider"></div>
 						        <div class="card-content">
-						          <p>Tiene un alto nivel de penetración en sus clientes, muy por encima del de su competencia</p>
+						          <p>Tiene un <strong>ratio de endeudamiento inferior</strong> al de su competencia</p>
 						        </div>
 						        <div class="divider"></div>
 						        <div class="card-content">
-						          <p>Tiene un ratio de endeudamiento inferior al de su competencia</p>
-						        </div>
-						        <div class="divider"></div>
-						        <div class="card-content">
-						          <p>Tiene un ratio de endeudamiento a corto muy por debajo de su competencia</p>
+						          <p>Tiene un <strong>ratio de endeudamiento a corto muy por debajo</strong> de su competencia</p>
 						        </div>
 						      </div>
 						    </div>
@@ -140,6 +144,7 @@
 						          <p>{{company.name}} se encuentra en una situación de crecimiento sostenido, pero con resultados a la baja</p>
 						        </div>
 						        <div class="divider"></div>
+
 						        <div class="card-content">
 						          <p>{{company.name}} tiene un alto nivel de concentranción en sus proveedores</p>
 						        </div>
@@ -231,7 +236,11 @@
 									      		<span class="activator center-align grey-text text-darken-4"> {{ obj.name}}</span>
 									      	</div>
 									      	<div class="divider"></div>
+									      	<br>
 									      	<div class="row">
+									      		<div class="col s6">
+									      			<i class="fa fa-bullseye left-align" aria-hidden="true"></i><span class="grey-text light text-darken-4"> Match: 
+									      		</div>
 									      		<div class="col s6">
 									      			<span class="right-align flow-text" style="color: {% if obj.similarity > 0.7 %}green{% elif obj.similarity > 0.3 %} orange{% else %}red{% endif %}"> {{ obj.similarity|mul:10|floatformat }}</span>
 									      		</div>
@@ -245,6 +254,14 @@
 									      		</div>
 									      		<div class="col s6">
 									      			<span class="right-align" style="color: {% if obj.factoring_preaprobado > 0 %}green{% else %}red{% endif %}"> {% if obj.factoring_preaprobado > 0 %} Te financiamos hasta  <a href="https://www.bancosantander.es/es/empresas-advance/productos-y-servicios/cobros/factoring" id="download-button" target="_blank" class="btn waves-effect waves-light transparent grey-text text-darken-4 border-grey"> {{ obj.factoring_preaprobado|floatformat|intcomma }}€ </a>  {% else %} Sin preaprobación {% endif %}</span>
+									      		</div>
+									      	</div>
+									      	<div class="row">
+									      		<div class="col l8 s8">
+									      			<i class="fa fa-user left-align" aria-hidden="true"></i><span class="grey-text light text-darken-4"> Cliente propio: 
+									      		</div>
+									      		<div class="col l4 s4">
+									      			<span class="right-align black-text "> {{ obj.own_client}} </span>
 									      		</div>
 									      	</div>
 										    <div class="card-action">
@@ -276,47 +293,59 @@
 
 								{% if  forloop.counter|add:"-2"|divisibleby:3 %}
 									<div class="card blue-grey lighten-4 hoverable">
-									    <div class="card-image waves-effect waves-block waves-light">
-									      <img class="activator" src="{{ obj.image}}">
-									    </div>
-									    <div class="card-content">
-									    	<div class="row">
-									      		<span class="activator center-align grey-text text-darken-4"> {{ obj.name}}</span>
-									      	</div>
-									      	<div class="divider"></div>
-									      	<div class="row">
-									      		<div class="col s6">
-									      			<span class="right-align flow-text" style="color: {% if obj.similarity > 0.7 %}green{% elif obj.similarity > 0.3 %} orange{% else %}red{% endif %}"> {{ obj.similarity|mul:10|floatformat }}</span>
-									      		</div>
-									      	</div>
+							    <div class="card-image waves-effect waves-block waves-light">
+							      <img class="activator" src="{{ obj.image}}">
+							    </div>
+							    <div class="card-content">
+							    	<div class="row">
+							      		<span class="activator center-align grey-text text-darken-4"> {{ obj.name}}</span>
+							      	</div>
+							      	<div class="divider"></div>
+							      	<br>
+							      	<div class="row">
+							      		<div class="col s6">
+							      			<i class="fa fa-bullseye left-align" aria-hidden="true"></i><span class="grey-text light text-darken-4"> Match: 
+							      		</div>
+							      		<div class="col s6">
+							      			<span class="right-align flow-text" style="color: {% if obj.similarity > 0.7 %}green{% elif obj.similarity > 0.3 %} orange{% else %}red{% endif %}"> {{ obj.similarity|mul:10|floatformat }}</span>
+							      		</div>
+							      	</div>
 
-									      	<div class="row">
-									      		<div class="col s6">
-									      			<i class="fa fa-money left-align" aria-hidden="true"></i></i><span class="grey-text light text-darken-4"> Financing:
-									      			<br>
-									      			<small>¿Necesitarás financiar tus facturas?</small>	
-									      		</div>
-									      		<div class="col s6">
-									      			<span class="right-align" style="color: {% if obj.factoring_preaprobado > 0 %}green{% else %}red{% endif %}"> {% if obj.factoring_preaprobado > 0 %} Te financiamos hasta  <a href="https://www.bancosantander.es/es/empresas-advance/productos-y-servicios/cobros/factoring" id="download-button" target="_blank" class="btn waves-effect waves-light transparent grey-text text-darken-4 border-grey"> {{ obj.factoring_preaprobado|floatformat|intcomma }}€ </a>  {% else %} Sin preaprobación {% endif %}</span>
-									      		</div>
-									      	</div>
-										    <div class="card-action">
-										    	<a class="blue-grey-text text-darken-3" href="{{ obj.get_absolute_url }}">Ver detalle</a>
-										      	<span ><i class="material-icons right activator center">more_vert</i></span>
-										    </div>
-									    </div>
-									    <div class="card-reveal">
-									    	<span class="card-title">Actividad:<i class="material-icons right">close</i></span>
-									    	<div class="row">
-									      		<p class="grey-text text-darken-4">{{ obj.cnae_2 }}</p>
-									      		<p class="grey-text text-darken-4">{{ obj.cnae }}</p>
-									      	</div>
-									      	<span class="card-title">Localización:</span>
-									      	<div class="row">
-									      		<p class="grey-text text-darken-4">{{ obj.territorial }}</p>
-									      	</div>
-									    </div>
-									</div>
+							      	<div class="row">
+							      		<div class="col s6">
+							      			<i class="fa fa-money left-align" aria-hidden="true"></i></i><span class="grey-text light text-darken-4"> Financing:
+							      			<br>
+							      			<small>¿Necesitarás financiar tus facturas?</small>	
+							      		</div>
+							      		<div class="col s6">
+							      			<span class="right-align" style="color: {% if obj.factoring_preaprobado > 0 %}green{% else %}red{% endif %}"> {% if obj.factoring_preaprobado > 0 %} Te financiamos hasta  <a href="https://www.bancosantander.es/es/empresas-advance/productos-y-servicios/cobros/factoring" id="download-button" target="_blank" class="btn waves-effect waves-light transparent grey-text text-darken-4 border-grey"> {{ obj.factoring_preaprobado|floatformat|intcomma }}€ </a>  {% else %} Sin preaprobación {% endif %}</span>
+							      		</div>
+							      	</div>
+							      	<div class="row">
+							      		<div class="col l8 s8">
+							      			<i class="fa fa-user left-align" aria-hidden="true"></i><span class="grey-text light text-darken-4"> Cliente propio: 
+							      		</div>
+							      		<div class="col l4 s4">
+							      			<span class="right-align black-text "> {{ obj.own_client}} </span>
+							      		</div>
+							      	</div>
+								    <div class="card-action">
+								    	<a class="blue-grey-text text-darken-3" href="{{ obj.get_absolute_url }}">Ver detalle</a>
+								      	<span ><i class="material-icons right activator center">more_vert</i></span>
+								    </div>
+							    </div>
+							    <div class="card-reveal">
+							    	<span class="card-title">Actividad:<i class="material-icons right">close</i></span>
+							    	<div class="row">
+							      		<p class="grey-text text-darken-4">{{ obj.cnae_2 }}</p>
+							      		<p class="grey-text text-darken-4">{{ obj.cnae }}</p>
+							      	</div>
+							      	<span class="card-title">Localización:</span>
+							      	<div class="row">
+							      		<p class="grey-text text-darken-4">{{ obj.territorial }}</p>
+							      	</div>
+							    </div>
+							</div>
 
 								{% endif %}
 							{% endfor %}
@@ -327,47 +356,59 @@
 
 								{% if  forloop.counter|add:"-3"|divisibleby:3 %}
 									<div class="card blue-grey lighten-4 hoverable">
-									    <div class="card-image waves-effect waves-block waves-light">
-									      <img class="activator" src="{{ obj.image}}">
-									    </div>
-									    <div class="card-content">
-									    	<div class="row">
-									      		<span class="activator center-align grey-text text-darken-4"> {{ obj.name}}</span>
-									      	</div>
-									      	<div class="divider"></div>
-									      	<div class="row">
-									      		<div class="col s6">
-									      			<span class="right-align flow-text" style="color: {% if obj.similarity > 0.7 %}green{% elif obj.similarity > 0.3 %} orange{% else %}red{% endif %}"> {{ obj.similarity|mul:10|floatformat }}</span>
-									      		</div>
-									      	</div>
+							    <div class="card-image waves-effect waves-block waves-light">
+							      <img class="activator" src="{{ obj.image}}">
+							    </div>
+							    <div class="card-content">
+							    	<div class="row">
+							      		<span class="activator center-align grey-text text-darken-4"> {{ obj.name}}</span>
+							      	</div>
+							      	<div class="divider"></div>
+							      	<br>
+							      	<div class="row">
+							      		<div class="col s6">
+							      			<i class="fa fa-bullseye left-align" aria-hidden="true"></i><span class="grey-text light text-darken-4"> Match: 
+							      		</div>
+							      		<div class="col s6">
+							      			<span class="right-align flow-text" style="color: {% if obj.similarity > 0.7 %}green{% elif obj.similarity > 0.3 %} orange{% else %}red{% endif %}"> {{ obj.similarity|mul:10|floatformat }}</span>
+							      		</div>
+							      	</div>
 
-									      	<div class="row">
-									      		<div class="col s6">
-									      			<i class="fa fa-money left-align" aria-hidden="true"></i></i><span class="grey-text light text-darken-4"> Financing:
-									      			<br>
-									      			<small>¿Necesitarás financiar tus facturas?</small>	
-									      		</div>
-									      		<div class="col s6">
-									      			<span class="right-align" style="color: {% if obj.factoring_preaprobado > 0 %}green{% else %}red{% endif %}"> {% if obj.factoring_preaprobado > 0 %} Te financiamos hasta  <a href="https://www.bancosantander.es/es/empresas-advance/productos-y-servicios/cobros/factoring" id="download-button" target="_blank" class="btn waves-effect waves-light transparent grey-text text-darken-4 border-grey"> {{ obj.factoring_preaprobado|floatformat|intcomma }}€ </a>  {% else %} Sin preaprobación {% endif %}</span>
-									      		</div>
-									      	</div>
-										    <div class="card-action">
-										    	<a class="blue-grey-text text-darken-3" href="{{ obj.get_absolute_url }}">Ver detalle</a>
-										      	<span ><i class="material-icons right activator center">more_vert</i></span>
-										    </div>
-									    </div>
-									    <div class="card-reveal">
-									    	<span class="card-title">Actividad:<i class="material-icons right">close</i></span>
-									    	<div class="row">
-									      		<p class="grey-text text-darken-4">{{ obj.cnae_2 }}</p>
-									      		<p class="grey-text text-darken-4">{{ obj.cnae }}</p>
-									      	</div>
-									      	<span class="card-title">Localización:</span>
-									      	<div class="row">
-									      		<p class="grey-text text-darken-4">{{ obj.territorial }}</p>
-									      	</div>
-									    </div>
-									</div>
+							      	<div class="row">
+							      		<div class="col s6">
+							      			<i class="fa fa-money left-align" aria-hidden="true"></i></i><span class="grey-text light text-darken-4"> Financing:
+							      			<br>
+							      			<small>¿Necesitarás financiar tus facturas?</small>	
+							      		</div>
+							      		<div class="col s6">
+							      			<span class="right-align" style="color: {% if obj.factoring_preaprobado > 0 %}green{% else %}red{% endif %}"> {% if obj.factoring_preaprobado > 0 %} Te financiamos hasta  <a href="https://www.bancosantander.es/es/empresas-advance/productos-y-servicios/cobros/factoring" id="download-button" target="_blank" class="btn waves-effect waves-light transparent grey-text text-darken-4 border-grey"> {{ obj.factoring_preaprobado|floatformat|intcomma }}€ </a>  {% else %} Sin preaprobación {% endif %}</span>
+							      		</div>
+							      	</div>
+							      	<div class="row">
+							      		<div class="col l8 s8">
+							      			<i class="fa fa-user left-align" aria-hidden="true"></i><span class="grey-text light text-darken-4"> Cliente propio: 
+							      		</div>
+							      		<div class="col l4 s4">
+							      			<span class="right-align black-text "> {{ obj.own_client}} </span>
+							      		</div>
+							      	</div>
+								    <div class="card-action">
+								    	<a class="blue-grey-text text-darken-3" href="{{ obj.get_absolute_url }}">Ver detalle</a>
+								      	<span ><i class="material-icons right activator center">more_vert</i></span>
+								    </div>
+							    </div>
+							    <div class="card-reveal">
+							    	<span class="card-title">Actividad:<i class="material-icons right">close</i></span>
+							    	<div class="row">
+							      		<p class="grey-text text-darken-4">{{ obj.cnae_2 }}</p>
+							      		<p class="grey-text text-darken-4">{{ obj.cnae }}</p>
+							      	</div>
+							      	<span class="card-title">Localización:</span>
+							      	<div class="row">
+							      		<p class="grey-text text-darken-4">{{ obj.territorial }}</p>
+							      	</div>
+							    </div>
+							</div>
 
 								{% endif %}
 							{% endfor %}

@@ -35,14 +35,14 @@ from django.db.models import Prefetch
 
 @login_required
 def DebugView(request):
-	# empresas = Empresa.objects.all()
-	# for e in empresas:
-	# 	rand = randint(0,1)
-	# 	if rand > 0.3:
-	# 		e.own_client = 'SÍ'
-	# 	else:
-	# 		e.own_client = 'NO'
-	# 	e.save()
+	empresas = Empresa.objects.all()
+	for e in empresas:
+		rand = randint(0,1)
+		if rand > 0.3:
+			e.own_client = 'SÍ'
+		else:
+			e.own_client = 'NO'
+		e.save()
 
 	company_id = request.session.get('company')
 	company = Empresa.objects.filter(pk=company_id)[0]
@@ -179,7 +179,6 @@ def EmpresaDetailView(request, pk=None):
 				ventas.append(estado.ventas)
 				amortizaciones.append(estado.amortizaciones)
 			if int(company_id)==int(pk) and int(company_id)==990 and (i != 0):
-				print('siii')
 				fechas.append(estado.ejercicio)
 				depreciaciones.append(depreciaciones[i-1]*random.uniform(1, 1.1))
 				ebitda.append(ebitda[i-1]*random.uniform(1, 1.1))
@@ -198,8 +197,8 @@ def EmpresaDetailView(request, pk=None):
 				resultado_explotacion.append(resultado_explotacion[i-1]*random.uniform(0.93, 1.001))
 				ventas.append(ventas[i-1]*random.uniform(0.99, 1.05))
 				amortizaciones.append(amortizaciones[i-1]*random.uniform(1, 1.1))
-				num_proveedores = 5
-				hhi_providers = 0.73
+				num_proveedores = empresa.get_providers().count()
+				hhi_providers = empresa.hhi_providers()
 				margen_comercial_sector_clientes = empresa.margen_comercial_sector_clientes()
 			elif i!=0 and int(company_id)!=1610 and int(company_id)!=990:
 				fechas.append(estado.ejercicio)
@@ -305,9 +304,9 @@ def FinancialRiskRecommendationsView(request):
 	company = company.prefetch_related('estados_financieros','cirbe','productos')[0]
 
 	if int(company_id)==1610:
-		deuda_ebitda = 0.3133
-		deuda_largo = 154199.451351351345 * deuda_ebitda * 0.8
-		deuda_corto = 154199.451351351345 * deuda_ebitda * 0.2
+		deuda_ebitda = 0.9133
+		deuda_largo = 154199.451351351345 * deuda_ebitda * 0.85
+		deuda_corto = 154199.451351351345 * deuda_ebitda * 0.15
 		ratio_corto_largo = deuda_corto / deuda_largo
 		deuda_corto_pond = deuda_corto / 154199.451351351345
 		dias_a_cobrar = 175
@@ -384,9 +383,9 @@ def ProviderRiskRecommendationsView(request):
 	except:
 		ultimos_eeff = Empresa()
 	if int(company_id)==1610:
-		dependencia = 0.01
-		hhi_providers = 0.73
-		proveedores = 5
+		dependencia = 0.04
+		hhi_providers = company.hhi_providers()
+		proveedores = company.get_providers().count()
 	else:
 		dependencia = company.my_penetration_provider()
 		hhi_providers = company.hhi_providers()
@@ -427,21 +426,21 @@ def CommercialProvidersRecommendationsView(request):
     ))[0]
 
 	if int(company_id) == 1610:
-		sells_sector = [{u'ejercicio': u'2011', 'c': 546283.4647849461}, {u'ejercicio': u'2012', 'c': 456645.75040462404}, {u'ejercicio': u'2013', 'c': 378471.62807453406}, {u'ejercicio': u'2014', 'c': 456921.41805970157}]
+		sells_sector = [{u'ejercicio': u'2011', 'c': 846283.4647849461}, {u'ejercicio': u'2012', 'c': 956645.75040462404}, {u'ejercicio': u'2013', 'c': 978471.62807453406}, {u'ejercicio': u'2014', 'c': 1056921.41805970157}]
 		sells_me = [{u'ejercicio': u'2011', 'c': 1392696.61117647061}, {u'ejercicio': u'2012', 'c': 1534303.62062499998}, {u'ejercicio': u'2013', 'c': 1399953.46552631578}, {u'ejercicio': u'2014', 'c': 1491070.38647058822}]
-		ebitda_sector = [{u'ejercicio': u'2011', 'c': 49361.97748407643}, {u'ejercicio': u'2012', 'c': 47984.25817891373}, {u'ejercicio': u'2013', 'c': 46471.11822525595}, {u'ejercicio': u'2014', 'c': 54865.1086259542}]
+		ebitda_sector = [{u'ejercicio': u'2011', 'c': 139361.97748407643}, {u'ejercicio': u'2012', 'c': 127984.25817891373}, {u'ejercicio': u'2013', 'c': 126471.11822525595}, {u'ejercicio': u'2014', 'c': 133865.1086259542}]
 		ebitda_me = [{u'ejercicio': u'2011', 'c': 151794.07494505495}, {u'ejercicio': u'2012', 'c': 145185.49206521739}, {u'ejercicio': u'2013', 'c': 141847.803749999985}, {u'ejercicio': u'2014', 'c': 154199.451351351345}]
-		resultados_sector = [{u'ejercicio': u'2011', 'c': 66543.67525477704}, {u'ejercicio': u'2012', 'c': 53854.49316293933}, {u'ejercicio': u'2013', 'c': 16644.12122866895}, {u'ejercicio': u'2014', 'c': 76736.3875572519}]
+		resultados_sector = [{u'ejercicio': u'2011', 'c': 96543.67525477704}, {u'ejercicio': u'2012', 'c': 73854.49316293933}, {u'ejercicio': u'2013', 'c': 56644.12122866895}, {u'ejercicio': u'2014', 'c': 96736.3875572519}]
 		resultados_me = [{u'ejercicio': u'2011', 'c': 153690.474505494498}, {u'ejercicio': u'2012', 'c': 102998.05847826087}, {u'ejercicio': u'2013', 'c': 70357.194875000005}, {u'ejercicio': u'2014', 'c': 132367.53648648648}]
 		diff_sells = (sells_me[len(sells_me)-1]['c'] - sells_sector[len(sells_sector)-1]['c'])/sells_sector[len(sells_sector)-1]['c']
 		diff_ebitda = (ebitda_me[len(ebitda_me)-1]['c'] - ebitda_sector[len(ebitda_sector)-1]['c'])/ebitda_sector[len(ebitda_sector)-1]['c']
 		diff_resultados = (resultados_me[len(resultados_me)-1]['c'] - resultados_sector[len(resultados_sector)-1]['c'])/resultados_sector[len(resultados_sector)-1]['c']
-		penetration = 0.01
-		num_proveedores = 5
+		penetration = 0.04
+		num_proveedores = empresa.get_providers().count()
 		margen = 0.16
 		ratio_comercial = 1- margen
-		hhi_providers = 0.73
-		average_transfer_to_provider = 1567
+		hhi_providers = empresa.hhi_providers()
+		average_transfer_to_provider = 1267
 	else:
 		average_transfer_to_provider = empresa.average_transfer_to_provider()
 		sells_sector = list(empresa.balance_providers_sells_avg_sector())

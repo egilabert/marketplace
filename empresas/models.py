@@ -1071,7 +1071,7 @@ class Empresa(models.Model, r_clients.Recommendations_clients,
 
     def deuda_total_sector_pond(self):
         if len(self.balance_ebitda_avg_sector()) > 0 and float(self.balance_ebitda_avg_sector()[len(self.balance_ebitda_avg_sector())-1].get('c', 0)) > 0:
-            return float(self.deuda_largo_sector()*0.1+self.deuda_corto())/float(self.balance_ebitda_avg_sector()[len(self.balance_ebitda_avg_sector())-1].get('c', 0)*3)
+            return float(self.deuda_largo_sector()*0.1+self.deuda_corto())/float(self.balance_ebitda_avg_sector()[len(self.balance_ebitda_avg_sector())-1].get('c', 0))
         return 0
 
     def ratio_endeudamiento(self):

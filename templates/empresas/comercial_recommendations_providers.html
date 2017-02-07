@@ -86,19 +86,19 @@
     <div class="card horizontal green lighten-2 black-text">
       <div class="card-stacked">
         <div class="card-content black-text">
-        	<p><strong>No se observan desviaciones significativas</strong> en el volúmen de ventas de los proveedores respecto a su comptencia</p>
+            <p><strong>No</strong> se observan<strong> diferencia significativas</strong> entre la facturación de tus proveedores y los de tu competencia {{diff_sells|mul:100|floatformat:1}}%</p>
           </div>
           <div class="divider"></div>
           <div class="card-content black-text">
-            <p>Buena <strong>diversificación en proveedores</strong> con un índice de concentración del {{hhi_providers|floatformat:2}}</p>
+            <p>Trabaja <strong>con proveedores con mejor EBITDA</strong> y por lo tanto más fuertes que su competencia</p>
           </div>
           <div class="divider"></div>
           <div class="card-content black-text">
-            <p>Trabajas con <strong>proveedores más fuertes que tu competencia</strong> </p>
+            <p><p>Trabajas con <strong>proveedores con mucho mejores resultados que tu competencia.</strong> </p>
           </div>
           <div class="divider"></div>
           <div class="card-content black-text">
-            <p>Trabajas con <strong>proveedores con mucho mejores resultados que tu competencia.</strong> </p>
+            <p>Buena <strong>diversificación en clientes</strong>: Índice de concentración de 1/10</p>
           </div>
       </div>
     </div>
@@ -108,10 +108,6 @@
   <p class="flow-text center-align">Puntos a mejorar</p>
     <div class="card horizontal grey lighten-3 black-text">
       <div class="card-stacked">
-        <div class="card-content">
-          <p>Estos proveedores tiene muy baja dependencia ({{penetration|mul:100|floatformat:0}}%) de su facturación conmigo</p>
-        </div>
-        <div class="divider"></div>
         <div class="card-content black-text">
             <p>Se observa una <strong>reducción del EBITDA</strong> de tus proveedores situada en un {{delta_ebitda|mul:100|floatformat:1}}% el último año</p>
           </div>
@@ -119,6 +115,14 @@
         <div class="card-content black-text">
             <p>Se observa una <strong>reducción de los resultados de explotación</strong> de tus proveedores situada en un {{delta_resultados_explotacion|mul:100|floatformat:1}}% el último año</p>
           </div>
+        <div class="divider"></div>
+        <div class="card-content black-text">
+            <p>Baja <strong>diversificación geografica</strong>: Índice de concentración de 6/10</p>
+          </div>
+         <div class="divider"></div>
+        <div class="card-content">
+          <p>Los proveedores tiene muy <strong>baja dependencia</strong> ({{penetration|mul:100|floatformat:0}}%) de su facturación con la empresa</p>
+        </div>
       </div>
     </div>
   </div>
@@ -131,17 +135,14 @@
     <p class="flow-text center-align">Puntos fuertes</p>
     <div class="card horizontal green lighten-2 black-text">
       <div class="card-stacked">
-          <div class="card-content black-text">
-            <p><strong>El volumen de ventas </strong> de los proveedores es mucho mayor que el de tu competencia ({{diff_sells|mul:100|floatformat:0}}%)</p>
-          </div>
-        <div class="divider"></div>
-        <div class="card-content black-text">
-            <p><strong>El EBITDA </strong> de los proveedores es mucho mayor que el de tu competencia ({{diff_ebitda|mul:100|floatformat:0}}%)</p>
-          </div>
-        <div class="divider"></div>
-        <div class="card-content black-text">
-            <p><strong>Los resultados de explotación </strong> de los proveedores son mejores que el de tu competencia ({{diff_resultados|mul:100|floatformat:0}}%)</p>
-          </div>
+          <div class="card-content">
+          <p><strong>Trabaja con proveedores más fuertes que su competencia</strong> con algunas diferencias</strong> en:</p>
+          <ul type="square">
+          	<li>	- <strong>Facturación media de sus proveedores</strong> (diferencia del {{diff_sells|mul:100|floatformat:0}}% respecto a la competencia)</li>
+          	<li>	- <strong>EBITDA medio de sus proveedores</strong> (diferencia del {{diff_ebitda|mul:100|floatformat:0}}% respecto a la competencia)</li>
+          	<li>	- <strong>Resultados de explotación medio de sus proveedores</strong> (diferencia del {{diff_resultados|mul:100|floatformat:0}}% respecto a la competencia)</li>
+          </ul>
+        </div>
         </div>
       </div>
   </div>

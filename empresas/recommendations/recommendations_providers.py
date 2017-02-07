@@ -12,17 +12,7 @@ class Recommendations_providers:
     
     def respuesta_providers_ventas_interpretation(self):
         if self.id==1610:
-            balance_sells_deviation = float(1491070.38647058822-456921.41805970157)/float(456921.41805970157)
-            if balance_sells_deviation > 0.5:
-                return "En promedio, trabajas con proveedores mucho más grandes que tu competencia"
-            elif balance_sells_deviation > 0.1:
-                return "En promedio, trabajas con proveedores más grandes que la competencia."
-            elif balance_sells_deviation > -0.1:
-                return "En promedio, trabajas con proveedores parecidos a los de tu competencia."
-            elif balance_sells_deviation > -0.5:
-                return "En promedio, trabajas con proveedores más pequeños que tu competencia."
-            else:
-                return "En promedio, trabajas con proveedores mucho más pequeños que tu competencia"
+            return "En promedio, trabajas con proveedores más grandes que la competencia."
         elif len(self.balance_providers_sells())>0:
             balance_sells_deviation = float(self.balance_providers_sells()[len(self.balance_providers_sells())-1]['c']-self.balance_providers_sells_avg_sector()[len(self.balance_providers_sells_avg_sector())-1]['c'])/float(self.balance_providers_sells_avg_sector()[len(self.balance_providers_sells_avg_sector())-1]['c'])
             if balance_sells_deviation > 0.5:
@@ -40,17 +30,7 @@ class Recommendations_providers:
 
     def respuesta_providers_ventas_hint(self):
         if self.id==1610:
-            balance_sells_deviation = float(1491070.38647058822-456921.41805970157)/float(456921.41805970157)
-            if balance_sells_deviation > 0.5:
-                return "Sigue así! Si buscas ampliar tu base de proveedores utiliza nuestro motor de recomendaciones."
-            elif balance_sells_deviation > 0.1:
-                return "Muy bien! Si buscas ampliar tu base de proveedores utiliza nuestro motor de recomendaciones."
-            elif balance_sells_deviation > -0.1:
-                return "Bien! Si te interesa, puedes encontrar proveedores de mayor tamaño utilizando nuestro motor de recomendaciones."
-            elif balance_sells_deviation > -0.5:
-                return "Atención! Trabajar con proveedores más pequeños te da mayor poder de negociación pero puede aumentar el riesgo para tu empresa. Has probado con proveedores más grandes? Si buscas nuevas oportunidades comerciales utiliza nuestro motor de recomendaciones."
-            else:
-                return "Alerta! Trabajar con proveedores muy pequeños da mayor poder de negociación pero puede aumentar el riesgo para tu empresa. Has probado con proveedores más grandes? Si buscas ampliar  tu base de proveedores utiliza nuestro motor de recomendaciones."
+            return "Muy bien! Si buscas ampliar tu base de proveedores utiliza nuestro motor de recomendaciones."
         elif len(self.balance_providers_sells())>0:
             balance_sells_deviation = float(self.balance_providers_sells()[len(self.balance_providers_sells())-1]['c']-self.balance_providers_sells_avg_sector()[len(self.balance_providers_sells_avg_sector())-1]['c'])/float(self.balance_providers_sells_avg_sector()[len(self.balance_providers_sells_avg_sector())-1]['c'])
             if balance_sells_deviation > 0.5:
@@ -107,17 +87,7 @@ class Recommendations_providers:
     
     def respuesta_providers_ebitda_interpretation(self):
         if self.id==1610:
-            balance_ebitda_deviation = float(154199.451351351345-54865.1086259542)/float(54865.1086259542)
-            if balance_ebitda_deviation > 0.5:
-                return "En promedio, trabajas con proveedores mucho más fuertes que tu competencia."
-            elif balance_ebitda_deviation > 0.1:
-                return "En promedio, trabajas con proveedores más fuertes que la competencia."
-            elif balance_ebitda_deviation > -0.1:
-                return "En promedio, trabajas con proveedores parecidos a los de tu competencia."
-            elif balance_ebitda_deviation > -0.5:
-                return "En promedio, trabajas con proveedores más débiles que tu competencia."
-            else:
-                return "En promedio, trabajas con proveedores mucho más débiles que tu competencia."
+            return "En promedio, trabajas con proveedores más fuertes que la competencia."
         elif len(self.balance_providers_ebitda())>0:
             balance_ebitda_deviation = float(self.balance_providers_ebitda()[len(self.balance_providers_ebitda())-1]['c']-self.balance_providers_ebitda_avg_sector()[len(self.balance_providers_ebitda_avg_sector())-1]['c'])/abs(float(self.balance_providers_ebitda_avg_sector()[len(self.balance_providers_ebitda_avg_sector())-1]['c']))
             if balance_ebitda_deviation > 0.5:
@@ -135,17 +105,7 @@ class Recommendations_providers:
 
     def respuesta_providers_ebitda_hint(self):
         if self.id==1610:
-            balance_ebitda_deviation = float(154199.451351351345-54865.1086259542)/float(54865.1086259542)
-            if balance_ebitda_deviation > 0.5:
-                return "Sigue así! Si buscas ampliar  tu base de proveedores utiliza nuestro motor de recomendaciones ."
-            elif balance_ebitda_deviation > 0.1:
-                return "Muy bien! Si buscas ampliar  tu base de proveedores utiliza nuestro motor de recomendaciones ."
-            elif balance_ebitda_deviation > -0.1:
-                return "Bien! Si te interesa, puedes encontrar proveedores más fuertes utilizando nuestro motor de recomendaciones ."
-            elif balance_ebitda_deviation > -0.5:
-                return "Atención! Trabajar con proveedores más débiles es más arriesgado para tu negocio. Has probado con proveedores más fuertes? Si buscas ampliar  tu base de proveedores utiliza nuestro motor de recomendaciones ."
-            else:
-                return "Alerta! Trabajar con proveedores en dificultades supone un riesgo para tu negocio. Has probado con proveedores más fuertes? Si buscas ampliar  tu base de proveedores utiliza nuestro motor de recomendaciones ."
+            return "Muy bien! Si buscas ampliar  tu base de proveedores utiliza nuestro motor de recomendaciones ."
         elif len(self.balance_providers_ebitda())>0:
             balance_ebitda_deviation = float(self.balance_providers_ebitda()[len(self.balance_providers_ebitda())-1]['c']-self.balance_providers_ebitda_avg_sector()[len(self.balance_providers_ebitda_avg_sector())-1]['c'])/abs(float(self.balance_providers_ebitda_avg_sector()[len(self.balance_providers_ebitda_avg_sector())-1]['c']))
             if balance_ebitda_deviation > 0.5:
