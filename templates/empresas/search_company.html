@@ -60,15 +60,15 @@ NetworkB2B
       </div>
       <div class="row center">
         <div class="col m1 s1"></div>
-          <div class="col m4 s4">
+          <div class="col m5 s4 center-align">
             <form action="{% url 'empresas:empresas_home' %}" method="post" id="journey1">
               {% csrf_token %}
               <input type="hidden" id="journey1" name="journey1" value="journey1">
               <button type="submit" value="submit" form="journey1" id="download-button" class="btn-large waves-effect waves-light alpha_back pad_top orange-text text-darken-4 border-grey">Journey 1 </button>
             </form>
           </div>
-          <div class="col m2 s1"></div>
-          <div class="col m4 s4">
+          <div class="col m1 s1"></div>
+          <div class="col m5 s4 center-align">
             <form action="{% url 'empresas:empresas_home' %}" method="post" id="journey2">
               {% csrf_token %}
               <input type="hidden" id="journey2" name="journey2" value="journey2">
