@@ -1,7 +1,7 @@
 {% load static %}
 {% load humanize %}
 {% load mathfilters %}
-
+				
 				<div class="row">
 		    		<div class="col s12 m4 cards-container">
 		    		{% if  recommended_clients.all.count > 0 %}
@@ -35,6 +35,14 @@
 							      		</div>
 							      		<div class="col s6">
 							      			<span class="right-align" style="color: {% if obj.factoring_preaprobado > 0 %}green{% else %}red{% endif %}"> {% if obj.factoring_preaprobado > 0 %} Te financiamos hasta  <a href="https://www.bancosantander.es/es/empresas-advance/productos-y-servicios/cobros/factoring" id="download-button" target="_blank" class="btn waves-effect waves-light transparent grey-text text-darken-4 border-grey"> {{ obj.factoring_preaprobado|floatformat|intcomma }}€ </a>  {% else %} Sin preaprobación {% endif %}</span>
+							      		</div>
+							      	</div>
+							      	<div class="row">
+							      		<div class="col l8 s8">
+							      			<i class="fa fa-user left-align" aria-hidden="true"></i><span class="grey-text light text-darken-4"> Cliente propio: 
+							      		</div>
+							      		<div class="col l4 s4">
+							      			<span class="right-align black-text "> {{ obj.clientes_recomendados.own_client}} </span>
 							      		</div>
 							      	</div>
 								    <div class="card-action">
@@ -98,6 +106,14 @@
 							      			<span class="right-align" style="color: {% if obj.factoring_preaprobado > 0 %}green{% else %}red{% endif %}"> {% if obj.factoring_preaprobado > 0 %} Te financiamos hasta  <a href="https://www.bancosantander.es/es/empresas-advance/productos-y-servicios/cobros/factoring" id="download-button" target="_blank" class="btn waves-effect waves-light transparent grey-text text-darken-4 border-grey"> {{ obj.factoring_preaprobado|floatformat|intcomma }}€ </a>  {% else %} Sin preaprobación {% endif %}</span>
 							      		</div>
 							      	</div>
+							      	<div class="row">
+							      		<div class="col l8 s8">
+							      			<i class="fa fa-user left-align" aria-hidden="true"></i><span class="grey-text light text-darken-4"> Cliente propio: 
+							      		</div>
+							      		<div class="col l4 s4">
+							      			<span class="right-align black-text "> {{ obj.clientes_recomendados.own_client}} </span>
+							      		</div>
+							      	</div>
 								    <div class="card-action">
 								    	<a class="blue-grey-text text-darken-3" href="{{ obj.clientes_recomendados.get_absolute_url }}">Ver detalle</a>
 								      	<span ><i class="material-icons right activator center">more_vert</i></span>
@@ -155,6 +171,14 @@
 							      		</div>
 							      		<div class="col s6">
 							      			<span class="right-align" style="color: {% if obj.factoring_preaprobado > 0 %}green{% else %}red{% endif %}"> {% if obj.factoring_preaprobado > 0 %} Te financiamos hasta  <a href="https://www.bancosantander.es/es/empresas-advance/productos-y-servicios/cobros/factoring" id="download-button" target="_blank" class="btn waves-effect waves-light transparent grey-text text-darken-4 border-grey"> {{ obj.factoring_preaprobado|floatformat|intcomma }}€ </a>  {% else %} Sin preaprobación {% endif %}</span>
+							      		</div>
+							      	</div>
+							      	<div class="row">
+							      		<div class="col l8 s8">
+							      			<i class="fa fa-user left-align" aria-hidden="true"></i><span class="grey-text light text-darken-4"> Cliente propio: 
+							      		</div>
+							      		<div class="col l4 s4">
+							      			<span class="right-align black-text "> {{ obj.clientes_recomendados.own_client}} </span>
 							      		</div>
 							      	</div>
 								    <div class="card-action">

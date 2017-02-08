@@ -35,14 +35,14 @@ from django.db.models import Prefetch
 
 @login_required
 def DebugView(request):
-	empresas = Empresa.objects.all()
-	for e in empresas:
-		rand = randint(0,1)
-		if rand > 0.3:
-			e.own_client = 'SÍ'
-		else:
-			e.own_client = 'NO'
-		e.save()
+	# empresas = Empresa.objects.all()
+	# for e in empresas:
+	# 	rand = randint(0,1)
+	# 	if rand > 0.3:
+	# 		e.own_client = 'SÍ'
+	# 	else:
+	# 		e.own_client = 'NO'
+	# 	e.save()
 
 	company_id = request.session.get('company')
 	company = Empresa.objects.filter(pk=company_id)[0]
@@ -311,6 +311,8 @@ def FinancialRiskRecommendationsView(request):
 		deuda_corto_pond = deuda_corto / 154199.451351351345
 		dias_a_cobrar = 175
 		dias_a_pagar = 58
+		dias_a_pagar_sector = 85
+		dias_a_cobrar_sector = 98
 	else:
 		deuda_ebitda = company.deuda_total_pond()
 		deuda_largo = company.cirbe.largo_plazo_dispuesto
@@ -319,12 +321,16 @@ def FinancialRiskRecommendationsView(request):
 		deuda_corto_pond = company.deuda_corto_pond()
 		dias_a_cobrar = company.dias_a_cobrar()
 		dias_a_pagar = company.dias_a_pagar()
+		dias_a_pagar_sector = company.dias_a_pagar_sector()
+		dias_a_cobrar_sector = company.dias_a_cobrar_sector()
 	try:
 		ultimos_eeff = company.estados_financieros.reverse()[0]
 	except:
 		ultimos_eeff = Empresa()
 	context = {
 		'company':company,
+		'dias_a_pagar_sector': dias_a_pagar_sector,
+		'dias_a_cobrar_sector': dias_a_cobrar_sector,
 		'deuda_corto_pond': deuda_corto_pond,
 		'dias_a_pagar': dias_a_pagar,
 		'dias_a_cobrar': dias_a_cobrar,
@@ -640,6 +646,7 @@ def TrasferCreateView(request, empresa_id):
 
 @login_required
 def ClientView(request):
+
 	today = timezone.now().date()
 	company_id = request.session.get('company')
 	company = Empresa.objects.filter(pk=company_id)
@@ -650,7 +657,6 @@ def ClientView(request):
         to_attr="ultimos_estados_financieros"
     ))[0]
 
-	recommended_clients = company.get_recommended_clients()
 	sector, region, min_bill, comment = request.GET.get("sector"), request.GET.get("region"), request.GET.get("min_bill"), request.GET.get("comment")
 
 	if request.session.get('recommended_clients_page') is None:
@@ -658,17 +664,20 @@ def ClientView(request):
 	else:
 		request.session['recommended_clients_page'] = request.session.get('recommended_clients_page') + 1
 
+	recommended_clients = company.recommended.all() #company.get_recommended_clients()
+
 	if sector is not None or region is not None or min_bill is not None:
 		if region=="true" or sector!="": 
 			if region=="true":
-				recommended_clients = company.recommended.exclude(
+				recommended_clients = recommended_clients.exclude(
 					clientes_recomendados__territorial=company.territorial)
 			else:
-				recommended_clients = company.recommended.fliter(
+				recommended_clients = recommended_clients.filter(
 					clientes_recomendados__territorial=company.territorial)
 			if sector != "":
 				recommended_clients = recommended_clients.filter(
 					clientes_recomendados__cnae_2=sector)
+			print(recommended_clients)
 			context = {
 				"company": company, 
 				"recommended_clients": recommended_clients[:50],
@@ -676,14 +685,14 @@ def ClientView(request):
 			}
 			return render(request, "empresas/cards_layout.html", context)
 		else:
-			recommended_clients = company.get_recommended_clients()
+			recommended_clients = recommended_clients.exclude(clientes_recomendados__name=company.name)
 			context = {
 				"company": company, 
 				"recommended_clients": recommended_clients[:50],
 				"loading_times": request.session['recommended_clients_page']
 			}
 			return render(request, "empresas/cards_layout.html", context)
-
+	print('nada')
 	context = {
 		"company": company, 
 		"title": "Recommended clients",
