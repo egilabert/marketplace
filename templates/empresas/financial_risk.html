@@ -166,7 +166,7 @@
 		      	  		<div class="col s12 m2 line">
 		      	  			<div class="center-align">
 				            <i class="fa fa-money" aria-hidden="true"></i><span class="card-title"> Situación financiera</span>
-				            <h3 class="align-right orange-text darken-1"></h3>
+				            <h4 class="align-right orange-text darken-1"></h4>
 				            {% if company.hats_alert %}
 			                    {% if company.hats_alert == "ROJA" %}
 			                    <h4 class="align-right red-text darken-1">{{company.hats_alert}}</h4>
@@ -238,7 +238,7 @@
 				 ///////////////////////////////////////////////////////////// -->
 
 					<div class="white_back title_conf">
-				    	<h3 class="flow-text">  Riesgo de crédito - ¿Puedo asumir más endeudamiento?</h3>
+				    	<h4 class="flow-text">  Riesgo de crédito - ¿Puedo asumir más endeudamiento?</h4>
 				    </div>
 			    	<div class="row title_conf">
 			    	<!-- Resultado explotaciones -->
@@ -359,7 +359,7 @@
 						            		<div class="col m4 s6">
 						            			<div class="card blue-grey lighten-3">
 						            				<span class="card-title blue-grey-text text-darken-3">{{producto.producto}}</span>
-						              				<h3 class="orange-text text-darken-2">{{producto.dispuesto|floatformat:0|intcomma}}€</h3>
+						              				<h4 class="orange-text text-darken-2">{{producto.dispuesto|floatformat:0|intcomma}}€</h4>
 						              				<small class="blue-grey-text text-darken-3">Fecha vencimiento: {{producto.fecha_vencimiento}}</small><br>
 						              				<small class="blue-grey-text text-darken-3">Cuota anual: {{producto.cuota_anual|floatformat:1|intcomma}}€</small>
 						              			</div>

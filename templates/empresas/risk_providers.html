@@ -160,7 +160,7 @@
 		      	  		<div class="col s12 m2 line">
 		      	  			<div class="center-align">
 				            <i class="fa fa-user-o" aria-hidden="true"></i><span class="card-title"> Tus proveedores</span>
-				            <h3 class="align-right orange-text darken-1">{{proveedores}}</h3>
+				            <h4 class="align-right orange-text darken-1">{{proveedores}}</h4>
 				            <span class="green-text text-darken-1"><i class="fa fa-sort-up" aria-hidden="true"></i><span class="card-title">34%</span></span> <span class="light">Desde el mes pasado</span>
 				            </div>
 				        </div>
@@ -168,7 +168,7 @@
 				        <div class="col s12 m2 line">
 		      	  			<div class="center-align ">
 				            <i class="fa fa-users" aria-hidden="true"></i><span class="card-title"> Sus proveedores</span>
-				            <h3 class="align-right orange-text darken-1">{{company.get_sector_providers|floatformat:0|intcomma}}</h3>
+				            <h4 class="align-right orange-text darken-1">{{company.get_sector_providers|floatformat:0|intcomma}}</h4>
 				            <span class="green-text text-darken-1"><i class="fa fa-sort-up" aria-hidden="true"></i><span class="card-title">10%</span></span> <span class="light">Desde el mes pasado</span>
 				            </div>
 				        </div>
@@ -176,7 +176,7 @@
 				        <div class="col s12 m2 line">
 		      	  			<div class="center-align ">
 				            <i class="fa fa-rocket" aria-hidden="true"></i><span class="card-title"> Su dependencia</span>
-				            <h3 class="align-right orange-text darken-1">{{dependencia|mul:100|floatformat:1|intcomma}}%</h3>
+				            <h4 class="align-right orange-text darken-1">{{dependencia|mul:100|floatformat:1|intcomma}}%</h4>
 				            <span class="green-text text-darken-1"><i class="fa fa-sort-up" aria-hidden="true"></i><span class="card-title">5%</span></span> <span class="light">Desde el mes pasado</span>
 				            </div>
 				        </div>
@@ -184,7 +184,7 @@
 				        <div class="col s12 m2 line">
 		      	  			<div class="center-align ">
 				            <i class="fa fa-cubes" aria-hidden="true"></i><span class="card-title"> Competencia</span>
-				            <h3 class="align-right orange-text darken-1">{{company.get_sector_companies.count}}</h3>
+				            <h4 class="align-right orange-text darken-1">{{company.get_sector_companies.count}}</h4>
 				            <span class="red-text text-darken-1"><i class="fa fa-sort-down" aria-hidden="true"></i><span class="card-title">7%</span></span> <span class="light">Desde el mes pasado</span>
 				            </div>
 				        </div>
@@ -192,7 +192,7 @@
 				        <div class="col s12 m2 line">
 		      	  			<div class="center-align ">
 				            <i class="fa fa-eur" aria-hidden="true"></i><span class="card-title"> Pagos acumulados</span>
-				            <h3 class="align-right orange-text darken-1">{{company.get_total_buys|floatformat:0|intcomma}}€</h3>
+				            <h4 class="align-right orange-text darken-1">{{company.get_total_buys|floatformat:0|intcomma}}€</h4>
 				            <span class="red-text text-darken-1"><i class="fa fa-sort-down" aria-hidden="true"></i><span class="card-title">4%</span></span> <span class="light">Desde el mes pasado</span>
 				            </div>
 				        </div>
@@ -200,7 +200,7 @@
 				        <div class="col s12 m2">
 		      	  			<div class="center-align ">
 				            <i class="fa fa-money" aria-hidden="true"></i><span class="card-title"> Pago promedio</span>
-				            <h3 class="align-right orange-text darken-1">{{company.average_transfer_to_provider|floatformat:0|intcomma}}€</h3>
+				            <h4 class="align-right orange-text darken-1">{{company.average_transfer_to_provider|floatformat:0|intcomma}}€</h4>
 				            <span class="green-text text-darken-1"><i class="fa fa-sort-up" aria-hidden="true"></i><span class="card-title">1%</span></span> <span class="light">Desde el mes pasado</span>
 				            </div>
 				        </div>
