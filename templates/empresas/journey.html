@@ -237,36 +237,7 @@
 									    	<div class="row">
 									      		<span class="activator center-align grey-text text-darken-4"> {{ obj.name}}</span>
 									      	</div>
-									      	<div class="divider"></div>
-									      	<br>
-									      	<div class="row">
-									      		<div class="col s6">
-									      			<i class="fa fa-bullseye left-align" aria-hidden="true"></i><span class="grey-text light text-darken-4"> Match: 
-									      		</div>
-									      		<div class="col s6">
-									      			<span class="right-align flow-text" style="color: {% if obj.similarity > 0.7 %}green{% elif obj.similarity > 0.3 %} orange{% else %}red{% endif %}"> {{ obj.similarity|mul:10|floatformat }}</span>
-									      		</div>
-									      	</div>
-
-									      	<div class="row">
-									      		<div class="col s6">
-									      			<i class="fa fa-money left-align" aria-hidden="true"></i></i><span class="grey-text light text-darken-4"> Financing:
-									      			<br>
-									      			<small>¿Necesitarás financiar tus facturas?</small>	
-									      		</div>
-									      		<div class="col s6">
-									      			<span class="right-align" style="color: {% if obj.factoring_preaprobado > 0 %}green{% else %}red{% endif %}"> {% if obj.factoring_preaprobado > 0 %} Te financiamos hasta  <a href="https://www.bancsabadell.com/cs/Satellite/SabAtl/Factoring/1191332201741/es/" id="download-button" target="_blank" class="btn waves-effect waves-light transparent grey-text text-darken-4 border-grey"> {{ obj.factoring_preaprobado|floatformat|intcomma }}€ </a>  {% else %} Sin preaprobación {% endif %}</span>
-									      			<!-- https://www.bancosantander.es/es/empresas-advance/productos-y-servicios/cobros/factoring -->
-									      		</div>
-									      	</div>
-									      	<div class="row">
-									      		<div class="col l8 s8">
-									      			<i class="fa fa-user left-align" aria-hidden="true"></i><span class="grey-text light text-darken-4"> Cliente propio: 
-									      		</div>
-									      		<div class="col l4 s4">
-									      			<span class="right-align black-text "> {{ obj.own_client}} </span>
-									      		</div>
-									      	</div>
+									      	
 										    <div class="card-action">
 										    	<a class="blue-grey-text text-darken-3" href="{{ obj.get_absolute_url }}">Ver detalle</a>
 										      	<span ><i class="material-icons right activator center">more_vert</i></span>
@@ -303,36 +274,7 @@
 							    	<div class="row">
 							      		<span class="activator center-align grey-text text-darken-4"> {{ obj.name}}</span>
 							      	</div>
-							      	<div class="divider"></div>
-							      	<br>
-							      	<div class="row">
-							      		<div class="col s6">
-							      			<i class="fa fa-bullseye left-align" aria-hidden="true"></i><span class="grey-text light text-darken-4"> Match: 
-							      		</div>
-							      		<div class="col s6">
-							      			<span class="right-align flow-text" style="color: {% if obj.similarity > 0.7 %}green{% elif obj.similarity > 0.3 %} orange{% else %}red{% endif %}"> {{ obj.similarity|mul:10|floatformat }}</span>
-							      		</div>
-							      	</div>
-
-							      	<div class="row">
-							      		<div class="col s6">
-							      			<i class="fa fa-money left-align" aria-hidden="true"></i></i><span class="grey-text light text-darken-4"> Financing:
-							      			<br>
-							      			<small>¿Necesitarás financiar tus facturas?</small>	
-							      		</div>
-							      		<div class="col s6">
-							      			<span class="right-align" style="color: {% if obj.factoring_preaprobado > 0 %}green{% else %}red{% endif %}"> {% if obj.factoring_preaprobado > 0 %} Te financiamos hasta  <a href="https://www.bancsabadell.com/cs/Satellite/SabAtl/Factoring/1191332201741/es/" id="download-button" target="_blank" class="btn waves-effect waves-light transparent grey-text text-darken-4 border-grey"> {{ obj.factoring_preaprobado|floatformat|intcomma }}€ </a>  {% else %} Sin preaprobación {% endif %}</span>
-							      			<!-- https://www.bancosantander.es/es/empresas-advance/productos-y-servicios/cobros/factoring -->
-							      		</div>
-							      	</div>
-							      	<div class="row">
-							      		<div class="col l8 s8">
-							      			<i class="fa fa-user left-align" aria-hidden="true"></i><span class="grey-text light text-darken-4"> Cliente propio: 
-							      		</div>
-							      		<div class="col l4 s4">
-							      			<span class="right-align black-text "> {{ obj.own_client}} </span>
-							      		</div>
-							      	</div>
+							      	
 								    <div class="card-action">
 								    	<a class="blue-grey-text text-darken-3" href="{{ obj.get_absolute_url }}">Ver detalle</a>
 								      	<span ><i class="material-icons right activator center">more_vert</i></span>
@@ -367,36 +309,7 @@
 							    	<div class="row">
 							      		<span class="activator center-align grey-text text-darken-4"> {{ obj.name}}</span>
 							      	</div>
-							      	<div class="divider"></div>
-							      	<br>
-							      	<div class="row">
-							      		<div class="col s6">
-							      			<i class="fa fa-bullseye left-align" aria-hidden="true"></i><span class="grey-text light text-darken-4"> Match: 
-							      		</div>
-							      		<div class="col s6">
-							      			<span class="right-align flow-text" style="color: {% if obj.similarity > 0.7 %}green{% elif obj.similarity > 0.3 %} orange{% else %}red{% endif %}"> {{ obj.similarity|mul:10|floatformat }}</span>
-							      		</div>
-							      	</div>
-
-							      	<div class="row">
-							      		<div class="col s6">
-							      			<i class="fa fa-money left-align" aria-hidden="true"></i></i><span class="grey-text light text-darken-4"> Financing:
-							      			<br>
-							      			<small>¿Necesitarás financiar tus facturas?</small>	
-							      		</div>
-							      		<div class="col s6">
-							      			<span class="right-align" style="color: {% if obj.factoring_preaprobado > 0 %}green{% else %}red{% endif %}"> {% if obj.factoring_preaprobado > 0 %} Te financiamos hasta  <a href="https://www.bancsabadell.com/cs/Satellite/SabAtl/Factoring/1191332201741/es/" id="download-button" target="_blank" class="btn waves-effect waves-light transparent grey-text text-darken-4 border-grey"> {{ obj.factoring_preaprobado|floatformat|intcomma }}€ </a>  {% else %} Sin preaprobación {% endif %}</span>
-							      			<!-- https://www.bancosantander.es/es/empresas-advance/productos-y-servicios/cobros/factoring -->
-							      		</div>
-							      	</div>
-							      	<div class="row">
-							      		<div class="col l8 s8">
-							      			<i class="fa fa-user left-align" aria-hidden="true"></i><span class="grey-text light text-darken-4"> Cliente propio: 
-							      		</div>
-							      		<div class="col l4 s4">
-							      			<span class="right-align black-text "> {{ obj.own_client}} </span>
-							      		</div>
-							      	</div>
+							      	
 								    <div class="card-action">
 								    	<a class="blue-grey-text text-darken-3" href="{{ obj.get_absolute_url }}">Ver detalle</a>
 								      	<span ><i class="material-icons right activator center">more_vert</i></span>
@@ -451,24 +364,7 @@
 									    	<div class="row">
 									      		<span class="activator center-align grey-text text-darken-4"> {{ obj.name}}</span>
 									      	</div>
-									      	<div class="divider"></div>
-									      	<div class="row">
-									      		<div class="col s6">
-									      			<span class="right-align flow-text" style="color: {% if obj.similarity > 0.7 %}green{% elif obj.similarity > 0.3 %} orange{% else %}red{% endif %}"> {{ obj.similarity|mul:10|floatformat }}</span>
-									      		</div>
-									      	</div>
-
-									      	<div class="row">
-									      		<div class="col s6">
-									      			<i class="fa fa-money left-align" aria-hidden="true"></i></i><span class="grey-text light text-darken-4"> Financing:
-									      			<br>
-									      			<small>¿Necesitarás financiar tus facturas?</small>	
-									      		</div>
-									      		<div class="col s6">
-									      			<span class="right-align" style="color: {% if obj.factoring_preaprobado > 0 %}green{% else %}red{% endif %}"> {% if obj.factoring_preaprobado > 0 %} Te financiamos hasta  <a href="https://www.bancsabadell.com/cs/Satellite/SabAtl/Factoring/1191332201741/es/" id="download-button" target="_blank" class="btn waves-effect waves-light transparent grey-text text-darken-4 border-grey"> {{ obj.factoring_preaprobado|floatformat|intcomma }}€ </a>  {% else %} Sin preaprobación {% endif %}</span>
-									      			<!-- https://www.bancosantander.es/es/empresas-advance/productos-y-servicios/cobros/factoring -->
-									      		</div>
-									      	</div>
+									      	
 										    <div class="card-action">
 										    	<a class="blue-grey-text text-darken-3" href="{{ obj.get_absolute_url }}">Ver detalle</a>
 										      	<span ><i class="material-icons right activator center">more_vert</i></span>
@@ -505,24 +401,7 @@
 									    	<div class="row">
 									      		<span class="activator center-align grey-text text-darken-4"> {{ obj.name}}</span>
 									      	</div>
-									      	<div class="divider"></div>
-									      	<div class="row">
-									      		<div class="col s6">
-									      			<span class="right-align flow-text" style="color: {% if obj.similarity > 0.7 %}green{% elif obj.similarity > 0.3 %} orange{% else %}red{% endif %}"> {{ obj.similarity|mul:10|floatformat }}</span>
-									      		</div>
-									      	</div>
-
-									      	<div class="row">
-									      		<div class="col s6">
-									      			<i class="fa fa-money left-align" aria-hidden="true"></i></i><span class="grey-text light text-darken-4"> Financing:
-									      			<br>
-									      			<small>¿Necesitarás financiar tus facturas?</small>	
-									      		</div>
-									      		<div class="col s6">
-									      			<span class="right-align" style="color: {% if obj.factoring_preaprobado > 0 %}green{% else %}red{% endif %}"> {% if obj.factoring_preaprobado > 0 %} Te financiamos hasta  <a href="https://www.bancsabadell.com/cs/Satellite/SabAtl/Factoring/1191332201741/es/" id="download-button" target="_blank" class="btn waves-effect waves-light transparent grey-text text-darken-4 border-grey"> {{ obj.factoring_preaprobado|floatformat|intcomma }}€ </a>  {% else %} Sin preaprobación {% endif %}</span>
-									      			<!-- https://www.bancosantander.es/es/empresas-advance/productos-y-servicios/cobros/factoring -->
-									      		</div>
-									      	</div>
+									      	
 										    <div class="card-action">
 										    	<a class="blue-grey-text text-darken-3" href="{{ obj.get_absolute_url }}">Ver detalle</a>
 										      	<span ><i class="material-icons right activator center">more_vert</i></span>
@@ -557,24 +436,7 @@
 									    	<div class="row">
 									      		<span class="activator center-align grey-text text-darken-4"> {{ obj.name}}</span>
 									      	</div>
-									      	<div class="divider"></div>
-									      	<div class="row">
-									      		<div class="col s6">
-									      			<span class="right-align flow-text" style="color: {% if obj.similarity > 0.7 %}green{% elif obj.similarity > 0.3 %} orange{% else %}red{% endif %}"> {{ obj.similarity|mul:10|floatformat }}</span>
-									      		</div>
-									      	</div>
-
-									      	<div class="row">
-									      		<div class="col s6">
-									      			<i class="fa fa-money left-align" aria-hidden="true"></i></i><span class="grey-text light text-darken-4"> Financing:
-									      			<br>
-									      			<small>¿Necesitarás financiar tus facturas?</small>	
-									      		</div>
-									      		<div class="col s6">
-									      			<span class="right-align" style="color: {% if obj.factoring_preaprobado > 0 %}green{% else %}red{% endif %}"> {% if obj.factoring_preaprobado > 0 %} Te financiamos hasta  <a href="https://www.bancsabadell.com/cs/Satellite/SabAtl/Factoring/1191332201741/es/" id="download-button" target="_blank" class="btn waves-effect waves-light transparent grey-text text-darken-4 border-grey"> {{ obj.factoring_preaprobado|floatformat|intcomma }}€ </a>  {% else %} Sin preaprobación {% endif %}</span>
-									      			<!-- https://www.bancosantander.es/es/empresas-advance/productos-y-servicios/cobros/factoring -->
-									      		</div>
-									      	</div>
+									      	
 										    <div class="card-action">
 										    	<a class="blue-grey-text text-darken-3" href="{{ obj.get_absolute_url }}">Ver detalle</a>
 										      	<span ><i class="material-icons right activator center">more_vert</i></span>
