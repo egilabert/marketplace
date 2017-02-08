@@ -2,6 +2,9 @@
 
 /* Simple setup for this demo */
 
+.btn {
+  padding: 0 1rem !important;
+}    
 .mdl-card {
   width: 1050px;
   min-height: 0;
