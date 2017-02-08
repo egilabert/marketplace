@@ -564,54 +564,54 @@
 					            	<div class="row center-align">
 					            		<div class="col m3 s12 line">
 					            			<p>Clientes</p>
-					            			<h4><small><i class="fa fa-user" aria-hidden="true"></i></small> {{company.hhi_clients_clients|floatformat:2}}</h4>
-					            			<h4><small><i class="fa fa-users" aria-hidden="true"></i></small> {{company.hhi_clients_sector_clients|floatformat:2}}</h4>
+					            			<h5><small><i class="fa fa-user" aria-hidden="true"></i></small> {{company.hhi_clients_clients|floatformat:2}}</h5>
+					            			<h5><small><i class="fa fa-users" aria-hidden="true"></i></small> {{company.hhi_clients_sector_clients|floatformat:2}}</h5>
 					            		</div>
 					            		<div class="col m3 s12 line">
 					            			<p>Geográfica</p>
-					            			<h4><small><i class="fa fa-user" aria-hidden="true"></i></small> {{company.hhi_geografical_clients|floatformat:2}}</h4>
-					            			<h4><small><i class="fa fa-users" aria-hidden="true"></i></small> {{company.hhi_geografical_sector_clients|floatformat:2}}</h4>
+					            			<h5><small><i class="fa fa-user" aria-hidden="true"></i></small> {{company.hhi_geografical_clients|floatformat:2}}</h5>
+					            			<h5><small><i class="fa fa-users" aria-hidden="true"></i></small> {{company.hhi_geografical_sector_clients|floatformat:2}}</h5>
 					            		</div>
 					            		<div class="col m3 s12 line">
 					            			<p>Sectorial</p>
-					            			<h4><small><i class="fa fa-user" aria-hidden="true"></i></small> {{company.hhi_cnae_clients|floatformat:2}}</h4>
-					            			<h4><small><i class="fa fa-users" aria-hidden="true"></i></small> {{company.hhi_cnae_sector_clients|floatformat:2}}</h4>
+					            			<h5><small><i class="fa fa-user" aria-hidden="true"></i></small> {{company.hhi_cnae_clients|floatformat:2}}</h5>
+					            			<h5><small><i class="fa fa-users" aria-hidden="true"></i></small> {{company.hhi_cnae_sector_clients|floatformat:2}}</h5>
 					            		</div>
 					            		<div class="col m3 s12">
 					            			<p>Temporal</p>
-					            			<h4><small><i class="fa fa-user" aria-hidden="true"></i></small> {{company.hhi_temporal_clients|floatformat:2}}</h4>
-					            			<h4><small><i class="fa fa-users" aria-hidden="true"></i></small> {{company.hhi_temporal_sector_clients|floatformat:2}}</h4>
+					            			<h5><small><i class="fa fa-user" aria-hidden="true"></i></small> {{company.hhi_temporal_clients|floatformat:2}}</h5>
+					            			<h5><small><i class="fa fa-users" aria-hidden="true"></i></small> {{company.hhi_temporal_sector_clients|floatformat:2}}</h5>
 					            		</div>
 									</div>
 									<div class="divider"></div>
 									<div class="row center-align">
 					            		<div class="col m3 s12">
 					            			{% if company.hhi_clients_clients|sub:company.hhi_clients_sector_clients < 0 %}
-					            				<h4 style="color: green"> <i class="fa fa-sort-down" aria-hidden="true"></i> {{company.hhi_clients_clients|sub:company.hhi_clients_sector_clients|floatformat:2}}</h4>
+					            				<h5 style="color: green"> <i class="fa fa-sort-down" aria-hidden="true"></i> {{company.hhi_clients_clients|sub:company.hhi_clients_sector_clients|floatformat:2}}</h5>
 					            			{%else%}
-					            				<h4 style="color: red"> <i class="fa fa-sort-up" aria-hidden="true"></i> {{company.hhi_clients_clients|sub:company.hhi_clients_sector_clients|floatformat:2}}</h4>
+					            				<h5 style="color: red"> <i class="fa fa-sort-up" aria-hidden="true"></i> {{company.hhi_clients_clients|sub:company.hhi_clients_sector_clients|floatformat:2}}</h5>
 					            			{% endif %}
 					            			
 					            		</div>
 					            		<div class="col m3 s12">
 					            			{% if company.hhi_geografical_clients|sub:company.hhi_geografical_sector_clients < 0 %}
-					            				<h4 style="color: green"> <i class="fa fa-sort-down" aria-hidden="true"></i> {{company.hhi_geografical_clients|sub:company.hhi_geografical_sector_clients|floatformat:2}}</h4>
+					            				<h5 style="color: green"> <i class="fa fa-sort-down" aria-hidden="true"></i> {{company.hhi_geografical_clients|sub:company.hhi_geografical_sector_clients|floatformat:2}}</h5>
 					            			{%else%}
-					            				<h4 style="color: red"> <i class="fa fa-sort-up" aria-hidden="true"></i> {{company.hhi_geografical_clients|sub:company.hhi_geografical_sector_clients|floatformat:2}}</h4>
+					            				<h5 style="color: red"> <i class="fa fa-sort-up" aria-hidden="true"></i> {{company.hhi_geografical_clients|sub:company.hhi_geografical_sector_clients|floatformat:2}}</h5>
 					            			{% endif %}
 					            		</div>
 					            		<div class="col m3 s12">
 					            			{% if company.hhi_cnae_clients|sub:company.hhi_cnae_sector_clients < 0 %}
-					            				<h4 style="color: green"> <i class="fa fa-sort-down" aria-hidden="true"></i> {{company.hhi_cnae_clients|sub:company.hhi_cnae_sector_clients|floatformat:2}}</h4>
+					            				<h5 style="color: green"> <i class="fa fa-sort-down" aria-hidden="true"></i> {{company.hhi_cnae_clients|sub:company.hhi_cnae_sector_clients|floatformat:2}}</h5>
 					            			{%else%}
-					            				<h4 style="color: red"> <i class="fa fa-sort-up" aria-hidden="true"></i> {{company.hhi_cnae_clients|sub:company.hhi_cnae_sector_clients|floatformat:2}}</h4>
+					            				<h5 style="color: red"> <i class="fa fa-sort-up" aria-hidden="true"></i> {{company.hhi_cnae_clients|sub:company.hhi_cnae_sector_clients|floatformat:2}}</h5>
 					            			{% endif %}
 					            		</div>
 					            		<div class="col m3 s12">
 					            			{% if company.hhi_temporal_clients|sub:company.hhi_temporal_sector_clients < 0 %}
-					            				<h4 style="color: green"> <i class="fa fa-sort-down" aria-hidden="true"></i> {{company.hhi_temporal_clients|sub:company.hhi_temporal_sector_clients|floatformat:2}}</h4>
+					            				<h5 style="color: green"> <i class="fa fa-sort-down" aria-hidden="true"></i> {{company.hhi_temporal_clients|sub:company.hhi_temporal_sector_clients|floatformat:2}}</h5>
 					            			{%else%}
-					            				<h4 style="color: red"> <i class="fa fa-sort-up" aria-hidden="true"></i> {{company.hhi_temporal_clients|sub:company.hhi_temporal_sector_clients|floatformat:2}}</h4>
+					            				<h5 style="color: red"> <i class="fa fa-sort-up" aria-hidden="true"></i> {{company.hhi_temporal_clients|sub:company.hhi_temporal_sector_clients|floatformat:2}}</h5>
 					            			{% endif %}
 					            		</div>
 									</div>
@@ -657,42 +657,42 @@
 					              	<div class="row center-align">
 					            		<div class="col m4 s12 line">
 					            			<p>Margen comercial</p>
-					            			<h4><i class="fa fa-user" aria-hidden="true"></i> {{company.margen_comercial_clientes|floatformat:2}}</h4>
-					            			<h4><i class="fa fa-users" aria-hidden="true"></i> {{margen_comercial_sector_clientes|floatformat:2}}</h4>
+					            			<h5><i class="fa fa-user" aria-hidden="true"></i> {{company.margen_comercial_clientes|floatformat:2}}</h5>
+					            			<h5><i class="fa fa-users" aria-hidden="true"></i> {{margen_comercial_sector_clientes|floatformat:2}}</h5>
 					            		</div>
 					            		<div class="col m4 s12 line">
 					            			<p>Ratio de eficiencia</p>
-					            			<h4><i class="fa fa-user" aria-hidden="true"></i> {{company.ratio_comercial_clientes|floatformat:2}}</h4>
-					            			<h4><i class="fa fa-users" aria-hidden="true"></i> {{ratio_comercial_sector_clientes|floatformat:2}}</h4>
+					            			<h5><i class="fa fa-user" aria-hidden="true"></i> {{company.ratio_comercial_clientes|floatformat:2}}</h5>
+					            			<h5><i class="fa fa-users" aria-hidden="true"></i> {{ratio_comercial_sector_clientes|floatformat:2}}</h5>
 					            		</div>
 					            		<div class="col m4 s12">
 					            			<p>Ticket medio</p>
-					            			<h4><i class="fa fa-user" aria-hidden="true"></i> {{average_transfer_from_client|floatformat:0}}</h4>
-					            			<h4><i class="fa fa-users" aria-hidden="true"></i> {{company.average_sector_sells|floatformat:0}}</h4>
+					            			<h5><i class="fa fa-user" aria-hidden="true"></i> {{average_transfer_from_client|floatformat:0}}</h5>
+					            			<h5><i class="fa fa-users" aria-hidden="true"></i> {{company.average_sector_sells|floatformat:0}}</h5>
 					            		</div>
 									</div>
 									<div class="divider"></div>
 									<div class="row center-align">
 					            		<div class="col m4 s12">
 					            			{% if company.margen_comercial_clientes|sub:company.margen_comercial_sector_clientes < 0 %}
-					            				<h4 style="color: red"> <i class="fa fa-sort-down" aria-hidden="true"></i> {{company.margen_comercial_clientes|sub:margen_comercial_sector_clientes|floatformat:2}}</h4>
+					            				<h5 style="color: red"> <i class="fa fa-sort-down" aria-hidden="true"></i> {{company.margen_comercial_clientes|sub:margen_comercial_sector_clientes|floatformat:2}}</h5>
 					            			{%else%}
-					            				<h4 style="color: green"> <i class="fa fa-sort-up" aria-hidden="true"></i> {{company.margen_comercial_clientes|sub:margen_comercial_sector_clientes|floatformat:2}}</h4>
+					            				<h5 style="color: green"> <i class="fa fa-sort-up" aria-hidden="true"></i> {{company.margen_comercial_clientes|sub:margen_comercial_sector_clientes|floatformat:2}}</h5>
 					            			{% endif %}
 					            			
 					            		</div>
 					            		<div class="col m4 s12">
 					            			{% if company.ratio_comercial_clientes|sub:ratio_comercial_sector_clientes < 0 %}
-					            				<h4 style="color: green"> <i class="fa fa-sort-down" aria-hidden="true"></i> {{company.ratio_comercial_clientes|sub:ratio_comercial_sector_clientes|floatformat:2}}</h4>
+					            				<h5 style="color: green"> <i class="fa fa-sort-down" aria-hidden="true"></i> {{company.ratio_comercial_clientes|sub:ratio_comercial_sector_clientes|floatformat:2}}</h5>
 					            			{%else%}
-					            				<h4 style="color: red"> <i class="fa fa-sort-up" aria-hidden="true"></i> {{company.ratio_comercial_clientes|sub:ratio_comercial_sector_clientes|floatformat:2}}</h4>
+					            				<h5 style="color: red"> <i class="fa fa-sort-up" aria-hidden="true"></i> {{company.ratio_comercial_clientes|sub:ratio_comercial_sector_clientes|floatformat:2}}</h5>
 					            			{% endif %}
 					            		</div>
 					            		<div class="col m4 s12">
 					            			{% if company.average_transfer_from_client|sub:company.average_sector_sells < 0 %}
-					            				<h4 style="color: red"> <i class="fa fa-sort-down" aria-hidden="true"></i> {{company.average_transfer_from_client|sub:company.average_sector_sells|floatformat:2}}</h4>
+					            				<h5 style="color: red"> <i class="fa fa-sort-down" aria-hidden="true"></i> {{company.average_transfer_from_client|sub:company.average_sector_sells|floatformat:2}}</h5>
 					            			{%else%}
-					            				<h4 style="color: green"> <i class="fa fa-sort-up" aria-hidden="true"></i> {{company.average_transfer_from_client|sub:company.average_sector_sells|floatformat:2}}</h4>
+					            				<h5 style="color: green"> <i class="fa fa-sort-up" aria-hidden="true"></i> {{company.average_transfer_from_client|sub:company.average_sector_sells|floatformat:2}}</h5>
 					            			{% endif %}
 					            		</div>
 									</div>
