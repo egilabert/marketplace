@@ -88,7 +88,35 @@ def SearchView(request):
 
 @login_required
 def HomeView(request):
-	if request.POST:
+	print(request.POST)
+	if request.POST and request.POST.get('journey1',None):
+		print('journey1')
+		try:
+			del request.session['company']
+			del request.session['recommended_clients_page']
+		except:
+			pass
+		request.session.modified = True
+		got_it = Empresa.objects.filter(pk=990).first()
+		company = got_it.pk #1492 #randint(0, queryset.count() - 1) # # ## 865 865-1 
+		request.session['company'] = company
+		return HttpResponseRedirect(str(got_it.pk))
+
+	elif request.POST and request.POST.get('journey2',None):
+		print('journey2')
+		try:
+			del request.session['company']
+			del request.session['recommended_clients_page']
+		except:
+			pass
+		request.session.modified = True
+		got_it = Empresa.objects.filter(pk=1610).first()
+		company = got_it.pk #1492 #randint(0, queryset.count() - 1) # # ## 865 865-1 
+		request.session['company'] = company
+		return HttpResponseRedirect(str(got_it.pk))
+
+	elif request.POST and request.POST.get('company_name',None):
+		print('search')
 		name = request.POST['company_name']
 	try:
 		del request.session['company']
@@ -190,7 +218,6 @@ def EmpresaDetailView(request, pk=None):
 				margen_comercial_sector_clientes = 0.16
 				
 			if int(company_id)==int(pk) and int(company_id)==1610 and (i != 0):
-				print('here')
 				fechas.append(estado.ejercicio)
 				depreciaciones.append(depreciaciones[i-1]*random.uniform(1, 1.1))
 				ebitda.append(ebitda[i-1]*random.uniform(0.93, 1.001))

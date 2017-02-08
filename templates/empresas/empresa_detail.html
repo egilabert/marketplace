@@ -21,6 +21,8 @@
     <h3 class="center-align white-text text-darken-3 light">¡Considera nuevos clientes!</h3>
     {% elif referrer == 'provider' %}
     <h3 class="center-align white-text text-darken-3 light">¡Considera nuevos proveedores!</h3>
+    {% else %}
+    <h3 class="center-align white-text text-darken-3 light">{{company.name}}</h3>
     {% endif %}
     <div class="parallax"><img src="{% static 'images/cambodia-1476378_1920.jpg' %}"></div>
 </div>
