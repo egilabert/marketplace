@@ -147,6 +147,7 @@ def HomeView(request):
 	elif request.POST and request.POST.get('company_name',None):
 		print('search')
 		name = request.POST['company_name']
+		
 	try:
 		del request.session['company']
 		del request.session['recommended_clients_page']
@@ -158,12 +159,18 @@ def HomeView(request):
 		if request.user.username == "pmonras2":
 			company = 865
 		else:
-			got_it = Empresa.objects.filter(name=name).first()
-			company = got_it.pk #1492 #randint(0, queryset.count() - 1) # # ## 865 865-1 
+			try:
+				got_it = Empresa.objects.filter(name=name).first()
+				company = got_it.pk #1492 #randint(0, queryset.count() - 1) # # ## 865 865-1
+			except:
+				return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
 		request.session['company'] = company
 	else:
-		company_id = request.session.get('company')
-		company = Empresa.objects.filter(pk=company_id).first()
+		try:
+			company_id = request.session.get('company')
+			company = Empresa.objects.filter(pk=company_id).first()
+		except:
+			return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
 
 	checker = Empresa.objects.filter(name="CODINA DE TOUS S.L.").first()
 	checker.territorial = 'T.NORTE'
