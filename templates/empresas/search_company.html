@@ -64,7 +64,7 @@ NetworkB2B
       <div class="row center padding_title">
         <div class="col m3 s12"></div>
         <div class="col m6 s12">
-          <div class="col m5 s6 center-align">
+          <div class="col m5 s12 center-align">
             <form action="{% url 'empresas:empresas_home' %}" method="post" id="journey1">
               {% csrf_token %}
               <input type="hidden" id="journey1" name="journey1" value="journey1">
@@ -72,9 +72,9 @@ NetworkB2B
             </form>
           </div>
           
-          <div class="col m2 s1"></div>
+          <div class="col m2 s12"></div>
 
-          <div class="col m5 s4 center-align">
+          <div class="col m5 s12 center-align">
             <form action="{% url 'empresas:empresas_home' %}" method="post" id="journey2">
               {% csrf_token %}
               <input type="hidden" id="journey2" name="journey2" value="journey2">

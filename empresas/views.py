@@ -33,7 +33,7 @@ from django.db.models import Prefetch
 """				EMPRESAS VIEWS 							  """
 """-------------------------------------------------------"""
 
-@login_required
+# @login_required
 def DebugView(request):
 	# empresas = Empresa.objects.all()
 	# for e in empresas:
@@ -84,7 +84,7 @@ def DebugView(request):
 	return render(request, "empresas/debugging_recommender.html", context)
 
 
-@login_required
+# @login_required
 def InformeView(request):
 	company_id = request.session.get('company')
 	company = Empresa.objects.filter(pk=company_id)[0]
@@ -95,7 +95,7 @@ def InformeView(request):
 	}
 	return render(request, "empresas/journey.html", context)
 
-@login_required
+# @login_required
 def SearchView(request):
 	
 	autofilter = dict()
@@ -115,7 +115,7 @@ def SearchView(request):
 	}
 	return render(request, "empresas/search_company.html", context)
 
-@login_required
+# @login_required
 def HomeView(request):
 	print(request.POST)
 	if request.POST and request.POST.get('journey1',None):
@@ -176,7 +176,7 @@ def HomeView(request):
 	return HttpResponseRedirect(str(got_it.pk))
 	#return render(request, "empresas/journey.html", {'empresa': Empresa.objects.all()[company-1]})
 
-@login_required
+# @login_required
 def EmpresaDetailView(request, pk=None):
 
 	try:
@@ -342,7 +342,7 @@ def EmpresaDetailView(request, pk=None):
 
 	return render(request, 'empresas/empresa_detail.html', context)
 
-@login_required
+# @login_required
 def OpportunityClientsView(request):
 	
 	company_id = request.session.get('company')
@@ -352,7 +352,7 @@ def OpportunityClientsView(request):
 		}
 	return render(request, 'empresas/opportunities_clients.html', context)
 
-@login_required
+# @login_required
 def FinancialRiskRecommendationsView(request):
 	
 	company_id = request.session.get('company')
@@ -399,7 +399,7 @@ def FinancialRiskRecommendationsView(request):
 		}
 	return render(request, 'empresas/financial_risk.html', context)
 
-@login_required
+# @login_required
 def FAQView(request):
 	company_id = request.session.get('company')
 	company = Empresa.objects.filter(pk=company_id)
@@ -408,7 +408,7 @@ def FAQView(request):
 	}
 	return render(request, 'empresas/faq.html', context)
 
-@login_required
+# @login_required
 def ClientRiskRecommendationsView(request):
 	
 	company_id = request.session.get('company')
@@ -434,7 +434,7 @@ def ClientRiskRecommendationsView(request):
 		}
 	return render(request, 'empresas/risk_client.html', context)
 
-@login_required
+# @login_required
 def ProviderRiskRecommendationsView(request):
 	
 	company_id = request.session.get('company')
@@ -466,7 +466,7 @@ def ProviderRiskRecommendationsView(request):
 		}
 	return render(request, 'empresas/risk_providers.html', context)
 
-@login_required
+# @login_required
 def OpportunityProviderView(request):
 	
 	company_id = request.session.get('company')
@@ -476,7 +476,7 @@ def OpportunityProviderView(request):
 		}
 	return render(request, 'empresas/opportunities_providers.html', context)
 
-@login_required
+# @login_required
 def CommercialProvidersRecommendationsView(request):
 	company_id = request.session.get('company')
 	empresa = Empresa.objects.filter(pk=company_id)
@@ -554,7 +554,7 @@ def CommercialProvidersRecommendationsView(request):
 
 	return render(request, 'empresas/comercial_recommendations_providers.html', context)
 
-@login_required
+# @login_required
 def CommercialClientsRecommendationsView(request):
 	company_id = request.session.get('company')
 	empresa = Empresa.objects.filter(pk=company_id)
@@ -657,7 +657,7 @@ def CommercialClientsRecommendationsView(request):
 """				TRANFERS VIEWS 							  """
 """-------------------------------------------------------"""
 
-@login_required
+# @login_required
 def TransferListView(request):
 	latest_tranfers_list = Transfer.objects.order_by('-operation_data')[:10]
 	context = {
@@ -670,7 +670,7 @@ def TransferDetailView(request, transfer_id):
 	context = {'transfer':transfer}
 	return render(request, 'empresas/transfer_detail.html', context)
 
-@login_required
+# @login_required
 def TrasferCreateView(request, empresa_id):
     empresa = get_object_or_404(Empresa, pk=empresa_id)
     form = TransferForm(request.POST)
@@ -700,7 +700,7 @@ def TrasferCreateView(request, empresa_id):
 """				CLIENTS VIEWS 							  """
 """-------------------------------------------------------"""
 
-@login_required
+# @login_required
 def ClientView(request):
 
 	today = timezone.now().date()
@@ -762,7 +762,7 @@ def ClientView(request):
 """				PROVIDERS VIEWS 							  """
 """-------------------------------------------------------"""
 
-@login_required
+# @login_required
 def ProviderView(request):
 	today = timezone.now().date()
 	company_id = request.session.get('company')
