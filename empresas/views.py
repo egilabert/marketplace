@@ -25,7 +25,7 @@ import os
 import json
 import random
 import posixpath
-from django.db.models import Avg, Max, Min, Count, Sum
+from django.db.models import Avg, Max, Min, Count, Sum, Q
 from django.core.serializers.json import DjangoJSONEncoder
 from django.db.models import Prefetch
 
@@ -44,10 +44,39 @@ def DebugView(request):
 	# 		e.own_client = 'NO'
 	# 	e.save()
 
+	# link = settings.DATA_FOLDER+'transferencias_cnae_v2.csv'
+	# transferencias = pd.read_csv(link, sep=';', decimal=',', encoding='latin1')
+	# transfer_count = transferencias.groupby(["REFERENCIA_1", "REFERENCIA_ORIGEN"]).IMPORTE.count().reset_index()
+
 	company_id = request.session.get('company')
 	company = Empresa.objects.filter(pk=company_id)[0]
+
+	transferencias_clientes = Transfer.objects.filter(destination_reference=company).values('origin_reference', 'destination_reference').annotate(c=Count('amount'))
+	transferencias_proveedores = Transfer.objects.filter(origin_reference=company).values('origin_reference', 'destination_reference').annotate(c=Count('amount'))
+	transferencias_competencia_a_proveedores = Transfer.objects.filter(destination_reference__in=company.get_providers()).filter(origin_reference__in=company.get_sector_companies()).values('origin_reference', 'destination_reference').annotate(c=Count('amount'))
+	transferencias_clientes_a_competencia = Transfer.objects.filter(destination_reference__in=company.get_sector_companies()).filter(origin_reference__in=company.get_clients()).values('origin_reference', 'destination_reference').annotate(c=Count('amount'))
+
+	transferencias = list(transferencias_clientes)+list(transferencias_proveedores)+list(transferencias_competencia_a_proveedores)+list(transferencias_clientes_a_competencia)
+	links = list(transferencias)
+	links_list = list()
+	for l in links:
+		links_list.append({"source": l['origin_reference'], "target": l['destination_reference'], "value": l['c']})
+
+	nodes = list(company.get_providers()) + list(company.get_clients()) + list(company.get_sector_companies())#+ list(additive) + list(additive2)
+	nodes_list = [{'id': company.id, 'group': 1}]
+	for n in nodes:
+		if n in list(company.get_providers()):
+			nodes_list.append({'id': n.id, 'group': 8})
+		elif n in list(company.get_clients()):
+			nodes_list.append({'id': n.id, 'group': 3})
+		elif n in list(company.get_sector_companies()):
+			nodes_list.append({'id': n.id, 'group': 4})
+
+	network = {"nodes": nodes_list, "links": links_list}
+
 	context = {
 		'company': company,
+		'network': json.dumps(network, cls=DjangoJSONEncoder),
 		'rec': company.clients_of_sector_companies().exclude(id__in=company.get_clients()),
 		'recommended_clients': company.get_recommended_clients(),
 		'recommended_providers': company.get_recommended_providers(),
@@ -260,7 +289,7 @@ def EmpresaDetailView(request, pk=None):
 
 
 	if key=='client':
-		data = json.dumps(list(empresa.get_monthly_buys_amount()), cls=DjangoJSONEncoder)
+		data = json.dumps(list(empresa.get_origin_referencely_buys_amount()), cls=DjangoJSONEncoder)
 		titulo = 'Compras mensuales'
 	elif key=='provider':
 		data = json.dumps(list(empresa.get_monthly_sells_amount()), cls=DjangoJSONEncoder)

@@ -981,7 +981,6 @@ class Empresa(models.Model, r_clients.Recommendations_clients,
     def get_recommended_providers(self):
         return RecommendedClients.objects.filter(empresa__in=self.providers_of_sector_companies()).exclude(empresa__in=self.get_clients()).annotate(Count('clientes_recomendados', distinct=True)).order_by('-similarity')
 
-
     def get_sectors(self, qs):
         group_by = qs.values("cnae_2").annotate(count=Count('id', distinct=True)).order_by('-count')
         sectores = [d['cnae_2'] for d in group_by]
