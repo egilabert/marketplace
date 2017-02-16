@@ -92,15 +92,18 @@
           </div>
           <div class="divider"></div>
           <div class="card-content black-text">
-            <p><strong>Ratio de endeudamiento</strong> sensiblemente inferior al de su competencia ({{company.ratio_endeudamiento|sub:company.ratio_endeudamiento_sector|div:company.ratio_endeudamiento_sector|mul:100|floatformat:0}}%)</p>
+            <p><strong>Ratio de endeudamiento</strong> sensiblemente inferior al de su competencia </p>
+            <!-- ({{company.ratio_endeudamiento|sub:company.ratio_endeudamiento_sector|div:company.ratio_endeudamiento_sector|mul:100|floatformat:0}}%) -->
           </div>
           <div class="divider"></div>
           <div class="card-content black-text">
-            <p><strong>Ratio de deuda entre EBITDA</strong> sensiblemente inferior al de su competencia ({{deuda_ebitda|sub:company.deuda_total_sector_pond|div:company.deuda_total_sector_pond|mul:100|floatformat:0}}%)</p>
+            <p><strong>Ratio de deuda entre EBITDA</strong> sensiblemente inferior al de su competencia </p>
+            <!-- ({{deuda_ebitda|sub:company.deuda_total_sector_pond|div:company.deuda_total_sector_pond|mul:100|floatformat:0}}%) -->
           </div>
           <div class="divider"></div>
           <div class="card-content black-text">
-            <p><strong>Ratio de deuda a corto plazo entre EBITDA</strong> sensiblemente inferior al de su competencia ({{deuda_corto_pond|sub:company.deuda_corto_sector_pond|div:company.deuda_corto_sector_pond|mul:100|floatformat:0}}%)</p>
+            <p><strong>Ratio de deuda a corto plazo entre EBITDA</strong> sensiblemente inferior al de su competencia </p>
+            <!-- ({{deuda_corto_pond|sub:company.deuda_corto_sector_pond|div:company.deuda_corto_sector_pond|mul:100|floatformat:0}}%) -->
           </div>
         </div>
       </div>
@@ -130,15 +133,18 @@
           </div>
           <div class="divider"></div>
           <div class="card-content black-text">
-            <p><strong>Ratio de endeudamiento</strong> sensiblemente inferior al de su competencia ({{company.ratio_endeudamiento|sub:company.ratio_endeudamiento_sector|div:company.ratio_endeudamiento_sector|mul:100|floatformat:0}}%)</p>
+            <p><strong>Ratio de endeudamiento</strong> sensiblemente inferior al de su competencia </p>
+            <!-- ({{company.ratio_endeudamiento|sub:company.ratio_endeudamiento_sector|div:company.ratio_endeudamiento_sector|mul:100|floatformat:0}}%) -->
           </div>
           <div class="divider"></div>
           <div class="card-content black-text">
-            <p><strong>Ratio de deuda entre EBITDA</strong> sensiblemente inferior al de su competencia ({{deuda_ebitda|sub:company.deuda_total_sector_pond|div:company.deuda_total_sector_pond|mul:100|floatformat:0}}%)</p>
+            <p><strong>Ratio de deuda entre EBITDA</strong> sensiblemente inferior al de su competencia </p>
+            <!-- ({{deuda_ebitda|sub:company.deuda_total_sector_pond|div:company.deuda_total_sector_pond|mul:100|floatformat:0}}%) -->
           </div>
           <div class="divider"></div>
           <div class="card-content black-text">
-            <p><strong>Ratio de deuda a corto plazo entre EBITDA</strong> sensiblemente inferior al de su competencia ({{deuda_corto_pond|sub:company.deuda_corto_sector_pond|div:company.deuda_corto_sector_pond|mul:100|floatformat:0}}%)</p>
+            <p><strong>Ratio de deuda a corto plazo entre EBITDA</strong> sensiblemente inferior al de su competencia </p>
+            <!-- ({{deuda_corto_pond|sub:company.deuda_corto_sector_pond|div:company.deuda_corto_sector_pond|mul:100|floatformat:0}}%) -->
           </div>
           
           
@@ -324,7 +330,7 @@
 			    		</div>
 			    	</div>
 			    	<!-- EBITDA -->
-			    	<div class="row">
+			    	<!-- <div class="row">
 			    		<div class="col m6 s12">
 			    			<div class="card grey lighten-4">
 					            <div class="card-content grey-text darken-4">
@@ -344,14 +350,14 @@
 					    					<div class="col m12 s12 center-align"></div>
 					    					<div class="col m12 s12 center-align">
 					    						<span class="right-align"><a href="https://www.bancosantander.es/es/empresas-advance/financiacion" id="download-button" target="_blank" class="btn waves-effect waves-light transparent grey-text text-darken-4 border-grey"> Consulta nuestros productos </a> </span>
-					    						<!-- https://www.bancsabadell.com/cs/Satellite/SabAtl/Financiacion/1191332198388/es/ -->
+					    						 https://www.bancsabadell.com/cs/Satellite/SabAtl/Financiacion/1191332198388/es/ 
 					    					</div>
 					    				</div>
 					    			</blockquote>
 					            </div>
 					        </div>
 			    		</div>
-			    	</div>
+			    	</div> -->
 			    	<!-- EBITDA -->
 			    	<div class="row">
 			    		<div class="col m7 s12">
@@ -422,8 +428,8 @@
 					        </div>
 			    		</div>
 			    	</div>
-			    		
-			    	<!-- EBITDA -->
+			    		<!-- 
+			
 			    	<div class="row">
 			    		<div class="col m6 s12">
 			    			<div class="card grey lighten-4">
@@ -442,7 +448,7 @@
 					            </div>
 					        </div>
 			    		</div>
-			    	</div>
+			    	</div> -->
 			    	<!-- Resultado explotaciones -->
 			    	<div class="row">
 			    		<div class="col m6 s12">
@@ -623,18 +629,18 @@
 					            	<span class="card-title">Tienes contratados {{productos_variable.count}} producto(s) con tipo de interés variable</span>
 					            	<div class="row">
 					            	{% for producto in productos_variable%}
-						              	<div class="center-align">
+						              	<div class="row center-align">
 						            		<div class="col m4 s12">
 						            			<p>Cuota actual</p>
 						            			<h5>{{producto.cuota_mensual|floatformat:0|intcomma}} €</h5>
 						            		</div>
 						            		<div class="col m4 s12">
 						            			<p>En el escenario...</p>
-						            			<h5><i class="fa fa-sort-up" aria-hidden="true"></i> 1% de Euribor </h5>
+						            			<h6><i class="fa fa-sort-up" aria-hidden="true"></i> 1% de Euribor </h6>
 						            		</div>
 						            		<div class="col m4 s12">
-						            			<p>Aumento cuota mensual</p>
-						            			<h5 class="red-text"><i class="fa fa-sort-up" aria-hidden="true"></i> {{producto.cuota_mensual_mas_1|sub:producto.cuota_mensual|floatformat:2|intcomma}} €</h5>
+						            			<!-- <p>Aumento cuota mensual</p>
+						            			<h5 class="red-text"><i class="fa fa-sort-up" aria-hidden="true"></i> {{producto.cuota_mensual_mas_1|sub:producto.cuota_mensual|floatformat:2|intcomma}} €</h5> -->
 						            			<p>Aumento cuota anual</p>
 						            			<h5 class="red-text"><i class="fa fa-sort-up" aria-hidden="true"></i> {{producto.cuota_mensual_mas_1|sub:producto.cuota_mensual|mul:12|floatformat:2|intcomma}} €</h5>
 						            		</div>
@@ -677,15 +683,15 @@
   	var deuda_largo_graph = document.getElementById("deuda_largo_graph");
   	var ratio_corto_largo_graph = document.getElementById("ratio_corto_largo_graph");
   	var ratio_endeudamiento_graph = document.getElementById("ratio_endeudamiento_graph");
-  	var calendario_de_pagos = document.getElementById("calendario_de_pagos");
+  	// var calendario_de_pagos = document.getElementById("calendario_de_pagos");
   	var volumen_por_divisa_graph = document.getElementById("volumen_por_divisa_graph");
   	var gasto_financiero_graph = document.getElementById("gasto_financiero_graph");
   	
-  	BarGraph(calendario_de_pagos); //, {{get_monthly_sells|safe}}, {{get_monthly_sector_avg_sells|safe}});
+  	// BarGraph(calendario_de_pagos); //, {{get_monthly_sells|safe}}, {{get_monthly_sector_avg_sells|safe}});
   	stackedbarchart(deuda_corto_graph, 'hola_2', 'hola_2', {{deuda_corto_pond}}, {{company.deuda_corto_sector_pond}}, 'Deuda a corto')
   	stackedbarchart(deuda_largo_graph, 'hola_2', 'hola_2', {{deuda_ebitda}}, {{company.deuda_total_sector_pond}}, 'Deuda a largo')
   	stackedbarchart(ratio_corto_largo_graph, 'hola_2', 'hola_2', {{ratio_corto_largo}}, {{company.ratio_sector_corto_largo}}, 'Ratio corto/largo')
-  	stackedbarchart(gasto_financiero_graph, 'hola_2', 'hola_2', {{company.costes_financiacion}}, {{company.costes_financiacion_sector}}, 'Gasto financiero')
+  	// stackedbarchart(gasto_financiero_graph, 'hola_2', 'hola_2', {{company.costes_financiacion}}, {{company.costes_financiacion_sector}}, 'Gasto financiero')
   	stackedbarchart(ratio_endeudamiento_graph, 'hola_2', 'hola_2', {{company.ratio_endeudamiento}}, {{company.ratio_endeudamiento_sector}}, 'Ratio de endeudamiento')
   	pie(volumen_por_divisa_graph, [{{company.get_total_sells|mul:0.01}},{{company.get_total_sells|mul:0.8}}], ['Dollar', 'Euro'])
   	// prepare data...

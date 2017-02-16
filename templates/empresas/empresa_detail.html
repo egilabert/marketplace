@@ -85,7 +85,11 @@
       <p class="flow-text center-align">Puntos fuertes</p>
       <div class="card horizontal green lighten-2">
         <div class="card-stacked">
-          <div class="card-content black-text">
+        <div class="card-content black-text">
+            <p>Situación de <strong>crecimiento sostenido</strong>, con buenos indicadores en sus estados financieros</p>
+          </div>
+          <div class="divider"></div>
+          <!-- <div class="card-content black-text">
             <p><strong>Crecimiento de las ventas</strong> situado en un {{delta_ventas|mul:100|floatformat:1}}% el último año</p>
           </div>
           <div class="divider"></div>
@@ -96,13 +100,13 @@
           <div class="card-content black-text">
             <p><strong>Crecimiento de los resultados de explotación</strong> situado en un {{delta_resultados_explotacion|mul:100|floatformat:1}}% el último año</p>
           </div>
-          <div class="divider"></div>
+          <div class="divider"></div> -->
           <div class="card-content black-text">
-            <p>Buena <strong>diversificación en clientes</strong> con un índice de concentración de 1/10</p>
+            <p>Buena <strong>diversificación de sus ventas</strong> en un gran número de clientes</p>
           </div> <!-- {{empresa.hhi_clients_clients|floatformat:2}} -->
           <div class="divider"></div>
           <div class="card-content black-text">
-            <p>Buena <strong>diversificación en proveedores</strong> con un índice de concentración del 1/10</p> 
+            <p>Buena <strong>diversificación de sus compras</strong> en un gran número de proveedores</p>
             <!-- {{empresa.hhi_providers|floatformat:2}} -->
           </div>
         </div>
@@ -114,12 +118,12 @@
       <div class="card horizontal grey lighten-3">
         <div class="card-stacked">
           <div class="card-content black-text">
-            <p>Baja <strong>diversificación geográfica</strong> con un índice de concentración del 9/10</p> 
+            <p>Baja <strong>diversificación de sus ventas</strong> en muy pocas provincias</p>
           </div>
-          <div class="divider"></div>
+          <!-- <div class="divider"></div>
           <div class="card-content black-text">
             <p>Baja <strong>diversificación sectorial</strong> con un índice de concentración del 5/10</p> 
-          </div>
+          </div> -->
           </div>
         </div>
     </div>
@@ -137,11 +141,11 @@
           </div>
           <div class="divider"></div>
           <div class="card-content black-text">
-            <p>Buena <strong>diversificación en clientes</strong> con un índice de concentración de 1/10</p>
+            <p>Buena <strong>diversificación de sus ventas</strong> en un gran número de clientes</p>
           </div>
           <div class="divider"></div>
           <div class="card-content black-text">
-            <p>Buena <strong>diversificación en proveedores</strong> con un índice de concentración de 1/10</p>
+            <p>Buena <strong>diversificación de sus compras</strong> en un gran número de proveedores</p>
           </div>
           <!-- {{empresa.hhi_clients_clients|floatformat:2}} -->
         </div>
@@ -153,11 +157,11 @@
       <div class="card horizontal grey lighten-3">
         <div class="card-stacked">
           <div class="card-content black-text">
-            <p>Se observa una <strong>reducción del EBITDA</strong> situado en un {{delta_ebitda|mul:100|floatformat:1}}% el último año</p>
+            <p>Se observa una <strong>reducción del EBITDA</strong> del {{delta_ebitda|mul:100|floatformat:1}}% en el último año</p>
           </div>
           <div class="divider"></div>
           <div class="card-content black-text">
-            <p>Se observa una <strong>reducción de los resultados de explotación</strong> situado en un {{delta_resultados_explotacion|mul:100|floatformat:1}}% el último año</p>
+            <p>Se observa una <strong>reducción de los resultados de explotación</strong> del {{delta_resultados_explotacion|mul:100|floatformat:1}}% en el último año</p>
           </div>
           
           <!-- {{hhi_providers|floatformat:2}} -->
