@@ -296,7 +296,7 @@ def EmpresaDetailView(request, pk=None):
 
 
 	if key=='client':
-		data = json.dumps(list(empresa.get_origin_referencely_buys_amount()), cls=DjangoJSONEncoder)
+		data = json.dumps(list(empresa.get_monthly_buys_amount()), cls=DjangoJSONEncoder)
 		titulo = 'Compras mensuales'
 	elif key=='provider':
 		data = json.dumps(list(empresa.get_monthly_sells_amount()), cls=DjangoJSONEncoder)

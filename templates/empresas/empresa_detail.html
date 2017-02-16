@@ -398,12 +398,20 @@
               </div>
           </div>
 
+          {% if company.id == empresa.id %}
+          <h5 class="light">¿Cuál es tu estacionalidad?</h5>
+          {% else %}
           <h5 class="light">¿Cuál es el mejor momento para empezar a trabajar juntos?</h5>
+          {% endif %}
           <div class="row">
             <div class="col m8 s12">
                 <div class="card grey lighten-4">
                       <div class="card-content grey-text darken-4">
+                      {% if company.id == empresa.id %}
+                        <span class="card-title">Visualiza tu estacionalidad en ventas</span>
+                      {% else %}
                         <span class="card-title">Identifica la estacionalidad para contactar en el momento idóneo</span>
+                      {% endif %}
                           <canvas id="frecuencia_graph" width="300" height="150"></canvas>
                       </div>
                   </div>
@@ -413,9 +421,11 @@
                   <div class="card-content white-text">
                   {% if referrer == 'client' %}
                     El histograma te muestra la actividad económica (compras) de la empresa a lo largo del año. De esta manera puedes interpretar cuales son los picos y momentos valle de actividad y, en consecuencia, cuando podría ser mejor momento para entablar relaciones comerciales (p.e. 3-6 meses antes de sus compras).
-                    {% else %}
+                  {% elif company.id == empresa.id %}
+                    El histograma te muestra la actividad económica (ventas) de la empresa a lo largo del año. De esta manera puedes interpretar cuales son los picos y momentos valle de actividad.
+                  {% else %}
                     El histograma te muestra la actividad económica (ventas) de la empresa a lo largo del año. De esta manera puedes interpretar cuales son los picos y momentos valle de actividad y, en consecuencia, cuando podría ser mejor momento para entablar relaciones comerciales.
-                    {% endif %}
+                  {% endif %}
                     
                   </div>
                 </div>
