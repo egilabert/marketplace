@@ -1,0 +1,515 @@
+{
+    "links": [
+        {
+            "source": 6, 
+            "target": 7, 
+            "value": 0.25
+        }, 
+        {
+            "source": 7, 
+            "target": 8, 
+            "value": 0.2
+        }, 
+        {
+            "source": 8, 
+            "target": 9, 
+            "value": 0.2
+        }, 
+        {
+            "source": 9, 
+            "target": 10, 
+            "value": 0.2
+        }, 
+        {
+            "source": 10, 
+            "target": 11, 
+            "value": 0.2
+        }, 
+        {
+            "source": 7, 
+            "target": 12, 
+            "value": 0.05
+        }, 
+        {
+            "source": 12, 
+            "target": 13, 
+            "value": 0.05
+        }, 
+        {
+            "source": 13, 
+            "target": 14, 
+            "value": 0.05
+        }, 
+        {
+            "source": 14, 
+            "target": 15, 
+            "value": 0.05
+        }, 
+        {
+            "source": 11, 
+            "target": 16, 
+            "value": 0.2
+        }, 
+        {
+            "source": 15, 
+            "target": 0, 
+            "value": 0.05
+        }, 
+        {
+            "source": 6, 
+            "target": 17, 
+            "value": 0.75
+        }, 
+        {
+            "source": 17, 
+            "target": 18, 
+            "value": 0.675
+        }, 
+        {
+            "source": 18, 
+            "target": 19, 
+            "value": 0.27
+        }, 
+        {
+            "source": 19, 
+            "target": 20, 
+            "value": 0.162
+        }, 
+        {
+            "source": 20, 
+            "target": 21, 
+            "value": 0.081
+        }, 
+        {
+            "source": 21, 
+            "target": 0, 
+            "value": 0.0243
+        }, 
+        {
+            "source": 21, 
+            "target": 1, 
+            "value": 0.0567
+        }, 
+        {
+            "source": 20, 
+            "target": 22, 
+            "value": 0.081
+        }, 
+        {
+            "source": 22, 
+            "target": 5, 
+            "value": 0.0729
+        }, 
+        {
+            "source": 22, 
+            "target": 4, 
+            "value": 0.008100000000000001
+        }, 
+        {
+            "source": 19, 
+            "target": 23, 
+            "value": 0.10800000000000001
+        }, 
+        {
+            "source": 23, 
+            "target": 5, 
+            "value": 0.048600000000000004
+        }, 
+        {
+            "source": 23, 
+            "target": 4, 
+            "value": 0.005400000000000001
+        }, 
+        {
+            "source": 23, 
+            "target": 5, 
+            "value": 0.048600000000000004
+        }, 
+        {
+            "source": 23, 
+            "target": 4, 
+            "value": 0.005400000000000001
+        }, 
+        {
+            "source": 18, 
+            "target": 24, 
+            "value": 0.0675
+        }, 
+        {
+            "source": 24, 
+            "target": 25, 
+            "value": 0.0405
+        }, 
+        {
+            "source": 25, 
+            "target": 26, 
+            "value": 0.02025
+        }, 
+        {
+            "source": 26, 
+            "target": 0, 
+            "value": 0.006075
+        }, 
+        {
+            "source": 26, 
+            "target": 1, 
+            "value": 0.014175
+        }, 
+        {
+            "source": 25, 
+            "target": 27, 
+            "value": 0.02025
+        }, 
+        {
+            "source": 27, 
+            "target": 5, 
+            "value": 0.018225
+        }, 
+        {
+            "source": 27, 
+            "target": 4, 
+            "value": 0.0020250000000000003
+        }, 
+        {
+            "source": 24, 
+            "target": 28, 
+            "value": 0.027000000000000003
+        }, 
+        {
+            "source": 28, 
+            "target": 5, 
+            "value": 0.012150000000000001
+        }, 
+        {
+            "source": 28, 
+            "target": 4, 
+            "value": 0.0013500000000000003
+        }, 
+        {
+            "source": 28, 
+            "target": 5, 
+            "value": 0.012150000000000001
+        }, 
+        {
+            "source": 28, 
+            "target": 4, 
+            "value": 0.0013500000000000003
+        }, 
+        {
+            "source": 18, 
+            "target": 29, 
+            "value": 0.0675
+        }, 
+        {
+            "source": 29, 
+            "target": 30, 
+            "value": 0.03375
+        }, 
+        {
+            "source": 30, 
+            "target": 0, 
+            "value": 0.006075
+        }, 
+        {
+            "source": 30, 
+            "target": 1, 
+            "value": 0.014175
+        }, 
+        {
+            "source": 29, 
+            "target": 31, 
+            "value": 0.03375
+        }, 
+        {
+            "source": 31, 
+            "target": 5, 
+            "value": 0.018225
+        }, 
+        {
+            "source": 31, 
+            "target": 4, 
+            "value": 0.0020250000000000003
+        }, 
+        {
+            "source": 18, 
+            "target": 32, 
+            "value": 0.27
+        }, 
+        {
+            "source": 32, 
+            "target": 33, 
+            "value": 0.162
+        }, 
+        {
+            "source": 33, 
+            "target": 34, 
+            "value": 0.081
+        }, 
+        {
+            "source": 34, 
+            "target": 0, 
+            "value": 0.0243
+        }, 
+        {
+            "source": 34, 
+            "target": 1, 
+            "value": 0.0567
+        }, 
+        {
+            "source": 33, 
+            "target": 35, 
+            "value": 0.081
+        }, 
+        {
+            "source": 35, 
+            "target": 5, 
+            "value": 0.0729
+        }, 
+        {
+            "source": 35, 
+            "target": 4, 
+            "value": 0.008100000000000001
+        }, 
+        {
+            "source": 32, 
+            "target": 36, 
+            "value": 0.10800000000000001
+        }, 
+        {
+            "source": 36, 
+            "target": 5, 
+            "value": 0.048600000000000004
+        }, 
+        {
+            "source": 36, 
+            "target": 4, 
+            "value": 0.005400000000000001
+        }, 
+        {
+            "source": 36, 
+            "target": 5, 
+            "value": 0.048600000000000004
+        }, 
+        {
+            "source": 36, 
+            "target": 4, 
+            "value": 0.005400000000000001
+        }, 
+        {
+            "source": 17, 
+            "target": 37, 
+            "value": 0.07500000000000001
+        }, 
+        {
+            "source": 37, 
+            "target": 38, 
+            "value": 0.015000000000000003
+        }, 
+        {
+            "source": 38, 
+            "target": 2, 
+            "value": 0.012750000000000003
+        }, 
+        {
+            "source": 38, 
+            "target": 3, 
+            "value": 0.0022500000000000003
+        }, 
+        {
+            "source": 37, 
+            "target": 39, 
+            "value": 0.030000000000000006
+        }, 
+        {
+            "source": 39, 
+            "target": 2, 
+            "value": 0.025500000000000005
+        }, 
+        {
+            "source": 39, 
+            "target": 3, 
+            "value": 0.0045000000000000005
+        }, 
+        {
+            "source": 37, 
+            "target": 40, 
+            "value": 0.030000000000000006
+        }, 
+        {
+            "source": 40, 
+            "target": 2, 
+            "value": 0.025500000000000005
+        }, 
+        {
+            "source": 40, 
+            "target": 3, 
+            "value": 0.0045000000000000005
+        }
+    ], 
+    "nodes": [
+        {
+            "id": "NoMAT_score", 
+            "name": "Cobro"
+        }, 
+        {
+            "id": "NoMAT_score", 
+            "name": "Refinanciaci\u00f3n"
+        }, 
+        {
+            "id": "NoMAT_score", 
+            "name": "Refinanciaci\u00f3n agresiva"
+        }, 
+        {
+            "id": "NoMAT_score", 
+            "name": "Mandato de venta"
+        }, 
+        {
+            "id": "NoMAT_score", 
+            "name": "Daci\u00f3n"
+        }, 
+        {
+            "id": "NoMAT_score", 
+            "name": "Demanda"
+        }, 
+        {
+            "id": "final_score", 
+            "name": "Entrada en impago"
+        }, 
+        {
+            "id": "MAT_score", 
+            "name": "MAT postivo"
+        }, 
+        {
+            "id": "MAT_score", 
+            "name": "Gran n\u00famero de ciclos de impago"
+        }, 
+        {
+            "id": "MAT_score", 
+            "name": "_"
+        }, 
+        {
+            "id": "MAT_score", 
+            "name": "_a"
+        }, 
+        {
+            "id": "MAT_score", 
+            "name": "_b"
+        }, 
+        {
+            "id": "MAT_score", 
+            "name": "Primer o pocos ciclos de impago"
+        }, 
+        {
+            "id": "MAT_score", 
+            "name": "_2"
+        }, 
+        {
+            "id": "MAT_score", 
+            "name": "_3"
+        }, 
+        {
+            "id": "MAT_score", 
+            "name": "_4"
+        }, 
+        {
+            "id": "MAT_score", 
+            "name": "Autcobro - No gesti\u00f3n"
+        }, 
+        {
+            "id": "NoMAT_score", 
+            "name": "MAT negativo"
+        }, 
+        {
+            "id": "NoMAT_score", 
+            "name": "Trasformable"
+        }, 
+        {
+            "id": "NoMAT_score", 
+            "name": "LTV > 120%"
+        }, 
+        {
+            "id": "NoMAT_score", 
+            "name": "Con voluntad de pago (0)"
+        }, 
+        {
+            "id": "NoMAT_score", 
+            "name": "Con capacidad de pago"
+        }, 
+        {
+            "id": "NoMAT_score", 
+            "name": "Sin capacidad de pago"
+        }, 
+        {
+            "id": "NoMAT_score", 
+            "name": "Sin voluntad de pago (0)"
+        }, 
+        {
+            "id": "NoMAT_score", 
+            "name": "Importe de deuda > 600k\u20ac"
+        }, 
+        {
+            "id": "NoMAT_score", 
+            "name": "Con voluntad de pago (1)"
+        }, 
+        {
+            "id": "NoMAT_score", 
+            "name": "Con capacidad de pago"
+        }, 
+        {
+            "id": "NoMAT_score", 
+            "name": "Sin capacidad de pago"
+        }, 
+        {
+            "id": "NoMAT_score", 
+            "name": "Sin voluntad de pago (1)"
+        }, 
+        {
+            "id": "NoMAT_score", 
+            "name": "Maturity > 40%"
+        }, 
+        {
+            "id": "NoMAT_score", 
+            "name": "Con capacidad de pago"
+        }, 
+        {
+            "id": "NoMAT_score", 
+            "name": "Sin capacidad de pago"
+        }, 
+        {
+            "id": "NoMAT_score", 
+            "name": "Resto"
+        }, 
+        {
+            "id": "NoMAT_score", 
+            "name": "Con voluntad de pago (3)"
+        }, 
+        {
+            "id": "NoMAT_score", 
+            "name": "Con capacidad de pago"
+        }, 
+        {
+            "id": "NoMAT_score", 
+            "name": "Sin capacidad de pago"
+        }, 
+        {
+            "id": "NoMAT_score", 
+            "name": "Sin voluntad de pago (3)"
+        }, 
+        {
+            "id": "NoMAT_score", 
+            "name": "No Trasformable"
+        }, 
+        {
+            "id": "NoMAT_score", 
+            "name": "Deuda inferior al VES - LTV Bajo"
+        }, 
+        {
+            "id": "NoMAT_score", 
+            "name": "Carga previa de terceros"
+        }, 
+        {
+            "id": "NoMAT_score", 
+            "name": "2a hipoteca"
+        }
+    ]
+}

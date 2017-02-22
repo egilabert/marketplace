@@ -1,0 +1,1 @@
+{"nodes": [{"name": "Entrada en impago", "id": "final_score"}, {"name": "MAT postivo", "id": "MAT_score"}, {"name": "MAT negativo", "id": "NoMAT_score"}], "links": [{"source": 0, "target": 1, "value": 0.25}, {"source": 0, "target": 2, "value": 0.75}]}

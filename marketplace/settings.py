@@ -75,7 +75,8 @@ TEMPLATES = [
         'DIRS': [os.path.join(BASE_DIR, 'templates'), 
                 os.path.join(BASE_DIR, 'templates')+"/empresas",
                 os.path.join(BASE_DIR, 'templates')+"/accounts", 
-                os.path.join(BASE_DIR, 'templates')+"/helpers", 
+                os.path.join(BASE_DIR, 'templates')+"/helpers",
+                os.path.join(BASE_DIR, 'templates')+"/LCX",
                 os.path.join(BASE_DIR, 'templates')+"/risk_cro"],
         'APP_DIRS': True,
         'OPTIONS': {

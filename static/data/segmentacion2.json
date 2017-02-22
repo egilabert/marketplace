@@ -1,0 +1,116 @@
+{
+"nodes": [
+{
+"name": "Entrada en impago",
+"id": "final_score"
+},
+{
+"name": "MAT Malo - Gestión impago",
+"id": "NoMAT_score"
+},
+{
+"name": "No transformable - Deuda inferior al 60% del VES",
+"id": "NoMAT_score"
+},
+{
+"name": "No transformable - Carga previa terceros",
+"id": "NoMAT_score"
+},
+{
+"name": "No transformable - 2a Hipoteca",
+"id": "NoMAT_score"
+},
+{
+"name": "Cobro/Refinanciación agresiva",
+"id": "NoMAT_score"
+},
+{
+"name": "Transformable",
+"id": "NoMAT_score"
+},
+{
+"name": "Transformable - Maturity alta",
+"id": "NoMAT_score"
+},
+{
+"name": "Transformable - Maturity baja",
+"id": "NoMAT_score"
+},
+{
+"name": "Cobro/Refinanciación",
+"id": "NoMAT_score"
+},
+{
+"name": "MAT bueno - Sin gestión",
+"id": "MAT_score"
+}
+],
+"links": [
+{
+"source": 0,
+"value": 0.75,
+"target": 1
+},
+{
+"source": 1,
+"value": 0.01,
+"target": 2
+},
+{
+"source": 1,
+"value": 0.05,
+"target": 3
+},
+{
+"source": 1,
+"value": 0.015,
+"target": 4
+},
+{
+"source": 2,
+"value": 0.01,
+"target": 5
+},
+{
+"source": 3,
+"value": 0.05,
+"target": 5
+},
+{
+"source": 4,
+"value": 0.015,
+"target": 5
+},
+{
+"source": 1,
+"value": 0.675,
+"target": 6
+},
+{
+"source": 6,
+"value": 0.175,
+"target": 7
+},
+{
+"source": 6,
+"value": 0.5,
+"target": 8
+},
+{
+"source": 7,
+"value": 0.175,
+"target": 9
+},
+{
+"source": 8,
+"value": 0.5,
+"target": 9
+},
+{
+"source": 0,
+"value": 0.25,
+"target": 10
+}
+
+]
+}

@@ -31,6 +31,7 @@ urlpatterns = [
     url(r'^accounts/', include('allauth.urls')),
     url(r'^empresas/', include('empresas.urls', namespace='empresas')),
     url(r'^cro/', include('risk_cro.urls', namespace='risk_cro')),
+    url(r'^lcx/', include('LCX.urls', namespace='lcx')),
 ]
 
 if settings.DEBUG:
