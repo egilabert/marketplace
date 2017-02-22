@@ -115,10 +115,8 @@ def SegmentosView(request):
 			links_list.append({ "source": nodes_list.index({'name': "_4", "id": "MAT_score"}), "value": d1[i]*0.2, "target": nodes_list.index({"name": "Cobro", "id": "NoMAT_score"}) })
 
 	segmentacion = {"nodes": nodes_list, "links": links_list}
-	print(segmentacion)
-	print(settings.DATA_FOLDER+'segmentacion3.json')
 
-	with open(settings.DATA_FOLDER+'segmentacion3.json', 'w') as fp:
-		json.dump(segmentacion, fp, indent=4, sort_keys=True, cls=DjangoJSONEncoder)
+	# with open(settings.DATA_FOLDER+'segmentacion3.json', 'w') as fp:
+	# 	json.dump(segmentacion, fp, indent=4, sort_keys=True, cls=DjangoJSONEncoder)
 
-	return render(request, "lcx_segmentos.html", {})
+	return render(request, "lcx_segmentos.html", {'segmentacion': json.dumps(segmentacion, cls=DjangoJSONEncoder)})

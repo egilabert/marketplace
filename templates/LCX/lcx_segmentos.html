@@ -46,7 +46,10 @@
             'research_ingredient': '#3f3e47',
             'fallback':            '#9f9fa3'
           };
-      d3.json("../../../static/data/segmentacion3.json", function(error, json) {
+
+      var arbol = {{segmentacion|safe}}
+
+      // d3.json("../../../static/data/segmentacion3.json", function(error, json) {
         var chart = d3.select("#chart").append("svg").chart("Sankey.Path");
         chart
           .name(label)
@@ -60,7 +63,7 @@
           .nodePadding(10)
           .spread(true)
           .iterations(0)
-          .draw(json);
+          .draw(arbol);
         function label(node) {
           return node.name.replace(/\s*\(.*?\)$/, '');
         }
@@ -74,7 +77,7 @@
             return null;
           }
         }
-      });
+      // });
     </script>
   </body>
 </html>
