@@ -440,7 +440,7 @@
           <h5 class="light">¿Cuál es el mejor momento para empezar a trabajar juntos?</h5>
           {% endif %}
           <div class="row">
-            <div class="col m8 s12">
+            <div class="col m12 s12">
                 <div class="card grey lighten-4">
                       <div class="card-content grey-text darken-4">
                       {% if company.id == empresa.id %}
@@ -448,11 +448,11 @@
                       {% else %}
                         <span class="card-title">Identifica la estacionalidad para contactar en el momento idóneo</span>
                       {% endif %}
-                          <canvas id="frecuencia_graph" width="300" height="150"></canvas>
+                          <canvas id="frecuencia_graph" width="300" height="100"></canvas>
                       </div>
                   </div>
               </div>
-              <div class="col s12 m4">
+              <div class="col s12 m12">
                 <div class="card blue-grey lighten-1">
                   <div class="card-content white-text">
                   {% if referrer == 'client' %}
@@ -470,15 +470,23 @@
 
           <h5 class="light">¿Dónde trabaja?</h5>
           <div class="row">
-            <div class="col m5 s12">
+            <div class="col m6 s12">
                 <div class="card grey lighten-4">
                       <div class="card-content grey-text darken-4">
-                        <span class="card-title">Grado de deslocalización</span>
-                          <canvas id="geo_graph" width="200" height="200"></canvas>
+                        <span class="card-title">Tu deslocalización</span>
+                          <canvas id="geo_graph" width="200" height="150"></canvas>
                       </div>
                   </div>
               </div>
-              <div class="col s12 m7">
+              <div class="col m6 s12">
+                <div class="card grey lighten-4">
+                      <div class="card-content grey-text darken-4">
+                        <span class="card-title">Deslocalización comparables</span>
+                          <canvas id="geo_graph_sec" width="200" height="150"></canvas>
+                      </div>
+                  </div>
+              </div>
+              <div class="col s12 m12">
                 <div class="card blue-grey lighten-1">
                   <div class="card-content white-text">
                     {% if referrer == 'client' %}
@@ -494,15 +502,23 @@
 
           <h5 class="light">¿Trabaja de un modo diversificado en diversos sectores?</h5>
           <div class="row">
-            <div class="col m5 s12">
+            <div class="col m6 s12">
                 <div class="card grey lighten-4">
                       <div class="card-content grey-text darken-4">
                         <span class="card-title">Grado de diversificación</span>
-                          <canvas id="sector_graph" width="200" height="200"></canvas>
+                          <canvas id="sector_graph" width="200" height="150"></canvas>
                       </div>
                   </div>
               </div>
-              <div class="col s7 m6">
+              <div class="col m6 s12">
+                <div class="card grey lighten-4">
+                      <div class="card-content grey-text darken-4">
+                        <span class="card-title">Grado de diversificación</span>
+                          <canvas id="sector_graph_sec" width="200" height="150"></canvas>
+                      </div>
+                  </div>
+              </div>
+              <div class="col s12 m12">
                 <div class="card blue-grey lighten-1">
                   <div class="card-content white-text">
                     {% if referrer == 'client' %}
@@ -627,24 +643,24 @@
 <script type="text/javascript">
     var frecuencia_graph = document.getElementById("frecuencia_graph");
     var geo_graph = document.getElementById("geo_graph");
+    var geo_graph_sec = document.getElementById("geo_graph_sec");
     var sector_graph = document.getElementById("sector_graph");
+    var sector_graph_sec = document.getElementById("sector_graph_sec");
     var facturacion_graph = document.getElementById("facturacion_graph");
     var eficiencia_graph = document.getElementById("eficiencia_graph");
 
     stackedbarchart(eficiencia_graph, {{balance_sells_avg_sector|safe}}, {{balance_sells|safe}}, {{balance_ebitda_avg_sector|safe}}, {{balance_ebitda|safe}}, 'Ratio de eficiencia')
-    LineGraph(facturacion_graph, {{balance_sells_avg_sector|safe}}, {{balance_sells|safe}});
-    LineGraph(ebitda_graph, {{balance_ebitda_avg_sector|safe}}, {{balance_ebitda|safe}});
-    LineGraph(resultados_graph, {{balance_resultado_avg_sector|safe}}, {{balance_resultado|safe}});
+    LineGraph(facturacion_graph, {{balance_sells_avg_sector|safe}}, {{balance_sells|safe}}, "Ventas");
+    LineGraph(ebitda_graph, {{balance_ebitda_avg_sector|safe}}, {{balance_ebitda|safe}}, "EBITDA");
+    LineGraph(resultados_graph, {{balance_resultado_avg_sector|safe}}, {{balance_resultado|safe}}, "Resultado");
     BarGraph(frecuencia_graph, {{monthly_sells|safe}}, "{{titulo}}");
     DonutGraph(geo_graph, {{clients_by_region|safe}} );
+    DonutGraph(geo_graph_sec, {{clients_sector_by_region|safe}} );
     DonutGraphSector(sector_graph, {{clients_by_sector|safe}});
+    DonutGraphSector(sector_graph_sec, {{clients_sector_by_sector|safe}});
 
     function stackedbarchart(div, ventas_sec, ventas_me, ebitda_sec, ebitda_me, title)
         {
-          console.log(ventas_sec[ventas_sec.length-1])
-          console.log(ventas_me[ventas_me.length-1])
-          console.log(ebitda_sec[ebitda_sec.length-1])
-          console.log(ebitda_me[ebitda_me.length-1])
           var ventas_s = ventas_sec[ventas_sec.length-1].c
           var ventas_m = ventas_me[ventas_me.length-1].c
           var ebitda_s = ebitda_sec[ebitda_sec.length-1].c
@@ -657,7 +673,7 @@
                 labels: ["Tú","Comparables"],
                 datasets: [{
                   type: 'bar',
-                    label: "Penetration",
+                    label: "Ratio de eficiencia",
                     data: ratios,
                     backgroundColor: 'rgba(47,79,79, 0.2)',
                     borderColor: 'rgba(47,79,79, 1)',
@@ -666,10 +682,8 @@
             },
             options: {
                 legend: {
-                    display: false,
-                    labels: {
-                        fontColor: 'rgb(255, 99, 132)'
-                    }
+                    display: true,
+                    
                 },
                 scales: {
                     yAxes: [{
@@ -683,7 +697,7 @@
         });
       }
 
-    function LineGraph(div, data_sector, data_you) {
+    function LineGraph(div, data_sector, data_you, label) {
       var labels_1 = [];
       var labels_2 = []; 
       var data_1=[];
@@ -725,9 +739,6 @@
         }
       });
       you.forEach(function(packet, i) {
-          console.log(labels_1.includes(packet.ejercicio))
-          console.log(packet.ejercicio)
-          console.log(years.indexOf(packet.ejercicio))
           if (years.includes(packet.ejercicio)==true) {
             labels_2[years.indexOf(packet.ejercicio)] = packet.ejercicio;
             data_2[years.indexOf(packet.ejercicio)] = packet.c;
@@ -736,10 +747,10 @@
               data_2[years.indexOf(packet.ejercicio)] = 0;
           }
       });
-      line(div, labels_1, labels_2, data_1, data_2)
+      line(div, labels_1, labels_2, data_1, data_2, label)
     }
 
-    function line(div, labels, labels2, data1, data2) {
+    function line(div, labels, labels2, data1, data2, label) {
         var scatterChart = new Chart(div, {
           type: 'line',
           data: {
@@ -753,7 +764,7 @@
               showTooltip: false, //NEW OPTION DON"T NEED TO INCLUDE IT IF YOU WANT TO DISPLAY BUT WON"T HURT IF YOU DO
               data: data1
           }, {
-              label: "{{company.name|safe}}",
+              label: "{{empresa.name|safe}}",
               backgroundColor: "rgba(47,79,79,0.5)",
               borderColor: "rgba(47,79,79,0.8)",
               highlightFill: "rgba(47,79,79,0.75)",
@@ -788,11 +799,13 @@
     function DonutGraphSector(div, data_you) {
       var labels_1 = ["En su sector","Fuera de su sector"];
       var data_1=[0,0];
+
       var you = data_you
       you.forEach(function(packet, i) {
-        console.log(packet.cnae)
-        console.log("{{empresa.cnae}}")
-        if (packet.cnae=="{{empresa.cnae}}") {
+        console.log(packet.cnae_2)
+        console.log("{{empresa.cnae_2}}")
+        console.log(packet.cnae_2=="{{empresa.cnae_2}}")
+        if (packet.cnae_2=="{{empresa.cnae_2}}") {
            data_1[0] += packet.c;
         } else {
            data_1[1] += packet.c;

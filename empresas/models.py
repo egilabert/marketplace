@@ -963,14 +963,20 @@ class Empresa(models.Model, r_clients.Recommendations_clients,
     def clients_by_region(self):
         return Empresa.objects.filter(transfers__destination_reference=self).all().values('territorial').annotate(c=Sum('transfers__amount'))
 
+    def clients_sector_by_region(self):
+        return Empresa.objects.filter(transfers__destination_reference__in=self.get_sector_companies().all()).values('territorial').annotate(c=Sum('transfers__amount'))
+
     def providers_by_region(self):
         return Empresa.objects.filter(destination_reference__origin_reference=self).all().values('territorial').annotate(c=Sum('transfers__amount'))
 
     def clients_by_sector(self):
-        return Empresa.objects.filter(transfers__destination_reference=self).all().values('cnae').annotate(c=Sum('transfers__amount'))
+        return Empresa.objects.filter(transfers__destination_reference=self).all().values('cnae_2').annotate(c=Sum('transfers__amount'))
+
+    def clients_sector_by_sector(self):
+        return Empresa.objects.filter(transfers__destination_reference__in=self.get_sector_companies().all()).values('cnae_2').annotate(c=Sum('transfers__amount'))
 
     def providers_by_sector(self):
-        return Empresa.objects.filter(destination_reference__origin_reference=self).all().values('cnae').annotate(c=Sum('transfers__amount'))
+        return Empresa.objects.filter(destination_reference__origin_reference=self).all().values('cnae_2').annotate(c=Sum('transfers__amount'))
     
     # General Helpers
     # ------------------------------------------------------------------

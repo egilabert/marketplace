@@ -343,6 +343,8 @@ def EmpresaDetailView(request, pk=None):
 	else:
 		delta_resultados_explotacion = 0
 
+	print(empresa.clients_sector_by_sector())
+	
 	context = {
 		'referrer': key,
 		'delta_ventas': delta_ventas,
@@ -362,7 +364,9 @@ def EmpresaDetailView(request, pk=None):
 		'ebitda': json.dumps(ebitda),
 		'depreciaciones': json.dumps(depreciaciones),
 		'clients_by_sector': json.dumps(list(empresa.clients_by_sector()), cls=DjangoJSONEncoder),
+		'clients_sector_by_sector': json.dumps(list(empresa.clients_sector_by_sector()), cls=DjangoJSONEncoder),
 		'clients_by_region': json.dumps(list(empresa.clients_by_region()), cls=DjangoJSONEncoder),
+		'clients_sector_by_region': json.dumps(list(empresa.clients_sector_by_region()), cls=DjangoJSONEncoder),
 		'monthly_sells': data,
 		'amortizaciones': json.dumps(amortizaciones),
 		'resultado_explotacion': json.dumps(resultado_explotacion),
