@@ -246,7 +246,7 @@
               </div>
           </div>
           <div class="row">
-              <div class="col s12 m4">
+              <div class="col s12 m3">
                 <div class="card blue-grey darken-1">
                   <div class="card-content white-text">
                     <span class="card-title">Último ejercicio</span>
@@ -258,7 +258,7 @@
                   </div>
                 </div>
               </div>
-              <div class="col s12 m4">
+              <div class="col s12 m3">
                 <div class="card blue-grey darken-1">
                   <div class="card-content white-text">
                     <span class="card-title">Ventas</span>
@@ -270,7 +270,7 @@
                   </div>
                 </div>
               </div>
-              <div class="col s12 m4">
+              <div class="col s12 m3">
                 <div class="card blue-grey darken-1">
                   <div class="card-content white-text">
                     <span class="card-title">EBITDA</span>
@@ -279,6 +279,14 @@
                     {% else %}
                     <h5 class="align-right orange-text darken-1">-</h5>
                     {% endif %}
+                  </div>
+                </div>
+              </div>
+              <div class="col s12 m3">
+                <div class="card blue-grey darken-1">
+                  <div class="card-content white-text">
+                    <span class="card-title">Comparables</span>
+                    <h5 class="align-right orange-text darken-1">{{company.get_sector_companies.count}}</h5>
                   </div>
                 </div>
               </div>
@@ -324,26 +332,50 @@
           <h4 class="light">Últimos ejercicios</h4>
           <div class="row">
               <div class="col s12 m6">
-                <div class="card grey lighten-4">
+                <!-- <div class="card grey lighten-4">
                   <div class="card-content grey-text darken-4">
                     <span class="card-title">Volumen de ventas</span>
                     <canvas id="barChart" width="400" height="400"></canvas>
                   </div>
-                </div>
+                </div> -->
+                <div class="card grey lighten-4">
+                      <div class="card-content grey-text darken-4">
+                        <span class="card-title">Volumen de Ventas</span>
+                        <canvas id="facturacion_graph" width="300" height="200"></canvas>
+                      </div>
+                  </div>
+                  <div class="card grey lighten-4">
+                      <div class="card-content grey-text darken-4">
+                        <span class="card-title">Ratio de eficiencia</span>
+                        <canvas id="eficiencia_graph" width="300" height="200"></canvas>
+                      </div>
+                  </div>
+                  
               </div>
               <div class="col s12 m6">
-                <div class="card grey lighten-4">
+                <!-- <div class="card grey lighten-4">
                   <div class="card-content grey-text darken-4">
                     <span class="card-title">EBITDA - Resultado Explotación</span>
                     <canvas id="lineChart" width="400" height="400"></canvas>
                   </div>
-                </div>
+                </div> -->
+                <div class="card grey lighten-4">
+                      <div class="card-content grey-text darken-4">
+                        <span class="card-title">EBITDA</span>
+                        <canvas id="ebitda_graph" width="300" height="200"></canvas>
+                      </div>
+                  </div>
+                  <div class="card grey lighten-4">
+                      <div class="card-content grey-text darken-4">
+                        <span class="card-title">Resultado Explotación</span>
+                        <canvas id="resultados_graph" width="300" height="200"></canvas>
+                      </div>
+                  </div>
               </div>
           </div>
-
+          <hr>
           {% endif %}
           <h4 class="light">Información adicional de interés</h4>
-          <div class="divider"></div>
           <div class="row">
               <div class="col s12 m4">
                 <div class="card blue-grey darken-1">
@@ -596,11 +628,148 @@
     var frecuencia_graph = document.getElementById("frecuencia_graph");
     var geo_graph = document.getElementById("geo_graph");
     var sector_graph = document.getElementById("sector_graph");
+    var facturacion_graph = document.getElementById("facturacion_graph");
+    var eficiencia_graph = document.getElementById("eficiencia_graph");
 
-    
+    stackedbarchart(eficiencia_graph, {{balance_sells_avg_sector|safe}}, {{balance_sells|safe}}, {{balance_ebitda_avg_sector|safe}}, {{balance_ebitda|safe}}, 'Ratio de eficiencia')
+    LineGraph(facturacion_graph, {{balance_sells_avg_sector|safe}}, {{balance_sells|safe}});
+    LineGraph(ebitda_graph, {{balance_ebitda_avg_sector|safe}}, {{balance_ebitda|safe}});
+    LineGraph(resultados_graph, {{balance_resultado_avg_sector|safe}}, {{balance_resultado|safe}});
     BarGraph(frecuencia_graph, {{monthly_sells|safe}}, "{{titulo}}");
     DonutGraph(geo_graph, {{clients_by_region|safe}} );
     DonutGraphSector(sector_graph, {{clients_by_sector|safe}});
+
+    function stackedbarchart(div, ventas_sec, ventas_me, ebitda_sec, ebitda_me, title)
+        {
+          console.log(ventas_sec[ventas_sec.length-1])
+          console.log(ventas_me[ventas_me.length-1])
+          console.log(ebitda_sec[ebitda_sec.length-1])
+          console.log(ebitda_me[ebitda_me.length-1])
+          var ventas_s = ventas_sec[ventas_sec.length-1].c
+          var ventas_m = ventas_me[ventas_me.length-1].c
+          var ebitda_s = ebitda_sec[ebitda_sec.length-1].c
+          var ebitda_m = ebitda_me[ebitda_me.length-1].c
+
+          var ratios= [(ventas_m-ebitda_m) / ventas_m * 100, (ventas_s-ebitda_s) * 100 / ventas_s]
+          var myChart = new Chart(div, {
+            type: 'bar',
+            data: {
+                labels: ["Tú","Comparables"],
+                datasets: [{
+                  type: 'bar',
+                    label: "Penetration",
+                    data: ratios,
+                    backgroundColor: 'rgba(47,79,79, 0.2)',
+                    borderColor: 'rgba(47,79,79, 1)',
+                    borderWidth: 2
+                }]
+            },
+            options: {
+                legend: {
+                    display: false,
+                    labels: {
+                        fontColor: 'rgb(255, 99, 132)'
+                    }
+                },
+                scales: {
+                    yAxes: [{
+                stacked: true
+                    }],
+                    xAxes: [{
+                  stacked: true
+              }]
+                }
+            }
+        });
+      }
+
+    function LineGraph(div, data_sector, data_you) {
+      var labels_1 = [];
+      var labels_2 = []; 
+      var data_1=[];
+      var data_2=[];
+      var sector = data_sector
+      var you = data_you
+      function arrayUnique(array) {
+            var a = array.concat();
+            for(var i=0; i<a.length; ++i) {
+                for(var j=i+1; j<a.length; ++j) {
+                    if(a[i] === a[j])
+                        a.splice(j--, 1);
+                }
+            }
+
+            return a;
+        }
+      var years = []
+      sector.forEach(function(packet, i) {
+        years.push(packet.ejercicio);
+      });
+      you.forEach(function(packet, i) {
+        years.push(packet.ejercicio);
+      });
+      var years = arrayUnique(years);
+
+      labels_1 = years
+      labels_2 = years
+      data_1 = new Array(years.length) //.fill(0)
+      data_2 = new Array(years.length) //.fill(0)
+
+      sector.forEach(function(packet, i) {
+        if (years.includes(packet.ejercicio)==true) {
+            labels_1[years.indexOf(packet.ejercicio)] = packet.ejercicio;
+            data_1[years.indexOf(packet.ejercicio)] = packet.c;
+        } else {
+            labels_1[years.indexOf(packet.ejercicio)] = years[i];
+            data_1[years.indexOf(packet.ejercicio)] = 0;
+        }
+      });
+      you.forEach(function(packet, i) {
+          console.log(labels_1.includes(packet.ejercicio))
+          console.log(packet.ejercicio)
+          console.log(years.indexOf(packet.ejercicio))
+          if (years.includes(packet.ejercicio)==true) {
+            labels_2[years.indexOf(packet.ejercicio)] = packet.ejercicio;
+            data_2[years.indexOf(packet.ejercicio)] = packet.c;
+          } else {
+              labels_2[years.indexOf(packet.ejercicio)] = years[i];
+              data_2[years.indexOf(packet.ejercicio)] = 0;
+          }
+      });
+      line(div, labels_1, labels_2, data_1, data_2)
+    }
+
+    function line(div, labels, labels2, data1, data2) {
+        var scatterChart = new Chart(div, {
+          type: 'line',
+          data: {
+              labels: labels,
+              datasets: [{
+              label: "Comparables",
+              backgroundColor: "rgba(220,220,220,0.5)",
+              borderColor: "rgba(220,220,220,0.8)",
+              highlightFill: "rgba(220,220,220,0.75)",
+              pointHoverBackgroundColor: "rgba(220,220,220,1)",
+              showTooltip: false, //NEW OPTION DON"T NEED TO INCLUDE IT IF YOU WANT TO DISPLAY BUT WON"T HURT IF YOU DO
+              data: data1
+          }, {
+              label: "{{company.name|safe}}",
+              backgroundColor: "rgba(47,79,79,0.5)",
+              borderColor: "rgba(47,79,79,0.8)",
+              highlightFill: "rgba(47,79,79,0.75)",
+              pointHoverBackgroundColor: "rgba(47,79,79,1)",
+              showTooltip: false, //NEW OPTION DON"T NEED TO INCLUDE IT IF YOU WANT TO DISPLAY BUT WON"T HURT IF YOU DO
+              data: data2
+          }]},
+          options: {
+            responsive: true,
+            pointDotRadius: 10,
+            bezierCurve: false,
+            scaleShowVerticalLines: false,
+            scaleGridLineColor: 'black'
+          }
+      });
+      }
 
     function DonutGraph(div, data_you) {
       var labels_1 = ["En su región","Fuera de su región"];

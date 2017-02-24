@@ -38,6 +38,14 @@ Generación de datos
   		</div>
 </div>
 
+<div class="row padding_full">
+		<div class="col s2 center">
+			<a class="waves-effect waves-light btn" id="content_based_button">Content Based</a>
+			<div id="content_based_response"></div>
+  		</div>
+  		
+</div>
+
 <div class="ajax_modal">
 	<div id="loadingDiv6">
 		<div class="progress">
@@ -55,6 +63,25 @@ Generación de datos
 	$(document)
 		.ajaxStart(function () { $body.addClass("loading");})
 	   	.ajaxStop(function () { $body.removeClass("loading"); });
+	
+	$( "#content_based_button" ).click(function() {
+		$.ajax({
+			url: '/empresas/generatedata/content_based/',
+			type: 'get'})
+				.done( function (responseText) {
+		            // Triggered if response status code is 200 (OK)
+		            $('#content_based_response').html(responseText);
+		         })
+		         .fail( function (jqXHR, status, error) {
+		            // Triggered if response status code is NOT 200 (OK)
+		            alert(jqXHR.responseText);
+		         })
+		         .always( function() {
+		            // Always run after .done() or .fail()
+		            $('p:first').after('<p>Thank you.</p>');
+		         });
+
+	});
 
 	$( "#empresas_button" ).click(function() {
 		$.ajax({

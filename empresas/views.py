@@ -20,6 +20,7 @@ from random import randint
 from faker import Factory
 from django.conf import settings
 from .als_recommender import *
+from .item_based import *
 import numpy
 import os
 import json
@@ -99,15 +100,15 @@ def InformeView(request):
 def SearchView(request):
 	
 	autofilter = dict()
-	company = Empresa.objects.filter(pk=990).first()  
-	autofilter[company.name] = company.image
+	# company = Empresa.objects.filter(pk=990).first()  
+	# autofilter[company.name] = company.image
 	# company = Empresa.objects.filter(pk=233).first()  
 	# autofilter[company.name] = company.image
-	company = Empresa.objects.filter(pk=1610).first()
-	autofilter[company.name] = company.image
-	# company = Empresa.objects.all()
-	# for c in company:
-	# 	autofilter[c.name] = c.image
+	# company = Empresa.objects.filter(pk=1610).first()
+	# autofilter[company.name] = company.image
+	company = Empresa.objects.all()
+	for c in company:
+		autofilter[c.name] = c.image
 
 	context = {
 		'autofilter': json.dumps(autofilter, cls=DjangoJSONEncoder),
@@ -231,6 +232,12 @@ def EmpresaDetailView(request, pk=None):
 	depreciaciones = []
 	resultado_explotacion = []
 	amortizaciones = []
+	sells_sector = []
+	sells_me = []
+	ebitda_sector = []
+	ebitda_me = []
+	resultados_sector = []
+	resultados_me = []
 	try:
 		num_proveedores = empresa.get_providers().count()
 		hhi_providers = empresa.hhi_providers()
@@ -242,6 +249,9 @@ def EmpresaDetailView(request, pk=None):
 				resultado_explotacion.append(estado.resultado_explotacion)
 				ventas.append(estado.ventas)
 				amortizaciones.append(estado.amortizaciones)
+				sells_me.append({'ejercicio': estado.ejercicio, 'c': ventas[len(ventas)-1]})
+				ebitda_me.append({'ejercicio': estado.ejercicio, 'c': ebitda[len(ebitda)-1]})
+				resultados_me.append({'ejercicio': estado.ejercicio, 'c': resultado_explotacion[len(resultado_explotacion)-1]})
 			if int(company_id)==int(pk) and int(company_id)==990 and (i != 0):
 				fechas.append(estado.ejercicio)
 				depreciaciones.append(depreciaciones[i-1]*random.uniform(1, 1.1))
@@ -252,6 +262,9 @@ def EmpresaDetailView(request, pk=None):
 				num_proveedores = empresa.get_providers().count()
 				hhi_providers = empresa.hhi_providers()
 				margen_comercial_sector_clientes = 0.16
+				sells_me.append({'ejercicio': estado.ejercicio, 'c': ventas[len(ventas)-1]})
+				ebitda_me.append({'ejercicio': estado.ejercicio, 'c': ebitda[len(ebitda)-1]})
+				resultados_me.append({'ejercicio': estado.ejercicio, 'c': resultado_explotacion[len(resultado_explotacion)-1]})
 				
 			if int(company_id)==int(pk) and int(company_id)==1610 and (i != 0):
 				fechas.append(estado.ejercicio)
@@ -263,6 +276,9 @@ def EmpresaDetailView(request, pk=None):
 				num_proveedores = empresa.get_providers().count()
 				hhi_providers = empresa.hhi_providers()
 				margen_comercial_sector_clientes = empresa.margen_comercial_sector_clientes()
+				sells_me.append({'ejercicio': estado.ejercicio, 'c': ventas[len(ventas)-1]})
+				ebitda_me.append({'ejercicio': estado.ejercicio, 'c': ebitda[len(ebitda)-1]})
+				resultados_me.append({'ejercicio': estado.ejercicio, 'c': resultado_explotacion[len(resultado_explotacion)-1]})
 			elif i!=0 and int(company_id)!=1610 and int(company_id)!=990:
 				fechas.append(estado.ejercicio)
 				depreciaciones.append(estado.depreciaciones)
@@ -271,6 +287,9 @@ def EmpresaDetailView(request, pk=None):
 				ventas.append(estado.ventas)
 				amortizaciones.append(estado.amortizaciones)
 				margen_comercial_sector_clientes = empresa.margen_comercial_sector_clientes()
+				sells_me = list(empresa.balance_sells())
+				ebitda_me = list(empresa.balance_ebitda())
+				resultados_me = list(empresa.resultado_explotacion())
 	except:
 		ventas.append(0)
 		depreciaciones.append(0)
@@ -280,6 +299,10 @@ def EmpresaDetailView(request, pk=None):
 		num_proveedores = empresa.get_providers().count()
 		hhi_providers = empresa.hhi_providers()
 		margen_comercial_sector_clientes = empresa.margen_comercial_sector_clientes()
+
+	resultados_sector = list(empresa.resultado_explotacion_avg_sector())
+	ebitda_sector = list(empresa.balance_ebitda_avg_sector())
+	sells_sector = list(empresa.balance_sells_avg_sector())
 
 	if not fechas:
 		fechas.append(0)
@@ -345,7 +368,16 @@ def EmpresaDetailView(request, pk=None):
 		'resultado_explotacion': json.dumps(resultado_explotacion),
 		'fechas': json.dumps(fechas),
 		'checked_client': checked_client,
-		'checked_providers': checked_providers}
+		'checked_providers': checked_providers,
+		'get_monthly_buys_amount': json.dumps(list(empresa.get_monthly_buys_amount()), cls=DjangoJSONEncoder),
+		'get_sector_total_monthly_buys_amount': json.dumps(list(empresa.get_sector_total_monthly_buys_amount()), cls=DjangoJSONEncoder),
+		'balance_sells_avg_sector': json.dumps(sells_sector, cls=DjangoJSONEncoder),
+		'balance_sells': json.dumps(sells_me, cls=DjangoJSONEncoder),
+		'balance_ebitda_avg_sector': json.dumps(ebitda_sector, cls=DjangoJSONEncoder),
+		'balance_ebitda': json.dumps(ebitda_me, cls=DjangoJSONEncoder),
+		'balance_resultado_avg_sector': json.dumps(resultados_sector, cls=DjangoJSONEncoder),
+		'balance_resultado': json.dumps(resultados_me, cls=DjangoJSONEncoder),
+		}
 
 	return render(request, 'empresas/empresa_detail.html', context)
 
@@ -1057,6 +1089,15 @@ def RecommendationsCreate(request):
                           use_native=True,
                           dtype=numpy.float64)
 	return HttpResponse("Recommendations loaded")
+
+@staff_member_required
+def ContentBasedCreate(request):
+	# ===============================================================
+
+	# Generando recomendaciones.......
+	content_based_similarity()
+	return HttpResponse("Recommendations loaded")
+	
 
 @staff_member_required
 def CompaniesCleanning(request):
