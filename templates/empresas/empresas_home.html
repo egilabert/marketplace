@@ -8,14 +8,80 @@ Marketplace - Pillango
 {% block side-nav %}{% include "side-nav.html" %}{% endblock %}
 
 {% block content %}
-	<div class="wrap_register">
+	<div class="wrap_register2">
 		<div class="contents text-right">
-          <h1 class="fadding light">Where business meets business</h1>
-          <p class="fadding_2 light" >qué estás buscando?</p>
-          <a href="{% url 'empresas:clients' %}" class="waves-effect waves-teal btn-flat white-text fadding_3">Clientes</a>
-          <a href="{% url 'empresas:providers' %}" class="waves-effect waves-teal btn-flat white-text fadding_3">Proveedores</a>
-          <a href="{% url 'empresas:recommendations' %}" class="waves-effect waves-teal btn-flat white-text fadding_3">Recomendaciones</a>
-          <a href="{% url 'empresas:recommendations_financial_risk' %}" id="risk" class="waves-effect waves-teal btn-flat white-text fadding_3">Risk Manager</a>
+          <h2 class="light center-align">Where business meets business</h2>
+          <a href="{% url 'empresas:clients' %}" class="">
+          	<div class="row">
+		      <div class="col s12 m12">
+		        <div class="card" style="background: rgba(255, 255, 250, .7);">
+		        <div class="card-content">
+		          	<span class="flow-text">Haz una visita guiada...</span>
+			          	<div class="mdl-card mdl-shadow--2dp">
+
+						      <div class="mdl-card__supporting-text">
+
+						        <div class="mdl-stepper-horizontal-alternative">
+						          
+						          <div class="mdl-stepper-step active-step">
+						            <a href="">
+						              <div class="mdl-stepper-circle"><span>1</span></div>
+						              <div class="mdl-stepper-title">Mi empresa</div>
+						              <div class="mdl-stepper-optional">Resumen de tus principales resultados e indicaodres comparados con los de tu competencia</div>
+						              <div class="mdl-stepper-bar-left"></div>
+						              <div class="mdl-stepper-bar-right"></div>
+						            </a>
+						          </div>
+						          
+						          <div class="mdl-stepper-step active-step">
+						            <a href="{% url 'empresas:recommendations' %}">
+						              <div class="mdl-stepper-circle"><span>2</span></div>
+						              <div class="mdl-stepper-title">Mis Clientes/Proveedores</div>
+						              <div class="mdl-stepper-optional">Resumen de tus clientes y proveedores comparados con los clientes y proveedores de tu competencia</div>
+						              <div class="mdl-stepper-bar-left"></div>
+						              <div class="mdl-stepper-bar-right"></div>
+						            </a>
+						          </div>
+						          <div class="mdl-stepper-step active-step">
+						            <a href="{% url 'empresas:recommendations_financial_risk' %}">
+						              <div class="mdl-stepper-circle"><span>3</span></div>
+						              <div class="mdl-stepper-title">Mis Riesgos</div>
+						              <div class="mdl-stepper-optional">Conoce tus riesgos financieros, los de tus clientes y los de tus proveedores y compárate con tu competencia</div>
+						              <div class="mdl-stepper-optional"></div>
+						              <div class="mdl-stepper-bar-left"></div>
+						              <div class="mdl-stepper-bar-right"></div>
+						            </a>
+						          </div>
+						          <div class="mdl-stepper-step active-step">
+						            <a href="{% url 'empresas:informe' %}">
+						              <div class="mdl-stepper-circle"><span>4</span></div>
+						              <div class="mdl-stepper-title">Mis Recomendaciones</div>
+						              <div class="mdl-stepper-optional">Te indicamos los puntos más importantes detectados y te generamos una lista de recomendaciones</div>
+						              <div class="mdl-stepper-bar-left"></div>
+						              <div class="mdl-stepper-bar-right"></div>
+						            </a>
+						          </div>
+						        </div>
+
+						      </div>
+
+						  </div>
+					</div>
+		        </div>
+		      </div>
+		      </div>
+          </a>
+          <a href="{% url 'empresas:clients' %}" class="">
+          	<div class="row">
+		      <div class="col s12 m12">
+		        <div class="card" style="background: rgba(255, 255, 250, .7);">
+		        <div class="card-content">
+		          	<span class="flow-text">Descubre por tu mismo...</span>
+			    </div>
+		        </div>
+		      </div>
+		      </div>
+          </a>
         </div>
 	</div>
 {% endblock %}

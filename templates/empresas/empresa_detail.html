@@ -38,7 +38,7 @@
           <div class="mdl-stepper-step active-step">
             <a href="{% url 'empresas:detail' pk=company.pk %}">
               <div class="mdl-stepper-circle"><span>1</span></div>
-              <div class="mdl-stepper-title">Revisión cliente</div>
+              <div class="mdl-stepper-title">Mi empresa</div>
               <div class="mdl-stepper-bar-left"></div>
               <div class="mdl-stepper-bar-right"></div>
             </a>
@@ -47,7 +47,7 @@
           <div class="mdl-stepper-step">
             <a href="{% url 'empresas:recommendations' %}">
               <div class="mdl-stepper-circle"><span>2</span></div>
-              <div class="mdl-stepper-title">Clientes/Proveedores</div>
+              <div class="mdl-stepper-title">Mis Clientes/Proveedores</div>
               <div class="mdl-stepper-optional">Comparativa</div>
               <div class="mdl-stepper-bar-left"></div>
               <div class="mdl-stepper-bar-right"></div>
@@ -56,7 +56,7 @@
           <div class="mdl-stepper-step">
             <a href="{% url 'empresas:recommendations_financial_risk' %}">
               <div class="mdl-stepper-circle"><span>3</span></div>
-              <div class="mdl-stepper-title">Riesgos</div>
+              <div class="mdl-stepper-title">Mis Riesgos</div>
               <div class="mdl-stepper-optional">Comparativa</div>
               <div class="mdl-stepper-optional"></div>
               <div class="mdl-stepper-bar-left"></div>
@@ -66,7 +66,7 @@
           <div class="mdl-stepper-step">
             <a href="{% url 'empresas:informe' %}">
               <div class="mdl-stepper-circle"><span>4</span></div>
-              <div class="mdl-stepper-title">Recomendaciones</div>
+              <div class="mdl-stepper-title">Mis Recomendaciones</div>
               <div class="mdl-stepper-optional">Informe</div>
               <div class="mdl-stepper-bar-left"></div>
               <div class="mdl-stepper-bar-right"></div>
@@ -180,24 +180,36 @@
 
 <div class="row">
           <div class="col s12 m3">
-
+              {% if company.id == empresa.id %}
               <div class="col s12 m12">
               <div class="card blue-grey darken-1">
                 <div class="card-content white-text">
-                  <span class="card-title">Contacta con esta empresa... </span>
-                  <p>Ponemos a tu disposición los principales indicadores de esta empresa y sus datos de contacto para que puedas empezar a negociar con ella. Si te interesa la empresa, puedes guardar el contacto para gestionarlo a posteriori</p>
-                </div>
-                <div class="card-action">
-                  {% if referrer == 'client' %}
-                  <a href="#">GUARDAR CLIENTE</a>
-                  {% elif referrer == 'provider' %}
-                  <a href="#">GUARDAR PROVEEDOR</a>
-                  {% endif %}
-                  
+                  <span class="card-title">Conoce tus principales inicadores... </span>
+                  <p>Ponemos a tu disposición tus principales indicadores y los comparamos con tu competencia. Puede ayudarte a ubicar tu negocio en el mercado</p>
+                 </div>
                 </div>
               </div>
-            </div>
 
+                {% else %}
+                <div class="col s12 m12">
+                  <div class="card blue-grey darken-1">
+                    <div class="card-content white-text">
+                      <span class="card-title">Contacta con esta empresa... </span>
+                      <p>Ponemos a tu disposición los principales indicadores de esta empresa y sus datos de contacto para que puedas empezar a negociar con ella. Si te interesa la empresa, puedes guardar el contacto para gestionarlo a posteriori</p>
+                    </div>
+                    <div class="card-action">
+                      {% if referrer == 'client' %}
+                      <a href="#">GUARDAR CLIENTE</a>
+                      {% elif referrer == 'provider' %}
+                      <a href="#">GUARDAR PROVEEDOR</a>
+                      {% endif %}
+                      
+                        </div>
+                      </div>
+                  </div>
+                  {% endif %}
+
+            {% if company.id != empresa.id %}
             <div class="col s12 m12">
               <div class="card blue-grey darken-1">
                 <div class="card-content white-text">
@@ -209,6 +221,7 @@
                 </div>
               </div>
             </div>
+            {% endif %}
 
             <div class="col s12 m12">
               <div class="card blue-grey darken-1">

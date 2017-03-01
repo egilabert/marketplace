@@ -26,10 +26,12 @@ from .views import (HomeView,
                     OpportunityClientsView,
                     OpportunityProviderView,
                     FAQView,
-                    SearchView)
+                    SearchView,
+                    IntroView)
 
 urlpatterns = [
 
+    url(r'^intro/$', IntroView, name='empresas_intro'),
     url(r'^$', HomeView, name='empresas_home'),
     #url(r'^create/$', EmpresaDetailView, name='empresa_create'),
     url(r'^(?P<pk>\d+)/$', EmpresaDetailView, name='detail'),

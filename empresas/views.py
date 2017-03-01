@@ -116,11 +116,22 @@ def SearchView(request):
 	}
 	return render(request, "empresas/search_company.html", context)
 
+def IntroView(request):
+	try:
+		del request.session['company']
+		del request.session['recommended_clients_page']
+	except:
+		pass
+	request.session.modified = True
+	got_it = Empresa.objects.filter(pk=990).first()
+	company = got_it.pk #1492 #randint(0, queryset.count() - 1) # # ## 865 865-1 
+	request.session['company'] = company
+
+	return render(request, "empresas/empresas_home.html", {'empresa': Empresa.objects.all()[company-1], 'buttons': False})
+
 # @login_required
 def HomeView(request):
-	print(request.POST)
 	if request.POST and request.POST.get('journey1',None):
-		print('journey1')
 		try:
 			del request.session['company']
 			del request.session['recommended_clients_page']
@@ -133,7 +144,6 @@ def HomeView(request):
 		return HttpResponseRedirect(str(got_it.pk))
 
 	elif request.POST and request.POST.get('journey2',None):
-		print('journey2')
 		try:
 			del request.session['company']
 			del request.session['recommended_clients_page']
@@ -146,7 +156,6 @@ def HomeView(request):
 		return HttpResponseRedirect(str(got_it.pk))
 
 	elif request.POST and request.POST.get('company_name',None):
-		print('search')
 		name = request.POST['company_name']
 		
 	try:
@@ -173,14 +182,6 @@ def HomeView(request):
 		except:
 			return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
 
-	checker = Empresa.objects.filter(name="CODINA DE TOUS S.L.").first()
-	checker.territorial = 'T.NORTE'
-	checker.save()
-
-	checker = Empresa.objects.filter(name="CONFIPA, S.L.").first()
-	checker.territorial = 'T.NOROESTE'
-	checker.save()
-	
 	return HttpResponseRedirect(str(got_it.pk))
 	#return render(request, "empresas/journey.html", {'empresa': Empresa.objects.all()[company-1]})
 

@@ -396,6 +396,17 @@ li p {
     color: black;
 }
 
+.wrap_register2 {
+  background: url("../images/register.jpg") no-repeat center center fixed; 
+        -webkit-background-size: cover;
+        -moz-background-size: cover;
+        -o-background-size: cover;
+        background-size: cover;
+    padding: 1em 0em 10em 3em;
+    min-height: 43em;
+    color: black;
+}
+
 .wrap_search {
   background: url("../images/hands.jpg") no-repeat center center fixed; 
         -webkit-background-size: cover;
