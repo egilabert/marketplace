@@ -29,6 +29,7 @@
 	    <div class="parallax"><img src="{% static 'images/super-powers.jpg' %}"></div>
 	</div>
 	
+	{% if journey %}
 <div class="mdl-card mdl-shadow--2dp">
 
       <div class="mdl-card__supporting-text">
@@ -74,6 +75,7 @@
       </div>
 
   </div>
+  {% endif %}
 
 
 {% if company.id == 990 %}

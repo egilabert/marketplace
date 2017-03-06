@@ -93,6 +93,7 @@ def InformeView(request):
 		'company': company,
 		'recommended_clients': company.recommended_clients.all(),
 		'recommended_providers': company.recommended_providers.all(),
+		'journey': request.session.get('journey')
 	}
 	return render(request, "empresas/journey.html", context)
 
@@ -117,10 +118,13 @@ def SearchView(request):
 	return render(request, "empresas/search_company.html", context)
 
 def IntroView(request):
-	print('-------------')
 	company = request.session['company']
-	print(company)
-	print('-------------')
+	try:
+		del request.session['journey']
+	except:
+		pass
+	request.session['journey'] = True
+	request.session.modified = True
 	return render(request, "empresas/empresas_home.html", {'company': Empresa.objects.all()[company-1], 'buttons': False})
 
 # @login_required
@@ -195,6 +199,8 @@ def EmpresaDetailView(request, pk=None):
 			key = 'none'
 	except:
 		key = 'none'
+
+	print(request.session.get('journey'))
 
 	empresa = Empresa.objects.filter(pk=pk)
 	company_id = request.session.get('company')
@@ -377,6 +383,7 @@ def EmpresaDetailView(request, pk=None):
 		'balance_ebitda': json.dumps(ebitda_me, cls=DjangoJSONEncoder),
 		'balance_resultado_avg_sector': json.dumps(resultados_sector, cls=DjangoJSONEncoder),
 		'balance_resultado': json.dumps(resultados_me, cls=DjangoJSONEncoder),
+		'journey': request.session.get('journey')
 		}
 
 	return render(request, 'empresas/empresa_detail.html', context)
@@ -394,6 +401,15 @@ def OpportunityClientsView(request):
 # @login_required
 def FinancialRiskRecommendationsView(request):
 	
+	try:
+		referrer = request.META['HTTP_REFERER']
+		if 'intro' in referrer:
+			request.session['journey'] = False
+	except:
+		request.session['journey'] = False
+
+	print(request.session.get('journey'))
+
 	company_id = request.session.get('company')
 	company = Empresa.objects.filter(pk=company_id)
 	company = company.prefetch_related('estados_financieros','cirbe','productos')[0]
@@ -434,7 +450,8 @@ def FinancialRiskRecommendationsView(request):
 		'ratio_corto_largo': ratio_corto_largo,
 		'deuda_corto': deuda_corto,
 		'productos_variable': company.productos_con_tipo_variable().all(),
-		'ultimos_eeff': ultimos_eeff
+		'ultimos_eeff': ultimos_eeff,
+		'journey': request.session.get('journey')
 		}
 	return render(request, 'empresas/financial_risk.html', context)
 
@@ -469,7 +486,8 @@ def ClientRiskRecommendationsView(request):
 		'get_monthly_buys': json.dumps(list(company.get_monthly_buys_amount()), cls=DjangoJSONEncoder),
 		'get_monthly_sector_avg_buys': json.dumps(list(company.get_sector_total_monthly_buys_amount()), cls=DjangoJSONEncoder),
 		'productos_variable': company.productos_con_tipo_variable().all(),
-		'ultimos_eeff': ultimos_eeff
+		'ultimos_eeff': ultimos_eeff,
+		'journey': request.session.get('journey')
 		}
 	return render(request, 'empresas/risk_client.html', context)
 
@@ -501,15 +519,15 @@ def ProviderRiskRecommendationsView(request):
 		'get_monthly_sells': json.dumps(list(company.get_monthly_sells_amount()), cls=DjangoJSONEncoder),
 		'get_monthly_sector_avg_sells': json.dumps(list(company.get_sector_total_monthly_sells_amount()), cls=DjangoJSONEncoder),
 		'productos_variable': company.productos_con_tipo_variable().all(),
-		'ultimos_eeff': ultimos_eeff
+		'ultimos_eeff': ultimos_eeff,
+		'journey': request.session.get('journey')
 		}
 	return render(request, 'empresas/risk_providers.html', context)
 
 # @login_required
 def OpportunityProviderView(request):
-	
 	company_id = request.session.get('company')
-	company = Empresa.objects.filter(pk=company_id)
+	company = Empresa.objects.filter(pk=company_id).first()
 	context = {
 		'company':company
 		}
@@ -589,12 +607,21 @@ def CommercialProvidersRecommendationsView(request):
 		'balance_providers_ebitda': json.dumps(ebitda_me, cls=DjangoJSONEncoder),
 		'balance_providers_resultado_avg_sector': json.dumps(resultados_sector, cls=DjangoJSONEncoder),
 		'balance_providers_resultado': json.dumps(resultados_me, cls=DjangoJSONEncoder),
+		'journey': request.session.get('journey')
 		}
 
 	return render(request, 'empresas/comercial_recommendations_providers.html', context)
 
 # @login_required
 def CommercialClientsRecommendationsView(request):
+
+	try:
+		referrer = request.META['HTTP_REFERER']
+		if 'intro' in referrer:
+			request.session['journey'] = False
+	except:
+		request.session['journey'] = False
+
 	company_id = request.session.get('company')
 	empresa = Empresa.objects.filter(pk=company_id)
 	empresa = empresa.prefetch_related(None)
@@ -687,7 +714,8 @@ def CommercialClientsRecommendationsView(request):
 		'balance_ebitda': json.dumps(ebitda_me, cls=DjangoJSONEncoder), #json.dumps(list(empresa.balance_clients_ebitda()), cls=DjangoJSONEncoder),
 		'balance_resultado_avg_sector': json.dumps(resultados_sector, cls=DjangoJSONEncoder), #json.dumps(list(empresa.balance_clients_resultado_avg_sector()), cls=DjangoJSONEncoder),
 		'balance_resultado': json.dumps(resultados_me, cls=DjangoJSONEncoder), #json.dumps(list(empresa.balance_clients_resultado()), cls=DjangoJSONEncoder),
-		'penetration': penetration
+		'penetration': penetration,
+		'journey': request.session.get('journey')
 		}
 
 	return render(request, 'empresas/comercial_recommendations_clients.html', context)
@@ -742,6 +770,13 @@ def TrasferCreateView(request, empresa_id):
 # @login_required
 def ClientView(request):
 
+	try:
+		referrer = request.META['HTTP_REFERER']
+		if 'intro' in referrer:
+			request.session['journey'] = False
+	except:
+		request.session['journey'] = False
+
 	today = timezone.now().date()
 	company_id = request.session.get('company')
 	company = Empresa.objects.filter(pk=company_id)
@@ -787,13 +822,13 @@ def ClientView(request):
 				"loading_times": request.session['recommended_clients_page']
 			}
 			return render(request, "empresas/cards_layout.html", context)
-	print('nada')
 	context = {
 		"company": company, 
 		"title": "Recommended clients",
 		"today": today,
 		'recommended_clients': recommended_clients[:50],
-		"loading_times": request.session['recommended_clients_page']
+		"loading_times": request.session['recommended_clients_page'],
+		'journey': request.session.get('journey')
 	}
 	return render(request, "empresas/recommended_clients.html", context)
 
@@ -803,6 +838,14 @@ def ClientView(request):
 
 # @login_required
 def ProviderView(request):
+
+	try:
+		referrer = request.META['HTTP_REFERER']
+		if 'intro' in referrer:
+			request.session['journey'] = False
+	except:
+		request.session['journey'] = False
+
 	today = timezone.now().date()
 	company_id = request.session.get('company')
 	company = Empresa.objects.filter(pk=company_id)
@@ -845,7 +888,8 @@ def ProviderView(request):
 		"title": "Recommended providers",
 		"recommended_providers": recommended_providers[:50],
 		"today": today,
-		"loading_times": request.session['recommended_providers_page']
+		"loading_times": request.session['recommended_providers_page'],
+		'journey': request.session.get('journey')
 	}
 	return render(request, "empresas/recommended_providers.html", context)
 

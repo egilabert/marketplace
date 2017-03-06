@@ -24,6 +24,21 @@
     {% elif company.id == empresa.id %}
     <h3 class="center-align white-text text-darken-3 light">{{company.name}}</h3>
     {% endif %}
+    {% if not journey %}
+      <div class="row center">
+
+          <div class="col m4 s3">
+            <a href="{% url 'empresas:detail' pk=company.pk %}" id="download-button" class="btn-large waves-effect waves-light alpha_back pad_top orange-text text-darken-4 border-grey">Mi empresa  </a>
+          </div>
+          <div class="col m4 s3">
+            <a href="{% url 'empresas:recommendations' %}" id="download-button" class="btn-large waves-effect waves-light transparent pad_top border-white">Clientes  </a>
+          </div>
+          <div class="col m4 s3">
+            <a href="{% url 'empresas:recommendations_providers' %}" id="download-button" class="btn-large waves-effect waves-light transparent pad_top border-white">Proveedores  </a>
+          </div>
+      
+        </div>
+    {% endif %}
     <div class="parallax"><img src="{% static 'images/cambodia-1476378_1920.jpg' %}"></div>
 </div>
 

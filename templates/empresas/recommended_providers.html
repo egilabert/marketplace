@@ -15,6 +15,8 @@
 		<h3 class="center-align white-text light">Buenos proveedores mejoran tu negocio</h3>
 	    <div class="parallax"><img src="{% static 'images/providers.jpg' %}"></div>
 	</div>
+
+	{% if journey %}
 <div class="mdl-card mdl-shadow--2dp">
 
       <div class="mdl-card__supporting-text">
@@ -60,6 +62,7 @@
       </div>
 
   </div>
+  {% endif %}
   
 	
     <h5 class="center title light padding_title"><a href='{{ company.get_absolute_url }}'>{{company.name}}</a>, has hablado antes con estos potenciales proveedores?</h5>
