@@ -117,17 +117,11 @@ def SearchView(request):
 	return render(request, "empresas/search_company.html", context)
 
 def IntroView(request):
-	try:
-		del request.session['company']
-		del request.session['recommended_clients_page']
-	except:
-		pass
-	request.session.modified = True
-	got_it = Empresa.objects.filter(pk=990).first()
-	company = got_it.pk #1492 #randint(0, queryset.count() - 1) # # ## 865 865-1 
-	request.session['company'] = company
-
-	return render(request, "empresas/empresas_home.html", {'empresa': Empresa.objects.all()[company-1], 'buttons': False})
+	print('-------------')
+	company = request.session['company']
+	print(company)
+	print('-------------')
+	return render(request, "empresas/empresas_home.html", {'company': Empresa.objects.all()[company-1], 'buttons': False})
 
 # @login_required
 def HomeView(request):
@@ -157,14 +151,14 @@ def HomeView(request):
 
 	elif request.POST and request.POST.get('company_name',None):
 		name = request.POST['company_name']
-		
+
 	try:
 		del request.session['company']
 		del request.session['recommended_clients_page']
 	except:
 		pass
 	request.session.modified = True
-	#queryset = Empresa.objects.all()
+
 	if request.session.get('company') is None:
 		if request.user.username == "pmonras2":
 			company = 865
@@ -182,7 +176,8 @@ def HomeView(request):
 		except:
 			return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
 
-	return HttpResponseRedirect(str(got_it.pk))
+	#return render(request, 'empresas/empresas_home.html', {})
+	return HttpResponseRedirect(reverse('empresas:empresas_intro'))
 	#return render(request, "empresas/journey.html", {'empresa': Empresa.objects.all()[company-1]})
 
 # @login_required
@@ -204,6 +199,7 @@ def EmpresaDetailView(request, pk=None):
 	empresa = Empresa.objects.filter(pk=pk)
 	company_id = request.session.get('company')
 	company = Empresa.objects.filter(pk=company_id)[0]
+
 	empresa = empresa.prefetch_related('estados_financieros','transfers')[0]
 
 	form = TransferForm()
@@ -317,7 +313,6 @@ def EmpresaDetailView(request, pk=None):
 		resultado_explotacion.append(0)
 	if not amortizaciones:
 		amortizaciones.append(0)
-
 
 	if key=='client':
 		data = json.dumps(list(empresa.get_monthly_buys_amount()), cls=DjangoJSONEncoder)
