@@ -65,7 +65,10 @@ def get_data_mekko(request, *args, **kwargs):
 			dict([
 				('name','Riesgo concentración'),
 				('value',25)])
-			,
+			])
+		]), dict([
+			('agrup', 'Riesgo proveedores'),
+			('data', [
 			dict([
 				('name','Riesgo mercado / precios'),
 				('value',25)])
@@ -73,7 +76,35 @@ def get_data_mekko(request, *args, **kwargs):
 			dict([
 				('name','Riesgo incumplimiento'),
 				('value',51)])
+			,
+			dict([
+				('name','Riesgo concentración'),
+				('value',51)])
 			])
+		]), dict([
+			('agrup', 'Riesgo Financiero'),
+			('data', [
+			dict([
+				('name','Riesgo crédito - inversión'),
+				('value',25)])
+			,
+			dict([
+				('name','Riesgo crédito - circulante'),
+				('value',51)])
+			,
+			dict([
+				('name','Riesgo liquidez - working capital'),
+				('value',51)])
+			,
+			dict([
+				('name','Riesgo liquidez - divisa'),
+				('value',51)])
+			,
+			dict([
+				('name','Riesgo liquidez - tipo de interés'),
+				('value',51)])
+			])
+
 		])
 	return JsonResponse(data, safe=False)
 
@@ -251,7 +282,7 @@ def SwitchView(request, pk=None):
 		titulo = 'Ventas mensuales'
 	else:
 		data = json.dumps(list(empresa.get_monthly_buys_amount()), cls=DjangoJSONEncoder)
-		titulo = 'Compras mensuales'
+		titulo = 'Ventas mensuales'
 
 	if len(ventas)>1:
 		delta_ventas = (ventas[len(ventas)-1] - ventas[len(ventas)-2])/ventas[len(ventas)-2]
@@ -268,8 +299,6 @@ def SwitchView(request, pk=None):
 	else:
 		delta_resultados_explotacion = 0
 
-	print(empresa.clients_sector_by_sector())
-	
 	context = {
 		'referrer': key,
 		'delta_ventas': delta_ventas,
@@ -563,7 +592,7 @@ def EmpresaDetailView(request, pk=None):
 		titulo = 'Ventas mensuales'
 	else:
 		data = json.dumps(list(empresa.get_monthly_buys_amount()), cls=DjangoJSONEncoder)
-		titulo = 'Compras mensuales'
+		titulo = 'Ventas mensuales'
 
 	if len(ventas)>1:
 		delta_ventas = (ventas[len(ventas)-1] - ventas[len(ventas)-2])/ventas[len(ventas)-2]
@@ -580,8 +609,6 @@ def EmpresaDetailView(request, pk=None):
 	else:
 		delta_resultados_explotacion = 0
 
-	print(empresa.clients_sector_by_sector())
-	
 	context = {
 		'referrer': key,
 		'delta_ventas': delta_ventas,
