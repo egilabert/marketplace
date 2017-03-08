@@ -1,0 +1,190 @@
+{% extends "app_base.html" %}
+{% load static %}
+{% load humanize %}
+{% load mathfilters %}
+{% block page_title %}
+Home - {{ company.name }}
+{% endblock %}
+
+{% block body_class %}background_grey{% endblock %}
+{% block side-nav %}{% include "side-nav.html" %}{% endblock %}
+{% block content %}
+
+<div class="parallax-container">
+	<!-- <h3 class="center-align grey-text text-darken-3 light">Rocky clients are not all the same</h3> -->
+	<h3 class="center-align grey-text text-darken-3 light">No todos los clientes son iguales</h3>
+	<div class="parallax"><img src="{% static 'images/rocks.jpg' %}"></div>
+</div>
+
+<div id="sketch-holder">
+    <!-- Our sketch will go here! -->
+</div>
+
+<script src="//cdnjs.cloudflare.com/ajax/libs/p5.js/0.5.7/p5.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/p5.js/0.5.7/addons/p5.dom.min.js"></script>
+<script src="{% static 'js/sketch.js' %}"></script>
+{% endblock %}
+
+ {% block alt_js %}
+
+<script type="text/javascript">
+
+	var img = [];
+	var x_perc = [0,0];
+	var total = 0;
+	var y_perc = [[]];
+	var risc_data;
+	elements = []
+
+	function preload() {
+	  img[0] = loadImage("{% static 'images/TBR/Resized/129H_resized.jpg' %}");
+	  img[1] = loadImage("{% static 'images/TBR/Resized/114H_resized.jpg' %}");
+	  img[2] = loadImage("{% static 'images/TBR/Resized/127H_resized.jpg' %}");
+	  img[3] = loadImage("{% static 'images/TBR/Resized/335H_resized.jpg' %}");
+	  img[4] = loadImage("{% static 'images/TBR/Resized/328H_resized.jpg' %}");
+	  img[5] = loadImage("{% static 'images/TBR/Resized/162H_resized.jpg' %}");
+	  img[6] = loadImage("{% static 'images/TBR/Resized/151H_resized.jpg' %}");
+	  img[7] = loadImage("{% static 'images/TBR/Resized/186H_resized.jpg' %}");
+	  img[8] = loadImage("{% static 'images/TBR/Resized/231H_resized.jpg' %}");
+	  myFont = loadFont("{% static 'fonts/roboto/Roboto-Light.ttf' %}");
+	  myFont_Bold = loadFont("{% static 'fonts/roboto/Roboto-Bold.ttf' %}");
+	}
+
+	function drawMekko(data) {
+	  console.log("Loaded data");
+	  console.log(data);
+	  risc_data = data
+
+	  x_index = 0
+	  y_index = 0
+
+	  y_perc = zeros([data.length, data[0].data.length])
+
+	  for (var i = 0; i < data.length; i = i + 1) {
+	  	for (var j = 0; j < data[i].data.length; j = j + 1) {
+	  		total = total + data[i].data[j].value
+	  		x_perc[i] = x_perc[i] + data[i].data[j].value
+	  		y_perc[i][j] = data[i].data[j].value //+ y_perc[i][j]
+	  	}
+	  }
+
+	  for (var i = 0; i < data.length; i = i + 1) {
+		  	if (i!=0) {
+		  		x_index = x_index + elements[elements.length-1].nextRight()
+		  	}
+		  	y_index = 0;
+		  	for (var j = 0; j < data[i].data.length; j = j + 1) {
+		  		console.log((i*(data.length+1))+j)
+		  		console.log([x_index, y_index])
+		  		elements.push(
+		  			new MekkoElement(
+		  				x_index, 
+		  				y_index, 
+		  				(width-1)*x_perc[i]/total, 
+		  				(height-1)*y_perc[i][j]/x_perc[i], 
+		  				data[i].data[j].name, 
+		  				img[(i*(data.length+1))+j]
+		  			)
+		  		);
+		  		y_index = y_index + height*y_perc[i][j]/x_perc[i] //elements[elements.length-1].nextDown()
+		  	}
+	  }
+	}
+
+	function setup() {
+	  canvas = createCanvas(windowWidth/5*4, windowHeight);
+	  canvas.parent('sketch-holder');
+	  loadJSON("/empresas/get_data_mekko/", drawMekko);
+	  filter('GRAY');
+	}
+
+	function draw() {
+		cursor(ARROW);
+	  	background(245, 245, 245);
+	  	frameRate(30);
+	  	for (var i = 0; i < elements.length; i = i + 1) {
+	  		elements[i].draw();
+	  		if (elements[i].mouseOn()) {
+	  			cursor(HAND);
+	  		}
+	  	}
+	}
+
+	function windowResized() {
+	  resizeCanvas(windowWidth, windowHeight);
+	}
+
+	function MekkoElement(x, y, w, h, label, img) {
+		this.offset = 10
+		this.x = x,
+		this.y = y,
+		this.width = w,
+		this.height = h,
+		this.label = label
+
+		this.mouseOn = function() {
+			if (mouseX >this.x && mouseX < (this.x + this.width) && mouseY > this.y && mouseY < (this.y + this.height)) {
+				return true;
+			} else {
+				return false;
+			}
+		}
+		this.draw = function() {
+			if (this.mouseOn()) {
+				//image(img, this.x + this.offset/2, this.y + this.offset/2, this.width - this.offset, this.height - this.offset);
+				tint(255,150,150);
+				textFont(myFont);
+				textSize(20);
+				textAlign(CENTER, CENTER);
+				fill(0);
+				text(this.label, this.x + this.width/2, this.y + this.height/2);
+			} else {
+				
+				noTint();
+				image(img, this.x + this.offset/2, this.y + this.offset/2, this.width - this.offset, this.height - this.offset);
+				// filter(GRAY);
+				textFont(myFont_Bold);
+				textSize(18);
+				textAlign(CENTER, CENTER);
+				fill(255);
+				text(this.label, this.x + this.width/2, this.y + this.height/2);
+			}
+		    noFill();
+		    rect(this.x + this.offset/2, this.y + this.offset/2, this.width - this.offset, this.height - this.offset);
+		}
+		this.nextTop = function() {
+			top_y = this.y
+		    return top_y
+		}
+		this.nextDown = function() {
+			down_y = this.y + this.height
+		    return down_y
+		}
+		this.nextRight = function() {
+			right_x = this.x + this.width
+		    return right_x
+		}
+		this.nextLeft = function() {
+			left_x = this.x
+		    return left_x
+		}
+	}
+
+	function zeros(dimensions) {
+	    var array = [];
+
+	    for (var i = 0; i < dimensions[0]; ++i) {
+	        array.push(dimensions.length == 1 ? 0 : zeros(dimensions.slice(1)));
+	    }
+
+	    return array;
+	}
+
+
+	$(document).ready(function(){
+
+	});
+
+
+</script>
+{% endblock alt_js %}

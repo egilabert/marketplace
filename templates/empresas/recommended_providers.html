@@ -115,7 +115,7 @@
 		    		<div class="row">
 		    		<div class="col s12 m4 cards-container">
 
-					{% for obj in company.providers_recommended.all %}
+					{% for obj in recommended_providers %}
 						{% if  obj.similarity > -1000 %}
 							{% if  forloop.counter|add:"-1"|divisibleby:3 %}
 							<div class="card brown lighten-5 hoverable">
@@ -172,7 +172,7 @@
 					<!-- =================== -->
 
 					<div class="col s12 m4 cards-container">
-						{% for obj in company.providers_recommended.all %}
+						{% for obj in recommended_providers %}
 						
 							{% if  obj.similarity > -1000 %}
 
@@ -230,7 +230,7 @@
 					</div>
 
 					<div class="col s12 m4 cards-container">
-						{% for obj in company.providers_recommended.all %}
+						{% for obj in recommended_providers %}
 
 							{% if  obj.similarity > -1000 %}
 						

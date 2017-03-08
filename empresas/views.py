@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-from django.http import HttpResponse, HttpResponseRedirect, HttpRequest
+from django.http import HttpResponse, HttpResponseRedirect, HttpRequest, JsonResponse
 from django.conf import settings
 from django.shortcuts import render, get_object_or_404
 from django.contrib.auth.decorators import login_required
@@ -30,6 +30,55 @@ from django.db.models import Avg, Max, Min, Count, Sum, Q
 from django.core.serializers.json import DjangoJSONEncoder
 from django.db.models import Prefetch
 
+
+def get_data_mekko(request, *args, **kwargs):
+	data = dict([
+		('agrup', 'Riesgo Negocio'),
+		('data', [
+			dict([
+				('name','Riesgo macroeconómico'),
+				('value',45)])
+			,
+			dict([
+				('name','Riesgo competencia'),
+				('value',50)])
+			,
+			dict([
+				('name','Riesgo normativo'),
+				('value',34)])
+			])
+		]), dict([
+			('agrup', 'Riesgo clientes'),
+			('data', [
+			dict([
+				('name','Riesgo de demanda'),
+				('value',22)])
+			,
+			dict([
+				('name','Riesgo de fuga'),
+				('value',66)])
+			,
+			dict([
+				('name','Riesgo de impagos'),
+				('value',40)])
+			,
+			dict([
+				('name','Riesgo concentración'),
+				('value',25)])
+			,
+			dict([
+				('name','Riesgo mercado / precios'),
+				('value',25)])
+			,
+			dict([
+				('name','Riesgo incumplimiento'),
+				('value',51)])
+			])
+		])
+	return JsonResponse(data, safe=False)
+
+def SummaryView(request):
+	return render(request, "empresas/summary.html", {})
 """-------------------------------------------------------"""
 """				EMPRESAS VIEWS 							  """
 """-------------------------------------------------------"""
@@ -971,6 +1020,8 @@ def ClientView(request):
 		request.session['recommended_clients_page'] = request.session.get('recommended_clients_page') + 1
 
 	recommended_clients = company.recommended.all() #company.get_recommended_clients()
+	recommended_clients = recommended_clients.filter(similarity__gt=0)
+	print(recommended_clients)
 
 	if sector is not None or region is not None or min_bill is not None:
 		if region=="true" or sector!="": 
@@ -983,7 +1034,6 @@ def ClientView(request):
 			if sector != "":
 				recommended_clients = recommended_clients.filter(
 					clientes_recomendados__cnae_2=sector)
-			print(recommended_clients)
 			context = {
 				"company": company, 
 				"recommended_clients": recommended_clients[:50],
@@ -998,6 +1048,7 @@ def ClientView(request):
 				"loading_times": request.session['recommended_clients_page']
 			}
 			return render(request, "empresas/cards_layout.html", context)
+
 	context = {
 		"company": company, 
 		"title": "Recommended clients",
@@ -1027,7 +1078,8 @@ def ProviderView(request):
 	company = Empresa.objects.filter(pk=company_id)
 	company = company.prefetch_related('providers_recommended__clientes_recomendados__estados_financieros','transfers')[0] #'estados_financieros','recommended','recommended__clientes_recomendados'
 
-	recommended_providers = company.get_recommended_providers()  #company.providers_recommended.all()
+	recommended_providers = company.providers_recommended.all()  #company.get_recommended_providers()
+	recommended_providers = recommended_providers.filter(similarity__gt=0)
 	sector, region, min_bill, comment = request.GET.get("sector"), request.GET.get("region"), request.GET.get("min_bill"), request.GET.get("comment")
 
 	if request.session.get('recommended_providers_page') is None:

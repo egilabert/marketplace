@@ -28,11 +28,15 @@ from .views import (HomeView,
                     FAQView,
                     SearchView,
                     IntroView,
-                    SwitchView)
+                    SwitchView,
+                    SummaryView,
+                    get_data_mekko)
 
 urlpatterns = [
 
     url(r'^intro/$', IntroView, name='empresas_intro'),
+    url(r'^summary/$', SummaryView, name='summary'),
+    url(r'^get_data_mekko/$', get_data_mekko, name='get_data_mekko'),
     url(r'^$', HomeView, name='empresas_home'),
     #url(r'^create/$', EmpresaDetailView, name='empresa_create'),
     url(r'^(?P<pk>\d+)/$', EmpresaDetailView, name='detail'),
