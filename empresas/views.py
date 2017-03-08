@@ -109,7 +109,12 @@ def get_data_mekko(request, *args, **kwargs):
 	return JsonResponse(data, safe=False)
 
 def SummaryView(request):
-	return render(request, "empresas/summary.html", {})
+	company_id = request.session.get('company')
+	company = Empresa.objects.filter(pk=company_id)
+	company = company.prefetch_related('estados_financieros','transfers')[0]
+	print(company)
+	print(company.estados_financieros.all())
+	return render(request, "empresas/summary.html", {'empresa': company, 'company': company})
 """-------------------------------------------------------"""
 """				EMPRESAS VIEWS 							  """
 """-------------------------------------------------------"""
