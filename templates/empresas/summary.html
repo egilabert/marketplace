@@ -31,7 +31,7 @@ Home - {{ company.name }}
 		      <div class="card horizontal green lighten-2">
 		        <div class="card-stacked">
 		        <div class="card-content black-text">
-		            <p>Buena <strong>diversificación de sus compras</strong> en un gran número de proveedores</p>
+		            <p id="puntos_fuertes">Buena <strong>diversificación de sus compras</strong> en un gran número de proveedores</p>
 		          </div>
 		        </div>
 		      </div>
@@ -41,7 +41,7 @@ Home - {{ company.name }}
 		      <div class="card horizontal grey lighten-3">
 		        <div class="card-stacked">
 		          <div class="card-content black-text">
-		            <p>Baja <strong>diversificación de sus ventas</strong>, efectuadas en muy pocas provincias</p>
+		            <p id="puntos_mejorar">Baja <strong>diversificación de sus ventas</strong>, efectuadas en muy pocas provincias</p>
 		          </div>
 		          </div>
 		        </div>
@@ -66,8 +66,121 @@ Home - {{ company.name }}
 	var total = 0;
 	var y_perc = [[]];
 	var risc_data;
+	var mejorar;
+	var fuertes;
 	elements = []
 
+	function setup() {
+		var parent_width = document.getElementById('sketch-holder').offsetWidth;
+		var parent_height = document.getElementById('sketch-holder').offsetHeight;
+		fuertes = select('#puntos_fuertes')
+		mejorar = select('#puntos_mejorar')
+
+		canvas = createCanvas(parent_width, windowHeight);
+		canvas.parent('sketch-holder');
+		loadJSON("/empresas/get_data_mekko/", drawMekko);
+	}
+
+	function draw() {
+		cursor(ARROW);
+	  	background(245, 245, 245);
+	  	frameRate(30);
+	  	fuertes.html("Buena <strong>diversificación de sus compras</strong> en un gran número de proveedores")
+	  	mejorar.html("Baja <strong>diversificación de sus ventas</strong>, efectuadas en muy pocas provincias")
+	  	for (var i = 0; i < elements.length; i = i + 1) {
+	  		if (elements[i].height > 0) {
+	  			elements[i].draw();
+	  		}
+	  		if (elements[i].mouseOn()) {
+	  			cursor(HAND);
+	  			fuertes.html("Estas posicionado encima de <strong>"+ elements[i].label +"</strong>, aquí van a ir sus puntos fuertes")
+	  			mejorar.html("Estas posicionado encima de <strong>"+ elements[i].label +"</strong>, aquí van a ir sus puntos a mejorar")
+	  		}
+	  	}
+	}
+
+	function windowResized() {
+		var parent_width = document.getElementById('sketch-holder').offsetWidth;
+	  	resizeCanvas(parent_width, windowHeight);
+	}
+
+	// --------------------------------------------------------
+	// Mekko element Object
+	// --------------------------------------------------------
+	function MekkoElement(x, y, w, h, label, img, col, alpha) {
+		this.offset = 10
+		this.x = x,
+		this.y = y,
+		this.width = w,
+		this.height = h,
+		this.label = label.replace("Riesgo ", "");
+		this.alpha_col = alpha
+
+		if (col==0) {
+			this.color = color(255,0,0, this.alpha_col)
+		} else if (col==1) {
+			this.color = color(0,255,0, this.alpha_col)
+		} else if (col==2) {
+			this.color = color(0,0,255, this.alpha_col)
+		} else if (col==3) {
+			this.color = color(255,255,0, this.alpha_col)
+		}
+
+		this.mouseOn = function() {
+			if (mouseX >this.x && mouseX < (this.x + this.width) && mouseY > this.y && mouseY < (this.y + this.height)) {
+				return true;
+			} else {
+				return false;
+			}
+		}
+
+		this.draw = function() {
+			if (this.mouseOn()) {
+				//image(img, this.x + this.offset/2, this.y + this.offset/2, this.width - this.offset, this.height - this.offset);
+				tint(255,150,150);
+				textFont(myFont);
+				textSize(20);
+				textAlign(CENTER, CENTER);
+				fill(0);
+				text(this.label, this.x + this.width/2, this.y + this.height/2);
+				
+			} else {
+				
+				noTint();
+				image(img, this.x + this.offset/2, this.y + this.offset/2, this.width - this.offset, this.height - this.offset);
+				// filter(GRAY);
+				textFont(myFont_Bold);
+				textSize(18);
+				textAlign(CENTER, CENTER);
+				fill(255);
+				text(this.label, this.x + this.width/2, this.y + this.height/2);
+			}
+		    fill(this.color);
+		    rect(this.x + this.offset/2, this.y + this.offset/2, this.width - this.offset, this.height - this.offset);
+		}
+
+		this.nextTop = function() {
+			top_y = this.y
+		    return top_y
+		}
+
+		this.nextDown = function() {
+			down_y = this.y + this.height
+		    return down_y
+		}
+
+		this.nextRight = function() {
+			right_x = this.x + this.width
+		    return right_x
+		}
+
+		this.nextLeft = function() {
+			left_x = this.x
+		    return left_x
+		}
+	}
+
+	// Preloading images and fonts
 	function preload() {
 	  img[0] = loadImage("{% static 'images/TBR/Resized/129H_resized.jpg' %}");
 	  img[1] = loadImage("{% static 'images/TBR/Resized/114H_resized.jpg' %}");
@@ -93,12 +206,11 @@ Home - {{ company.name }}
 	  myFont_Bold = loadFont("{% static 'fonts/roboto/Roboto-Bold.ttf' %}");
 	}
 
+	// Callback function for drawing the Mekko once the images are loaded
 	function drawMekko(data) {
-	  console.log("Loaded data");
-	  console.log(data);
-	  risc_data = data
-
+	  
 	  // Declaración e Inicialización de variables 
+	  risc_data = data
 	  x_index = 0
 	  y_index = 0
 	  y_perc = zeros([data.length, data[0].data.length])
@@ -107,33 +219,21 @@ Home - {{ company.name }}
 
 	  for (var i = 0; i < data.length; i = i + 1) {
 	  	for (var j = 0; j < data[i].data.length; j = j + 1) {
-	  		console.log("Datos");
-	  		console.log(data[i].data[j].value)
 	  		total = total + data[i].data[j].value
 	  		x_perc[i] = x_perc[i] + data[i].data[j].value
 	  		y_perc[i][j] = data[i].data[j].value //+ y_perc[i][j]
 	  	}
 	  }
-	 	console.log("Vectores");
-	 	console.log(Mekko_width)
-	 	console.log(total)
-		console.log(x_perc)
-		console.log(y_perc)
-
-		// Creación de las Coordenadas y Dimensiones de los elementos del Mekko
+	  // Creación de las Coordenadas y Dimensiones de los elementos del Mekko
 	  for (var i = 0; i < data.length; i = i + 1) {
 		  	if (i!=0) {
 
 		  		x_index = elements[elements.length-1].nextRight()
 		  	}
-		  	console.log('X_Teòrica')
-		  	console.log(Mekko_width*x_perc[i]/total)
 
 		  	y_index = 0;
 		  	for (var j = 0; j < data[i].data.length; j = j + 1) {
 		  		
-		  		console.log("Coordenadas");
-		  		console.log([x_index, y_index])
 		  		elements.push(
 		  			new MekkoElement(
 		  				x_index, 
@@ -151,101 +251,7 @@ Home - {{ company.name }}
 	  }
 	}
 
-	function setup() {
-		var parent_width = document.getElementById('sketch-holder').offsetWidth;
-		var parent_height = document.getElementById('sketch-holder').offsetHeight;
-		canvas = createCanvas(parent_width, windowHeight);
-		canvas.parent('sketch-holder');
-		loadJSON("/empresas/get_data_mekko/", drawMekko);
-	}
-
-	function draw() {
-		cursor(ARROW);
-	  	background(245, 245, 245);
-	  	frameRate(30);
-	  	for (var i = 0; i < elements.length; i = i + 1) {
-	  		if (elements[i].height > 0) {
-	  			elements[i].draw();
-	  		}
-	  		if (elements[i].mouseOn()) {
-	  			cursor(HAND);
-	  		}
-	  	}
-	}
-
-	function windowResized() {
-		var parent_width = document.getElementById('sketch-holder').offsetWidth;
-		//var parent_height = document.getElementById('sketch-holder').offsetHeight;
-	  	resizeCanvas(parent_width, windowHeight);
-	}
-
-	function MekkoElement(x, y, w, h, label, img, col, alpha) {
-		this.offset = 10
-		this.x = x,
-		this.y = y,
-		this.width = w,
-		this.height = h,
-		this.label = label.replace("Riesgo ", "");
-		this.alpha_col = alpha
-		if (col==0) {
-			this.color = color(255,0,0, this.alpha_col)
-		} else if (col==1) {
-			this.color = color(0,255,0, this.alpha_col)
-		} else if (col==2) {
-			this.color = color(0,0,255, this.alpha_col)
-		} else if (col==3) {
-			this.color = color(255,255,0, this.alpha_col)
-		}
-		
-
-		this.mouseOn = function() {
-			if (mouseX >this.x && mouseX < (this.x + this.width) && mouseY > this.y && mouseY < (this.y + this.height)) {
-				return true;
-			} else {
-				return false;
-			}
-		}
-		this.draw = function() {
-			if (this.mouseOn()) {
-				//image(img, this.x + this.offset/2, this.y + this.offset/2, this.width - this.offset, this.height - this.offset);
-				tint(255,150,150);
-				textFont(myFont);
-				textSize(20);
-				textAlign(CENTER, CENTER);
-				fill(0);
-				text(this.label, this.x + this.width/2, this.y + this.height/2);
-			} else {
-				
-				noTint();
-				image(img, this.x + this.offset/2, this.y + this.offset/2, this.width - this.offset, this.height - this.offset);
-				// filter(GRAY);
-				textFont(myFont_Bold);
-				textSize(18);
-				textAlign(CENTER, CENTER);
-				fill(255);
-				text(this.label, this.x + this.width/2, this.y + this.height/2);
-			}
-		    fill(this.color);
-		    rect(this.x + this.offset/2, this.y + this.offset/2, this.width - this.offset, this.height - this.offset);
-		}
-		this.nextTop = function() {
-			top_y = this.y
-		    return top_y
-		}
-		this.nextDown = function() {
-			down_y = this.y + this.height
-		    return down_y
-		}
-		this.nextRight = function() {
-			right_x = this.x + this.width
-		    return right_x
-		}
-		this.nextLeft = function() {
-			left_x = this.x
-		    return left_x
-		}
-	}
-
+	// Intializer helper
 	function zeros(dimensions) {
 	    var array = [];
 
