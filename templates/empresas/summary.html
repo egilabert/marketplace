@@ -13,12 +13,44 @@ Home - {{ company.name }}
 <div class="parallax-container">
 	<!-- <h3 class="center-align grey-text text-darken-3 light">Rocky clients are not all the same</h3> -->
 	<h3 class="center-align grey-text text-darken-3 light">No todos los clientes son iguales</h3>
-	<div class="parallax"><img src="{% static 'images/rocks.jpg' %}"></div>
+	<div class="parallax"><img src="{% static 'images/strategic.jpg' %}"></div>
+</div>
+<div class="white_back title_conf">
+	<h4 class="flow-text">  Gestiona tus riesgos - ¿Cuáles son tus principales exposiciones? </h4>
+</div>
+<div class="row">
+	<div class="col s12 m9">
+		<div id="sketch-holder">
+		    <!-- Our sketch will go here! -->
+		</div>
+	</div>
+	<div class="col s12 m3">
+		<div class="row">
+		    <div class="col s12 m1"></div>
+		    <div class="col s12 m12">
+		      <div class="card horizontal green lighten-2">
+		        <div class="card-stacked">
+		        <div class="card-content black-text">
+		            <p>Buena <strong>diversificación de sus compras</strong> en un gran número de proveedores</p>
+		          </div>
+		        </div>
+		      </div>
+		    </div>
+		    
+		    <div class="col s12 m12">
+		      <div class="card horizontal grey lighten-3">
+		        <div class="card-stacked">
+		          <div class="card-content black-text">
+		            <p>Baja <strong>diversificación de sus ventas</strong>, efectuadas en muy pocas provincias</p>
+		          </div>
+		          </div>
+		        </div>
+		    </div>
+		    <div class="col s12 m1"></div>
+		  </div>
+	</div>
 </div>
 
-<div id="sketch-holder">
-    <!-- Our sketch will go here! -->
-</div>
 
 <script src="//cdnjs.cloudflare.com/ajax/libs/p5.js/0.5.7/p5.min.js"></script>
 <script src="//cdnjs.cloudflare.com/ajax/libs/p5.js/0.5.7/addons/p5.dom.min.js"></script>
@@ -30,7 +62,7 @@ Home - {{ company.name }}
 <script type="text/javascript">
 
 	var img = [];
-	var x_perc = [0,0];
+	var x_perc = [0,0,0,0];
 	var total = 0;
 	var y_perc = [[]];
 	var risc_data;
@@ -41,22 +73,22 @@ Home - {{ company.name }}
 	  img[1] = loadImage("{% static 'images/TBR/Resized/114H_resized.jpg' %}");
 	  img[2] = loadImage("{% static 'images/TBR/Resized/127H_resized.jpg' %}");
 	  img[3] = loadImage("{% static 'images/TBR/Resized/335H_resized.jpg' %}");
-	  img[4] = loadImage("{% static 'images/TBR/Resized/328H_resized.jpg' %}");
+	  img[4] = loadImage("{% static 'images/TBR/Resized/background-909386_1920_resized.jpg' %}");
 	  img[5] = loadImage("{% static 'images/TBR/Resized/162H_resized.jpg' %}");
 	  img[6] = loadImage("{% static 'images/TBR/Resized/151H_resized.jpg' %}");
 	  img[7] = loadImage("{% static 'images/TBR/Resized/186H_resized.jpg' %}");
 	  img[8] = loadImage("{% static 'images/TBR/Resized/231H_resized.jpg' %}");
-	  img[9] = loadImage("{% static 'images/TBR/Resized/129H_resized.jpg' %}");
-	  img[10] = loadImage("{% static 'images/TBR/Resized/114H_resized.jpg' %}");
-	  img[11] = loadImage("{% static 'images/TBR/Resized/127H_resized.jpg' %}");
-	  img[12] = loadImage("{% static 'images/TBR/Resized/335H_resized.jpg' %}");
-	  img[13] = loadImage("{% static 'images/TBR/Resized/328H_resized.jpg' %}");
-	  img[14] = loadImage("{% static 'images/TBR/Resized/162H_resized.jpg' %}");
-	  img[15] = loadImage("{% static 'images/TBR/Resized/151H_resized.jpg' %}");
-	  img[16] = loadImage("{% static 'images/TBR/Resized/186H_resized.jpg' %}");
-	  img[17] = loadImage("{% static 'images/TBR/Resized/231H_resized.jpg' %}");
-	  img[18] = loadImage("{% static 'images/TBR/Resized/186H_resized.jpg' %}");
-	  img[19] = loadImage("{% static 'images/TBR/Resized/231H_resized.jpg' %}");
+	  img[9] = loadImage("{% static 'images/TBR/Resized/camera-581126_1920_resized.jpg' %}");
+	  img[10] = loadImage("{% static 'images/TBR/Resized/Digital-Marketing-Changed-the-Way-B2B-Market-Functions-696x392_resized.jpg' %}");
+	  img[11] = loadImage("{% static 'images/TBR/Resized/dolphins_resized.jpg' %}");
+	  img[12] = loadImage("{% static 'images/TBR/Resized/mushroom-1332745_1920_resized.jpg' %}");
+	  img[13] = loadImage("{% static 'images/TBR/Resized/public-domain-images-free-stock-photos-001-1000x667_resized.jpg' %}");
+	  img[14] = loadImage("{% static 'images/TBR/Resized/public-domain-images-free-stock-photos-002-1000x667_resized.jpg' %}");
+	  img[15] = loadImage("{% static 'images/TBR/Resized/padlock-510329_1920_resized.jpg' %}");
+	  img[16] = loadImage("{% static 'images/TBR/Resized/public-domain-images-free-stock-photos-alley-ball-bowl-1000x662_resized.jpg' %}");
+	  img[17] = loadImage("{% static 'images/TBR/Resized/public-domain-images-free-stock-photos-architecture-black-and-white-building-1000x667_resized.jpg' %}");
+	  img[18] = loadImage("{% static 'images/TBR/Resized/old-1130743_1920_resized.jpg' %}");
+	  img[19] = loadImage("{% static 'images/TBR/Resized/public-domain-images-free-stock-photos-apple-fruits-iphone-1000x667_resized.jpg' %}");
 	  myFont = loadFont("{% static 'fonts/roboto/Roboto-Light.ttf' %}");
 	  myFont_Bold = loadFont("{% static 'fonts/roboto/Roboto-Bold.ttf' %}");
 	}
@@ -66,47 +98,65 @@ Home - {{ company.name }}
 	  console.log(data);
 	  risc_data = data
 
+	  // Declaración e Inicialización de variables 
 	  x_index = 0
 	  y_index = 0
-
 	  y_perc = zeros([data.length, data[0].data.length])
+	  Mekko_width = width
+	  Mekko_height = 0.9*height
 
 	  for (var i = 0; i < data.length; i = i + 1) {
 	  	for (var j = 0; j < data[i].data.length; j = j + 1) {
+	  		console.log("Datos");
+	  		console.log(data[i].data[j].value)
 	  		total = total + data[i].data[j].value
 	  		x_perc[i] = x_perc[i] + data[i].data[j].value
 	  		y_perc[i][j] = data[i].data[j].value //+ y_perc[i][j]
 	  	}
 	  }
+	 	console.log("Vectores");
+	 	console.log(Mekko_width)
+	 	console.log(total)
+		console.log(x_perc)
+		console.log(y_perc)
 
+		// Creación de las Coordenadas y Dimensiones de los elementos del Mekko
 	  for (var i = 0; i < data.length; i = i + 1) {
 		  	if (i!=0) {
-		  		x_index = x_index + elements[elements.length-1].nextRight()
+
+		  		x_index = elements[elements.length-1].nextRight()
 		  	}
+		  	console.log('X_Teòrica')
+		  	console.log(Mekko_width*x_perc[i]/total)
+
 		  	y_index = 0;
 		  	for (var j = 0; j < data[i].data.length; j = j + 1) {
-		  		console.log((i*(data.length+1))+j)
+		  		
+		  		console.log("Coordenadas");
 		  		console.log([x_index, y_index])
 		  		elements.push(
 		  			new MekkoElement(
 		  				x_index, 
 		  				y_index, 
-		  				width*x_perc[i]/total, 
-		  				height*y_perc[i][j]/x_perc[i], 
+		  				Mekko_width*x_perc[i]/total, 
+		  				Mekko_height*y_perc[i][j]/x_perc[i], 
 		  				data[i].data[j].name, 
-		  				img[(i*(data.length+1))+j]
+		  				img[(i*(data.length+1))+j],
+		  				i,
+		  				60
 		  			)
 		  		);
-		  		y_index = y_index + height*y_perc[i][j]/x_perc[i] //elements[elements.length-1].nextDown()
+		  		y_index = y_index + Mekko_height*y_perc[i][j]/x_perc[i] //elements[elements.length-1].nextDown()
 		  	}
 	  }
 	}
 
 	function setup() {
-	  canvas = createCanvas(windowWidth/5*4, windowHeight);
-	  canvas.parent('sketch-holder');
-	  loadJSON("/empresas/get_data_mekko/", drawMekko);
-	  filter('GRAY');
+		var parent_width = document.getElementById('sketch-holder').offsetWidth;
+		var parent_height = document.getElementById('sketch-holder').offsetHeight;
+		canvas = createCanvas(parent_width, windowHeight);
+		canvas.parent('sketch-holder');
+		loadJSON("/empresas/get_data_mekko/", drawMekko);
 	}
 
 	function draw() {
@@ -114,7 +164,9 @@ Home - {{ company.name }}
 	  	background(245, 245, 245);
 	  	frameRate(30);
 	  	for (var i = 0; i < elements.length; i = i + 1) {
-	  		elements[i].draw();
+	  		if (elements[i].height > 0) {
+	  			elements[i].draw();
+	  		}
 	  		if (elements[i].mouseOn()) {
 	  			cursor(HAND);
 	  		}
@@ -122,16 +174,29 @@ Home - {{ company.name }}
 	}
 
 	function windowResized() {
-	  resizeCanvas(windowWidth, windowHeight);
+		var parent_width = document.getElementById('sketch-holder').offsetWidth;
+		//var parent_height = document.getElementById('sketch-holder').offsetHeight;
+	  	resizeCanvas(parent_width, windowHeight);
 	}
 
-	function MekkoElement(x, y, w, h, label, img) {
+	function MekkoElement(x, y, w, h, label, img, col, alpha) {
 		this.offset = 10
 		this.x = x,
 		this.y = y,
 		this.width = w,
 		this.height = h,
-		this.label = label
+		this.label = label.replace("Riesgo ", "");
+		this.alpha_col = alpha
+		if (col==0) {
+			this.color = color(255,0,0, this.alpha_col)
+		} else if (col==1) {
+			this.color = color(0,255,0, this.alpha_col)
+		} else if (col==2) {
+			this.color = color(0,0,255, this.alpha_col)
+		} else if (col==3) {
+			this.color = color(255,255,0, this.alpha_col)
+		}
+		
 
 		this.mouseOn = function() {
 			if (mouseX >this.x && mouseX < (this.x + this.width) && mouseY > this.y && mouseY < (this.y + this.height)) {
@@ -160,7 +225,7 @@ Home - {{ company.name }}
 				fill(255);
 				text(this.label, this.x + this.width/2, this.y + this.height/2);
 			}
-		    noFill();
+		    fill(this.color);
 		    rect(this.x + this.offset/2, this.y + this.offset/2, this.width - this.offset, this.height - this.offset);
 		}
 		this.nextTop = function() {

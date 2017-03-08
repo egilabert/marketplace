@@ -36,72 +36,72 @@ def get_data_mekko(request, *args, **kwargs):
 		('agrup', 'Riesgo Negocio'),
 		('data', [
 			dict([
-				('name','Riesgo macroeconómico'),
-				('value',45)])
+				('name','Riesgo Macroeconómico'),
+				('value',10)])
 			,
 			dict([
-				('name','Riesgo competencia'),
+				('name','Riesgo Competencia'),
 				('value',50)])
 			,
 			dict([
-				('name','Riesgo normativo'),
+				('name','Riesgo Normativo'),
 				('value',34)])
 			])
 		]), dict([
-			('agrup', 'Riesgo clientes'),
+			('agrup', 'Riesgo Clientes'),
 			('data', [
 			dict([
-				('name','Riesgo de demanda'),
+				('name','Riesgo Demanda'),
 				('value',22)])
 			,
 			dict([
-				('name','Riesgo de fuga'),
+				('name','Riesgo Fuga'),
 				('value',66)])
 			,
 			dict([
-				('name','Riesgo de impagos'),
+				('name','Riesgo Impagos'),
 				('value',40)])
 			,
 			dict([
-				('name','Riesgo concentración'),
+				('name','Riesgo Concentración'),
 				('value',25)])
 			])
 		]), dict([
-			('agrup', 'Riesgo proveedores'),
+			('agrup', 'Riesgo Proveedores'),
 			('data', [
 			dict([
-				('name','Riesgo mercado / precios'),
+				('name','Riesgo Mercado / Precios'),
 				('value',25)])
 			,
 			dict([
-				('name','Riesgo incumplimiento'),
+				('name','Riesgo Incumplimiento'),
 				('value',51)])
 			,
 			dict([
-				('name','Riesgo concentración'),
+				('name','Riesgo Concentración'),
 				('value',51)])
 			])
 		]), dict([
 			('agrup', 'Riesgo Financiero'),
 			('data', [
 			dict([
-				('name','Riesgo crédito - inversión'),
+				('name','Riesgo Crédito - Inversión'),
 				('value',25)])
 			,
 			dict([
-				('name','Riesgo crédito - circulante'),
+				('name','Riesgo Crédito - Circulante'),
 				('value',51)])
 			,
 			dict([
-				('name','Riesgo liquidez - working capital'),
+				('name','Riesgo Liquidez - Working capital'),
 				('value',51)])
 			,
 			dict([
-				('name','Riesgo liquidez - divisa'),
+				('name','Riesgo Liquidez - Divisa'),
 				('value',51)])
 			,
 			dict([
-				('name','Riesgo liquidez - tipo de interés'),
+				('name','Riesgo Liquidez - Tipo de interés'),
 				('value',51)])
 			])
 
