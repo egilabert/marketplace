@@ -83,7 +83,7 @@ Home - {{ company.name }}
 
 	function draw() {
 		cursor(ARROW);
-	  	background(245, 245, 245);
+	  	background(237, 243, 249);
 	  	frameRate(30);
 	  	fuertes.html("Buena <strong>diversificación de sus compras</strong> en un gran número de proveedores")
 	  	mejorar.html("Baja <strong>diversificación de sus ventas</strong>, efectuadas en muy pocas provincias")
@@ -108,7 +108,7 @@ Home - {{ company.name }}
 	// Mekko element Object
 	// --------------------------------------------------------
 	function MekkoElement(x, y, w, h, label, img, col, alpha) {
-		this.offset = 10
+		this.offset = 0
 		this.x = x,
 		this.y = y,
 		this.width = w,
@@ -156,6 +156,7 @@ Home - {{ company.name }}
 				text(this.label, this.x + this.width/2, this.y + this.height/2);
 			}
 		    fill(this.color);
+		    noStroke();
 		    rect(this.x + this.offset/2, this.y + this.offset/2, this.width - this.offset, this.height - this.offset);
 		}
 
