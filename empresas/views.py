@@ -414,6 +414,16 @@ def EmpresaDetailView(request, pk=None):
 
 	try:
 		referrer = request.META['HTTP_REFERER']
+		print(referrer)
+		if 'intro' in referrer:
+			request.session['journey'] = True
+	except:
+		request.session['journey'] = False
+
+	request.session.modified = True
+
+	try:
+		referrer = request.META['HTTP_REFERER']
 		if int(pk) == int(request.session.get('company')):
 			key = 'self'
 		elif 'clients' in referrer:

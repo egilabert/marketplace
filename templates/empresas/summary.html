@@ -80,8 +80,8 @@ Home - {{ company.name }}
 		  			new MekkoElement(
 		  				x_index, 
 		  				y_index, 
-		  				(width-1)*x_perc[i]/total, 
-		  				(height-1)*y_perc[i][j]/x_perc[i], 
+		  				width*x_perc[i]/total, 
+		  				height*y_perc[i][j]/x_perc[i], 
 		  				data[i].data[j].name, 
 		  				img[(i*(data.length+1))+j]
 		  			)
