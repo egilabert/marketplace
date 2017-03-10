@@ -139,6 +139,7 @@ Home - {{ company.name }}
 				<div id="sketch-holder">
 				    <!-- Our sketch will go here! -->
 				</div>
+				<small>El área de cada foto es proporcional a la importancia que le otorgamos a ese concepto para tu empresa. ¡Aprovéchalo para priorizar tus gestiones!</small>
 			</div>
 			<div class="col s12 m1"></div>
 			
@@ -180,53 +181,48 @@ Home - {{ company.name }}
 		<p class="flow-text center-align">Novedades en tu red</p>
 		<ul class="collection" style="height: 338px; overflow:auto;">
 		    <li class="collection-item avatar">
-		      <i class="material-icons circle red">play_arrow</i>
-		      <span class="title">Tus clientes están aumentado sus ventas esta semana</span>
-		      <p>Están un 5% por encima de su media anual <br>
-		         <small>10/03/2017</small>
+		      <i class="material-icons circle red">trending_up</i>
+		      <span class="title">Tu competencia ha aumentado el número de clientes en el último mes (+10%)</span>
+		      <p class="right-align">13/03/2017 <br>
 		      </p>
-		      <a href="#!" class="secondary-content"><i class="material-icons">grade</i></a>
 		    </li>
 		    <li class="collection-item avatar">
-		      <i class="material-icons circle">folder</i>
-		      <span class="title">Title</span>
-		      <p>First Line <br>
-		         Second Line
+		      <i class="material-icons circle">assessment</i>
+		      <span class="title">Tu competencia ha aumentado su ticket medio en el último mes (+6%)</span>
+		      <p class="right-align">13/03/2017 <br>
 		      </p>
-		      <a href="#!" class="secondary-content"><i class="material-icons">grade</i></a>
 		    </li>
 		    <li class="collection-item avatar">
 		      <i class="material-icons circle green">insert_chart</i>
-		      <span class="title">Title</span>
-		      <p>First Line <br>
-		         Second Line
+		      <span class="title">Tus clientes han aumentado su deuda esta semana (+5%)</span>
+		      <p class="right-align">12/03/2017 <br>
 		      </p>
-		      <a href="#!" class="secondary-content"><i class="material-icons">grade</i></a>
+		    </li>
+		    <li class="collection-item avatar">
+		      <i class="material-icons circle red">repeat</i>
+		      <span class="title">Tu red ha disminuido el número de transacciones esta semana (-8%)</span>
+		      <p class="right-align">12/03/2017 <br>
+		      </p>
+		    </li>
+		    <li class="collection-item avatar">
+		      <i class="material-icons circle red">query_builder</i>
+		      <span class="title">Tus clientes han retrasado pagos a proveedores esta semana</span>
+		      <p class="right-align">11/03/2017 <br>
+		      </p>
 		    </li>
 		    <li class="collection-item avatar">
 		      <i class="material-icons circle red">play_arrow</i>
-		      <span class="title">Tus clientes están aumentado sus ventas esta semana</span>
-		      <p>Están un 5% por encima de su media anual <br>
-		         <small>10/03/2017</small>
+		      <span class="title">Alguno de tus competidores ha facturado con una nueva divisa esta semana</span>
+		      <p class="right-align">11/03/2017 <br>
 		      </p>
-		      <a href="#!" class="secondary-content"><i class="material-icons">grade</i></a>
 		    </li>
 		    <li class="collection-item avatar">
-		      <i class="material-icons circle red">play_arrow</i>
-		      <span class="title">Title</span>
-		      <p>First Line <br>
-		         Second Line
+		      <i class="material-icons circle green">query_builder</i>
+		      <span class="title">Alguno de tus competidores se ha retrasado en el pago de su deuda</span>
+		      <p class="right-align">10/03/2017 <br>
 		      </p>
-		      <a href="#!" class="secondary-content"><i class="material-icons">grade</i></a>
 		    </li>
-		    <li class="collection-item avatar">
-		      <i class="material-icons circle red">play_arrow</i>
-		      <span class="title">Tus clientes están aumentado sus ventas esta semana</span>
-		      <p>Están un 5% por encima de su media anual <br>
-		         <small>10/03/2017</small>
-		      </p>
-		      <a href="#!" class="secondary-content"><i class="material-icons">grade</i></a>
-		    </li>
+		    
 		  </ul>
 	</div>
 
@@ -234,118 +230,70 @@ Home - {{ company.name }}
 		<div style="">
 		<p class="flow-text center-align">Notícias destacadas</p>
 		<ul class="collection" style="height: 338px; overflow:auto;">
+
+			<li class="collection-item avatar">
+		    <a href="http://elpais.com/elpais/2017/03/06/buenavida/1488794532_900723.html" target="_blank">
+		      <img src="{% static 'images/promo_og_elpais.png' %}" alt="" class="circle">
+		      <span class="title grey-text text-darken-1">En esta comida ecológica sí merece la pena rascarse el bolsillo</span>
+		      <p class="right-align">09/03/2017 <br>
+		      </p>
+		    </a>
+		    </li>
+
 		    <li class="collection-item avatar">
+		    <a href="http://www.europapress.es/economia/noticia-sector-catalan-distribucion-bebidas-alimentacion-crecio-44-2015-20160317173300.html" target="_blank">
+		      <img src="{% static 'images/Europapress.jpg' %}" alt="" class="circle">
+		      <span class="title grey-text text-darken-1">El sector catalán de la distribución de bebidas y alimentación creció un 4,4% en 2015</span>
+		      <p class="right-align">17/03/2016 <br>
+		      </p>
+		    </a>
+		    </li>
+
+		    <li class="collection-item avatar">
+		    <a href="http://www.elmundo.es/cataluna/2016/01/28/56a9fd79e2704e8d3d8b4580.html" target="_blank">
+		      <img src="{% static 'images/logoelmundo_rrss.png' %}" alt="" class="circle">
+		      <span class="title grey-text text-darken-1">Alimentaria potenciará la gastronomía y dejará más 170 millones en Barcelona</span>
+		      <p class="right-align">09/03/2017 <br>
+		      </p>
+		    </a>
+		    </li>
+
+		    <li class="collection-item avatar">
+		    <a href="http://www.expansion.com/catalunya/2016/12/23/585cfd5eca474122418b4588.html" target="_blank">
 		      <img src="{% static 'images/expansion-logo.jpg' %}" alt="" class="circle">
-		      <span class="title">Title</span>
-		      <p>First Line <br>
-		         Second Line
+		      <span class="title grey-text text-darken-1">Alimentaria y Hostelco se celebrarán a la vez en 2018</span>
+		      <p class="right-align">15/02/2016 <br>
 		      </p>
-		      <a href="#!" class="secondary-content"><i class="material-icons">grade</i></a>
+		    </a>
 		    </li>
+
 		    <li class="collection-item avatar">
-		    	<img src="{% static 'images/WSJ.png' %}" alt="" class="circle">
-		      <span class="title">Title</span>
-		      <p>First Line <br>
-		         Second Line
+		    <a href="http://noticias.juridicas.com/base_datos/Laboral/569373-convenio-colectivo-marco-de-mayoristas-de-alimentacion-de-cataluna-r-tsf-384-2016.html" target="_blank">
+		      <img src="{% static 'images/noticias-jurdicas.jpg' %}" alt="" class="circle">
+		      <span class="title grey-text text-darken-1">Resolución TSF/384/2016, de 15 de febrero, por la que se dispone la inscripción y la publicación del Convenio colectivo marco de mayoristas de alimentación de Cataluña</span>
+		      <p class="right-align">15/02/2016 <br>
 		      </p>
-		      <a href="#!" class="secondary-content"><i class="material-icons">grade</i></a>
+		    </a>
 		    </li>
+
 		    <li class="collection-item avatar">
-		    	<img src="{% static 'images/promo_og_elpais.png' %}" alt="" class="circle">
-		      <span class="title">Title</span>
-		      <p>First Line <br>
-		         Second Line
+		    <a href="http://www.diaridetarragona.com/uploads/74571a50e280904.pdf" target="_blank">
+		      <img src="{% static 'images/diari_tarragona.jpg' %}" alt="" class="circle">
+		      <span class="title grey-text text-darken-1">Guía Empresarial de Tarragona</span>
+		      <p class="right-align">15/02/2016 <br>
 		      </p>
-		      <a href="#!" class="secondary-content"><i class="material-icons">grade</i></a>
+		    </a>
 		    </li>
+
 		    <li class="collection-item avatar">
-		      <img src="{% static 'images/expansion-logo.jpg' %}" alt="" class="circle">
-		      <span class="title">Title</span>
-		      <p>First Line <br>
-		         Second Line
+		    <a href="https://www.alimarket.es/noticia/157837/fragadis-impulsa-la-marca--spar--en-tarragona" target="_blank">
+		      <img src="{% static 'images/alimarket.jpg' %}" alt="" class="circle">
+		      <span class="title grey-text text-darken-1">Fragadis impulsa la marca 'Spar' en Tarragona</span>
+		      <p class="right-align">15/02/2016 <br>
 		      </p>
-		      <a href="#!" class="secondary-content"><i class="material-icons">grade</i></a>
+		    </a>
 		    </li>
-		    <li class="collection-item avatar">
-		    	<img src="{% static 'images/promo_og_elpais.png' %}" alt="" class="circle">
-		      <span class="title">Title</span>
-		      <p>First Line <br>
-		         Second Line
-		      </p>
-		      <a href="#!" class="secondary-content"><i class="material-icons">grade</i></a>
-		    </li>
-		    <li class="collection-item avatar">
-		    	<img src="{% static 'images/WSJ.png' %}" alt="" class="circle">
-		      <span class="title">Title</span>
-		      <p>First Line <br>
-		         Second Line
-		      </p>
-		      <a href="#!" class="secondary-content"><i class="material-icons">grade</i></a>
-		    </li>
-		    <li class="collection-item avatar">
-		      <img src="{% static 'images/cinco_dias.jpeg' %}" alt="" class="circle">
-		      <span class="title">Title</span>
-		      <p>First Line <br>
-		         Second Line
-		      </p>
-		      <a href="#!" class="secondary-content"><i class="material-icons">grade</i></a>
-		    </li>
-		    <li class="collection-item avatar">
-		      <img src="{% static 'images/expansion-logo.jpg' %}" alt="" class="circle">
-		      <span class="title">Title</span>
-		      <p>First Line <br>
-		         Second Line
-		      </p>
-		      <a href="#!" class="secondary-content"><i class="material-icons">grade</i></a>
-		    </li>
-		    <li class="collection-item avatar">
-		    	<img src="{% static 'images/WSJ.png' %}" alt="" class="circle">
-		      <span class="title">Title</span>
-		      <p>First Line <br>
-		         Second Line
-		      </p>
-		      <a href="#!" class="secondary-content"><i class="material-icons">grade</i></a>
-		    </li>
-		    <li class="collection-item avatar">
-		    	<img src="{% static 'images/promo_og_elpais.png' %}" alt="" class="circle">
-		      <span class="title">Title</span>
-		      <p>First Line <br>
-		         Second Line
-		      </p>
-		      <a href="#!" class="secondary-content"><i class="material-icons">grade</i></a>
-		    </li>
-		    <li class="collection-item avatar">
-		      <img src="{% static 'images/expansion-logo.jpg' %}" alt="" class="circle">
-		      <span class="title">Title</span>
-		      <p>First Line <br>
-		         Second Line
-		      </p>
-		      <a href="#!" class="secondary-content"><i class="material-icons">grade</i></a>
-		    </li>
-		    <li class="collection-item avatar">
-		    	<img src="{% static 'images/promo_og_elpais.png' %}" alt="" class="circle">
-		      <span class="title">Title</span>
-		      <p>First Line <br>
-		         Second Line
-		      </p>
-		      <a href="#!" class="secondary-content"><i class="material-icons">grade</i></a>
-		    </li>
-		    <li class="collection-item avatar">
-		    	<img src="{% static 'images/WSJ.png' %}" alt="" class="circle">
-		      <span class="title">Title</span>
-		      <p>First Line <br>
-		         Second Line
-		      </p>
-		      <a href="#!" class="secondary-content"><i class="material-icons">grade</i></a>
-		    </li>
-		    <li class="collection-item avatar">
-		      <img src="{% static 'images/cinco_dias.jpeg' %}" alt="" class="circle">
-		      <span class="title">Title</span>
-		      <p>First Line <br>
-		         Second Line
-		      </p>
-		      <a href="#!" class="secondary-content"><i class="material-icons">grade</i></a>
-		    </li>
+
 		  </ul>
 		</div>
 	</div>
@@ -358,30 +306,28 @@ Home - {{ company.name }}
         <div class="col s12 m6">
           <div class="card">
             <div class="card-image">
-              <img src="{% static 'images/rocks.jpg' %}">
+              <img src="{% static 'images/rsz_rocks.jpg' %}">
               <span class="card-title black-text">Clientes recomendados</span>
             </div>
             <div class="card-content">
-              <p>I am a very simple card. I am good at containing small bits of information.
-              I am convenient because I require little markup to use effectively.</p>
+              <p>Visita nuestro marketplace. Descubre y contacta con potenciales nuevos clientes y haz crecer tu negocio. Nuestro algoritmo te recomendará aquellos con los que podrías entenderte.</p>
             </div>
             <div class="card-action">
-              <a href="#">This is a link</a>
+              <a href="{% url 'empresas:clients' %}">Accede a tus clientes recomendados</a>
             </div>
           </div>
         </div>
         <div class="col s12 m6">
           <div class="card">
             <div class="card-image">
-              <img src="{% static 'images/supplier.jpg' %}">
+              <img src="{% static 'images/rsz_providers.jpg' %}">
               <span class="card-title">Proveedores recomendados</span>
             </div>
             <div class="card-content">
-              <p>I am a very simple card. I am good at containing small bits of information.
-              I am convenient because I require little markup to use effectively.</p>
+              <p>Visita nuestro marketplace. Descubre y contacta con potenciales nuevos proveedores y haz crecer tu negocio. Nuestro algoritmo te recomendará aquellos con los que podrías entenderte.</p>
             </div>
             <div class="card-action">
-              <a href="#">This is a link</a>
+              <a href="{% url 'empresas:providers' %}">Accede a tus proveedores recomendados</a>
             </div>
           </div>
         </div>
@@ -572,26 +518,28 @@ Home - {{ company.name }}
 
 	// Preloading images and fonts
 	function preload() {
-	  img[0] = loadImage("{% static 'images/TBR/Resized/129H_resized.jpg' %}");
-	  img[1] = loadImage("{% static 'images/TBR/Resized/114H_resized.jpg' %}");
-	  img[2] = loadImage("{% static 'images/TBR/Resized/127H_resized.jpg' %}");
-	  img[3] = loadImage("{% static 'images/TBR/Resized/335H_resized.jpg' %}");
-	  img[4] = loadImage("{% static 'images/TBR/Resized/background-909386_1920_resized.jpg' %}");
-	  img[5] = loadImage("{% static 'images/TBR/Resized/162H_resized.jpg' %}");
-	  img[6] = loadImage("{% static 'images/TBR/Resized/151H_resized.jpg' %}");
-	  img[7] = loadImage("{% static 'images/TBR/Resized/186H_resized.jpg' %}");
-	  img[8] = loadImage("{% static 'images/TBR/Resized/231H_resized.jpg' %}");
-	  img[9] = loadImage("{% static 'images/TBR/Resized/camera-581126_1920_resized.jpg' %}");
-	  img[10] = loadImage("{% static 'images/TBR/Resized/Digital-Marketing-Changed-the-Way-B2B-Market-Functions-696x392_resized.jpg' %}");
-	  img[11] = loadImage("{% static 'images/TBR/Resized/dolphins_resized.jpg' %}");
-	  img[12] = loadImage("{% static 'images/TBR/Resized/mushroom-1332745_1920_resized.jpg' %}");
-	  img[13] = loadImage("{% static 'images/TBR/Resized/public-domain-images-free-stock-photos-001-1000x667_resized.jpg' %}");
-	  img[14] = loadImage("{% static 'images/TBR/Resized/public-domain-images-free-stock-photos-002-1000x667_resized.jpg' %}");
-	  img[15] = loadImage("{% static 'images/TBR/Resized/padlock-510329_1920_resized.jpg' %}");
-	  img[16] = loadImage("{% static 'images/TBR/Resized/public-domain-images-free-stock-photos-alley-ball-bowl-1000x662_resized.jpg' %}");
-	  img[17] = loadImage("{% static 'images/TBR/Resized/public-domain-images-free-stock-photos-architecture-black-and-white-building-1000x667_resized.jpg' %}");
-	  img[18] = loadImage("{% static 'images/TBR/Resized/old-1130743_1920_resized.jpg' %}");
-	  img[19] = loadImage("{% static 'images/TBR/Resized/public-domain-images-free-stock-photos-apple-fruits-iphone-1000x667_resized.jpg' %}");
+	  img[0] = loadImage("{% static 'images/Macroeconomico.jpg' %}");
+	  img[1] = loadImage("{% static 'images/Competencia.jpg' %}");
+	  img[2] = loadImage("{% static 'images/Fidelidad.jpg' %}");
+	  img[3] = loadImage("{% static 'images/demanda.jpg' %}");
+	  img[4] = loadImage("{% static 'images/Fidelidad.jpg' %}");
+	  img[5] = loadImage("{% static 'images/TBR/Resized/186H_resized.jpg' %}");
+	  img[6] = loadImage("{% static 'images/concentration_clients.jpg' %}");
+	  img[7] = loadImage("{% static 'images/oferta.jpg' %}");
+	  img[8] = loadImage("{% static 'images/incumplimiento.jpg' %}");
+	  img[9] = loadImage("{% static 'images/concentration_providers.jpg' %}");
+	  img[10] = loadImage("{% static 'images/acceso inversion.jpg' %}");
+	  img[11] = loadImage("{% static 'images/acceso circulante.jpg' %}");
+	  img[12] = loadImage("{% static 'images/working capital.jpg' %}");
+	  img[13] = loadImage("{% static 'images/divisa.jpg' %}");
+	  img[14] = loadImage("{% static 'images/riesog tipo interes.jpg' %}");
+	  img[15] = loadImage("{% static 'images/Fidelidad.jpg' %}");
+	  img[16] = loadImage("{% static 'images/Fidelidad.jpg' %}");
+	  img[17] = loadImage("{% static 'images/Fidelidad.jpg' %}");
+	  img[18] = loadImage("{% static 'images/Fidelidad.jpg' %}");
+	  img[19] = loadImage("{% static 'images/Fidelidad.jpg' %}");
+	  img[20] = loadImage("{% static 'images/Fidelidad.jpg' %}");
+
 	  myFont = loadFont("{% static 'fonts/roboto/Roboto-Light.ttf' %}");
 	  myFont_Bold = loadFont("{% static 'fonts/roboto/Roboto-Bold.ttf' %}");
 	}
@@ -639,6 +587,7 @@ Home - {{ company.name }}
 	  		y_perc[i][j] = data[i].data[j].value //+ y_perc[i][j]
 	  	}
 	  }
+	  var counter = 0;
 	  // Creación de las Coordenadas y Dimensiones de los elementos del Mekko
 	  for (var i = 0; i < data.length; i = i + 1) {
 		  	if (i!=0) {
@@ -648,7 +597,7 @@ Home - {{ company.name }}
 
 		  	y_index = 0;
 		  	for (var j = 0; j < data[i].data.length; j = j + 1) {
-		  		
+		  		counter = counter + 1
 		  		elements.push(
 		  			new MekkoElement(
 		  				x_index, 
@@ -656,7 +605,7 @@ Home - {{ company.name }}
 		  				Mekko_width*x_perc[i]/total, 
 		  				Mekko_height*y_perc[i][j]/x_perc[i], 
 		  				data[i].data[j].name, 
-		  				img[(i*(data.length+1))+j],
+		  				img[counter-1],
 		  				i,
 		  				60,
 		  				data[i].data[j].info,

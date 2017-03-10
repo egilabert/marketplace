@@ -36,8 +36,9 @@ def get_data_mekko(request, *args, **kwargs):
 		('agrup', 'Riesgo Negocio'),
 		('data', [
 			dict([
-				('name','Riesgo Macroeconómico'),
+				('name','Riesgo Macro / Sectorial'),
 				('value',10),
+				('image', os.path.join(settings.STATIC_ROOT, 'images/Macroeconomico.jpg') ),
 				('info', 'Analizamos la evolución macroeconómica y de tu sector por ti. Te ayudamos a predecir posibles tendencias del mercado'),
 				('fuertes', 'Funcionalidad no disponible. Disculpa las molestias! Estamos trabajando para incluir este análisis y ofrecerte un mejor servicio'),
 				('mejorar', 'Funcionalidad no disponible. Disculpa las molestias! Estamos trabajando para incluir este análisis y ofrecerte un mejor servicio')])
@@ -45,6 +46,7 @@ def get_data_mekko(request, *args, **kwargs):
 			dict([
 				('name','Riesgo Competencia'),
 				('value',50),
+				('image', os.path.join(settings.STATIC_ROOT, 'images/Competencia.jpg') ),
 				('info', 'Analizamos tu competencia por ti. Te ayudamos a visualizar las tendencias de tu competencia más directa'),
 				('fuertes', 'Tu empresa muestra mejores resultados y evolución que tu competencia'),
 				('mejorar', '<p>Tu competencia ha experimentado un crecimiento destacable en volumen de ventas en el útlimo ejercicio</p><p>Tu competencia diversifica mejor sus ventas geográficamente</p>')])
@@ -52,6 +54,7 @@ def get_data_mekko(request, *args, **kwargs):
 			dict([
 				('name','Riesgo Normativo'),
 				('value',0),
+				('image', os.path.join(settings.STATIC_ROOT, 'images/Competencia.jpg') ),
 				('info', 'FER DESAPAREIXER'),
 				('fuertes', 'Funcionalidad no disponible. Disculpa las molestias! Estamos trabajando para incluir este análisis y ofrecerte un mejor servicio'),
 				('mejorar', 'Funcionalidad no disponible. Disculpa las molestias! Estamos trabajando para incluir este análisis y ofrecerte un mejor servicio')])
@@ -62,20 +65,23 @@ def get_data_mekko(request, *args, **kwargs):
 			dict([
 				('name','Riesgo Demanda'),
 				('value',22),
+				('image', os.path.join(settings.STATIC_ROOT, 'images/demanda.jpg') ),
 				('info', 'Analizamos tus clientes por ti. Te ayudamos a predecir posibles desviaciones en la demanda'),
-				('fuertes', '<p>Tus clientes son parecidos en tamaño y resultados a los clientes de tu competencia</p><p>Tus clientes han crecido en el último año</p>'),
+				('fuertes', '<p>Tus clientes son parecidos en tamaño y resultados a los clientes de tu competencia</p><div class="divider></div><p>Tus clientes han crecido en el último año</p>'),
 				('mejorar', '')])
 			,
 			dict([
 				('name','Riesgo Fidelidad'),
 				('value',66),
+				('image', os.path.join(settings.STATIC_ROOT, 'images/Fidelidad.jpg') ),
 				('info', 'Analizamos la fidelidad de tus clientes. Te ayudamos a medir el riesgo de fuga de clientes'),
 				('fuertes', '<p>Tus clientes te son fieles, con relaciones duraderas y elevado índice de penetración</p>'),
 				('mejorar', 'Tus clientes te tienen como proveedor principal, por lo que existe poco margen de crecimiento con ellos')])
 			,
 			dict([
-				('name','Riesgo Impagos'),
+				('name','Riesgo Solvencia'),
 				('value',40),
+				('image', os.path.join(settings.STATIC_ROOT, 'images/incumplimiento.jpg') ),
 				('info', 'Analizamos la solvencia de tus clientes. Te ayudamos a medir el riesgo de impago de sus facturas'),
 				('fuertes', '<p>Tus clientes tienen una solvencia en línea con la de los clientes de la competencia</p>'),
 				('mejorar', '<p>Tus clientes tienen un riesgo de concentración geográfica más elevado que los clientes de tu competencia</p>')])
@@ -83,6 +89,7 @@ def get_data_mekko(request, *args, **kwargs):
 			dict([
 				('name','Riesgo Concentración'),
 				('value',25),
+				('image', os.path.join(settings.STATIC_ROOT, 'images/concentration_clients.jpg') ),
 				('info', 'Analizamos los riesgos de concentración de tu empresa. Te ayudamos a medir las necesidades de diversificación de tu negocio'),
 				('fuertes', '<p>Buena diversificación en tus ventas con un gran número de clientes</p>'),
 				('mejorar', '<p>Baja diversificación de tus ventas, efectuadas en muy pocas provincias</p>')])
@@ -91,15 +98,17 @@ def get_data_mekko(request, *args, **kwargs):
 			('agrup', 'Riesgo Proveedores'),
 			('data', [
 			dict([
-				('name','Riesgo Mercado / Precios'),
+				('name','Riesgo Oferta'),
 				('value',25),
+				('image', os.path.join(settings.STATIC_ROOT, 'images/oferta.jpg') ),
 				('info', 'Analizamos tus proveedores por ti. Te ayudamos a predecir posibles cambios de precios de tus proveedores'),
 				('fuertes', '<p>Tus proveedores son más fuertes y con mejores resultados que los proveedores de tu competencia</p>'),
 				('mejorar', '<p>Tus proveedores han disminuido sus volúmenes de negocio en el último año</p>')])
 			,
 			dict([
-				('name','Riesgo Incumplimiento'),
+				('name','Riesgo Solvencia'),
 				('value',51),
+				('image', os.path.join(settings.STATIC_ROOT, 'images/incumplimiento.jpg') ),
 				('info', 'Analizamos la solvencia de tus proveedores. Te ayudamos a medir el riesgo de incumplimiento de sus obligaciones'),
 				('fuertes', '<p>Tus proveedores tienen una solvencia en línea con la de los proveedores de la competencia</p><p>Tus proveedores tienen un riesgo de concentración en línea con los proveedores de tu competencia</p>'),
 				('mejorar', '<p>Tus proveedores han disminuido sus volúmenes de negocio en el último año</p>')])
@@ -107,6 +116,7 @@ def get_data_mekko(request, *args, **kwargs):
 			dict([
 				('name','Riesgo Concentración'),
 				('value',51),
+				('image', os.path.join(settings.STATIC_ROOT, 'images/concentration_providers.jpg') ),
 				('info', 'Analizamos los riesgos de concentración de tu empresa. Te ayudamos a medir las oportunidades de diversificación de proveedores'),
 				('fuertes', '<p>Buena diversificación en tus compras con un gran número de proveedores</p>'),
 				('mejorar', '<p>Baja diversificación de tus compras, efectuadas en muy pocas provincias</p>')])
@@ -115,36 +125,41 @@ def get_data_mekko(request, *args, **kwargs):
 			('agrup', 'Riesgo Financiero'),
 			('data', [
 			dict([
-				('name','Riesgo Crédito - Inversión'),
+				('name','Riesgo Acceso a inversión'),
 				('value',25),
+				('image', os.path.join(settings.STATIC_ROOT, 'images/acceso inversion.jpg') ),
 				('info', 'Analizamos tu balance. Te ayudamos a entender como vemos tu solvencia para que puedas financiar tus inversiones'),
 				('fuertes', '<p>Dispones de una buena salud financiera</p><p>Ratios de endeudadmiento globales sensiblemente inferiores a los de tu competencia</p>'),
 				('mejorar', '<p></p>')])
 			,
 			dict([
-				('name','Riesgo Crédito - Circulante'),
+				('name','Riesgo Acceso a circulante'),
 				('value',51),
+				('image', os.path.join(settings.STATIC_ROOT, 'images/acceso circulante.jpg') ),
 				('info', 'Analizamos tu balance. Te ayudamos a entender como vemos tu solvencia para que puedas calibrar tu acceso a financiación del circulante en caso de imprevistos'),
 				('fuertes', '<p>Dispones de una buena salud financiera</p><p>Ratios de endeudadmiento a corto plazo sensiblemente inferiores a los de tu competencia</p>'),
 				('mejorar', '<p></p>')])
 			,
 			dict([
-				('name','Riesgo Liquidez - Working capital'),
+				('name','Riesgo Optimización del working capital'),
 				('value',51),
+				('image', os.path.join(settings.STATIC_ROOT, 'images/working capital.jpg') ),
 				('info', 'Analizamos tus necesidades de working capital. Te ayudamos a optimizarlas y te ofrecemos soluciones de financiación'),
 				('fuertes', '<p>Fluctuaciones en necesidades de working capital en línea con las de tu competencia</p>'),
 				('mejorar', '<p></p>')])
 			,
 			dict([
-				('name','Riesgo Liquidez - Divisa'),
+				('name','Riesgo Divisa'),
 				('value',51),
+				('image', os.path.join(settings.STATIC_ROOT, 'images/divisa.jpg') ),
 				('info', 'Analizamos tu exposición al mercado de divisas. Te ayudamos a medir y gestionar el riesgo asociado.'),
 				('fuertes', '<p>Tienes poca exposición al mercado de divisas</p>'),
 				('mejorar', '<p></p>')])
 			,
 			dict([
-				('name','Riesgo Liquidez - Tipo de interés'),
+				('name','Riesgo Tipo de interés'),
 				('value',51),
+				('image', os.path.join(settings.STATIC_ROOT, 'images/riesog tipo interes.jpg') ),
 				('info', 'Analizamos tu exposición al tipo de interés. Te ayudamos a medir y gestionar el riesgo asociado.'),
 				('fuertes', '<p>Tienes poca exposición a los tipos de interés</p>'),
 				('mejorar', '<p></p>')])
@@ -1084,7 +1099,7 @@ def ClientView(request):
 
 	try:
 		referrer = request.META['HTTP_REFERER']
-		if 'intro' in referrer:
+		if 'intro' in referrer or 'summary' in referrer:
 			request.session['journey'] = False
 	except:
 		request.session['journey'] = False
@@ -1155,7 +1170,7 @@ def ProviderView(request):
 
 	try:
 		referrer = request.META['HTTP_REFERER']
-		if 'intro' in referrer:
+		if 'intro' in referrer or 'summary' in referrer:
 			request.session['journey'] = False
 	except:
 		request.session['journey'] = False
