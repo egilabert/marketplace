@@ -12,11 +12,12 @@ Home - {{ company.name }}
 
 <div class="parallax-container">
 	<!-- <h3 class="center-align grey-text text-darken-3 light">Rocky clients are not all the same</h3> -->
-	<h3 class="center-align grey-text text-darken-3 light">No todos los clientes son iguales</h3>
-	<div class="parallax"><img src="{% static 'images/strategic.jpg' %}"></div>
+	<h3 class="center-align light white-text">Linia zero de defensa</h3>
+	<h5 class="center-align light white-text">{{company.name}}</h5>
+	<div class="parallax"><img src="{% static 'images/free-diving.jpg' %}"></div>
 </div>
 <div class="white_back title_conf">
-	<h4 class="flow-text">  Tu perfil - Esta és tu información básica mostrada </h4>
+	<h4 class="flow-text">  Tu perfil - Esta es tu información básica mostrada </h4>
 </div>
 
 <div class="row container">
@@ -103,12 +104,30 @@ Home - {{ company.name }}
       </div>
   </div>
 
-
-
 <div class="white_back title_conf">
 	<h4 class="flow-text">  Gestiona tus riesgos - ¿Cuáles son tus principales exposiciones? </h4>
 </div>
 <div class="padding_landing" >
+	<div class="row">
+		<div class="col s12 m11">
+			<div class="row">
+				<div class="col s12 m2 center-align">
+					<a href="{% url 'empresas:detail' pk=company.pk %}" id="download-button" class="btn-large waves-effect waves-light transparent red-text text-darken-3 border-grey" style="margin-left: 80px;"" >Negocio </a>
+				</div>
+				<div class="col s12 m3 center-align">
+					<a href="{% url 'empresas:recommendations' %}" id="download-button" class="btn-large waves-effect waves-light transparent green-text text-darken-3 border-grey" style="margin-left: 60px;">Cliente</a>
+				</div>
+				<div class="col s12 m3 center-align">
+					<a href="{% url 'empresas:recommendations_providers' %}" id="download-button" class="btn-large waves-effect waves-light transparent blue-text text-darken-3 border-grey" style="margin-left: 0px;">Proveedor</a>
+				</div>
+				<div class="col s12 m4 center-align">
+					<a href="{% url 'empresas:recommendations_financial_risk' %}" id="download-button" class="btn-large waves-effect waves-light transparent orange-text text-darken-3 border-grey" style="margin-right: 20px;">Financiero </a>
+				</div>
+			</div>
+		</div>
+		<div class="col s12 m1"></div>
+		
+	</div>
 	<div class="row">
 		<div class="col s12 m1"></div>
 		<div class="col s12 m10">
@@ -145,9 +164,9 @@ Home - {{ company.name }}
 	
 </div>
 
-<div class="white_back title_conf">
+<!-- <div class="white_back title_conf">
 	<h4 class="flow-text">  Noticias - Conoce las novedades de tu red y sigue informado de las notícias mas relevantes </h4>
-</div>
+</div> -->
 
 <div class="row">
 	<div class="col s12 m1"></div>
@@ -529,6 +548,9 @@ Home - {{ company.name }}
 	  myFont_Bold = loadFont("{% static 'fonts/roboto/Roboto-Bold.ttf' %}");
 	}
 
+	function mousePressed() {
+		link('http://www.elpais.com')
+	}
 	// Callback function for drawing the Mekko once the images are loaded
 	function drawMekko(data) {
 	  
@@ -538,7 +560,7 @@ Home - {{ company.name }}
 	  y_index = 0
 	  y_perc = zeros([data.length, data[0].data.length])
 	  Mekko_width = width
-	  Mekko_height = 0.9*height
+	  Mekko_height = height
 
 	  for (var i = 0; i < data.length; i = i + 1) {
 	  	for (var j = 0; j < data[i].data.length; j = j + 1) {

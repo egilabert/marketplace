@@ -45,7 +45,7 @@ def get_data_mekko(request, *args, **kwargs):
 			,
 			dict([
 				('name','Riesgo Normativo'),
-				('value',34)])
+				('value',0)])
 			])
 		]), dict([
 			('agrup', 'Riesgo Clientes'),
