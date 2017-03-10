@@ -12,16 +12,16 @@ Home - {{ company.name }}
 
 <div class="parallax-container">
 	<!-- <h3 class="center-align grey-text text-darken-3 light">Rocky clients are not all the same</h3> -->
-	<h3 class="center-align light white-text">Linia zero de defensa</h3>
+	<h3 class="center-align light white-text">Linea cero de defensa</h3>
 	<h5 class="center-align light white-text">{{company.name}}</h5>
 	<div class="parallax"><img src="{% static 'images/free-diving.jpg' %}"></div>
 </div>
 <div class="dark_grey_back title_conf">
-	<h4 class="flow-text white-text">  Tu perfil - Esta es tu información básica mostrada </h4>
+	<h4 class="flow-text grey-text">  Tu perfil - Esta es tu información básica mostrada </h4>
 </div>
 
 <div class="dark_grey_back">
-	<div class="row container white-text">
+	<div class="row container grey-text">
       <div class="col s9">
           <h4>{{ empresa.name }}</h4>
       </div>
@@ -117,7 +117,7 @@ Home - {{ company.name }}
 			<div class="col s12 m11">
 				<div class="row">
 					<div class="col s12 m2 center-align">
-						<a href="{% url 'empresas:detail' pk=company.pk %}" id="download-button" class="btn-large waves-effect waves-light transparent red-text text-darken-3 border-grey" style="margin-left: 80px;"" >Negocio </a>
+						<a href="{% url 'empresas:detail' pk=company.pk %}" id="download-button" class="btn-large waves-effect waves-light transparent red-text text-darken-3 border-grey" style="margin-left: 100px;"" >Negocio </a>
 					</div>
 					<div class="col s12 m3 center-align">
 						<a href="{% url 'empresas:recommendations' %}" id="download-button" class="btn-large waves-effect waves-light transparent green-text text-darken-3 border-grey" style="margin-left: 60px;">Cliente</a>
@@ -417,13 +417,15 @@ Home - {{ company.name }}
 	var mejorar;
 	var fuertes;
 	elements = []
+	var strWindowFeatures = "menubar=yes,location=yes,resizable=yes,scrollbars=yes,status=yes";
 
 	function setup() {
 		var parent_width = document.getElementById('sketch-holder').offsetWidth;
 		var parent_height = document.getElementById('sketch-holder').offsetHeight;
 		fuertes = select('#puntos_fuertes')
 		mejorar = select('#puntos_mejorar')
-
+		pop_w = 300;
+		pop_h = 100;
 		canvas = createCanvas(parent_width, windowHeight/3*2);
 		canvas.parent('sketch-holder');
 		loadJSON("/empresas/get_data_mekko/", drawMekko);
@@ -433,16 +435,54 @@ Home - {{ company.name }}
 		cursor(ARROW);
 	  	background(237, 243, 249);
 	  	frameRate(30);
-	  	fuertes.html("Buena <strong>diversificación de sus compras</strong> en un gran número de proveedores")
-	  	mejorar.html("Baja <strong>diversificación de sus ventas</strong>, efectuadas en muy pocas provincias")
+	  	fuertes.html("Resumimos los <strong>puntos fuertes</strong> detectados")
+	  	mejorar.html("Resumimos los <strong>puntos a mejorar</strong> detectados")
 	  	for (var i = 0; i < elements.length; i = i + 1) {
 	  		if (elements[i].height > 0) {
 	  			elements[i].draw();
 	  		}
 	  		if (elements[i].mouseOn()) {
 	  			cursor(HAND);
-	  			fuertes.html("Estas posicionado encima de <strong>"+ elements[i].label +"</strong>, aquí van a ir sus puntos fuertes")
-	  			mejorar.html("Estas posicionado encima de <strong>"+ elements[i].label +"</strong>, aquí van a ir sus puntos a mejorar")
+	  			fuertes.html(elements[i].fuertes)
+	  			mejorar.html(elements[i].mejorar)
+	  		}
+	  	}
+	  	for (var i = 0; i < elements.length; i = i + 1) {
+	  		if (elements[i].mouseOn()) {
+	  			textFont(myFont);
+				textSize(12);
+				textAlign(CENTER, CENTER);
+				fill(255, 230)
+				if (mouseX < width/2) {
+					if (mouseY < height/2) {
+						rectMode(CORNER);
+						rect(mouseX, mouseY, pop_w, pop_h)
+						fill(0);
+						text(elements[i].info, mouseX, mouseY, pop_w, pop_h);
+						rectMode(CORNER);
+					} else {
+						rectMode(CORNER);
+						rect(mouseX, mouseY, pop_w, -pop_h)
+						fill(0);
+						text(elements[i].info, mouseX, mouseY-pop_h, pop_w, pop_h);
+						rectMode(CORNER);
+					}
+				} else {
+					if (mouseY < height/2) {
+						rectMode(CORNER);
+						rect(mouseX-pop_w, mouseY, pop_w, pop_h)
+						fill(0);
+						text(elements[i].info, mouseX-pop_w, mouseY, pop_w, pop_h);
+						rectMode(CORNER);
+					} else {
+						rectMode(CORNER);
+						rect(mouseX-pop_w, mouseY, pop_w, -pop_h)
+						fill(0);
+						text(elements[i].info, mouseX-pop_w, mouseY-pop_h, pop_w, pop_h);
+						rectMode(CORNER);
+					}
+				}
+				
 	  		}
 	  	}
 	}
@@ -455,7 +495,7 @@ Home - {{ company.name }}
 	// --------------------------------------------------------
 	// Mekko element Object
 	// --------------------------------------------------------
-	function MekkoElement(x, y, w, h, label, img, col, alpha) {
+	function MekkoElement(x, y, w, h, label, img, col, alpha, info, fuertes, mejorar) {
 		this.offset = 0
 		this.x = x,
 		this.y = y,
@@ -463,6 +503,9 @@ Home - {{ company.name }}
 		this.height = h,
 		this.label = label.replace("Riesgo ", "");
 		this.alpha_col = alpha
+		this.info = info
+		this.fuertes = fuertes
+		this.mejorar = mejorar
 
 		if (col==0) {
 			this.color = color(255,0,0, this.alpha_col)
@@ -492,7 +535,6 @@ Home - {{ company.name }}
 				text(this.label, this.x + this.width/2, this.y + this.height/2);
 				
 			} else {
-				
 				noTint();
 				image(img, this.x + this.offset/2, this.y + this.offset/2, this.width - this.offset, this.height - this.offset);
 				// filter(GRAY);
@@ -555,7 +597,29 @@ Home - {{ company.name }}
 	}
 
 	function mousePressed() {
-		link('http://www.elpais.com')
+		var link1 = "{% url 'empresas:detail' pk=company.pk %}"
+		var link2 = "{% url 'empresas:recommendations' %}"
+		var link3 = "{% url 'empresas:recommendations_providers' %}"
+		var link4 = "{% url 'empresas:recommendations_financial_risk' %}"
+
+		function link(url, winName, options) {
+			winName && open(url, winName, options) || (location = url);
+		}
+
+		for (var i = 0; i < elements.length; i = i + 1) {
+			if (elements[i].mouseOn()) {
+				if (i==0 || i==1 || i==2) {
+					link(link1,'link', strWindowFeatures)
+				} else if (i==3 || i==4 || i==5 || i==6) {
+					link(link2,'link', strWindowFeatures)
+				} else if (i==7 || i==8 || i==9) {
+					link(link3,'link', strWindowFeatures)
+				} else {
+					link(link4,'link', strWindowFeatures)
+				}
+			}
+		}
+		
 	}
 	// Callback function for drawing the Mekko once the images are loaded
 	function drawMekko(data) {
@@ -594,7 +658,10 @@ Home - {{ company.name }}
 		  				data[i].data[j].name, 
 		  				img[(i*(data.length+1))+j],
 		  				i,
-		  				60
+		  				60,
+		  				data[i].data[j].info,
+		  				data[i].data[j].fuertes,
+		  				data[i].data[j].mejorar
 		  			)
 		  		);
 		  		y_index = y_index + Mekko_height*y_perc[i][j]/x_perc[i] //elements[elements.length-1].nextDown()
