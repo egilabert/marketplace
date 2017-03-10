@@ -184,15 +184,18 @@ def SummaryView(request):
 			return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
 		request.session['company'] = company
 
-	request.session['summary'] = True
-	request.session.modified = True
-
-	company_id = request.session.get('company')
-	company = Empresa.objects.filter(pk=company_id)
-	company = company.prefetch_related('estados_financieros','transfers')[0]
-	print(company)
-	print(company.estados_financieros.all())
-	return render(request, "empresas/summary.html", {'empresa': company, 'company': company})
+		request.session['summary'] = True
+		request.session.modified = True
+		company_id = request.session.get('company')
+		company = Empresa.objects.filter(pk=company_id)
+		company = company.prefetch_related('estados_financieros','transfers')[0]
+		return render(request, "empresas/summary.html", {'empresa': company, 'company': company})
+		
+	else:
+		company_id = request.session.get('company')
+		company = Empresa.objects.filter(pk=company_id)
+		company = company.prefetch_related('estados_financieros','transfers')[0]
+		return render(request, "empresas/summary.html", {'empresa': company, 'company': company})
 """-------------------------------------------------------"""
 """				EMPRESAS VIEWS 							  """
 """-------------------------------------------------------"""
@@ -445,6 +448,9 @@ def SearchView(request):
 	# company = Empresa.objects.filter(pk=1610).first()
 	# autofilter[company.name] = company.image
 	company = Empresa.objects.all()
+	comp = Empresa.objects.filter(pk=990).first()
+	comp.image = os.path.join(settings.STATIC_ROOT, 'images/TBR/Resized/231H_resized.jpg')
+
 	for c in company:
 		autofilter[c.name] = c.image
 
@@ -809,7 +815,7 @@ def FinancialRiskRecommendationsView(request):
 # @login_required
 def FAQView(request):
 	company_id = request.session.get('company')
-	company = Empresa.objects.filter(pk=company_id)
+	company = Empresa.objects.filter(pk=company_id)[0]
 	context = {
 		'company':company
 	}
