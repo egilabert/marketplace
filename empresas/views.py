@@ -37,7 +37,7 @@ def get_data_mekko(request, *args, **kwargs):
 		('data', [
 			dict([
 				('name','Riesgo Macro / Sectorial'),
-				('value',10),
+				('value',5),
 				('image', os.path.join(settings.STATIC_ROOT, 'images/Macroeconomico.jpg') ),
 				('info', 'Analizamos la evolución macroeconómica y de tu sector por ti. Te ayudamos a predecir posibles tendencias del mercado'),
 				('fuertes', 'Funcionalidad no disponible. Disculpa las molestias! Estamos trabajando para incluir este análisis y ofrecerte un mejor servicio'),
@@ -45,7 +45,7 @@ def get_data_mekko(request, *args, **kwargs):
 			,
 			dict([
 				('name','Riesgo Competencia'),
-				('value',50),
+				('value',15),
 				('image', os.path.join(settings.STATIC_ROOT, 'images/Competencia.jpg') ),
 				('info', 'Analizamos tu competencia por ti. Te ayudamos a visualizar las tendencias de tu competencia más directa'),
 				('fuertes', 'Tu empresa muestra mejores resultados y evolución que tu competencia'),
@@ -64,7 +64,7 @@ def get_data_mekko(request, *args, **kwargs):
 			('data', [
 			dict([
 				('name','Riesgo Demanda'),
-				('value',22),
+				('value',10),
 				('image', os.path.join(settings.STATIC_ROOT, 'images/demanda.jpg') ),
 				('info', 'Analizamos tus clientes por ti. Te ayudamos a predecir posibles desviaciones en la demanda'),
 				('fuertes', '<p>Tus clientes son parecidos en tamaño y resultados a los clientes de tu competencia</p><div class="divider></div><p>Tus clientes han crecido en el último año</p>'),
@@ -72,7 +72,7 @@ def get_data_mekko(request, *args, **kwargs):
 			,
 			dict([
 				('name','Riesgo Fidelidad'),
-				('value',66),
+				('value',20),
 				('image', os.path.join(settings.STATIC_ROOT, 'images/Fidelidad.jpg') ),
 				('info', 'Analizamos la fidelidad de tus clientes. Te ayudamos a medir el riesgo de fuga de clientes'),
 				('fuertes', '<p>Tus clientes te son fieles, con relaciones duraderas y elevado índice de penetración</p>'),
@@ -80,7 +80,7 @@ def get_data_mekko(request, *args, **kwargs):
 			,
 			dict([
 				('name','Riesgo Solvencia'),
-				('value',40),
+				('value',15),
 				('image', os.path.join(settings.STATIC_ROOT, 'images/incumplimiento.jpg') ),
 				('info', 'Analizamos la solvencia de tus clientes. Te ayudamos a medir el riesgo de impago de sus facturas'),
 				('fuertes', '<p>Tus clientes tienen una solvencia en línea con la de los clientes de la competencia</p>'),
@@ -88,7 +88,7 @@ def get_data_mekko(request, *args, **kwargs):
 			,
 			dict([
 				('name','Riesgo Concentración'),
-				('value',25),
+				('value',20),
 				('image', os.path.join(settings.STATIC_ROOT, 'images/concentration_clients.jpg') ),
 				('info', 'Analizamos los riesgos de concentración de tu empresa. Te ayudamos a medir las necesidades de diversificación de tu negocio'),
 				('fuertes', '<p>Buena diversificación en tus ventas con un gran número de clientes</p>'),
@@ -99,7 +99,7 @@ def get_data_mekko(request, *args, **kwargs):
 			('data', [
 			dict([
 				('name','Riesgo Oferta'),
-				('value',25),
+				('value',10),
 				('image', os.path.join(settings.STATIC_ROOT, 'images/oferta.jpg') ),
 				('info', 'Analizamos tus proveedores por ti. Te ayudamos a predecir posibles cambios de precios de tus proveedores'),
 				('fuertes', '<p>Tus proveedores son más fuertes y con mejores resultados que los proveedores de tu competencia</p>'),
@@ -107,7 +107,7 @@ def get_data_mekko(request, *args, **kwargs):
 			,
 			dict([
 				('name','Riesgo Solvencia'),
-				('value',51),
+				('value',10),
 				('image', os.path.join(settings.STATIC_ROOT, 'images/incumplimiento.jpg') ),
 				('info', 'Analizamos la solvencia de tus proveedores. Te ayudamos a medir el riesgo de incumplimiento de sus obligaciones'),
 				('fuertes', '<p>Tus proveedores tienen una solvencia en línea con la de los proveedores de la competencia</p><p>Tus proveedores tienen un riesgo de concentración en línea con los proveedores de tu competencia</p>'),
@@ -115,7 +115,7 @@ def get_data_mekko(request, *args, **kwargs):
 			,
 			dict([
 				('name','Riesgo Concentración'),
-				('value',51),
+				('value',10),
 				('image', os.path.join(settings.STATIC_ROOT, 'images/concentration_providers.jpg') ),
 				('info', 'Analizamos los riesgos de concentración de tu empresa. Te ayudamos a medir las oportunidades de diversificación de proveedores'),
 				('fuertes', '<p>Buena diversificación en tus compras con un gran número de proveedores</p>'),
@@ -126,7 +126,7 @@ def get_data_mekko(request, *args, **kwargs):
 			('data', [
 			dict([
 				('name','Riesgo Acceso a inversión'),
-				('value',25),
+				('value',5),
 				('image', os.path.join(settings.STATIC_ROOT, 'images/acceso inversion.jpg') ),
 				('info', 'Analizamos tu balance. Te ayudamos a entender como vemos tu solvencia para que puedas financiar tus inversiones'),
 				('fuertes', '<p>Dispones de una buena salud financiera</p><p>Ratios de endeudadmiento globales sensiblemente inferiores a los de tu competencia</p>'),
@@ -134,7 +134,7 @@ def get_data_mekko(request, *args, **kwargs):
 			,
 			dict([
 				('name','Riesgo Acceso a circulante'),
-				('value',51),
+				('value',10),
 				('image', os.path.join(settings.STATIC_ROOT, 'images/acceso circulante.jpg') ),
 				('info', 'Analizamos tu balance. Te ayudamos a entender como vemos tu solvencia para que puedas calibrar tu acceso a financiación del circulante en caso de imprevistos'),
 				('fuertes', '<p>Dispones de una buena salud financiera</p><p>Ratios de endeudadmiento a corto plazo sensiblemente inferiores a los de tu competencia</p>'),
@@ -142,7 +142,7 @@ def get_data_mekko(request, *args, **kwargs):
 			,
 			dict([
 				('name','Riesgo Optimización del working capital'),
-				('value',51),
+				('value',10),
 				('image', os.path.join(settings.STATIC_ROOT, 'images/working capital.jpg') ),
 				('info', 'Analizamos tus necesidades de working capital. Te ayudamos a optimizarlas y te ofrecemos soluciones de financiación'),
 				('fuertes', '<p>Fluctuaciones en necesidades de working capital en línea con las de tu competencia</p>'),
@@ -150,7 +150,7 @@ def get_data_mekko(request, *args, **kwargs):
 			,
 			dict([
 				('name','Riesgo Divisa'),
-				('value',51),
+				('value',5),
 				('image', os.path.join(settings.STATIC_ROOT, 'images/divisa.jpg') ),
 				('info', 'Analizamos tu exposición al mercado de divisas. Te ayudamos a medir y gestionar el riesgo asociado.'),
 				('fuertes', '<p>Tienes poca exposición al mercado de divisas</p>'),
@@ -158,7 +158,7 @@ def get_data_mekko(request, *args, **kwargs):
 			,
 			dict([
 				('name','Riesgo Tipo de interés'),
-				('value',51),
+				('value',5),
 				('image', os.path.join(settings.STATIC_ROOT, 'images/riesog tipo interes.jpg') ),
 				('info', 'Analizamos tu exposición al tipo de interés. Te ayudamos a medir y gestionar el riesgo asociado.'),
 				('fuertes', '<p>Tienes poca exposición a los tipos de interés</p>'),
@@ -440,9 +440,12 @@ def IntroView(request):
 	company = request.session['company']
 	try:
 		del request.session['journey']
+		del request.session['summary']
 	except:
 		pass
 	request.session['journey'] = True
+	request.session['summary'] = False
+
 	request.session.modified = True
 	return render(request, "empresas/empresas_home.html", {'company': Empresa.objects.all()[company-1], 'buttons': False})
 
@@ -508,9 +511,10 @@ def EmpresaDetailView(request, pk=None):
 
 	try:
 		referrer = request.META['HTTP_REFERER']
-		print(referrer)
-		if 'intro' in referrer:
+		if 'intro' in referrer or 'summary' in referrer:
 			request.session['journey'] = True
+			if 'summary' in referrer:
+				request.session['summary'] = True
 	except:
 		request.session['journey'] = False
 
@@ -710,7 +714,8 @@ def EmpresaDetailView(request, pk=None):
 		'balance_ebitda': json.dumps(ebitda_me, cls=DjangoJSONEncoder),
 		'balance_resultado_avg_sector': json.dumps(resultados_sector, cls=DjangoJSONEncoder),
 		'balance_resultado': json.dumps(resultados_me, cls=DjangoJSONEncoder),
-		'journey': request.session.get('journey')
+		'journey': request.session.get('journey'),
+		'summary': request.session.get('summary')
 		}
 
 	return render(request, 'empresas/empresa_detail.html', context)
@@ -1046,6 +1051,116 @@ def CommercialClientsRecommendationsView(request):
 		}
 
 	return render(request, 'empresas/comercial_recommendations_clients.html', context)
+
+# @login_required
+def CommercialClientsRecommendationsView2(request):
+
+	try:
+		referrer = request.META['HTTP_REFERER']
+		if 'intro' in referrer:
+			request.session['journey'] = False
+	except:
+		request.session['journey'] = False
+
+	company_id = request.session.get('company')
+	empresa = Empresa.objects.filter(pk=company_id)
+	empresa = empresa.prefetch_related(None)
+	empresa = empresa.prefetch_related('transfers', 'destination_reference', 'destination_reference__origin_reference')[0]
+
+	if int(company_id) == 990:
+		sells_sector = [{u'ejercicio': u'2011', 'c': 546283.4647849461}, {u'ejercicio': u'2012', 'c': 456645.75040462404}, {u'ejercicio': u'2013', 'c': 378471.62807453406}, {u'ejercicio': u'2014', 'c': 456921.41805970157}]
+		sells_me = [{u'ejercicio': u'2011', 'c': 592696.61117647061}, {u'ejercicio': u'2012', 'c': 534303.62062499998}, {u'ejercicio': u'2013', 'c': 399953.46552631578}, {u'ejercicio': u'2014', 'c': 491070.38647058822}]
+		ebitda_sector = [{u'ejercicio': u'2011', 'c': 49361.97748407643}, {u'ejercicio': u'2012', 'c': 47984.25817891373}, {u'ejercicio': u'2013', 'c': 46471.11822525595}, {u'ejercicio': u'2014', 'c': 54865.1086259542}]
+		ebitda_me = [{u'ejercicio': u'2011', 'c': 51794.07494505495}, {u'ejercicio': u'2012', 'c': 45185.49206521739}, {u'ejercicio': u'2013', 'c': 41847.803749999985}, {u'ejercicio': u'2014', 'c': 54199.451351351345}]
+		resultados_sector = [{u'ejercicio': u'2011', 'c': 66543.67525477704}, {u'ejercicio': u'2012', 'c': 53854.49316293933}, {u'ejercicio': u'2013', 'c': 16644.12122866895}, {u'ejercicio': u'2014', 'c': 76736.3875572519}]
+		resultados_me = [{u'ejercicio': u'2011', 'c': 63690.474505494498}, {u'ejercicio': u'2012', 'c': 42998.05847826087}, {u'ejercicio': u'2013', 'c': 10357.194875000005}, {u'ejercicio': u'2014', 'c': 82367.53648648648}]
+		penetration = 0.79
+		margen_comercial_sector_clientes = 0.17
+		average_transfer_from_client = empresa.average_transfer_from_client()
+		respuesta_clientes_ventas_interpretation = empresa.respuesta_clientes_ventas_interpretation()
+		respuesta_clientes_ventas_hint = empresa.respuesta_clientes_ventas_hint()
+		respuesta_clientes_ebitda_interpretation = empresa.respuesta_clientes_ebitda_interpretation()
+		respuesta_clientes_ebitda_hint = empresa.respuesta_clientes_ebitda_hint()
+		respuesta_clientes_resultado_interpretation = empresa.respuesta_clientes_resultado_interpretation()
+		respuesta_clientes_resultado_hint = empresa.respuesta_clientes_resultado_hint()
+	elif int(company_id)==1610:
+		average_transfer_from_client = empresa.average_transfer_from_client()
+		sells_sector = [{u'ejercicio': u'2011', 'c': 2180661.276511628}, {u'ejercicio': u'2012', 'c': 2062934.5268888888}, {u'ejercicio': u'2013', 'c': 2036585.5086363638}, {u'ejercicio': u'2014', 'c': 1840804.0434615384}]
+		sells_me = [{u'ejercicio': u'2011', 'c': 2072914.685151515}, {u'ejercicio': u'2012', 'c': 1997092.5245454542}, {u'ejercicio': u'2013', 'c': 1920736.3365625}, {u'ejercicio': u'2014', 'c': 1786596.690588235}]
+		ebitda_sector = [{u'ejercicio': u'2011', 'c': 122301.15116279075}, {u'ejercicio': u'2012', 'c': 144775.50600000002}, {u'ejercicio': u'2013', 'c': 102894.84340909087}, {u'ejercicio': u'2014', 'c': 103337.52038461539}]
+		ebitda_me = [{u'ejercicio': u'2011', 'c': 112907.07303030306}, {u'ejercicio': u'2012', 'c': 124063.1478787879}, {u'ejercicio': u'2013', 'c': 84667.197499999995}, {u'ejercicio': u'2014', 'c': 94119.011176470583}]
+		resultados_sector = [{u'ejercicio': u'2011', 'c': 83267.03534883722}, {u'ejercicio': u'2012', 'c': 88847.32644444442}, {u'ejercicio': u'2013', 'c': 48103.09454545455}, {u'ejercicio': u'2014', 'c': 37066.20846153845}]
+		resultados_me = [{u'ejercicio': u'2011', 'c': 73000.65969696968}, {u'ejercicio': u'2012', 'c': 75194.46393939393}, {u'ejercicio': u'2013', 'c': 46659.145}, {u'ejercicio': u'2014', 'c': 44551.467058823528}]
+		respuesta_clientes_ventas_interpretation = "En promedio, trabajas con clientes parecidos a los de tu competencia."
+		respuesta_clientes_ventas_hint = "Bien! Si te interesa, puedes encontrar clientes de mayor tamaño utilizando nuestro motor de recomendaciones."
+		respuesta_clientes_ebitda_interpretation = "En promedio, trabajas con clientes parecidos a los de tu competencia."
+		respuesta_clientes_ebitda_hint = "Bien! Si te interesa, puedes encontrar clientes más  fuertes utilizando nuestro motor de recomendaciones."
+		respuesta_clientes_resultado_interpretation = "En promedio, trabajas con clientes parecidos a los de tu competencia."
+		respuesta_clientes_resultado_hint = "Bien! Si te interesa, puedes encontrar mejores clientes utilizando nuestro motor de recomendaciones."
+		penetration = empresa.my_penetration_client()
+		margen_comercial_sector_clientes = empresa.margen_comercial_sector_clientes()
+	else:
+		sells_sector = list(empresa.balance_clients_sells_avg_sector())
+		sells_me = list(empresa.balance_clients_sells())
+		ebitda_sector = list(empresa.balance_clients_ebitda_avg_sector())
+		ebitda_me = list(empresa.balance_clients_ebitda())
+		resultados_sector = list(empresa.balance_clients_resultado_avg_sector())
+		resultados_me = list(empresa.balance_clients_resultado())
+		penetration = empresa.my_penetration_client()
+		margen_comercial_sector_clientes = empresa.margen_comercial_sector_clientes()
+		average_transfer_from_client = empresa.average_transfer_from_client()
+		respuesta_clientes_ventas_interpretation = empresa.respuesta_clientes_ventas_interpretation()
+		respuesta_clientes_ventas_hint = empresa.respuesta_clientes_ventas_hint()
+		respuesta_clientes_ebitda_interpretation = empresa.respuesta_clientes_ebitda_interpretation()
+		respuesta_clientes_ebitda_hint = empresa.respuesta_clientes_ebitda_hint()
+		respuesta_clientes_resultado_interpretation = empresa.respuesta_clientes_resultado_interpretation()
+		respuesta_clientes_resultado_hint = empresa.respuesta_clientes_resultado_hint()
+
+	diff_sells = (sells_me[len(sells_me)-1]['c'] - sells_sector[len(sells_sector)-1]['c'])/sells_sector[len(sells_sector)-1]['c']
+	diff_ebitda = (ebitda_me[len(ebitda_me)-1]['c'] - ebitda_sector[len(ebitda_sector)-1]['c'])/ebitda_sector[len(ebitda_sector)-1]['c']
+	diff_resultados = (resultados_me[len(resultados_me)-1]['c'] - resultados_sector[len(resultados_sector)-1]['c'])/resultados_sector[len(resultados_sector)-1]['c']
+	ratio = 1-margen_comercial_sector_clientes
+
+	if len(sells_me)>1:
+		delta_ventas = (sells_me[len(sells_me)-1]['c'] - sells_me[len(sells_me)-2]['c'])/sells_me[len(sells_me)-2]['c']
+	if len(ebitda_me)>1:
+		delta_ebitda = (ebitda_me[len(ebitda_me)-1]['c'] - ebitda_me[len(ebitda_me)-2]['c'])/ebitda_me[len(ebitda_me)-2]['c']
+	if len(resultados_me)>1:
+		delta_resultados_explotacion = (resultados_me[len(resultados_me)-1]['c'] - resultados_me[len(resultados_me)-2]['c'])/resultados_me[len(resultados_me)-2]['c']
+
+	hhi_clients_clients = empresa.hhi_clients_clients()
+	context = {
+		'company':empresa,
+		'margen_comercial_sector_clientes': margen_comercial_sector_clientes,
+		'ratio_comercial_sector_clientes': ratio,
+		'respuesta_clientes_ventas_interpretation': respuesta_clientes_ventas_interpretation,
+		'respuesta_clientes_ebitda_hint': respuesta_clientes_ebitda_hint,
+		'respuesta_clientes_ventas_hint': respuesta_clientes_ventas_hint,
+		'respuesta_clientes_ebitda_interpretation': respuesta_clientes_ebitda_interpretation,
+		'respuesta_clientes_resultado_interpretation': respuesta_clientes_resultado_interpretation,
+		'respuesta_clientes_resultado_hint': respuesta_clientes_resultado_hint,
+		'average_transfer_from_client': average_transfer_from_client,
+		'delta_ventas': delta_ventas,
+		'delta_ebitda': delta_ebitda,
+		'diff_sells': diff_sells,
+		'diff_ebitda': diff_ebitda,
+		'diff_resultados': diff_resultados,
+		'delta_resultados_explotacion': delta_resultados_explotacion,
+		'get_monthly_sells_amount': json.dumps(list(empresa.get_monthly_sells_amount()), cls=DjangoJSONEncoder),
+		'get_sector_total_monthly_sells_amount': json.dumps(list(empresa.get_sector_total_monthly_sells_amount()), cls=DjangoJSONEncoder),
+		'balance_sells_avg_sector': json.dumps(sells_sector, cls=DjangoJSONEncoder), #json.dumps(list(empresa.balance_clients_sells_avg_sector()), cls=DjangoJSONEncoder),
+		'balance_sells': json.dumps(sells_me, cls=DjangoJSONEncoder), #json.dumps(list(empresa.balance_clients_sells()), cls=DjangoJSONEncoder),
+		'balance_ebitda_avg_sector': json.dumps(ebitda_sector, cls=DjangoJSONEncoder), #json.dumps(list(empresa.balance_clients_ebitda_avg_sector()), cls=DjangoJSONEncoder),
+		'balance_ebitda': json.dumps(ebitda_me, cls=DjangoJSONEncoder), #json.dumps(list(empresa.balance_clients_ebitda()), cls=DjangoJSONEncoder),
+		'balance_resultado_avg_sector': json.dumps(resultados_sector, cls=DjangoJSONEncoder), #json.dumps(list(empresa.balance_clients_resultado_avg_sector()), cls=DjangoJSONEncoder),
+		'balance_resultado': json.dumps(resultados_me, cls=DjangoJSONEncoder), #json.dumps(list(empresa.balance_clients_resultado()), cls=DjangoJSONEncoder),
+		'penetration': penetration,
+		'journey': request.session.get('journey'),
+		'riesgo_impago_clientes': json.dumps(list(empresa.riesgo_impago_clientes()), cls=DjangoJSONEncoder),
+		'riesgo_impago_clientes_sector': json.dumps(list(empresa.riesgo_impago_clientes_sector()), cls=DjangoJSONEncoder),
+		}
+
+	return render(request, 'empresas/comercial_recommendations_clients2.html', context)
 
 """-------------------------------------------------------"""
 """				TRANFERS VIEWS 							  """

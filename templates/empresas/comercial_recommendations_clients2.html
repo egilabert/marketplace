@@ -1,0 +1,1098 @@
+{% extends "app_base.html" %}
+{% load static %}
+{% load humanize %}
+{% load mathfilters %}
+{% block page_title %}
+{{ company.name }}
+{% endblock %}
+
+{% block body_class %}background_grey{% endblock %}
+
+{% block side-nav %}{% include "side-nav.html" %}{% endblock %}
+
+{% block content %}
+
+
+	<div class="parallax-container">
+		<h3 class="center-align white-text text-darken-3 light">¿Cómo son tus clientes?</h3>
+		<div class="row center">{{company.name}}</div>
+		{% if journey %}
+		<div class="row center">
+			<!-- <div class="col m4 s1"></div>
+			<div class="col m2 s4">
+				<a href="{% url 'empresas:recommendations' %}" id="download-button" class="btn-large waves-effect waves-light alpha_back pad_top orange-text text-darken-4 border-grey">Clientes  </a>
+			</div>
+			<div class="col m2 s4">
+				<a href="{% url 'empresas:recommendations_providers' %}" id="download-button" class="btn-large waves-effect waves-light transparent pad_top border-white">Proveedores  </a>
+			</div> -->
+        </div>
+        {% else %}
+        <div class="row center">
+
+			<!-- <div class="col m4 s3">
+				<a href="{% url 'empresas:detail' pk=company.pk %}" id="download-button" class="btn-large waves-effect waves-light transparent pad_top border-white">Mi empresa  </a>
+			</div>
+			<div class="col m4 s3">
+				<a href="{% url 'empresas:recommendations' %}" id="download-button" class="btn-large waves-effect waves-light alpha_back pad_top orange-text text-darken-4 border-grey">Clientes  </a>
+			</div>
+			<div class="col m4 s3">
+				<a href="{% url 'empresas:recommendations_providers' %}" id="download-button" class="btn-large waves-effect waves-light transparent pad_top border-white">Proveedores  </a>
+			</div> -->
+			
+        </div>
+        {% endif %}
+	    <div class="parallax"><img src="{% static 'images/testimonial-bg.jpg' %}"></div>
+	</div>
+
+{% if company.id == 990 %}
+<div class="row">
+  <div class="col s12 m1"></div>
+  <div class="col s12 m5">
+    <p class="flow-text center-align">Puntos fuertes</p>
+    <div class="card horizontal green lighten-2 black-text">
+      <div class="card-stacked">
+        <!-- <div class="card-content">
+          <p><strong>No</strong> se observan <strong>diferencias significativas</strong> de tamaño en los clientes de la empresa <strong>respecto a los de su competencia</strong></p>
+          <ul type="square">
+          	<li>	- <strong>Facturación parecida a la de los clientes de la competencia</strong> (desviación inferior al 10% respecto la competencia)</li>
+          	<li>	- <strong>EBITDA parecido</strong> al de los clientes de la competencia (desviación inferior al 10% respecto la competencia)</li>
+          	<li>	- <strong>Resultados de explotación parecidos</strong> a los de los clientes de la competencia (desviación inferior al 10% respecto la competencia)</li>
+          </ul>
+        </div>
+        <div class="divider"></div> -->
+          <div class="card-content black-text">
+            <p>Buena <strong>diversificación de sus ventas</strong> en un gran número de clientes</p>
+          </div>
+      </div>
+    </div>
+  </div>
+  
+  <div class="col s12 m5">
+  <p class="flow-text center-align">Puntos a mejorar</p>
+    <div class="card horizontal grey lighten-3 black-text">
+      <div class="card-stacked">
+        <div class="card-content">
+          <p><strong>Sus clientes le tienen como proveedor principal</strong>, por lo que existe poco margen de crecimiento con ellos</p>
+        </div>
+        <div class="divider"></div>
+        <div class="card-content black-text">
+            <p>Baja <strong>diversificación de sus ventas</strong>, efectuadas en muy pocas provincias</p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="col s12 m1"></div>
+</div>
+{% elif company.id == 1610 %}
+<div class="row">
+  <div class="col s12 m1"></div>
+  <div class="col s12 m5">
+    <p class="flow-text center-align">Puntos fuertes</p>
+    <div class="card horizontal green lighten-2 black-text">
+      <div class="card-stacked">
+      	<!-- <div class="card-content">
+      		<p><strong>No</strong> se observan <strong>diferencias significativas</strong> de tamaño en los clientes de la empresa <strong>respecto a los de su competencia</strong></p>
+	          <ul type="square">
+	          	<li>	- <strong>Facturación parecida a la de los clientes de la competencia</strong> (desviación inferior al 10% respecto la competencia)</li>
+	          	<li>	- <strong>EBITDA parecido</strong> al de los clientes de la competencia (desviación inferior al 10% respecto la competencia)</li>
+	          	<li>	- <strong>Resultados de explotación parecidos</strong> a los de los clientes de la competencia (desviación ligeramente superior >10% respecto la competencia)</li>
+	          </ul>
+        </div>
+        <div class="divider"></div> -->
+        <div class="card-content black-text">
+            <p>Se observa un <strong>crecimiento del EBITDA medio</strong> de los clientes del {{delta_ebitda|mul:100|floatformat:0}}% en el último año.</p>
+          </div>
+        <div class="divider"></div>
+          <div class="card-content black-text">
+            <p>Buena <strong>diversificación de sus ventas</strong> en un gran número de clientes</p>
+          </div>
+        <div class="divider"></div>
+          <div class="card-content black-text">
+            <p>Buena <strong>diversificación de sus ventas</strong> en un gran número de sectores de actividad (CNAEs)</p>
+          </div>
+      </div>
+    </div>
+  </div>
+  
+  <div class="col s12 m5">
+  <p class="flow-text center-align">Puntos a mejorar</p>
+    <div class="card horizontal grey lighten-3 black-text">
+      <div class="card-stacked">
+        <div class="divider"></div>
+        <div class="card-content black-text">
+            <p>Baja <strong>diversificación de sus ventas</strong>, efectuadas en muy pocas provincias</p>
+        </div>
+        <!-- <div class="divider"></div>
+        <div class="card-content black-text">
+            <p>Se observa una <strong>reducción de la facturación media</strong> de los clientes situada en un {{delta_ventas|mul:100|floatformat:1}}% el último año.</p>
+          </div>
+        <div class="divider"></div>
+        <div class="card-content black-text">
+            <p>Se observa una <strong>reducción del resultado de explotación medio</strong> de los clientes situada en un {{delta_resultados_explotacion|mul:100|floatformat:1}}% el último año.</p>
+          </div> -->
+      </div>
+    </div>
+  </div>
+  <div class="col s12 m1"></div>
+</div>
+{% endif %}
+
+	<div class="row">
+				<!-- {{company.ebitda_avg_sector}} -->
+			    <div class="grey-bckg">
+			    	<div class="row grey-bckg padding_title">
+		      	  		<div class="col s12 m2 line">
+		      	  			<div class="center-align">
+				            <i class="fa fa-user-o" aria-hidden="true"></i><span class="card-title"> Tus clientes</span>
+				            <h4 class="align-right orange-text darken-1">{{company.get_clients.count}}</h4>
+				            <span class="green-text text-darken-1"><i class="fa fa-sort-up" aria-hidden="true"></i><span class="card-title">34%</span></span> <span class="light">Desde el mes pasado</span>
+				            </div>
+				        </div>
+
+				        <div class="col s12 m2 line">
+		      	  			<div class="center-align ">
+				            <i class="fa fa-cubes" aria-hidden="true"></i><span class="card-title"> Competencia</span>
+				            <h4 class="align-right orange-text darken-1">{{company.get_sector_companies.count}}</h4>
+				            <span class="red-text text-darken-1"><i class="fa fa-sort-down" aria-hidden="true"></i><span class="card-title">7%</span></span> <span class="light">Desde el mes pasado</span>
+				            </div>
+				        </div>
+				        
+				        <div class="col s12 m2 line">
+		      	  			<div class="center-align ">
+				            <i class="fa fa-users" aria-hidden="true"></i><span class="card-title"> Sus Clientes</span>
+				            <h4 class="align-right orange-text darken-1">{{company.get_sector_clients|floatformat:0|intcomma}}</h4>
+				            <span class="green-text text-darken-1"><i class="fa fa-sort-up" aria-hidden="true"></i><span class="card-title">10%</span></span> <span class="light">Desde el mes pasado</span>
+				            </div>
+				        </div>
+
+				        <div class="col s12 m2 line">
+		      	  			<div class="center-align ">
+				            <i class="fa fa-rocket" aria-hidden="true"></i><span class="card-title"> Tu penetración</span>
+				            <h4 class="align-right orange-text darken-1">{{penetration|mul:100|floatformat:0}}%</h4>
+				            <span class="green-text text-darken-1"><i class="fa fa-sort-up" aria-hidden="true"></i><span class="card-title">34%</span></span> <span class="light">Desde el mes pasado</span>
+				            </div>
+				        </div>
+
+				        <div class="col s12 m2 line">
+		      	  			<div class="center-align ">
+				            <i class="fa fa-eur" aria-hidden="true"></i><span class="card-title"> Cobros acumulados</span>
+				            <h4 class="align-right orange-text darken-1">{{company.get_total_sells|floatformat:0|intcomma}}€</h4>
+				            <span class="red-text text-darken-1"><i class="fa fa-sort-down" aria-hidden="true"></i><span class="card-title">4%</span></span> <span class="light">Desde el mes pasado</span>
+				            </div>
+				        </div>
+
+				        <div class="col s12 m2">
+		      	  			<div class="center-align ">
+				            <i class="fa fa-money" aria-hidden="true"></i><span class="card-title"> Cobro promedio</span>
+				            <h4 class="align-right orange-text darken-1">{{company.average_transfer_from_client|floatformat:0|intcomma}}€</h4>
+				            <span class="green-text text-darken-1"><i class="fa fa-sort-up" aria-hidden="true"></i><span class="card-title">1%</span></span> <span class="light">Desde el mes pasado</span>
+				            </div>
+				        </div>
+				    
+				    </div>
+				 </div>
+
+				 <!-- <div class="row">
+				 	<div class="col m6 s12">
+				 		<div class="list_top">
+						  <ol>
+						    <li><span class="span_list">1.</span><p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent euismod ultrices ante, ac laoreet nulla vestibulum adipiscing. Nam quis justo in augue auctor imperdiet. Curabitur aliquet orci sit amet est posuere consectetur. Fusce nec leo ut massa viverra venenatis. Nam accumsan libero a elit aliquet quis ullamcorper arcu tincidunt. Praesent purus turpis, consectetur quis congue vel, pulvinar at lorem. Vivamus varius condimentum dolor, quis ultricies ipsum porta quis. </p></li>
+						    
+						    <li><span class="span_list">2.</span><p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent euismod ultrices ante, ac laoreet nulla vestibulum adipiscing. Nam quis justo in augue auctor imperdiet. Curabitur aliquet orci sit amet est posuere consectetur.  </p></li>
+						    
+						    <li><span class="span_list">3.</span><p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent euismod ultrices ante, ac laoreet nulla vestibulum adipiscing. Nam quis justo in augue auctor imperdiet. Curabitur aliquet orci sit amet est posuere consectetur.  </p></li>
+						  </ol> 
+						</div>
+				 	</div>
+				 	<div class="col m6 s12">
+				 		<div>
+						  <ol>
+						    <li><span class="span_list">1.</span><p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent euismod ultrices ante, ac laoreet nulla vestibulum adipiscing. Nam quis justo in augue auctor imperdiet. Curabitur aliquet orci sit amet est posuere consectetur. Fusce nec leo ut massa viverra venenatis. Nam accumsan libero a elit aliquet quis ullamcorper arcu tincidunt. Praesent purus turpis, consectetur quis congue vel, pulvinar at lorem. Vivamus varius condimentum dolor, quis ultricies ipsum porta quis. </p></li>
+						    
+						    <li><span class="span_list">2.</span><p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent euismod ultrices ante, ac laoreet nulla vestibulum adipiscing. Nam quis justo in augue auctor imperdiet. Curabitur aliquet orci sit amet est posuere consectetur.  </p></li>
+						    
+						    <li><span class="span_list">3.</span><p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent euismod ultrices ante, ac laoreet nulla vestibulum adipiscing. Nam quis justo in augue auctor imperdiet. Curabitur aliquet orci sit amet est posuere consectetur.  </p></li>
+						  </ol> 
+						</div>
+				 	</div>
+				 </div>	
+ -->
+				 <!-- /////////////////////////////////////////////////////////////
+				 ////// ¿Como son mis clientes?
+				 ///////////////////////////////////////////////////////////// -->
+
+				
+				
+				
+					<div class="white_back title_conf">
+				    	<h3 class="flow-text">¿Cómo son mis clientes?  <i class="fa fa-caret-right" aria-hidden="true"></i>  Mejora la calidad de tus clientes</h3>
+				    </div>
+			    	<div class="row title_conf">
+			    	<!-- Facturación -->
+			    		<div class="row">
+			    		<div class="col m6 s12">
+			    			<div class="card grey lighten-4">
+					            <div class="card-content grey-text darken-4">
+					            	<span class="card-title">Ventas</span>
+					              <canvas id="facturacion_graph" width="300" height="150"></canvas>
+					            </div>
+					        </div>
+			    		</div>
+			    		<div class="col m6 s12">
+			    			<div class="card grey lighten-4">
+					            <div class="card-content grey-text darken-4">
+					              <blockquote>
+					    				<p class="light"><i class="tiny material-icons indigo-text darken-4">live_help</i> {{company.respuesta_clientes_ventas_info}}</p>
+					    				<p class="light"><i class="tiny material-icons indigo-text darken-4">info</i> {{respuesta_clientes_ventas_interpretation}}</p>
+					    				<!-- <p class="light">{{company.respuesta_clientes_ventas_interpretation_delta}}</p> -->
+					    				<p class="light"><i class="tiny material-icons indigo-text darken-4">new_releases</i> {{respuesta_clientes_ventas_hint}} </p>
+					    				<!-- <p class="light">{{company.respuesta_clientes_ventas_hint_delta}}</p> -->
+					    				<div class="row">
+					    					<div class="col m4 s6"></div>
+					    					<div class="col m12 s12 center-align">
+					    						<span class="right-align"><a href="{% url 'empresas:clients' %}" class="btn waves-effect waves-light transparent grey-text text-darken-4 border-grey"> Busca nuevos clientes </a> </span>
+					    					</div>
+					    				</div>
+					    			</blockquote>
+					            </div>
+					        </div>
+			    		</div>
+			    		</div>
+			    	<!-- EBITDA -->
+			    		<div class="row">
+			    		<div class="col m6 s12">
+			    			<div class="card grey lighten-4">
+					            <div class="card-content grey-text darken-4">
+					            	<span class="card-title">EBITDA</span>
+					              <canvas id="ebitda_graph" width="300" height="150"></canvas>
+					            </div>
+					        </div>
+			    		</div>
+			    		<div class="col m6 s12">
+			    			<div class="card grey lighten-4">
+					            <div class="card-content grey-text darken-4">
+					              <blockquote>
+					    				<p class="light"><i class="tiny material-icons indigo-text darken-4">live_help</i> {{company.respuesta_clientes_ebitda_info}}</p>
+					    				<p class="light"><i class="tiny material-icons indigo-text darken-4">info</i> {{respuesta_clientes_ebitda_interpretation}}</p>
+					    				<!-- <p class="light">{{company.respuesta_clientes_ebitda_interpretation_delta}}</p> -->
+					    				<p class="light"><i class="tiny material-icons indigo-text darken-4">new_releases</i> {{respuesta_clientes_ebitda_hint}}</p>
+					    				<!-- <p class="light">{{company.respuesta_clientes_ebitda_hint_delta}} </p> -->
+					    				<div class="row">
+					    					<div class="col m4 s6"></div>
+					    					<div class="col m12 s12 center-align">
+					    						<span class="right-align"><a href="{% url 'empresas:clients' %}" class="btn waves-effect waves-light transparent grey-text text-darken-4 border-grey"> Busca nuevos clientes </a> </span>
+					    					</div>
+					    				</div>
+					    			</blockquote>
+					            </div>
+					        </div>
+			    		</div>
+			    		</div>
+			    	<!-- Resultado explotaciones -->
+			    		<div class="row">
+			    		<div class="col m6 s12">
+			    			<div class="card grey lighten-4">
+					            <div class="card-content grey-text darken-4">
+					            	<span class="card-title">Resultado explotación</span>
+					              <canvas id="resultado_graph" width="300" height="150"></canvas>
+					            </div>
+					        </div>
+			    		</div>
+			    		<div class="col m6 s12">
+			    			<div class="card grey lighten-4">
+					            <div class="card-content grey-text darken-4">
+					              <blockquote>
+					    				<p class="light"><i class="tiny material-icons indigo-text darken-4">live_help</i> {{company.respuesta_clientes_resultado_info}}</p>
+					    				<p class="light"><i class="tiny material-icons indigo-text darken-4">info</i> {{respuesta_clientes_resultado_interpretation}}</p>
+					    				<!-- <p class="light">{{company.respuesta_clientes_resultado_interpretation_delta}}</p> -->
+					    				<p class="light"><i class="tiny material-icons indigo-text darken-4">new_releases</i> {{respuesta_clientes_resultado_hint}} </p>
+					    				<!-- <p class="light">{{company.respuesta_clientes_resultado_hint_delta}} </p> -->
+					    				<div class="row">
+					    					<div class="col m4 s6"></div>
+					    					<div class="col m12 s12 center-align">
+					    						<span class="right-align"><a href="{% url 'empresas:clients' %}" class="btn waves-effect waves-light transparent grey-text text-darken-4 border-grey"> Busca nuevos clientes </a> </span>
+					    					</div>
+					    				</div>
+					    			</blockquote>
+					            </div>
+					        </div>
+			    		</div>
+			    		</div>
+			    	</div>
+
+			    <!-- /////////////////////////////////////////////////////////////
+				 ////// ¿Cómo me relaciono con ellos?
+				 ///////////////////////////////////////////////////////////// -->
+
+			    <div class="white_back title_conf">
+			    	<h3 class="flow-text">¿Cómo me relaciono con ellos?  <i class="fa fa-caret-right" aria-hidden="true"></i>  Amplia y mejora la relación con tus clientes</h3>
+			    </div>
+			    	<div class="row title_conf">
+			    	<!-- Facturación -->
+			    	<div class="row">
+			    		<div class="col m6 s12">
+			    			<div class="card grey lighten-4">
+					            <div class="card-content grey-text darken-4">
+					            	<span class="card-title">Fidelización</span>
+					              	<div class="row">
+					              		<div class="col m6 s12 line center-align">
+					              			Iteracción media
+					              			<div class="row">
+						              			<div class="col m12 s12">
+						              				<i class="fa fa-user" aria-hidden="true"></i>
+						              				Tú
+						              			</div>
+						              			<div class="col m6 m6">
+						              				<span class="card-title">44 <small>días</small></span>
+						              			</div>
+						              			<div class="col m6 m6">
+						              				<span class="card-title"><span class="green-text text-darken-1"><i class="fa fa-sort-up" aria-hidden="true"></i> 34%</span></span> 
+						              			</div>
+					              			</div>
+					              			<div class="row">
+						              			<div class="col m12 s12">
+						              				<i class="fa fa-users" aria-hidden="true"></i>
+						              				Tus comparables
+						              			</div>
+						              			<div class="col m6 s6">
+						              				<span class="card-title">33 <small>días</small></span>
+						              			</div>
+						              			<div class="col m6 s6">
+						              				<span class="card-title"> <span class="green-text text-darken-1"><i class="fa fa-sort-up" aria-hidden="true"></i>10%</span></span> 
+						              			</div>
+					              			</div>
+					              		</div>
+
+					              		<div class="col m6 s12 center-align">
+					              			Trabajo con ellos desde
+					              			<div class="row">
+						              			<div class="col m12 s12">
+						              				<i class="fa fa-user" aria-hidden="true"></i>
+						              				Tú
+						              			</div>
+						              			<div class="col m6 s6">
+						              				<span class="card-title">4 <small>años</small></span>
+						              			</div>
+						              			<div class="col m6 s6">
+						              				<span class="card-title"><span class="red-text text-darken-1"><i class="fa fa-sort-down" aria-hidden="true"></i> 2%</span></span> 
+						              			</div>
+					              			</div>
+					              			<div class="row">
+						              			<div class="col m12 s12">
+						              				<i class="fa fa-users" aria-hidden="true"></i>
+						              				Tus comparables
+						              			</div>
+						              			<div class="col m6 s6">
+						              				<span class="card-title">8 <small>años</small></span>
+						              			</div>
+						              			<div class="col m6 s6">
+						              				<span class="card-title"><span class="green-text text-darken-1"><i class="fa fa-sort-up" aria-hidden="true"></i> 1%</span></span> 
+						              			</div>
+					              			</div>
+					              		</div>
+					              	</div>
+					            </div>
+					        </div>
+			    		</div>
+			    		<div class="col m6 s12">
+			    			<div class="card grey lighten-4">
+					            <div class="card-content grey-text darken-4">
+					              <blockquote>
+					    				<p class="light"><i class="tiny material-icons indigo-text darken-4">live_help</i> {{company.respuesta_clientes_fidelizacion_info}}</p>
+					    				<p class="light"><i class="tiny material-icons indigo-text darken-4">info</i> {{company.respuesta_clientes_fidelizacion_interacciones_interpretation}}</p>
+					    				
+					    				<p class="light"><i class="tiny material-icons indigo-text darken-4">new_releases</i> {{company.respuesta_clientes_fidelizacion_interacciones_hint}} </p>
+					    				<div class="row">
+					    					<div class="col m4 s6"></div>
+					    					<div class="col m12 s12 center-align">
+					    						<span class="right-align"><a href="{% url 'empresas:clients' %}" class="btn waves-effect waves-light transparent grey-text text-darken-4 border-grey"> Busca nuevos clientes </a> </span>
+					    					</div>
+					    				</div>
+					    			
+					    			</blockquote>
+					            </div>
+					        </div>
+			    		</div>
+			    		</div>
+			    	<!-- EBITDA -->
+			    	<div class="row">
+			    		<div class="col m6 s12">
+			    			<div class="card grey lighten-4">
+					            <div class="card-content grey-text darken-4">
+					            	<span class="card-title">Frecuencia</span>
+					              	<canvas id="frecuencia_graph" width="300" height="150"></canvas>
+					            </div>
+					        </div>
+			    		</div>
+			    		<div class="col m6 s12">
+			    			<div class="card grey lighten-4">
+					            <div class="card-content grey-text darken-4">
+					              <blockquote>
+					    				<p class="light"><i class="tiny material-icons indigo-text darken-4">live_help</i> {{company.respuesta_clientes_frecuenca_info}}</p>
+					    				<!-- <p class="light"><i class="tiny material-icons indigo-text darken-4">info</i> {{company.respuesta_clientes_frecuenca_interpretation}}</p>
+					    				
+					    				<p class="light"><i class="tiny material-icons indigo-text darken-4">new_releases</i> {{company.respuesta_clientes_frecuenca_hint}}</p> -->
+					    				<div class="row">
+					    					<div class="col m4 s6"></div>
+					    					<div class="col m12 s12 center-align">
+					    						<span class="right-align"><a href="{% url 'empresas:clients' %}" class="btn waves-effect waves-light transparent grey-text text-darken-4 border-grey"> Busca nuevos clientes </a> </span>
+					    					</div>
+					    				</div>
+					    			
+					    			</blockquote>
+					            </div>
+					        </div>
+			    		</div>
+			    	</div>
+			    	<!-- Resultado explotaciones -->
+			    	<div class="row">
+			    		<div class="col m6 s12">
+			    			<div class="col m12 s12">
+				    			<div class="card grey lighten-4">
+						            <div class="card-content grey-text darken-4">
+						            	<span class="card-title">Penetración</span>
+						            	<canvas id="penetration_graph" width="300" height="100"></canvas>
+						            </div>
+						        </div>
+						    </div>
+						    <div class="col m12 s12">
+						    	<div class="card grey lighten-4">
+						    	<div class="card-content grey-text darken-4">
+							    		<span class="card-title">Evolución</span>
+				              			<div class="row center-align">
+				              				<div class="col m6 s6">
+						              			<div class="col s12">
+						              				<i class="fa fa-user" aria-hidden="true"></i>
+						              				Tú
+						              			</div>
+						              			<div class="col m6 s6">
+						              				<span class="card-title">{{penetration|mul:100|floatformat:0}}<small>%</small></span>
+						              			</div>
+						              			<div class="col m6 s6">
+						              				<small><span class="card-title"><span class="green-text text-darken-1"><i class="fa fa-sort-up" aria-hidden="true"></i> 34%</span></small>
+						              			</div>
+						              		</div>
+						              		<div class="col m6 s6">
+						              			<div class="col s12">
+						              				<i class="fa fa-user" aria-hidden="true"></i>
+						              				Tus comparables
+						              			</div>
+						              			<div class="col m6 s6">
+						              				<span class="card-title">35<small>%</small></span>
+						              			</div>
+						              			<div class="col m6 s6">
+						              				<span class="card-title"><span class="green-text text-darken-1"><i class="fa fa-sort-up" aria-hidden="true"></i> 10%</span></span> 
+						              			</div>
+						              		</div>
+				              			</div>
+				              	</div>
+				              	</div>
+						    </div>
+			    		</div>
+			    		<div class="col m6 s12">
+			    			<div class="card grey lighten-4">
+					            <div class="card-content grey-text darken-4">
+					              <blockquote>
+					    				<p class="light"><i class="tiny material-icons indigo-text darken-4">live_help</i> {{company.respuesta_clientes_penetracion_info}}</p>
+					    				<p class="light"><i class="tiny material-icons indigo-text darken-4">info</i> {{company.respuesta_clientes_penetracion_interpretation}}</p>
+					    				
+					    				<p class="light"><i class="tiny material-icons indigo-text darken-4">new_releases</i> {{company.respuesta_clientes_penetracion_hint}} </p>
+					    				<div class="row">
+					    					<div class="col m4 s6"></div>
+					    					<div class="col m12 s12 center-align">
+					    						<span class="right-align"><a href="{% url 'empresas:clients' %}" class="btn waves-effect waves-light transparent grey-text text-darken-4 border-grey"> Busca nuevos clientes </a> </span>
+					    					</div>
+					    				</div>
+					    			
+					    			</blockquote>
+					            </div>
+					        </div>
+			    		</div>
+			    	</div>
+			    </div>
+
+			    <!-- /////////////////////////////////////////////////////////////
+				 ////// ¿Debería buscar nuevas oportunidades?
+				 ///////////////////////////////////////////////////////////// -->
+
+			    <div class="white_back title_conf">
+			    	<h3 class="flow-text">¿Debería buscar nuevas oportunidades?  <i class="fa fa-caret-right" aria-hidden="true"></i>  Amplia y mejora la calidad de tu cartera de clientes</h3>
+			    </div>
+			    	<div class="row title_conf">
+			    	<!-- Facturación -->
+			    	<div class="row">
+			    		<div class="col m7 s12">
+			    			<div class="card grey lighten-4">
+					            <div class="card-content grey-text darken-4">
+					            	<span class="card-title">Concentración de mi empresa</span>
+					            	<div class="row center-align">
+					            		<div class="col m3 s12 line">
+					            			<p>Clientes</p>
+					            			<h5><small><i class="fa fa-user" aria-hidden="true"></i></small> {{company.hhi_clients_clients|floatformat:2}}</h5>
+					            			<h5><small><i class="fa fa-users" aria-hidden="true"></i></small> {{company.hhi_clients_sector_clients|floatformat:2}}</h5>
+					            		</div>
+					            		<div class="col m3 s12 line">
+					            			<p>Geográfica</p>
+					            			<h5><small><i class="fa fa-user" aria-hidden="true"></i></small> {{company.hhi_geografical_clients|floatformat:2}}</h5>
+					            			<h5><small><i class="fa fa-users" aria-hidden="true"></i></small> {{company.hhi_geografical_sector_clients|floatformat:2}}</h5>
+					            		</div>
+					            		<div class="col m3 s12 line">
+					            			<p>Sectorial</p>
+					            			<h5><small><i class="fa fa-user" aria-hidden="true"></i></small> {{company.hhi_cnae_clients|floatformat:2}}</h5>
+					            			<h5><small><i class="fa fa-users" aria-hidden="true"></i></small> {{company.hhi_cnae_sector_clients|floatformat:2}}</h5>
+					            		</div>
+					            		<div class="col m3 s12">
+					            			<p>Temporal</p>
+					            			<h5><small><i class="fa fa-user" aria-hidden="true"></i></small> {{company.hhi_temporal_clients|floatformat:2}}</h5>
+					            			<h5><small><i class="fa fa-users" aria-hidden="true"></i></small> {{company.hhi_temporal_sector_clients|floatformat:2}}</h5>
+					            		</div>
+									</div>
+									<div class="divider"></div>
+									<div class="row center-align">
+					            		<div class="col m3 s12">
+					            			{% if company.hhi_clients_clients|sub:company.hhi_clients_sector_clients < 0 %}
+					            				<h5 style="color: green"> <i class="fa fa-sort-down" aria-hidden="true"></i> {{company.hhi_clients_clients|sub:company.hhi_clients_sector_clients|floatformat:2}}</h5>
+					            			{%else%}
+					            				<h5 style="color: red"> <i class="fa fa-sort-up" aria-hidden="true"></i> {{company.hhi_clients_clients|sub:company.hhi_clients_sector_clients|floatformat:2}}</h5>
+					            			{% endif %}
+					            			
+					            		</div>
+					            		<div class="col m3 s12">
+					            			{% if company.hhi_geografical_clients|sub:company.hhi_geografical_sector_clients < 0 %}
+					            				<h5 style="color: green"> <i class="fa fa-sort-down" aria-hidden="true"></i> {{company.hhi_geografical_clients|sub:company.hhi_geografical_sector_clients|floatformat:2}}</h5>
+					            			{%else%}
+					            				<h5 style="color: red"> <i class="fa fa-sort-up" aria-hidden="true"></i> {{company.hhi_geografical_clients|sub:company.hhi_geografical_sector_clients|floatformat:2}}</h5>
+					            			{% endif %}
+					            		</div>
+					            		<div class="col m3 s12">
+					            			{% if company.hhi_cnae_clients|sub:company.hhi_cnae_sector_clients < 0 %}
+					            				<h5 style="color: green"> <i class="fa fa-sort-down" aria-hidden="true"></i> {{company.hhi_cnae_clients|sub:company.hhi_cnae_sector_clients|floatformat:2}}</h5>
+					            			{%else%}
+					            				<h5 style="color: red"> <i class="fa fa-sort-up" aria-hidden="true"></i> {{company.hhi_cnae_clients|sub:company.hhi_cnae_sector_clients|floatformat:2}}</h5>
+					            			{% endif %}
+					            		</div>
+					            		<div class="col m3 s12">
+					            			{% if company.hhi_temporal_clients|sub:company.hhi_temporal_sector_clients < 0 %}
+					            				<h5 style="color: green"> <i class="fa fa-sort-down" aria-hidden="true"></i> {{company.hhi_temporal_clients|sub:company.hhi_temporal_sector_clients|floatformat:2}}</h5>
+					            			{%else%}
+					            				<h5 style="color: red"> <i class="fa fa-sort-up" aria-hidden="true"></i> {{company.hhi_temporal_clients|sub:company.hhi_temporal_sector_clients|floatformat:2}}</h5>
+					            			{% endif %}
+					            		</div>
+									</div>
+					            </div>
+					        </div>
+			    		</div>
+			    		<div class="col m5 s12">
+			    			<div class="card grey lighten-4">
+					            <div class="card-content grey-text darken-4">
+					              <blockquote>
+					    				<p class="light"><i class="tiny material-icons indigo-text darken-4">live_help</i> {{company.respuesta_clientes_concentracion_info}}</p>
+					    				<p class="light"><i class="tiny material-icons indigo-text darken-4">info</i> {{company.respuesta_clientes_concentracion_interpretation}}</p>
+					    				
+					    				<p class="light"><i class="tiny material-icons indigo-text darken-4">new_releases</i> {{company.respuesta_clientes_concentracion_hint}} </p>
+					    				<div class="row">
+					    					<div class="col m2 s6"></div>
+					    					<div class="col m12 s12 center-align">
+					    						<span class="right-align"><a href="{% url 'empresas:clients' %}" class="btn waves-effect waves-light transparent grey-text text-darken-4 border-grey"> Busca nuevos clientes </a> </span>
+					    					</div>
+					    				</div>
+					    			
+					    			</blockquote>
+					            </div>
+					        </div>
+			    		</div>
+			    	</div>
+			    </div>
+
+			    <!-- /////////////////////////////////////////////////////////////
+				 ////// ¿Cómo podría hacerlo?
+				 ///////////////////////////////////////////////////////////// -->
+
+			    <div class="white_back title_conf">
+			    	<h3 class="flow-text">¿Cómo podría hacerlo? </h3>
+			    </div>
+			    	<div class="row title_conf">
+			    	<!-- Facturación -->
+			    	<div class="row">
+			    		<div class="col m7 s12">
+			    			<div class="card grey lighten-4">
+					            <div class="card-content grey-text darken-4">
+					            	<span class="card-title">Margen de venta</span>
+					              	<div class="row center-align">
+					            		<div class="col m4 s12 line">
+					            			<p>Margen comercial</p>
+					            			<h5><i class="fa fa-user" aria-hidden="true"></i> {{company.margen_comercial_clientes|floatformat:2}}</h5>
+					            			<h5><i class="fa fa-users" aria-hidden="true"></i> {{margen_comercial_sector_clientes|floatformat:2}}</h5>
+					            		</div>
+					            		<div class="col m4 s12 line">
+					            			<p>Ratio de eficiencia</p>
+					            			<h5><i class="fa fa-user" aria-hidden="true"></i> {{company.ratio_comercial_clientes|floatformat:2}}</h5>
+					            			<h5><i class="fa fa-users" aria-hidden="true"></i> {{ratio_comercial_sector_clientes|floatformat:2}}</h5>
+					            		</div>
+					            		<div class="col m4 s12">
+					            			<p>Ticket medio</p>
+					            			<h5><i class="fa fa-user" aria-hidden="true"></i> {{average_transfer_from_client|floatformat:0}}</h5>
+					            			<h5><i class="fa fa-users" aria-hidden="true"></i> {{company.average_sector_sells|floatformat:0}}</h5>
+					            		</div>
+									</div>
+									<div class="divider"></div>
+									<div class="row center-align">
+					            		<div class="col m4 s12">
+					            			{% if company.margen_comercial_clientes|sub:company.margen_comercial_sector_clientes < 0 %}
+					            				<h5 style="color: red"> <i class="fa fa-sort-down" aria-hidden="true"></i> {{company.margen_comercial_clientes|sub:margen_comercial_sector_clientes|floatformat:2}}</h5>
+					            			{%else%}
+					            				<h5 style="color: green"> <i class="fa fa-sort-up" aria-hidden="true"></i> {{company.margen_comercial_clientes|sub:margen_comercial_sector_clientes|floatformat:2}}</h5>
+					            			{% endif %}
+					            			
+					            		</div>
+					            		<div class="col m4 s12">
+					            			{% if company.ratio_comercial_clientes|sub:ratio_comercial_sector_clientes < 0 %}
+					            				<h5 style="color: green"> <i class="fa fa-sort-down" aria-hidden="true"></i> {{company.ratio_comercial_clientes|sub:ratio_comercial_sector_clientes|floatformat:2}}</h5>
+					            			{%else%}
+					            				<h5 style="color: red"> <i class="fa fa-sort-up" aria-hidden="true"></i> {{company.ratio_comercial_clientes|sub:ratio_comercial_sector_clientes|floatformat:2}}</h5>
+					            			{% endif %}
+					            		</div>
+					            		<div class="col m4 s12">
+					            			{% if company.average_transfer_from_client|sub:company.average_sector_sells < 0 %}
+					            				<h5 style="color: red"> <i class="fa fa-sort-down" aria-hidden="true"></i> {{company.average_transfer_from_client|sub:company.average_sector_sells|floatformat:2}}</h5>
+					            			{%else%}
+					            				<h5 style="color: green"> <i class="fa fa-sort-up" aria-hidden="true"></i> {{company.average_transfer_from_client|sub:company.average_sector_sells|floatformat:2}}</h5>
+					            			{% endif %}
+					            		</div>
+									</div>
+					            </div>
+					        </div>
+			    		</div>
+			    		<div class="col m5 s12">
+			    			<div class="card grey lighten-4">
+					            <div class="card-content grey-text darken-4">
+					              <blockquote>
+					    				<p class="light"><i class="tiny material-icons indigo-text darken-4">live_help</i> {{company.respuesta_clientes_margen_info}}</p>
+					    				<p class="light"><i class="tiny material-icons indigo-text darken-4">info</i> {{company.respuesta_clientes_margen_interpretation}}</p>
+					    				
+					    				<p class="light"><i class="tiny material-icons indigo-text darken-4">new_releases</i> {{company.respuesta_clientes_margen_hint}} </p>
+					    				<div class="row">
+					    					<div class="col m2 s6"></div>
+					    					<div class="col m12 s12 center-align">
+					    						<span class="right-align"><a href="{% url 'empresas:clients' %}" class="btn waves-effect waves-light transparent grey-text text-darken-4 border-grey"> Busca nuevos clientes </a> </span>
+					    					</div>
+					    				</div>
+					    			
+					    			</blockquote>
+					            </div>
+					        </div>
+			    		</div>
+			    	</div>
+			    		
+			    	
+			    </div>
+
+			    <div class="white_back title_conf">
+				    	<h3 class="flow-text">  Riesgo de impago - ¿Conoces el estado de tus clientes?</h3>
+				    </div>
+			    	<div class="row title_conf">
+			    	<!-- Resultado explotaciones -->
+			    	<div class="row">
+			    		<div class="col m6 s12">
+			    			<div class="card grey lighten-4">
+					            <div class="card-content grey-text darken-4">
+					            	<span class="card-title">Riesgo de impago</span>
+					              <canvas id="hats_graph" width="300" height="140"></canvas>
+					            </div>
+					        </div>
+			    		</div>
+			    		<div class="col m6 s12">
+			    			<div class="card grey lighten-4">
+					            <div class="card-content grey-text darken-4">
+					              <blockquote>
+					    				<p class="light"><i class="tiny material-icons indigo-text darken-4">live_help</i> Nuestra métrica de riesgo de impago clasifica tus clientes según su probabilidad de impago en los próximos meses. Una alta concentración de clientes en estado rojo debería ser preocupante para la evolución de tu negocio</p>
+					    				<p class="light"><i class="tiny material-icons indigo-text darken-4">new_releases</i> <span class="bold"> En promedio, el riesgo de impago de tus clientes es parecido al de los de tu competencia</p>
+					    				<p class="light"><i class="tiny material-icons indigo-text darken-4">info</i> Puedes cubrir tu riesgo ampliando tu cartera de clientes o contratando una linea de factoring</p>
+					    				<div class="row center-align">
+					    					<div class="col m6 s6">
+					    						<a href="{% url 'empresas:clients' %}" id="download-button" target="_blank" class="btn waves-effect waves-light transparent grey-text text-darken-4 border-grey">Nuevos clientes </a>
+					    					</div>
+					    					<div class="col m6 s6">
+					    						<a href="https://www.bancsabadell.com/cs/Satellite/SabAtl/Factoring/1191332201741/es/" id="download-button" target="_blank" class="btn waves-effect waves-light transparent grey-text text-darken-4 border-grey">Factoring </a>
+					    						<!-- https://www.bancosantander.es/es/empresas-advance/productos-y-servicios/cobros/factoring -->
+					    					</div>
+					    				</div>
+					    			</blockquote>
+					            </div>
+					        </div>
+			    		</div>
+			    	</div>
+			    	</div>
+
+
+	  </div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.1.4/Chart.bundle.min.js"></script>
+
+<script type="text/javascript">
+
+	Chart.defaults.global.legend.display = false;
+	// And for a doughnut chart
+  	var my_geo_clients = document.getElementById("your_geo_concentration_clients");
+  	var mean_geo_clients = document.getElementById("mean_geo_concentration_clients");
+  	var my_geo_providers = document.getElementById("your_geo_concentration_providers");
+  	var mean_geo_providers = document.getElementById("mean_geo_concentration_providers");
+  	var your_sector_concentration_clients = document.getElementById("your_sector_concentration_clients");
+  	var your_sector_concentration_providers = document.getElementById("your_sector_concentration_providers");
+  	var mean_sector_concentration_clients = document.getElementById("mean_sector_concentration_clients");
+  	var mean_sector_concentration_providers = document.getElementById("mean_sector_concentration_providers");
+  	var your_timeseries_of_selling = document.getElementById("your_timeseries_of_selling");
+  	var sector_timeseries_of_selling = document.getElementById("sector_timeseries_of_selling");
+  	var your_ebitda = document.getElementById("your_ebitda");
+  	var mean_ebitda = document.getElementById("mean_ebitda");
+  	var your_resultado_explotacion = document.getElementById("your_resultado_explotacion");
+  	var mean_resultado_explotacion = document.getElementById("mean_resultado_explotacion");
+  	var facturacion_graph = document.getElementById("facturacion_graph");
+  	var hats_graph = document.getElementById("hats_graph");
+  	var resultado_graph = document.getElementById("resultado_graph");
+  	var frecuencia_graph = document.getElementById("frecuencia_graph");
+  	var penetration_graph = document.getElementById("penetration_graph");
+  	var penetracion_clientes = {{penetration}}
+	var penetracion_clientes_sector = 0.35//{{company.my_sector_penetration}}
+  	// Como son mis clients
+  	LineGraph(facturacion_graph, {{balance_sells_avg_sector|safe}}, {{balance_sells|safe}});
+  	LineGraph(ebitda_graph, {{balance_ebitda_avg_sector|safe}}, {{balance_ebitda|safe}});
+  	LineGraph(resultado_graph, {{balance_resultado_avg_sector|safe}}, {{balance_resultado|safe}});
+  	BarGraph(frecuencia_graph, {{get_sector_total_monthly_sells_amount|safe}}, {{get_monthly_sells_amount|safe}});
+  	stackedbarchart(penetration_graph, 'hola_2', 'hola_2', penetracion_clientes, penetracion_clientes_sector, 'Penetration')
+  	HatsBarGraph(hats_graph, {{riesgo_impago_clientes|safe}}, {{riesgo_impago_clientes_sector|safe}} )
+  	// donut(my_geo_clients, {{ territoriales_clientes }}, ["In your region","Outside your region"]);
+  	// donut(mean_geo_clients, {{ territoriales_proveedores }}, ["In your region","Outside your region"]);
+  	// donut(mean_geo_concentration_clients, {{ sector_territoriales_clientes }}, ["In your region","Outside your region"]);
+  	// donut(mean_geo_concentration_providers, {{ sector_territoriales_proveedores }}, ["In your region","Outside your region"]);
+  	// donut(your_sector_concentration_clients, {{ counts_sectores_clients }}, {{sectores_clients|safe}});
+  	// donut(your_sector_concentration_providers, {{ counts_sectores_providers }}, {{sectores_providers|safe}});
+  	// donut(mean_sector_concentration_clients, {{ mean_counts_sectores_clients }}, {{mean_sectores_clients|safe}});
+  	// donut(mean_sector_concentration_providers, {{ mean_counts_sectores_providers }}, {{mean_sectores_providers|safe}});
+
+  	// barchart(your_timeseries_of_selling,{{your_monthly_sells_amount}},{{your_monthly_sells_month|safe}}, 'Tus Cobros del último año');
+  	// barchart(sector_timeseries_of_selling,{{sector_monthly_sells_amount}},{{sector_monthly_sells_month|safe}}, 'Media de Cobros del sector el último año');
+  	// barchart(your_ebitda,{{your_ebitda_amount}},{{your_ebitda_ejercicio|safe}}, 'Tu EBITDA');
+  	// barchart(mean_ebitda,{{sector_ebitda_amount}},{{sector_ebitda_ejercicio|safe}}, 'EBITDA medio del sector');
+  	// barchart(your_resultado_explotacion,{{your_resultado_explotacion_amount}},{{your_resultado_explotacion_ejercicio|safe}}, 'Tu resultado_explotacion');
+  	// barchart(mean_resultado_explotacion,{{sector_resultado_explotacion_amount}},{{sector_resultado_explotacion_ejercicio|safe}}, 'Resultado_explotacion medio del sector');
+
+  	// prepare data...
+  	function HatsBarGraph(div, data_you, data_sector) {//, data_sector, data_you) {
+  		var labels = [];
+  		var data_1=[];
+  		var data_2=[];
+  		var data_3=[];
+  		var sector = data_sector
+  		var you = data_you
+  		you.forEach(function(packet, i) {
+	      labels.push(packet.hats_alert);
+	      if (packet.hats_alert=='ROJA') {
+	      	data_1.push(packet.c);
+	      } else if (packet.hats_alert=='AMARILLA') {
+	      	data_2.push(packet.c);
+	      } else if (packet.hats_alert=='VERDE') {
+	      	data_3.push(packet.c);
+	      }
+	    });
+	    sector.forEach(function(packet, i) {
+	      if (packet.hats_alert=='ROJA') {
+	      	data_1.push(packet.c);
+	      } else if (packet.hats_alert=='AMARILLA') {
+	      	data_2.push(packet.c);
+	      } else if (packet.hats_alert=='VERDE') {
+	      	data_3.push(packet.c);
+	      }
+	    });
+	    hats_barchart(div, data_1, data_2, data_3, "Riesgo de impago") //barchart(div, labels_1, labels_2, data_1, data_2, '# Transferencias / mes')
+  	}
+
+  	function hats_barchart(div, data_1, data_2, data_3, title)
+        {
+        	
+        	var myChart = new Chart(div, {
+		        type: 'bar',
+		        data: {
+		            labels: ["Tu","Comparables"],
+		            datasets: [{
+		            	type: 'bar',
+		                label: "Alerta Roja",
+		                data: data_1,
+		                backgroundColor: ['rgba(200,0,0,0.2)','rgba(200,0,0,0.2)'],
+		                borderColor: 'rgba(47,79,79, 1)',
+		                borderWidth: 2
+		            },{
+		            	type: 'bar',
+		                label: "Alerta Amarilla",
+		                data: data_2,
+		                backgroundColor: ['rgba(150,150,0,0.2)','rgba(150,150,0,0.2)'],
+		                borderColor: 'rgba(47,79,79, 1)',
+		                borderWidth: 2
+		            },{
+		            	type: 'bar',
+		                label: "Sin alerta",
+		                data: data_3,
+		                backgroundColor: ['rgba(0,200,0,0.2)','rgba(0,200,0,0.2)'],
+		                borderColor: 'rgba(47,79,79, 1)',
+		                borderWidth: 2
+		            }
+		            ]
+		        },
+		        options: {
+		            legend: {
+		                display: false,
+		                labels: {
+		                    fontColor: 'rgb(255, 99, 132)'
+		                }
+		            },
+		            scales: {
+		                yAxes: [{
+						    stacked: true,
+						    ticks: {
+				                beginAtZero: true
+				            }
+		                }],
+		                xAxes: [{
+					        stacked: true
+					    }]
+		            }
+		        }
+		    });
+    	}
+
+
+  	// prepare data...
+  	function BarGraph(div, data_sector, data_you) {
+  		var labels_1 = [];
+  		var labels_2 = []; 
+  		var data_1=[];
+  		var data_2=[];
+  		var sector = data_sector
+  		var you = data_you
+  		sector.forEach(function(packet, i) {
+	      	labels_1.push(packet.month);
+	      	data_1.push(packet.c);
+	    });
+	    you.forEach(function(packet, i) {
+	    	if (labels_1.includes(packet.month)==true) {
+	    		labels_2.push(packet.month);
+	      		data_2.push(packet.c);
+	    	} else {
+	    		labels_2.push(labels_1[i]);
+	      		data_2.push(0);
+	    	}
+	    });
+	    barchart(div, labels_1, labels_2, data_2, data_1, 'Compras / mes')
+  	}
+
+  	// prepare data...
+  	function LineGraph(div, data_sector, data_you) {
+  		var labels_1 = [];
+  		var labels_2 = []; 
+  		var data_1=[];
+  		var data_2=[];
+  		var sector = data_sector
+  		var you = data_you
+  		sector.forEach(function(packet, i) {
+	      labels_1.push(packet.ejercicio);
+	      data_1.push(packet.c);
+	    });
+	    you.forEach(function(packet, i) {
+	    	console.log('Line Graphs')
+	    	console.log(labels_1)
+	    	console.log(packet.ejercicio)
+	    	console.log(labels_1.includes(packet.ejercicio))
+	      	if (labels_1.includes(packet.ejercicio)==true) {
+	    		labels_2.push(packet.ejercicio);
+	      		data_2.push(packet.c);
+	    	} else {
+	    		labels_2.push(labels_1[i]);
+	      		data_2.push(0);
+	    	}
+	    });
+	    line(div, labels_1, labels_2, data_1, data_2)
+  	}
+
+  	function barchart(div, labels_1, labels_2, data_1, data_2, title)
+        {
+        	var myChart = new Chart(div, {
+		        type: 'bar',
+		        data: {
+		            labels: labels_2,
+		            datasets: [{
+		                label: "{{company.name|safe}}",
+		                data: data_1,
+		                yAxisID: "y-axis-0",
+		                backgroundColor: 'rgba(47,79,79, 0.2)',
+		                borderColor: 'rgba(47,79,79, 1)',
+		                borderWidth: 2
+		            },
+		            {
+		                label: "Average comparables",
+		                data: data_2,
+		                yAxisID: "y-axis-1",
+		                backgroundColor: 'rgba(169,169,169, 0.2)',
+		                borderColor: 'rgba(169,169,169, 1)',
+		                borderWidth: 2
+		            }]
+		        },
+		        options: {
+		            legend: {
+		                display: false,
+		                labels: {
+		                    fontColor: 'rgb(255, 99, 132)'
+		                }
+		            },
+		            title: {
+		                display: true,
+		                text: title
+		            },
+		            responsive: true,
+		            scales: {
+					      yAxes: [{
+					        position: "left",
+					        "id": "y-axis-0"
+					      }, {
+					        position: "right",
+					        "id": "y-axis-1"
+					      }]
+					  }
+		        }
+		    });
+    	}
+
+    function stackedbarchart(div, labels_1, labels_2, data_1, data_2, title)
+        {
+        	if (data_1<1) {
+        		data_1x = data_1*100
+        	} else {
+        		data_1x = 100
+        	}
+        	if (data_2<1) {
+        		data_2x = data_2*100
+        	} else {
+        		data_2x = 100
+        	}
+        	var dataset_1 = [data_1x,data_2x]
+        	var dataset_2 = [100-data_1x,100-data_2x]
+        	console.log(dataset_1)
+        	console.log(dataset_2)
+        	var myChart = new Chart(div, {
+		        type: 'bar',
+		        data: {
+		            labels: ["Tú","Comparables"],
+		            datasets: [{
+		            	type: 'bar',
+		                label: "Penetration",
+		                data: dataset_1,
+		                backgroundColor: 'rgba(47,79,79, 0.2)',
+		                borderColor: 'rgba(47,79,79, 1)',
+		                borderWidth: 2
+		            },
+		            {
+		            	type: 'bar',
+		                label: "Rest of the market",
+		                data: dataset_2,
+		                backgroundColor: 'rgba(169,169,169, 0.2)',
+		                borderColor: 'rgba(169,169,169, 1)',
+		                borderWidth: 2
+		            }]
+		        },
+		        options: {
+		            legend: {
+		                display: false,
+		                labels: {
+		                    fontColor: 'rgb(255, 99, 132)'
+		                }
+		            },
+		            scales: {
+		                yAxes: [{
+						    stacked: true
+		                }],
+		                xAxes: [{
+					        stacked: true
+					    }]
+		            }
+		        }
+		    });
+    	}
+
+  	function donut(div, data, labels)
+        {
+           var myDoughnutChart = new Chart(div, {
+            type: 'doughnut',
+            data: {
+                labels: labels,
+                datasets: [
+                    {
+                        data: data,
+                        backgroundColor: [
+                            'rgba(128,128,128, 0.5)',
+                            'rgba(47,79,79, 0.5)',
+                            'rgba(119,136,153, 0.5)',
+                            'rgba(192,192,192, 0.5)',
+		                    'rgba(169,180,169, 0.5)',
+		                    'rgba(128,128,128, 0.5)',
+                    		'rgba(220,220,220, 0.5)',
+                        ],
+                        hoverBackgroundColor: [
+                            'rgba(128,128,128, 1)',
+                            'rgba(47,79,79, 1)',
+                            'rgba(119,136,153, 1)',
+                            'rgba(192,192,192, 1)',
+		                    'rgba(169,180,169, 1)',
+		                    'rgba(128,128,128, 1)',
+                    		'rgba(220,220,220, 1)',
+                        ]
+                    }]
+            },
+            animation:{
+                animateScale:true
+            }
+        });
+        }
+
+    function line(div, labels, labels2, data1, data2) {
+    	var scatterChart = new Chart(div, {
+        type: 'line',
+        data: {
+            labels: labels,
+            datasets: [{
+            label: "Comparables",
+            backgroundColor: "rgba(220,220,220,0.5)",
+            borderColor: "rgba(220,220,220,0.8)",
+            highlightFill: "rgba(220,220,220,0.75)",
+            pointHoverBackgroundColor: "rgba(220,220,220,1)",
+            showTooltip: false, //NEW OPTION DON"T NEED TO INCLUDE IT IF YOU WANT TO DISPLAY BUT WON"T HURT IF YOU DO
+            data: data1
+        }, {
+            label: "{{company.name|safe}}",
+            backgroundColor: "rgba(47,79,79,0.5)",
+            borderColor: "rgba(47,79,79,0.8)",
+            highlightFill: "rgba(47,79,79,0.75)",
+            pointHoverBackgroundColor: "rgba(47,79,79,1)",
+            showTooltip: false, //NEW OPTION DON"T NEED TO INCLUDE IT IF YOU WANT TO DISPLAY BUT WON"T HURT IF YOU DO
+            data: data2
+        }]},
+        options: {
+          responsive: true,
+          pointDotRadius: 10,
+          bezierCurve: false,
+          scaleShowVerticalLines: false,
+          scaleGridLineColor: 'black'
+        }
+    });
+    }
+</script>
+{% endblock %}
+
+ {% block alt_js %}
+<script type="text/javascript">
+
+	$(document).ready(function(){
+
+	});
+
+
+</script>
+{% endblock alt_js %}

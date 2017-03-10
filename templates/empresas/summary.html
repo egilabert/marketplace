@@ -120,7 +120,7 @@ Home - {{ company.name }}
 						<a href="{% url 'empresas:detail' pk=company.pk %}" id="download-button" class="btn-large waves-effect waves-light transparent red-text text-darken-3 border-grey" style="margin-left: 100px;"" >Negocio </a>
 					</div>
 					<div class="col s12 m3 center-align">
-						<a href="{% url 'empresas:recommendations' %}" id="download-button" class="btn-large waves-effect waves-light transparent green-text text-darken-3 border-grey" style="margin-left: 60px;">Cliente</a>
+						<a href="{% url 'empresas:recommendations_clients2' %}" id="download-button" class="btn-large waves-effect waves-light transparent green-text text-darken-3 border-grey" style="margin-left: 60px;">Cliente</a>
 					</div>
 					<div class="col s12 m3 center-align">
 						<a href="{% url 'empresas:recommendations_providers' %}" id="download-button" class="btn-large waves-effect waves-light transparent blue-text text-darken-3 border-grey" style="margin-left: 0px;">Proveedor</a>
@@ -178,7 +178,7 @@ Home - {{ company.name }}
 <div class="row grey_back" style="margin-bottom: 0px; padding-bottom: 5rem;">
 	<div class="col s12 m1"></div>
 	<div class="col s12 m5">
-		<p class="flow-text center-align">Novedades en tu red</p>
+		<p class="flow-text center-align">¿Qué está pasando en tu red?</p>
 		<ul class="collection" style="height: 338px; overflow:auto;">
 		    <li class="collection-item avatar">
 		      <i class="material-icons circle red">trending_up</i>
@@ -228,7 +228,7 @@ Home - {{ company.name }}
 
 	<div class="col s12 m5">
 		<div style="">
-		<p class="flow-text center-align">Notícias destacadas</p>
+		<p class="flow-text center-align">¿Que dice la prensa?</p>
 		<ul class="collection" style="height: 338px; overflow:auto;">
 
 			<li class="collection-item avatar">
@@ -253,7 +253,7 @@ Home - {{ company.name }}
 		    <a href="http://www.elmundo.es/cataluna/2016/01/28/56a9fd79e2704e8d3d8b4580.html" target="_blank">
 		      <img src="{% static 'images/logoelmundo_rrss.png' %}" alt="" class="circle">
 		      <span class="title grey-text text-darken-1">Alimentaria potenciará la gastronomía y dejará más 170 millones en Barcelona</span>
-		      <p class="right-align">09/03/2017 <br>
+		      <p class="right-align">28/01/2016 <br>
 		      </p>
 		    </a>
 		    </li>
@@ -262,7 +262,7 @@ Home - {{ company.name }}
 		    <a href="http://www.expansion.com/catalunya/2016/12/23/585cfd5eca474122418b4588.html" target="_blank">
 		      <img src="{% static 'images/expansion-logo.jpg' %}" alt="" class="circle">
 		      <span class="title grey-text text-darken-1">Alimentaria y Hostelco se celebrarán a la vez en 2018</span>
-		      <p class="right-align">15/02/2016 <br>
+		      <p class="right-align">23/12/2016 <br>
 		      </p>
 		    </a>
 		    </li>
@@ -280,7 +280,7 @@ Home - {{ company.name }}
 		    <a href="http://www.diaridetarragona.com/uploads/74571a50e280904.pdf" target="_blank">
 		      <img src="{% static 'images/diari_tarragona.jpg' %}" alt="" class="circle">
 		      <span class="title grey-text text-darken-1">Guía Empresarial de Tarragona</span>
-		      <p class="right-align">15/02/2016 <br>
+		      <p class="right-align">15/12/2016 <br>
 		      </p>
 		    </a>
 		    </li>
@@ -289,7 +289,7 @@ Home - {{ company.name }}
 		    <a href="https://www.alimarket.es/noticia/157837/fragadis-impulsa-la-marca--spar--en-tarragona" target="_blank">
 		      <img src="{% static 'images/alimarket.jpg' %}" alt="" class="circle">
 		      <span class="title grey-text text-darken-1">Fragadis impulsa la marca 'Spar' en Tarragona</span>
-		      <p class="right-align">15/02/2016 <br>
+		      <p class="right-align">12/06/2014 <br>
 		      </p>
 		    </a>
 		    </li>
