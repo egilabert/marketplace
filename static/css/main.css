@@ -241,6 +241,10 @@ li p {
   background-color: white;
 }
 
+.dark_grey_back {
+  background-color: rgb(178, 184, 193);
+}
+
 .grey_back {
   background-color: #fafafa;
 }
