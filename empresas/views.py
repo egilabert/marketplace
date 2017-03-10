@@ -169,6 +169,24 @@ def get_data_mekko(request, *args, **kwargs):
 	return JsonResponse(data, safe=False)
 
 def SummaryView(request):
+	if request.POST:
+		if request.POST and request.POST.get('company_name',None):
+			name = request.POST['company_name']
+		try:
+			del request.session['company']
+			del request.session['recommended_clients_page']
+		except:
+			pass
+		try:
+			got_it = Empresa.objects.filter(name=name).first()
+			company = got_it.pk #1492 #randint(0, queryset.count() - 1) # # ## 865 865-1
+		except:
+			return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
+		request.session['company'] = company
+
+	request.session['summary'] = True
+	request.session.modified = True
+
 	company_id = request.session.get('company')
 	company = Empresa.objects.filter(pk=company_id)
 	company = company.prefetch_related('estados_financieros','transfers')[0]
@@ -787,6 +805,7 @@ def FinancialRiskRecommendationsView(request):
 		}
 	return render(request, 'empresas/financial_risk.html', context)
 
+
 # @login_required
 def FAQView(request):
 	company_id = request.session.get('company')
@@ -1162,6 +1181,143 @@ def CommercialClientsRecommendationsView2(request):
 
 	return render(request, 'empresas/comercial_recommendations_clients2.html', context)
 
+
+# @login_required
+def CommercialProvidersRecommendationsView2(request):
+	company_id = request.session.get('company')
+	empresa = Empresa.objects.filter(pk=company_id)
+	empresa = empresa.prefetch_related('estados_financieros','transfers__destination_reference', 'destination_reference__origin_reference',
+	Prefetch(
+        "transfers__destination_reference",
+        queryset=Empresa.objects.filter(transfers__destination_reference=empresa[0]).annotate(Count('name', distinct=True)),
+        to_attr="clients"
+    ))[0]
+
+	if int(company_id) == 1610:
+		sells_sector = [{u'ejercicio': u'2011', 'c': 846283.4647849461}, {u'ejercicio': u'2012', 'c': 956645.75040462404}, {u'ejercicio': u'2013', 'c': 978471.62807453406}, {u'ejercicio': u'2014', 'c': 1056921.41805970157}]
+		sells_me = [{u'ejercicio': u'2011', 'c': 1392696.61117647061}, {u'ejercicio': u'2012', 'c': 1534303.62062499998}, {u'ejercicio': u'2013', 'c': 1399953.46552631578}, {u'ejercicio': u'2014', 'c': 1491070.38647058822}]
+		ebitda_sector = [{u'ejercicio': u'2011', 'c': 139361.97748407643}, {u'ejercicio': u'2012', 'c': 127984.25817891373}, {u'ejercicio': u'2013', 'c': 126471.11822525595}, {u'ejercicio': u'2014', 'c': 133865.1086259542}]
+		ebitda_me = [{u'ejercicio': u'2011', 'c': 151794.07494505495}, {u'ejercicio': u'2012', 'c': 145185.49206521739}, {u'ejercicio': u'2013', 'c': 141847.803749999985}, {u'ejercicio': u'2014', 'c': 154199.451351351345}]
+		resultados_sector = [{u'ejercicio': u'2011', 'c': 96543.67525477704}, {u'ejercicio': u'2012', 'c': 73854.49316293933}, {u'ejercicio': u'2013', 'c': 56644.12122866895}, {u'ejercicio': u'2014', 'c': 96736.3875572519}]
+		resultados_me = [{u'ejercicio': u'2011', 'c': 153690.474505494498}, {u'ejercicio': u'2012', 'c': 102998.05847826087}, {u'ejercicio': u'2013', 'c': 70357.194875000005}, {u'ejercicio': u'2014', 'c': 132367.53648648648}]
+		diff_sells = (sells_me[len(sells_me)-1]['c'] - sells_sector[len(sells_sector)-1]['c'])/sells_sector[len(sells_sector)-1]['c']
+		diff_ebitda = (ebitda_me[len(ebitda_me)-1]['c'] - ebitda_sector[len(ebitda_sector)-1]['c'])/ebitda_sector[len(ebitda_sector)-1]['c']
+		diff_resultados = (resultados_me[len(resultados_me)-1]['c'] - resultados_sector[len(resultados_sector)-1]['c'])/resultados_sector[len(resultados_sector)-1]['c']
+		penetration = 0.04
+		num_proveedores = empresa.get_providers().count()
+		margen = 0.16
+		ratio_comercial = 1- margen
+		hhi_providers = empresa.hhi_providers()
+		average_transfer_to_provider = 1267
+	else:
+		average_transfer_to_provider = empresa.average_transfer_to_provider()
+		sells_sector = list(empresa.balance_providers_sells_avg_sector())
+		sells_me = list(empresa.balance_providers_sells())
+		ebitda_sector = list(empresa.balance_providers_ebitda_avg_sector())
+		ebitda_me = list(empresa.balance_providers_ebitda())
+		resultados_sector = list(empresa.balance_providers_resultado_avg_sector())
+		resultados_me = list(empresa.balance_providers_resultado())
+		penetration = empresa.my_penetration_provider()
+		num_proveedores = empresa.get_providers().count()
+		margen = empresa.margen_comercial_providers()
+		ratio_comercial = 1- margen
+		hhi_providers = empresa.hhi_providers()
+		diff_sells = (sells_me[len(sells_me)-1]['c'] - sells_sector[len(sells_sector)-1]['c'])/sells_sector[len(sells_sector)-1]['c']
+		diff_ebitda = (ebitda_me[len(ebitda_me)-1]['c'] - ebitda_sector[len(ebitda_sector)-1]['c'])/ebitda_sector[len(ebitda_sector)-1]['c']
+		diff_resultados = (resultados_me[len(resultados_me)-1]['c'] - resultados_sector[len(resultados_sector)-1]['c'])/resultados_sector[len(resultados_sector)-1]['c']
+		
+
+	if len(sells_me)>1:
+		delta_ventas = (sells_me[len(sells_me)-1]['c'] - sells_me[len(sells_me)-2]['c'])/sells_me[len(sells_me)-2]['c']
+	if len(ebitda_me)>1:
+		delta_ebitda = (ebitda_me[len(ebitda_me)-1]['c'] - ebitda_me[len(ebitda_me)-2]['c'])/ebitda_me[len(ebitda_me)-2]['c']
+	if len(resultados_me)>1:
+		delta_resultados_explotacion = (resultados_me[len(resultados_me)-1]['c'] - resultados_me[len(resultados_me)-2]['c'])/resultados_me[len(resultados_me)-2]['c']
+
+	context = {
+		'diff_sells': diff_sells,
+		'average_transfer_to_provider': average_transfer_to_provider,
+		'diff_ebitda': diff_ebitda,
+		'diff_resultados': diff_resultados,
+		'company':empresa,
+		'num_proveedores': num_proveedores,
+		'delta_ebitda': delta_ebitda,
+		'delta_ventas': delta_ventas,
+		'delta_resultados_explotacion': delta_resultados_explotacion,
+		'hhi_providers': hhi_providers,
+		'penetration': penetration,
+		'margen': margen,
+		'ratio_comercial': ratio_comercial,
+		'get_monthly_buys_amount': json.dumps(list(empresa.get_monthly_buys_amount()), cls=DjangoJSONEncoder),
+		'get_sector_total_monthly_buys_amount': json.dumps(list(empresa.get_sector_total_monthly_buys_amount()), cls=DjangoJSONEncoder),
+		'balance_providers_sells_avg_sector': json.dumps(sells_sector, cls=DjangoJSONEncoder),
+		'balance_providers_sells': json.dumps(sells_me, cls=DjangoJSONEncoder),
+		'balance_providers_ebitda_avg_sector': json.dumps(ebitda_sector, cls=DjangoJSONEncoder),
+		'balance_providers_ebitda': json.dumps(ebitda_me, cls=DjangoJSONEncoder),
+		'balance_providers_resultado_avg_sector': json.dumps(resultados_sector, cls=DjangoJSONEncoder),
+		'balance_providers_resultado': json.dumps(resultados_me, cls=DjangoJSONEncoder),
+		'journey': request.session.get('journey'),
+		'riesgo_impago_proveedores': json.dumps(list(empresa.riesgo_impago_proveedores()), cls=DjangoJSONEncoder),
+		'riesgo_impago_providers_sector': json.dumps(list(empresa.riesgo_impago_providers_sector()), cls=DjangoJSONEncoder),
+		}
+
+	return render(request, 'empresas/comercial_recommendations_providers2.html', context)
+
+def FinancialRiskRecommendationsView2(request):
+	
+	try:
+		referrer = request.META['HTTP_REFERER']
+		if 'intro' in referrer:
+			request.session['journey'] = False
+	except:
+		request.session['journey'] = False
+
+	print(request.session.get('journey'))
+
+	company_id = request.session.get('company')
+	company = Empresa.objects.filter(pk=company_id)
+	company = company.prefetch_related('estados_financieros','cirbe','productos')[0]
+
+	if int(company_id)==1610:
+		deuda_ebitda = 0.9133
+		deuda_largo = 154199.451351351345 * deuda_ebitda * 0.85
+		deuda_corto = 154199.451351351345 * deuda_ebitda * 0.15
+		ratio_corto_largo = deuda_corto / deuda_largo
+		deuda_corto_pond = deuda_corto / 154199.451351351345
+		dias_a_cobrar = 175
+		dias_a_pagar = 58
+		dias_a_pagar_sector = 85
+		dias_a_cobrar_sector = 98
+	else:
+		deuda_ebitda = company.deuda_total_pond()
+		deuda_largo = company.cirbe.largo_plazo_dispuesto
+		deuda_corto = company.cirbe.corto_plazo_dispuesto
+		ratio_corto_largo = company.ratio_corto_largo()
+		deuda_corto_pond = company.deuda_corto_pond()
+		dias_a_cobrar = company.dias_a_cobrar()
+		dias_a_pagar = company.dias_a_pagar()
+		dias_a_pagar_sector = company.dias_a_pagar_sector()
+		dias_a_cobrar_sector = company.dias_a_cobrar_sector()
+	try:
+		ultimos_eeff = company.estados_financieros.reverse()[0]
+	except:
+		ultimos_eeff = Empresa()
+	context = {
+		'company':company,
+		'dias_a_pagar_sector': dias_a_pagar_sector,
+		'dias_a_cobrar_sector': dias_a_cobrar_sector,
+		'deuda_corto_pond': deuda_corto_pond,
+		'dias_a_pagar': dias_a_pagar,
+		'dias_a_cobrar': dias_a_cobrar,
+		'deuda_ebitda': deuda_ebitda,
+		'deuda_largo': deuda_largo,
+		'ratio_corto_largo': ratio_corto_largo,
+		'deuda_corto': deuda_corto,
+		'productos_variable': company.productos_con_tipo_variable().all(),
+		'ultimos_eeff': ultimos_eeff,
+		'journey': request.session.get('journey')
+		}
+	return render(request, 'empresas/financial_risk2.html', context)
 """-------------------------------------------------------"""
 """				TRANFERS VIEWS 							  """
 """-------------------------------------------------------"""

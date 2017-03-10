@@ -116,17 +116,17 @@ Home - {{ company.name }}
 		<div class="row">
 			<div class="col s12 m11">
 				<div class="row">
-					<div class="col s12 m2 center-align">
-						<a href="{% url 'empresas:detail' pk=company.pk %}" id="download-button" class="btn-large waves-effect waves-light transparent red-text text-darken-3 border-grey" style="margin-left: 100px;"" >Negocio </a>
+					<div class="col s12 m3 center-align">
+						<a href="{% url 'empresas:detail' pk=company.pk %}" id="download-button" class="btn waves-effect waves-light transparent red-text text-darken-3 border-grey" style="margin-left: 70px;"" >Mercado</a>
 					</div>
 					<div class="col s12 m3 center-align">
-						<a href="{% url 'empresas:recommendations_clients2' %}" id="download-button" class="btn-large waves-effect waves-light transparent green-text text-darken-3 border-grey" style="margin-left: 60px;">Cliente</a>
-					</div>
-					<div class="col s12 m3 center-align">
-						<a href="{% url 'empresas:recommendations_providers' %}" id="download-button" class="btn-large waves-effect waves-light transparent blue-text text-darken-3 border-grey" style="margin-left: 0px;">Proveedor</a>
+						<a href="{% url 'empresas:recommendations_clients2' %}" id="download-button" class="btn waves-effect waves-light transparent green-text text-darken-3 border-grey" style="margin-left: 80px;"> Clientes</a>
 					</div>
 					<div class="col s12 m4 center-align">
-						<a href="{% url 'empresas:recommendations_financial_risk' %}" id="download-button" class="btn-large waves-effect waves-light transparent orange-text text-darken-3 border-grey" style="margin-right: 20px;">Financiero </a>
+						<a href="{% url 'empresas:recommendations_providers2' %}" id="download-button" class="btn waves-effect waves-light transparent blue-text text-darken-3 border-grey" style="margin-left: 80px;"> Proveedores</a>
+					</div>
+					<div class="col s12 m2 center-align">
+						<a href="{% url 'empresas:recommendations_financial2' %}" id="download-button" class="btn waves-effect waves-light transparent orange-text text-darken-3 border-grey" style="margin-right: 60px;">Financiero</a>
 					</div>
 				</div>
 			</div>
@@ -546,9 +546,9 @@ Home - {{ company.name }}
 
 	function mousePressed() {
 		var link1 = "{% url 'empresas:detail' pk=company.pk %}"
-		var link2 = "{% url 'empresas:recommendations' %}"
-		var link3 = "{% url 'empresas:recommendations_providers' %}"
-		var link4 = "{% url 'empresas:recommendations_financial_risk' %}"
+		var link2 = "{% url 'empresas:recommendations_clients2' %}"
+		var link3 = "{% url 'empresas:recommendations_providers2' %}"
+		var link4 = "{% url 'empresas:recommendations_financial2' %}"
 
 		function link(url, winName, options) {
 			winName && open(url, winName, options) || (location = url);

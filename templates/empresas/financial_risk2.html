@@ -1,0 +1,904 @@
+{% extends "app_base.html" %}
+{% load static %}
+{% load humanize %}
+{% load mathfilters %}
+{% block page_title %}
+{{ company.name }}
+{% endblock %}
+
+{% block body_class %}background_grey{% endblock %}
+{% block side-nav %}{% include "side-nav.html" %}{% endblock %}
+
+{% block content %}
+<div class="parallax-container">
+		<h3 class="center-align white-text text-darken-3 light">El riesgo financiero... ¿Podré seguir pagando?</h3>
+		<div class="row center">{{company.name}}</div>
+	    <div class="parallax"><img src="{% static 'images/super-powers.jpg' %}"></div>
+	</div>
+
+{% if company.id == 990 %}
+  <div class="row">
+    <div class="col s12 m1"></div>
+    <div class="col s12 m5">
+      <p class="flow-text center-align">Puntos fuertes</p>
+      <div class="card horizontal green lighten-2">
+        <div class="card-stacked">
+
+          <div class="card-content black-text">
+            <p><strong>Buena salud financiera</strong> según los modelos de riesgo internos de la entidad</p>
+          </div>
+          <div class="divider"></div>
+          <div class="card-content black-text">
+            <p><strong>Ratio de endeudamiento</strong> sensiblemente inferior al de su competencia </p>
+            <!-- ({{company.ratio_endeudamiento|sub:company.ratio_endeudamiento_sector|div:company.ratio_endeudamiento_sector|mul:100|floatformat:0}}%) -->
+          </div>
+          <div class="divider"></div>
+          <div class="card-content black-text">
+            <p><strong>Ratio de deuda entre EBITDA</strong> sensiblemente inferior al de su competencia </p>
+            <!-- ({{deuda_ebitda|sub:company.deuda_total_sector_pond|div:company.deuda_total_sector_pond|mul:100|floatformat:0}}%) -->
+          </div>
+          <div class="divider"></div>
+          <div class="card-content black-text">
+            <p><strong>Ratio de deuda a corto plazo entre EBITDA</strong> sensiblemente inferior al de su competencia </p>
+            <!-- ({{deuda_corto_pond|sub:company.deuda_corto_sector_pond|div:company.deuda_corto_sector_pond|mul:100|floatformat:0}}%) -->
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <div class="col s12 m5">
+    <p class="flow-text center-align">Puntos a mejorar</p>
+      <div class="card horizontal grey lighten-3">
+        <div class="card-stacked">
+          <!-- <div class="card-content black-text">
+            <p>{{company.name}} tiene un riesgo no cubierto al tipo de cambio frente al dollar</p>
+          </div> -->
+        </div>
+      </div>
+    </div>
+    <div class="col s12 m1"></div>
+  </div>
+{% elif company.id == 1610 %}
+  <div class="row">
+    <div class="col s12 m1"></div>
+    <div class="col s12 m5">
+      <p class="flow-text center-align">Puntos fuertes</p>
+      <div class="card horizontal green lighten-2">
+        <div class="card-stacked">
+        	<div class="card-content black-text">
+            <p><strong>Buena salud financiera</strong> según los modelos de riesgo internos de la entidad</p>
+          </div>
+          <div class="divider"></div>
+          <div class="card-content black-text">
+            <p><strong>Ratio de endeudamiento</strong> sensiblemente inferior al de su competencia </p>
+            <!-- ({{company.ratio_endeudamiento|sub:company.ratio_endeudamiento_sector|div:company.ratio_endeudamiento_sector|mul:100|floatformat:0}}%) -->
+          </div>
+          <div class="divider"></div>
+          <div class="card-content black-text">
+            <p><strong>Ratio de deuda entre EBITDA</strong> sensiblemente inferior al de su competencia </p>
+            <!-- ({{deuda_ebitda|sub:company.deuda_total_sector_pond|div:company.deuda_total_sector_pond|mul:100|floatformat:0}}%) -->
+          </div>
+          <div class="divider"></div>
+          <div class="card-content black-text">
+            <p><strong>Ratio de deuda a corto plazo entre EBITDA</strong> sensiblemente inferior al de su competencia </p>
+            <!-- ({{deuda_corto_pond|sub:company.deuda_corto_sector_pond|div:company.deuda_corto_sector_pond|mul:100|floatformat:0}}%) -->
+          </div>
+          
+          
+        </div>
+      </div>
+    </div>
+    
+    <div class="col s12 m5">
+    <p class="flow-text center-align">Puntos a mejorar</p>
+      <div class="card horizontal grey lighten-3">
+        <div class="card-stacked">
+          <div class="card-content black-text">
+          	<p>El <strong>ratio de días a cobrar / días a pagar está desbalanceado</strong> y es  peor que el de su competencia</p>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col s12 m1"></div>
+  </div>
+{% endif %}
+
+	<div class="row">
+			    <div class="grey-bckg">
+			    	<div class="row grey-bckg padding_title">
+		      	  		<div class="col s12 m2 line">
+		      	  			<div class="center-align">
+				            <i class="fa fa-money" aria-hidden="true"></i><span class="card-title"> Situación financiera</span>
+				            <h4 class="align-right orange-text darken-1"></h4>
+				            {% if company.hats_alert %}
+			                    {% if company.hats_alert == "ROJA" %}
+			                    <h4 class="align-right red-text darken-1">{{company.hats_alert}}</h4>
+			                    {% elif company.hats_alert == "AMARILLA" %}
+			                    <h4 class="align-right yellow-text darken-1">{{company.hats_alert}}</h4>
+			                    {% elif company.hats_alert == "VERDE" %}
+			                    <h4 class="align-right green-text darken-1">{{company.hats_alert}}</h4>
+			                    {% endif %}
+			                    {% else %}
+			                    <h4 class="align-right orange-text darken-1">-</h4>
+			                {% endif %}
+				            </div>
+				        </div>
+
+				        <div class="col s12 m2 line">
+		      	  			<div class="center-align ">
+				            <i class="fa fa-users" aria-hidden="true"></i><span class="card-title"> Endeudamiento</span>
+				            <h4 class="align-right orange-text darken-1">55%</h4>
+				            <span class="green-text text-darken-1"><i class="fa fa-sort-up" aria-hidden="true"></i><span class="card-title">5%</span></span> <span class="light">Desde el mes pasado</span>
+				            </div>
+				        </div>
+
+				        <div class="col s12 m2 line">
+		      	  			<div class="center-align ">
+				            <i class="fa fa-eur" aria-hidden="true"></i><span class="card-title"> Deuda / EBITDA</span>
+				            {% if company.deuda_total > 0 %}
+				            <h4 class="align-right orange-text darken-1">{{deuda_ebitda|mul:100|floatformat:0|intcomma}}%</h4>
+				            <!-- {{company.deuda_total|div:ultimos_eeff.ebitda|mul:100|floatformat:1|intcomma}} -->
+				            {% else %}
+				            <h4 class="align-right orange-text darken-1">-</h4>
+				            {% endif %}
+				            <span class="red-text text-darken-1"><i class="fa fa-sort-down" aria-hidden="true"></i><span class="card-title">4%</span></span> <span class="light">Desde el mes pasado</span>
+				            </div>
+				        </div>
+
+				        <div class="col s12 m2 line">
+		      	  			<div class="center-align ">
+				            <i class="fa fa-cubes" aria-hidden="true"></i><span class="card-title"> Deuda a largo</span>
+				            <h4 class="align-right orange-text darken-1">{{deuda_largo|floatformat:0|intcomma}}€</h4>
+				            <span class="red-text text-darken-1"><i class="fa fa-sort-down" aria-hidden="true"></i><span class="card-title">7%</span></span> <span class="light">Desde el mes pasado</span>
+				            </div>
+				        </div>
+
+				        <div class="col s12 m2 line">
+		      	  			<div class="center-align ">
+				            <i class="fa fa-rocket" aria-hidden="true"></i><span class="card-title"> Deuda a corto</span>
+				            <h4 class="align-right orange-text darken-1">{{deuda_corto|floatformat:0|intcomma}}€</h4>
+				            <span class="green-text text-darken-1"><i class="fa fa-sort-up" aria-hidden="true"></i><span class="card-title">5%</span></span> <span class="light">Desde el mes pasado</span>
+				            </div>
+				        </div>
+
+				        <div class="col s12 m2">
+		      	  			<div class="center-align ">
+				            <i class="fa fa-money" aria-hidden="true"></i><span class="card-title"> Ratio corto/largo</span>
+				            {% if company.cirbe.largo_plazo_dispuesto > 0 %}
+				            <h4 class="align-right orange-text darken-1">{{ratio_corto_largo|mul:100|floatformat:1|intcomma}}%</h4>
+				            {% else %}
+				            <h4 class="align-right orange-text darken-1">-</h4>
+				            {% endif %}
+				            <span class="green-text text-darken-1"><i class="fa fa-sort-up" aria-hidden="true"></i><span class="card-title">1%</span></span> <span class="light">Desde el mes pasado</span>
+				            </div>
+				        </div>
+				    
+				    </div>
+				 </div>
+
+				 <!-- /////////////////////////////////////////////////////////////
+				 ////// ¿Como son mis clientes?
+				 ///////////////////////////////////////////////////////////// -->
+
+					<div class="white_back title_conf">
+				    	<h4 class="flow-text">  Riesgo de crédito - ¿Puedo asumir más endeudamiento?</h4>
+				    </div>
+			    	<div class="row title_conf">
+			    	<!-- Resultado explotaciones -->
+			    	<div class="row">
+			    		<div class="col m6 s12">
+			    			<div class="card grey lighten-4">
+					            <div class="card-content grey-text darken-4">
+					            	<span class="card-title">Ratio de endeudamiento</span>
+					              <canvas id="ratio_endeudamiento_graph" width="300" height="150"></canvas>
+					            </div>
+					        </div>
+			    		</div>
+			    		<div class="col m6 s12">
+			    			<div class="card grey lighten-4">
+					            <div class="card-content grey-text darken-4">
+					              <blockquote>
+					    				<p class="light"><i class="tiny material-icons indigo-text darken-4">live_help</i> {{company.respuesta_finrisk_ratiodeuda_info}}</p>
+					    				<p class="light"><i class="tiny material-icons indigo-text darken-4">info</i> {{company.respuesta_finrisk_ratiodeuda_interpretation}}</p>
+					    				<p class="light"><i class="tiny material-icons indigo-text darken-4">new_releases</i> {{company.respuesta_finrisk_ratiodeuda_hint}} </p>
+					    				<div class="row">
+					    					<div class="col m12 s12 center-align"></div>
+					    					<div class="col m12 s12 center-align">
+					    						<span class="right-align"><a href="https://www.bancsabadell.com/cs/Satellite/SabAtl/Cuentas-de-empresa/1191357312542/es/" id="download-button" target="_blank" class="btn waves-effect waves-light transparent grey-text text-darken-4 border-grey"> Contrata un préstamo </a> </span>
+					    						<!-- https://www.bancosantander.es/es/empresas-advance/financiacion -->
+					    					</div>
+					    				</div>
+					    				
+					    			</blockquote>
+					            </div>
+					        </div>
+			    		</div>
+			    	</div>
+			    	<!-- EBITDA -->
+			    	<div class="row">
+			    		<div class="col m6 s12">
+			    			<div class="card grey lighten-4">
+					            <div class="card-content grey-text darken-4">
+					            	<span class="card-title">Deuda total / EBITDA</span>
+					              <canvas id="deuda_largo_graph" width="300" height="150"></canvas>
+					            </div>
+					        </div>
+			    		</div>
+			    		<div class="col m6 s12">
+			    			<div class="card grey lighten-4">
+					            <div class="card-content grey-text darken-4">
+					              <blockquote>
+					    				<p class="light"><i class="tiny material-icons indigo-text darken-4">live_help</i> {{company.respuesta_finrisk_deudatotal_info}}</p>
+					    				<p class="light"><i class="tiny material-icons indigo-text darken-4">info</i> {{company.respuesta_finrisk_deudatotal_interpretation}}</p>
+					    				<p class="light"><i class="tiny material-icons indigo-text darken-4">new_releases</i> {{company.respuesta_finrisk_deudatotal_hint}} </p>
+					    			</blockquote>
+					            </div>
+					        </div>
+			    		</div>
+			    	</div>
+			    	<!-- EBITDA -->
+			    	<div class="row">
+			    		<div class="col m6 s12">
+			    			<div class="card grey lighten-4">
+					            <div class="card-content grey-text darken-4">
+					            	<span class="card-title">Ratio deuda corto/largo plazo</span>
+					              <canvas id="ratio_corto_largo_graph" width="300" height="150"></canvas>
+					            </div>
+					        </div>
+			    		</div>
+			    		<div class="col m6 s12">
+			    			<div class="card grey lighten-4">
+					            <div class="card-content grey-text darken-4">
+					              <blockquote>
+					    				<p class="light"><i class="tiny material-icons indigo-text darken-4">live_help</i> {{company.respuesta_finrisk_cortolargo_info}}</p>
+					    				<p class="light"><i class="tiny material-icons indigo-text darken-4">info</i> {{company.respuesta_finrisk_cortolargo_interpretation}}</p>
+					    				<p class="light"><i class="tiny material-icons indigo-text darken-4">new_releases</i> {{company.respuesta_finrisk_cortolargo_hint}} </p>
+					    				<div class="row">
+					    					<div class="col m12 s12 center-align"></div>
+					    					<div class="col m12 s12 center-align">
+					    						<span class="right-align"><a href="https://www.bancsabadell.com/cs/Satellite/SabAtl/Lineas-de-credito/1191332198814/es/" id="download-button" target="_blank" class="btn waves-effect waves-light transparent grey-text text-darken-4 border-grey"> Contrata nuestra línea de crédito </a> </span>
+					    						<!-- https://www.bancosantander.es/es/empresas-advance/financiacion/financiacion-a-corto-plazo/credito-advance -->
+					    						
+					    					</div>
+					    				</div>
+					    			</blockquote>
+					            </div>
+					        </div>
+			    		</div>
+			    	</div>
+			    	<!-- EBITDA -->
+			    	<!-- <div class="row">
+			    		<div class="col m6 s12">
+			    			<div class="card grey lighten-4">
+					            <div class="card-content grey-text darken-4">
+					            	<span class="card-title">Coste de financiación</span>
+					              <canvas id="gasto_financiero_graph" width="300" height="150"></canvas>
+					            </div>
+					        </div>
+			    		</div>
+			    		<div class="col m6 s12">
+			    			<div class="card grey lighten-4">
+					            <div class="card-content grey-text darken-4">
+					              <blockquote>
+					    				<p class="light"><i class="tiny material-icons indigo-text darken-4">live_help</i> {{company.respuesta_finrisk_costefin_info}}</p>
+					    				<p class="light"><i class="tiny material-icons indigo-text darken-4">info</i> {{company.respuesta_finrisk_costefin_interpretation}}</p>
+					    				<p class="light"><i class="tiny material-icons indigo-text darken-4">new_releases</i> {{company.respuesta_finrisk_costefin_hint}} </p>
+					    				<div class="row">
+					    					<div class="col m12 s12 center-align"></div>
+					    					<div class="col m12 s12 center-align">
+					    						<span class="right-align"><a href="https://www.bancosantander.es/es/empresas-advance/financiacion" id="download-button" target="_blank" class="btn waves-effect waves-light transparent grey-text text-darken-4 border-grey"> Consulta nuestros productos </a> </span>
+					    						 https://www.bancsabadell.com/cs/Satellite/SabAtl/Financiacion/1191332198388/es/ 
+					    					</div>
+					    				</div>
+					    			</blockquote>
+					            </div>
+					        </div>
+			    		</div>
+			    	</div> -->
+			    	<!-- EBITDA -->
+			    	<div class="row">
+			    		<div class="col m7 s12">
+			    			<div class="card grey lighten-4">
+					            <div class="card-content grey-text darken-4">
+					            	<span class="card-title">Deuda por producto</span>
+					            	<div class="row center-align">
+						            		{% for producto in company.productos.all %}
+						            		<div class="col m4 s6">
+						            			<div class="card blue-grey lighten-3">
+						            				<span class="card-title blue-grey-text text-darken-3">{{producto.producto}}</span>
+						              				<h4 class="orange-text text-darken-2">{{producto.dispuesto|floatformat:0|intcomma}}€</h4>
+						              				<small class="blue-grey-text text-darken-3">Fecha vencimiento: {{producto.fecha_vencimiento}}</small><br>
+						              				<small class="blue-grey-text text-darken-3">Cuota anual: {{producto.cuota_anual|floatformat:1|intcomma}}€</small>
+						              			</div>
+						              		</div>
+						              		{% endfor %}
+					            	</div>
+					            </div>
+					        </div>
+			    		</div>
+			    		<div class="col m5 s12">
+			    			<div class="card grey lighten-4">
+					            <div class="card-content grey-text darken-4">
+					              <blockquote>
+					    				<p class="light"><i class="tiny material-icons indigo-text darken-4">live_help</i> {{company.respuesta_finrisk_deudaproducto_info}}</p>
+					    			</blockquote>
+					            </div>
+					        </div>
+			    		</div>
+			    	</div>
+			    	</div>
+
+			    <!-- /////////////////////////////////////////////////////////////
+				 ////// ¿Cómo me relaciono con ellos?
+				 ///////////////////////////////////////////////////////////// -->
+
+			    <div class="white_back title_conf">
+			    	<h3 class="flow-text">Riesgo de liquidez - ¿Puedo mejorar mi situación de caja?</h3>
+			    </div>
+			    	<div class="row title_conf">
+			    	<!-- Facturación -->
+			    	<div class="row">
+			    		<div class="col m6 s12">
+			    			<div class="card grey lighten-4">
+					            <div class="card-content grey-text darken-4">
+					            	<span class="card-title">Deuda a corto / EBITDA</span>
+					              <canvas id="deuda_corto_graph" width="300" height="150"></canvas>
+					            </div>
+					        </div>
+			    		</div>
+			    		<div class="col m6 s12">
+			    			<div class="card grey lighten-4">
+					            <div class="card-content grey-text darken-4">
+					              <blockquote>
+					    				<p class="light"><i class="tiny material-icons indigo-text darken-4">live_help</i> {{company.respuesta_finrisk_cortoebitda_info}}</p>
+					    				<p class="light"><i class="tiny material-icons indigo-text darken-4">info</i> {{company.respuesta_finrisk_cortoebitda_interpretation}}</p>
+					    				<p class="light"><i class="tiny material-icons indigo-text darken-4">new_releases</i> {{company.respuesta_finrisk_cortoebitda_hint}}</p>
+					    				<div class="row">
+					    					<div class="col m12 s12 center-align"></div>
+					    					<div class="col m12 s12 center-align">
+					    						<span class="right-align"><a href="https://www.bancsabadell.com/cs/Satellite/SabAtl/Lineas-de-credito/1191332198814/es/" id="download-button" target="_blank" class="btn waves-effect waves-light transparent grey-text text-darken-4 border-grey"> Productos de corto plazo</a> </span>
+					    						<!-- https://www.bancosantander.es/es/empresas-advance/financiacion/financiacion-a-corto-plazo/financiacion-a-corto-plazo -->
+					    					</div>
+					    				</div>
+					    			</blockquote>
+					            </div>
+					        </div>
+			    		</div>
+			    	</div>
+			    		<!-- 
+			
+			    	<div class="row">
+			    		<div class="col m6 s12">
+			    			<div class="card grey lighten-4">
+					            <div class="card-content grey-text darken-4">
+					            	<span class="card-title">Calendario aproximado de próximos pagos</span>
+					              	<canvas id="calendario_de_pagos" width="300" height="150"></canvas>
+					            </div>
+					        </div>
+			    		</div>
+			    		<div class="col m6 s12">
+			    			<div class="card grey lighten-4">
+					            <div class="card-content grey-text darken-4">
+					              <blockquote>
+					    				<p class="light"><i class="tiny material-icons indigo-text darken-4">live_help</i> {{company.respuesta_finrisk_calendario_info}}</p>
+					    			</blockquote>
+					            </div>
+					        </div>
+			    		</div>
+			    	</div> -->
+			    	<!-- Resultado explotaciones -->
+			    	<div class="row">
+			    		<div class="col m6 s12">
+			    			<div class="col m6 s12">
+						    	<div class="card grey lighten-4">
+						    	<div class="card-content grey-text darken-4">
+							    		<span class="card-title">Días a cobrar</span>
+				              			<div class="row">
+					              			<div class="col s4">
+					              				<i class="fa fa-user" aria-hidden="true"></i>
+					              				<br>
+					              				Tú
+					              			</div>
+					              			<div class="col s5">
+					              				<h5> {{dias_a_cobrar|floatformat:0|intcomma}}<small></small></h5>
+					              			</div>
+					              			<div class="col s3">
+					              				<span class="green-text text-darken-1"><i class="fa fa-sort-up" aria-hidden="true"></i><span class="card-title"> 34%</span></span> 
+					              			</div>
+				              			</div>
+				              			<div class="row">
+					              			<div class="col s4">
+					              				<i class="fa fa-users" aria-hidden="true"></i>
+					              				<br>
+					              				Tus comparables
+					              			</div>
+					              			<div class="col s5">
+					              				<h5> {{dias_a_cobrar_sector|floatformat:0|intcomma}}<small></small></h5>
+					              			</div>
+					              			<div class="col s3">
+					              				<span class="green-text text-darken-1"><i class="fa fa-sort-up" aria-hidden="true"></i><span class="card-title"> 10%</span></span> 
+					              			</div>
+				              			</div>
+				              	</div>
+				              	</div>
+						    </div>
+						    <div class="col m6 s12">
+						    	<div class="card grey lighten-4">
+						    	<div class="card-content grey-text darken-4">
+							    		<span class="card-title">Días a pagar</span>
+				              			<div class="row">
+					              			<div class="col s4">
+					              				<i class="fa fa-user" aria-hidden="true"></i>
+					              				<br>
+					              				Tú
+					              			</div>
+					              			<div class="col s5">
+					              				<h5> {{dias_a_pagar|floatformat:0|intcomma}}<small></small></h5>
+					              			</div>
+					              			<div class="col s3">
+					              				<span class="red-text text-darken-1"><i class="fa fa-sort-down" aria-hidden="true"></i><span class="card-title"> 5%</span></span> 
+					              			</div>
+				              			</div>
+				              			<div class="row">
+					              			<div class="col s4">
+					              				<i class="fa fa-users" aria-hidden="true"></i>
+					              				<br>
+					              				Tus comparables
+					              			</div>
+					              			<div class="col s5">
+					              				<h5> {{dias_a_pagar_sector|floatformat:0|intcomma}}<small></small></h5>
+					              			</div>
+					              			<div class="col s3">
+					              				<span class="green-text text-darken-1"><i class="fa fa-sort-up" aria-hidden="true"></i><span class="card-title"> 1%</span></span> 
+					              			</div>
+				              			</div>
+				              	</div>
+				              	</div>
+						    </div>
+			    		</div>
+			    		<div class="col m6 s12">
+			    			<div class="card grey lighten-4">
+					            <div class="card-content grey-text darken-4">
+					              <blockquote>
+					    				<p class="light"><i class="tiny material-icons indigo-text darken-4">live_help</i> {{company.respuesta_finrisk_workingcapital_info}}</p>
+					    				<p class="light"><i class="tiny material-icons indigo-text darken-4">info</i> {{company.respuesta_finrisk_workingcapital_interpretation}}</p>
+					    				<p class="light"><i class="tiny material-icons indigo-text darken-4">new_releases</i> {{company.respuesta_finrisk_workingcapital_hint}}</p>
+					    				<div class="row">
+					    					<div class="col m12 s12 center-align"></div>
+					    					<div class="col m12 s12 center-align">
+					    						<span class="right-align"><a href="https://www.bancsabadell.com/cs/Satellite/SabAtl/Lineas-de-credito/1191332198814/es/" id="download-button" target="_blank" class="btn waves-effect waves-light transparent grey-text text-darken-4 border-grey"> Productos para circulante </a> </span>
+					    						<!-- https://www.bancosantander.es/es/empresas-advance/financiacion/financiacion-a-corto-plazo/financiacion-a-corto-plazo -->
+					    					</div>
+					    				</div>
+					    			</blockquote>
+					            </div>
+					        </div>
+			    		</div>
+			    	</div>
+			    </div>
+
+			    <!-- /////////////////////////////////////////////////////////////
+				 ////// ¿Debería buscar nuevas oportunidades?
+				 ///////////////////////////////////////////////////////////// -->
+
+			    	<div class="row title_conf">
+			    	<!-- Resultado explotaciones -->
+			    	<div class="row">
+			    		<div class="col m3 s12">
+			    			<div class="card grey lighten-4">
+					            <div class="card-content grey-text darken-4">
+					            	<span class="card-title">Tipo de divisa</span>
+					              	<canvas id="volumen_por_divisa_graph" width="300" height="300"></canvas>
+					            </div>
+					        </div>
+			    		</div>
+			    		<div class="col m4 s12">
+			    			<div class="card grey lighten-4">
+					            <div class="card-content grey-text darken-4">
+					            	<span class="card-title">Volumen en riesgo</span>
+					              	<p>En caso de una variación del tipo de cambio tus ingressos pueden verse afectados.</p>
+					              		<div class="row">
+					              		<div class="col m6 s6">
+					              			<h6>Depreciación del 1%:</h6>
+					              		</div>
+					              		<div class="col m6 s6">
+					              			<h5 class="red-text">{{company.get_total_sells|mul:0.01|mul:-0.01|floatformat:1|intcomma}} €</h5>
+					              		</div>
+					              		</div>
+					              		<div class="row">
+					              		<div class="col m6 s6">
+					              			<h6>Depreciación del 10%:</h6>
+					              		</div>
+					              		<div class="col m6 s6">
+					              			<h5 class="red-text">{{company.get_total_sells|mul:0.01|mul:-0.1|floatformat:1|intcomma}} €</h5>
+					              		</div>
+					              		</div>
+					              		<div class="row">
+					              		<div class="col m6 s6">
+					              			<h6>Apreciación del 1%:</h6>
+					              		</div>
+					              		<div class="col m6 s6">
+					              			<h5 class="green-text">{{company.get_total_sells|mul:0.01|mul:0.01|floatformat:1|intcomma}} €</h5>
+					              		</div>
+					              		</div>
+					              		<div class="row">
+					              		<div class="col m6 s6">
+					              			<h6>Apreciación del 5%:</h6>
+					              		</div>
+					              		<div class="col m6 s6">
+					              			<h5 class="green-text">{{company.get_total_sells|mul:0.01|mul:0.05|floatformat:1|intcomma}} €</h5>
+					              		</div>
+					              		</div>
+					            </div>
+					        </div>
+			    		</div>
+			    		<div class="col m5 s12">
+			    			<div class="card grey lighten-4">
+					            <div class="card-content grey-text darken-4">
+					              <blockquote>
+					    				<p class="light"><i class="tiny material-icons indigo-text darken-4">live_help</i> {{company.respuesta_finrisk_divisa_info}}</p>
+					    				<p class="light"><i class="tiny material-icons indigo-text darken-4">info</i> {{company.respuesta_finrisk_divisa_interpretation}}</p>
+					    				<p class="light"><i class="tiny material-icons indigo-text darken-4">new_releases</i> {{company.respuesta_finrisk_divisa_hint}} </p>
+					    				<div class="row">
+					    					<div class="col m12 s12 center-align"></div>
+					    					<div class="col m12 s12 center-align">
+					    						<span class="right-align"><a href="https://www.bancsabadell.com/cs/Satellite/SabAtl/Coberturas-de-riesgo/1191332203628/es/" id="download-button" target="_blank" class="btn waves-effect waves-light transparent grey-text text-darken-4 border-grey"> Coberturas de divisas</a> </span>
+					    						<!-- https://www.bancosantander.es/es/empresas-advance/productos-y-servicios/proteccion/coberturas-de-tipo-de-cambio -->
+					    					</div>
+					    				</div>
+					    			</blockquote>
+					            </div>
+					        </div>
+			    		</div>
+			    	</div>
+			    </div>
+
+			    <!-- /////////////////////////////////////////////////////////////
+				 ////// ¿Cómo podría hacerlo?
+				 ///////////////////////////////////////////////////////////// -->
+
+			    	<div class="row title_conf">
+			    	<!-- Facturación -->
+			    	<div class="row">
+			    		<div class="col m6 s12">
+			    			<div class="card grey lighten-4">
+					            <div class="card-content grey-text darken-4">
+					            	<span class="card-title">Tienes contratados {{productos_variable.count}} producto(s) con tipo de interés variable</span>
+					            	<div class="row">
+					            	{% for producto in productos_variable%}
+						              	<div class="row center-align">
+						            		<div class="col m4 s12">
+						            			<p>Cuota actual</p>
+						            			<h5>{{producto.cuota_mensual|floatformat:0|intcomma}} €</h5>
+						            		</div>
+						            		<div class="col m4 s12">
+						            			<p>En el escenario...</p>
+						            			<h6><i class="fa fa-sort-up" aria-hidden="true"></i> 1% de Euribor </h6>
+						            		</div>
+						            		<div class="col m4 s12">
+						            			<!-- <p>Aumento cuota mensual</p>
+						            			<h5 class="red-text"><i class="fa fa-sort-up" aria-hidden="true"></i> {{producto.cuota_mensual_mas_1|sub:producto.cuota_mensual|floatformat:2|intcomma}} €</h5> -->
+						            			<p>Aumento cuota anual</p>
+						            			<h5 class="red-text"><i class="fa fa-sort-up" aria-hidden="true"></i> {{producto.cuota_mensual_mas_1|sub:producto.cuota_mensual|mul:12|floatformat:2|intcomma}} €</h5>
+						            		</div>
+										</div>
+										
+									{% endfor %}
+									</div>
+					            </div>
+					        </div>
+			    		</div>
+			    		<div class="col m6 s12">
+			    			<div class="card grey lighten-4">
+					            <div class="card-content grey-text darken-4">
+					              <blockquote>
+					    				<p class="light"><i class="tiny material-icons indigo-text darken-4">live_help</i> {{company.respuesta_finrisk_interes_info}}</p>
+					    				<p class="light"><i class="tiny material-icons indigo-text darken-4">info</i> {{company.respuesta_finrisk_interes_interpretation}}</p>
+					    				<p class="light"><i class="tiny material-icons indigo-text darken-4">new_releases</i> {{company.respuesta_finrisk_interes_hint}} </p>
+					    				<div class="row">
+					    					<div class="col m12 s12 center-align"></div>
+					    					<div class="col m12 s12 center-align">
+					    						<span class="right-align"><a href="https://www.bancsabadell.com/cs/Satellite/SabAtl/Coberturas-de-riesgo/1191332203628/es/" id="download-button" target="_blank" class="btn waves-effect waves-light transparent grey-text text-darken-4 border-grey"> Coberturas de tipo de interés</a> </span>
+					    						<!-- https://www.bancosantander.es/es/empresas-advance/productos-y-servicios/proteccion/coberturas-de-tipo-de-interes -->
+					    					</div>
+					    				</div>
+					    			</blockquote>
+					            </div>
+					        </div>
+			    		</div>
+			    	</div>
+			    </div>
+	  </div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.1.4/Chart.bundle.min.js"></script>
+
+<script type="text/javascript">
+
+	Chart.defaults.global.legend.display = false;
+	// And for a doughnut chart
+  	var deuda_corto_graph = document.getElementById("deuda_corto_graph");
+  	var deuda_largo_graph = document.getElementById("deuda_largo_graph");
+  	var ratio_corto_largo_graph = document.getElementById("ratio_corto_largo_graph");
+  	var ratio_endeudamiento_graph = document.getElementById("ratio_endeudamiento_graph");
+  	// var calendario_de_pagos = document.getElementById("calendario_de_pagos");
+  	var volumen_por_divisa_graph = document.getElementById("volumen_por_divisa_graph");
+  	var gasto_financiero_graph = document.getElementById("gasto_financiero_graph");
+  	
+  	// BarGraph(calendario_de_pagos); //, {{get_monthly_sells|safe}}, {{get_monthly_sector_avg_sells|safe}});
+  	stackedbarchart(deuda_corto_graph, 'hola_2', 'hola_2', {{deuda_corto_pond}}, {{company.deuda_corto_sector_pond}}, 'Deuda a corto')
+  	stackedbarchart(deuda_largo_graph, 'hola_2', 'hola_2', {{deuda_ebitda}}, {{company.deuda_total_sector_pond}}, 'Deuda a largo')
+  	stackedbarchart(ratio_corto_largo_graph, 'hola_2', 'hola_2', {{ratio_corto_largo}}, {{company.ratio_sector_corto_largo}}, 'Ratio corto/largo')
+  	// stackedbarchart(gasto_financiero_graph, 'hola_2', 'hola_2', {{company.costes_financiacion}}, {{company.costes_financiacion_sector}}, 'Gasto financiero')
+  	stackedbarchart(ratio_endeudamiento_graph, 'hola_2', 'hola_2', {{company.ratio_endeudamiento}}, {{company.ratio_endeudamiento_sector}}, 'Ratio de endeudamiento')
+  	pie(volumen_por_divisa_graph, [{{company.get_total_sells|mul:0.01}},{{company.get_total_sells|mul:0.8}}], ['Dollar', 'Euro'])
+  	// prepare data...
+  	function BarGraph(div, data) {//, data_sector, data_you) {
+  		// var labels_1 = [];
+  		// var labels_2 = []; 
+  		// var data_1=[];
+  		// var data_2=[];
+  		// var sector = data_sector
+  		// var you = data_you
+  		// sector.forEach(function(packet, i) {
+	   //    labels_1.push(packet.month);
+	   //    data_1.push(packet.c);
+	   //  });
+	   //  you.forEach(function(packet, i) {
+	   //  	console.log('Bar Graphs')
+	   //  	console.log(labels_1)
+	   //  	console.log(packet.month)
+	   //  	console.log(labels_1.includes(packet.month))
+	   //  	if (labels_1.includes(packet.month)==true) {
+	   //  		labels_2.push(packet.month);
+	   //    		data_2.push(packet.c);
+	   //  	} else {
+	   //  		labels_2.push(labels_1[i]);
+	   //    		data_2.push(0);
+	   //  	}
+	   //  });
+	    barchart(div, ["Jan-16","Feb-16","Mar-16","Apr-16","May-16","Jun-16","Jul-16","Aug-16","Sep-16","Oct-16","Nov-16","Dec-16"], ["Jan-16","Feb-16","Mar-16","Apr-16","May-16","Jun-16","Jul-16","Aug-16","Sep-16","Oct-16","Nov-16","Dec-16"], [328,328,328,328,328,328,328,328,328,328,328,328], [658,658,658,658,658,658,658,658,658,658,658,658], [849,849,849,849,849,849,849,849,849,849,849,849], 'Pagos mensuales') //barchart(div, labels_1, labels_2, data_1, data_2, '# Transferencias / mes')
+  	}
+
+  	// prepare data...
+  	function LineGraph(div, data_sector, data_you) {
+  		var labels_1 = [];
+  		var labels_2 = []; 
+  		var data_1=[];
+  		var data_2=[];
+  		var sector = data_sector
+  		var you = data_you
+  		sector.forEach(function(packet, i) {
+	      labels_1.push(packet.ejercicio);
+	      data_1.push(packet.c);
+	    });
+	    you.forEach(function(packet, i) {
+	    	console.log('Line Graphs')
+	    	console.log(labels_1)
+	    	console.log(packet.ejercicio)
+	    	console.log(labels_1.includes(packet.ejercicio))
+	      	if (labels_1.includes(packet.ejercicio)==true) {
+	    		labels_2.push(packet.ejercicio);
+	      		data_2.push(packet.c);
+	    	} else {
+	    		labels_2.push(labels_1[i]);
+	      		data_2.push(0);
+	    	}
+	    });
+	    // console.log(facturacion_graph)
+	    // console.log(labels_1)
+	    // console.log(labels_2)
+	    // console.log(data_1)
+	    // console.log(data_2)
+	    line(div, labels_1, labels_2, data_1, data_2)
+  	}
+
+  	function barchart(div, labels_1, labels_2, data_1, data_2, data_3, title)
+        {
+        	var myChart = new Chart(div, {
+		        type: 'bar',
+		        data: {
+		            labels: labels_2,
+		            datasets: [{
+		                label: "Préstamo 1",
+		                data: data_1,
+		                backgroundColor: 'rgba(47,79,79, 0.2)',
+		                borderColor: 'rgba(47,79,79, 1)',
+		                borderWidth: 2
+		            },
+		            {
+		                label: "Préstamo 2",
+		                data: data_2,
+		                backgroundColor: 'rgba(169,169,169, 0.2)',
+		                borderColor: 'rgba(169,169,169, 1)',
+		                borderWidth: 2
+		            },
+		            {
+		                label: "Préstamo 3",
+		                data: data_3,
+		                backgroundColor: 'rgba(129,129,129, 0.2)',
+		                borderColor: 'rgba(129,129,129, 1)',
+		                borderWidth: 2
+		            }]
+		        },
+		        options: {
+		            legend: {
+		                display: false,
+		                labels: {
+		                    fontColor: 'rgb(255, 99, 132)'
+		                }
+		            },
+		            title: {
+		                display: true,
+		                text: title
+		            },
+		            responsive: true,
+		            scales: {
+		                yAxes: [{
+		                    ticks: {
+		                        beginAtZero:true
+		                    },
+		                    stacked: true
+		                },
+		                ],
+		                xAxes: [{
+		                    stacked: true
+		                },
+		                ]
+		            }
+		        }
+		    });
+    	}
+
+    function stackedbarchart(div, labels_1, labels_2, data_1, data_2, title)
+        {
+        	var dataset_1 = [data_1,data_2]
+        	var myChart = new Chart(div, {
+		        type: 'bar',
+		        data: {
+		            labels: ["Tu","Comparables"],
+		            datasets: [{
+		            	type: 'bar',
+		                label: "Valor",
+		                data: dataset_1,
+		                backgroundColor: 'rgba(47,79,79, 0.2)',
+		                borderColor: 'rgba(47,79,79, 1)',
+		                borderWidth: 2
+		            }
+		            ]
+		        },
+		        options: {
+		            legend: {
+		                display: false,
+		                labels: {
+		                    fontColor: 'rgb(255, 99, 132)'
+		                }
+		            },
+		            scales: {
+		                yAxes: [{
+						    stacked: false,
+						    ticks: {
+				                beginAtZero: true
+				            }
+		                }],
+		                xAxes: [{
+					        stacked: false
+					    }]
+		            }
+		        }
+		    });
+    	}
+
+    function pie(div, data, labels)
+        {
+           var myDoughnutChart = new Chart(div, {
+            type: 'pie',
+            data: {
+                labels: labels,
+                datasets: [
+                    {
+                        data: data,
+                        backgroundColor: [
+                            'rgba(128,128,128, 0.5)',
+                            'rgba(47,79,79, 0.5)',
+                            'rgba(119,136,153, 0.5)',
+                            'rgba(192,192,192, 0.5)',
+		                    'rgba(169,180,169, 0.5)',
+		                    'rgba(128,128,128, 0.5)',
+                    		'rgba(220,220,220, 0.5)',
+                        ],
+                        hoverBackgroundColor: [
+                            'rgba(128,128,128, 1)',
+                            'rgba(47,79,79, 1)',
+                            'rgba(119,136,153, 1)',
+                            'rgba(192,192,192, 1)',
+		                    'rgba(169,180,169, 1)',
+		                    'rgba(128,128,128, 1)',
+                    		'rgba(220,220,220, 1)',
+                        ]
+                    }]
+            },
+            animation:{
+                animateScale:true
+            }
+        });
+        }
+
+  	function donut(div, data, labels)
+        {
+           var myDoughnutChart = new Chart(div, {
+            type: 'doughnut',
+            data: {
+                labels: labels,
+                datasets: [
+                    {
+                        data: data,
+                        backgroundColor: [
+                            'rgba(128,128,128, 0.5)',
+                            'rgba(47,79,79, 0.5)',
+                            'rgba(119,136,153, 0.5)',
+                            'rgba(192,192,192, 0.5)',
+		                    'rgba(169,180,169, 0.5)',
+		                    'rgba(128,128,128, 0.5)',
+                    		'rgba(220,220,220, 0.5)',
+                        ],
+                        hoverBackgroundColor: [
+                            'rgba(128,128,128, 1)',
+                            'rgba(47,79,79, 1)',
+                            'rgba(119,136,153, 1)',
+                            'rgba(192,192,192, 1)',
+		                    'rgba(169,180,169, 1)',
+		                    'rgba(128,128,128, 1)',
+                    		'rgba(220,220,220, 1)',
+                        ]
+                    }]
+            },
+            animation:{
+                animateScale:true
+            }
+        });
+        }
+
+    function line(div, labels, labels2, data1, data2) {
+    	var scatterChart = new Chart(div, {
+        type: 'line',
+        data: {
+            labels: labels,
+            datasets: [{
+            label: "Comparables",
+            backgroundColor: "rgba(220,220,220,0.5)",
+            borderColor: "rgba(220,220,220,0.8)",
+            highlightFill: "rgba(220,220,220,0.75)",
+            pointHoverBackgroundColor: "rgba(220,220,220,1)",
+            showTooltip: false, //NEW OPTION DON"T NEED TO INCLUDE IT IF YOU WANT TO DISPLAY BUT WON"T HURT IF YOU DO
+            data: data1
+        }, {
+            label: "{{company.name|safe}}",
+            backgroundColor: "rgba(47,79,79,0.5)",
+            borderColor: "rgba(47,79,79,0.8)",
+            highlightFill: "rgba(47,79,79,0.75)",
+            pointHoverBackgroundColor: "rgba(47,79,79,1)",
+            showTooltip: false, //NEW OPTION DON"T NEED TO INCLUDE IT IF YOU WANT TO DISPLAY BUT WON"T HURT IF YOU DO
+            data: data2
+        }]},
+        options: {
+          responsive: true,
+          pointDotRadius: 10,
+          bezierCurve: false,
+          scaleShowVerticalLines: false,
+          scaleGridLineColor: 'black'
+        }
+    });
+    }
+</script>
+{% endblock %}
+
+ {% block alt_js %}
+<script type="text/javascript">
+
+	$(document).ready(function(){
+
+	});
+
+
+</script>
+{% endblock alt_js %}

@@ -11,6 +11,7 @@ from .views import (HomeView,
                     TransferDetailView, 
                     TrasferCreateView, 
                     CommercialClientsRecommendationsView2,
+                    CommercialProvidersRecommendationsView2,
                     CommercialClientsRecommendationsView,
                     CommercialProvidersRecommendationsView,
                     FinancialRiskRecommendationsView,
@@ -31,13 +32,16 @@ from .views import (HomeView,
                     IntroView,
                     SwitchView,
                     SummaryView,
-                    get_data_mekko)
+                    get_data_mekko,
+                    FinancialRiskRecommendationsView2)
 
 urlpatterns = [
 
     url(r'^intro/$', IntroView, name='empresas_intro'),
     url(r'^summary/$', SummaryView, name='summary'),
     url(r'^recommendations/clients$', CommercialClientsRecommendationsView2, name='recommendations_clients2'),
+    url(r'^recommendations/providers$', CommercialProvidersRecommendationsView2, name='recommendations_providers2'),
+    url(r'^recommendations/financial$', FinancialRiskRecommendationsView2, name='recommendations_financial2'),
     url(r'^get_data_mekko/$', get_data_mekko, name='get_data_mekko'),
     url(r'^$', HomeView, name='empresas_home'),
     #url(r'^create/$', EmpresaDetailView, name='empresa_create'),
