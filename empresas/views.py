@@ -169,33 +169,44 @@ def get_data_mekko(request, *args, **kwargs):
 	return JsonResponse(data, safe=False)
 
 def SummaryView(request):
-	if request.POST:
-		if request.POST and request.POST.get('company_name',None):
-			name = request.POST['company_name']
-		try:
-			del request.session['company']
-			del request.session['recommended_clients_page']
-		except:
-			pass
-		try:
-			got_it = Empresa.objects.filter(name=name).first()
-			company = got_it.pk #1492 #randint(0, queryset.count() - 1) # # ## 865 865-1
-		except:
-			return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
-		request.session['company'] = company
+	try:
+		referrer = request.META['HTTP_REFERER']
+		print('---------------')
+		print(request.GET)
+		print(request.GET.get('company_name',None))
+		if request.GET and request.GET.get('company_name',None):
+			name = request.GET['company_name']
+			print('---------------')
+			print(name)
+			try:
+				del request.session['company']
+				del request.session['recommended_clients_page']
+			except:
+				pass
+			try:
+				got_it = Empresa.objects.filter(name=name).first()
+				company = got_it.pk #1492 #randint(0, queryset.count() - 1) # # ## 865 865-1
+			except:
+				return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
+			request.session['company'] = company
+			request.session['summary'] = True
+			request.session.modified = True
+			company_id = request.session.get('company')
+			company = Empresa.objects.filter(pk=company_id)
+			company = company.prefetch_related('estados_financieros','transfers')[0]
+			return render(request, "empresas/summary.html", {'empresa': company, 'company': company})
 
-		request.session['summary'] = True
-		request.session.modified = True
+		else:
+			company_id = request.session.get('company')
+			company = Empresa.objects.filter(pk=company_id)
+			company = company.prefetch_related('estados_financieros','transfers')[0]
+			return render(request, "empresas/summary.html", {'empresa': company, 'company': company})
+	except:
 		company_id = request.session.get('company')
 		company = Empresa.objects.filter(pk=company_id)
 		company = company.prefetch_related('estados_financieros','transfers')[0]
 		return render(request, "empresas/summary.html", {'empresa': company, 'company': company})
-		
-	else:
-		company_id = request.session.get('company')
-		company = Empresa.objects.filter(pk=company_id)
-		company = company.prefetch_related('estados_financieros','transfers')[0]
-		return render(request, "empresas/summary.html", {'empresa': company, 'company': company})
+
 """-------------------------------------------------------"""
 """				EMPRESAS VIEWS 							  """
 """-------------------------------------------------------"""
@@ -449,7 +460,8 @@ def SearchView(request):
 	# autofilter[company.name] = company.image
 	company = Empresa.objects.all()
 	comp = Empresa.objects.filter(pk=990).first()
-	comp.image = os.path.join(settings.STATIC_ROOT, 'images/TBR/Resized/231H_resized.jpg')
+	comp.image = posixpath.join(settings.STATIC_URL, "images/TBR/Resized/", "231H_resized.jpg")
+	comp.save()
 
 	for c in company:
 		autofilter[c.name] = c.image
@@ -499,9 +511,8 @@ def HomeView(request):
 		request.session['company'] = company
 		return HttpResponseRedirect(str(got_it.pk))
 
-	elif request.POST and request.POST.get('company_name',None):
-		name = request.POST['company_name']
-
+	elif request.GET and request.GET.get('company_name',None):
+		name = request.GET['company_name']
 	try:
 		del request.session['company']
 		del request.session['recommended_clients_page']

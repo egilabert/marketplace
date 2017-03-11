@@ -51,7 +51,7 @@ NetworkB2B
       <div class="row padding_top">
       <div class="col m3 s12"></div>
       <div class="col m6 s12">
-      <form action="{% url 'empresas:summary' %}" method="post" id="search_company">
+      <form action="{% url 'empresas:summary' %}" method="get" id="search_company">
         {% csrf_token %}
         <div class="input-field col s12">
           <i class="material-icons prefix">search</i>
