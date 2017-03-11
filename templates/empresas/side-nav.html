@@ -19,12 +19,16 @@
       <li><a href="{% url 'empresas:summary' %}"><i class="material-icons">airplay</i>Home</a></li>
       <li><a href="{% url 'empresas:faq' %}"><i class="material-icons">info_outline</i>FAQ & Comentarios</a></li>
       <li><div class="divider"></div></li>
-      <li><a class="subheader">Look & Find</a></li>
+      <li><a class="subheader">Marketplace</a></li>
       <li><a href="{% url 'empresas:clients' %}"><i class="material-icons">person_pin</i>Nuevos clientes!</a></li>
       <li><a href="{% url 'empresas:providers' %}"><i class="material-icons">settings_input_antenna</i>Nuevos proveedores!</a></li>
-      <li><a href="{% url 'empresas:recommendations' %}"><i class="material-icons">assessment</i>Tus recomendaciones!</a></li>
-      <li><a href="{% url 'empresas:recommendations_financial_risk' %}"><i class="material-icons">trending_down</i>Tus riesgos!</a></li>
-      <li><a href="{% url 'empresas:informe' %}"><i class="material-icons">assignment</i>Tu informe!</a></li>
+      <li><div class="divider"></div></li>
+      <li><a class="subheader">Análisis riesgos</a></li>
+      <li><a href="{% url 'empresas:detail' pk=company.pk %}"><i class="material-icons">assessment</i>Mercado!</a></li>
+      <li><a href="{% url 'empresas:recommendations_clients2' %}"><i class="material-icons">assignment</i>Tus clientes!</a></li>
+      <li><a href="{% url 'empresas:recommendations_providers2' %}"><i class="material-icons">assignment</i>Tus proveedores!</a></li>
+      <li><a href="{% url 'empresas:recommendations_financial2' %}"><i class="material-icons">trending_down</i>Financiero!</a></li>
+      
       
       <li><div class="divider"></div></li>
       <li><a class="subheader">Seguimiento</a></li>

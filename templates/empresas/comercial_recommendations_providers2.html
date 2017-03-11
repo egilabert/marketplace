@@ -16,33 +16,6 @@
 	<div class="parallax-container">
 		<h3 class="center-align grey-text text-darken-3 light">¿Cómo son tus proveedores?</h3>
 		<div class="row center grey-text text-darken-3">{{company.name}}</div>
-
-		{% if journey %}
-		<!-- <div class="row center">
-
-			<div class="col m4 s1"></div>
-			<div class="col m2 s4">
-				<a href="{% url 'empresas:recommendations' %}" id="download-button" class="btn-large waves-effect waves-light transparent pad_top grey-text text-darken-3 border-grey">Clientes  </a>
-			</div>
-			<div class="col m2 s4">
-				<a href="{% url 'empresas:recommendations_providers' %}" id="download-button" class="btn-large waves-effect waves-light alpha_back pad_top orange-text text-darken-4 border-grey">Proveedores  </a>
-			</div>
-        </div> -->
-        {% else %}
-        <!-- <div class="row center">
-
-			<div class="col m4 s3">
-				<a href="{% url 'empresas:detail' pk=company.pk %}" id="download-button" class="btn-large waves-effect waves-light transparent pad_top border-white">Mi empresa  </a>
-			</div>
-			<div class="col m4 s3">
-				<a href="{% url 'empresas:recommendations' %}" id="download-button" class="btn-large waves-effect waves-light transparent pad_top border-white">Clientes  </a>
-			</div>
-			<div class="col m4 s3">
-				<a href="{% url 'empresas:recommendations_providers' %}" id="download-button" class="btn-large waves-effect waves-light alpha_back pad_top orange-text text-darken-4 border-grey">Proveedores  </a>
-			</div>
-			
-        </div> -->
-        {% endif %}
 	    <div class="parallax"><img src="{% static 'images/supplier.jpg' %}"></div>
 	</div>
 
@@ -173,7 +146,7 @@
 				 ///////////////////////////////////////////////////////////// -->
 				 <div class="row">
 					<div class="white_back title_conf">
-				    	<h3 class="flow-text">¿Cómo son mis proveedores?  <i class="fa fa-caret-right" aria-hidden="true"></i>  Mejora la calidad de tus proveedores</h3>
+				    	<h3 class="flow-text">Análisis de oferta - ¿Cómo son mis proveedores?  <i class="fa fa-caret-right" aria-hidden="true"></i>  Mejora la calidad de tus proveedores</h3>
 				    </div>
 			    	<div class="row title_conf">
 			    	<!-- Facturación -->
@@ -266,6 +239,139 @@
 			    		</div>
 			    	</div>
 			    	</div>
+
+			    	<!-- /////////////////////////////////////////////////////////////
+				 ////// ¿Cómo me relaciono con ellos?
+				 ///////////////////////////////////////////////////////////// -->
+
+					<div class="white_back title_conf">
+				    	<h3 class="flow-text">  Análisis de solvencia - Riesgo de incumplimiento <i class="fa fa-caret-right" aria-hidden="true"></i> ¿Conoces el estado de tus proveedores?</h3>
+				    </div>
+			    	<div class="row title_conf">
+			    	<!-- Resultado explotaciones -->
+			    	<div class="row">
+			    		<div class="col m6 s12">
+			    			<div class="card grey lighten-4">
+					            <div class="card-content grey-text darken-4">
+					            	<span class="card-title">Riesgo de incumplimiento</span>
+					              <canvas id="hats_graph" width="300" height="140"></canvas>
+					            </div>
+					        </div>
+			    		</div>
+			    		<div class="col m6 s12">
+			    			<div class="card grey lighten-4">
+					            <div class="card-content grey-text darken-4">
+					              <blockquote>
+					    				<p class="light"><i class="tiny material-icons indigo-text darken-4">live_help</i> Nuestra métrica de riesgo de impago clasifica tus proveedores según su probabilidad de entrar en problemas financieros en los próximos meses. Una alta concentración de proveedores en estado rojo podría ser preocupante para la evolución de tu negocio</p>
+					    				<p class="light"><i class="tiny material-icons indigo-text darken-4">new_releases</i> <span class="bold"> En promedio, el riesgo de impago de tus proveedores es parecido al de los de tu competencia</p>
+					    				<p class="light"><i class="tiny material-icons indigo-text darken-4">info</i> Puedes cubrir tu riesgo ampliando tu cartera de proveedores</p>
+					    				<div class="row">
+					    					<div class="col m3 s12"></div>
+					    					<div class="col m12 s12 center-align">
+					    						<span class="right-align"><a href="{% url 'empresas:providers' %}" id="download-button" target="_blank" class="btn waves-effect waves-light transparent grey-text text-darken-4 border-grey"> Busca nuevos proveedores </a> </span>
+					    					</div>
+					    				</div>
+					    			</blockquote>
+					            </div>
+					        </div>
+			    		</div>
+			    	</div>
+			    </div>
+
+
+			    <!-- /////////////////////////////////////////////////////////////
+				 ////// ¿Debería buscar nuevas oportunidades?
+				 ///////////////////////////////////////////////////////////// -->
+
+			    <div class="white_back title_conf">
+			    	<h3 class="flow-text">Análisis de concentración - ¿Debería buscar nuevas oportunidades?  <i class="fa fa-caret-right" aria-hidden="true"></i>  Mejora tu cartera de proveedores</h3>
+			    </div>
+			    	<div class="row title_conf">
+			    	<!-- Facturación -->
+			    	<div class="row">
+			    		<div class="col m6 s12">
+			    			<div class="card brown lighten-5">
+					            <div class="card-content grey-text darken-4">
+					            	<span class="card-title">Concentración de mi empresa</span>
+					            	<div class="row center-align">
+					            		<div class="col m3 s12 line">
+					            			<p>Proveedores</p>
+					            			<h5><small><i class="fa fa-user" aria-hidden="true"></i></small>  {{hhi_providers|floatformat:2}}</h5>
+					            			<h5><small><i class="fa fa-users" aria-hidden="true"></i></small> {{company.hhi_providers_sector|floatformat:2}}</h5>
+					            		</div>
+					            		<div class="col m3 s12 line">
+					            			<p>Geográfica</p>
+					            			<h5><small><i class="fa fa-user" aria-hidden="true"></i></small>  {{company.hhi_geografical_providers|floatformat:2}}</h5>
+					            			<h5><small><i class="fa fa-users" aria-hidden="true"></i></small> {{company.hhi_geografical_sector_providers|floatformat:2}}</h5>
+					            		</div>
+					            		<div class="col m3 s12 line">
+					            			<p>Sectorial</p>
+					            			<h5><small><i class="fa fa-user" aria-hidden="true"></i></small>  {{company.hhi_cnae_providers|floatformat:2}}</h5>
+					            			<h5><small><i class="fa fa-users" aria-hidden="true"></i></small> {{company.hhi_cnae_sector_providers|floatformat:2}}</h5>
+					            		</div>
+					            		<div class="col m3 s12">
+					            			<p>Temporal</p>
+					            			<h5><small><i class="fa fa-user" aria-hidden="true"></i></small>  {{company.hhi_temporal_providers|floatformat:2}}</h5>
+					            			<h5><small><i class="fa fa-users" aria-hidden="true"></i></small> {{company.hhi_temporal_sector_providers|floatformat:2}}</h5>
+					            		</div>
+									</div>
+									<div class="divider"></div>
+									<div class="row center-align">
+					            		<div class="col m3 s12">
+					            			{% if company.hhi_providers|sub:company.hhi_providers_sector < 0 %}
+					            				<h5 style="color: green"> <i class="fa fa-sort-down" aria-hidden="true"></i> {{company.hhi_providers|sub:company.hhi_providers_sector|floatformat:2}}</h5>
+					            			{%else%}
+					            				<h5 style="color: red"> <i class="fa fa-sort-up" aria-hidden="true"></i> {{company.hhi_providers|sub:company.hhi_providers_sector|floatformat:2}}</h5>
+					            			{% endif %}
+					            			
+					            		</div>
+					            		<div class="col m3 s12">
+					            			{% if company.hhi_geografical_providers|sub:company.hhi_geografical_sector_providers < 0 %}
+					            				<h5 style="color: green"> <i class="fa fa-sort-down" aria-hidden="true"></i> {{company.hhi_geografical_providers|sub:company.hhi_geografical_sector_providers|floatformat:2}}</h5>
+					            			{%else%}
+					            				<h5 style="color: red"> <i class="fa fa-sort-up" aria-hidden="true"></i> {{company.hhi_geografical_providers|sub:company.hhi_geografical_sector_providers|floatformat:2}}</h5>
+					            			{% endif %}
+					            		</div>
+					            		<div class="col m3 s12">
+					            			{% if company.hhi_cnae_providers|sub:company.hhi_cnae_sector_providers < 0 %}
+					            				<h5 style="color: green"> <i class="fa fa-sort-down" aria-hidden="true"></i> {{company.hhi_cnae_providers|sub:company.hhi_cnae_sector_providers|floatformat:2}}</h5>
+					            			{%else%}
+					            				<h5 style="color: red"> <i class="fa fa-sort-up" aria-hidden="true"></i> {{company.hhi_cnae_providers|sub:company.hhi_cnae_sector_providers|floatformat:2}}</h5>
+					            			{% endif %}
+					            		</div>
+					            		<div class="col m3 s12">
+					            			{% if company.hhi_temporal_providers|sub:company.hhi_temporal_sector_providers < 0 %}
+					            				<h5 style="color: green"> <i class="fa fa-sort-down" aria-hidden="true"></i> {{company.hhi_temporal_providers|sub:company.hhi_temporal_sector_providers|floatformat:2}}</h5>
+					            			{%else%}
+					            				<h5 style="color: red"> <i class="fa fa-sort-up" aria-hidden="true"></i> {{company.hhi_temporal_providers|sub:company.hhi_temporal_sector_providers|floatformat:2}}</h5>
+					            			{% endif %}
+					            		</div>
+									</div>
+					            </div>
+					        </div>
+			    		</div>
+			    		<div class="col m6 s12">
+			    			<div class="card brown lighten-5">
+					            <div class="card-content grey-text darken-4">
+					              <blockquote>
+					    				<p class="light"><i class="tiny material-icons indigo-text darken-4">live_help</i> {{company.respuesta_providers_concentracion_info}}</p>
+					    				<p class="light"><i class="tiny material-icons indigo-text darken-4">info</i> {{company.respuesta_providers_concentracion_interpretation}}</p>
+					    				
+					    				<p class="light"><i class="tiny material-icons indigo-text darken-4">new_releases</i> {{company.respuesta_providers_concentracion_hint}} </p>
+					    				<div class="row">
+					    					<div class="col m2 s6"></div>
+					    					<div class="col m12 s12 center-align">
+					    						<span class="right-align"><a href="{% url 'empresas:providers' %}" target="_blank" class="btn waves-effect waves-light transparent grey-text text-darken-4 border-grey"> Busca nuevos proveedores </a> </span>
+					    					</div>
+					    				</div>
+					    			
+					    			</blockquote>
+					            </div>
+					        </div>
+			    		</div>
+			    	</div>
+			    </div>
+
 
 			    <!-- /////////////////////////////////////////////////////////////
 				 ////// ¿Cómo me relaciono con ellos?
@@ -370,99 +476,6 @@
 			    </div>
 
 			    <!-- /////////////////////////////////////////////////////////////
-				 ////// ¿Debería buscar nuevas oportunidades?
-				 ///////////////////////////////////////////////////////////// -->
-
-			    <div class="white_back title_conf">
-			    	<h3 class="flow-text">¿Debería buscar nuevas oportunidades?  <i class="fa fa-caret-right" aria-hidden="true"></i>  Amplia y mejora la calidad de tu cartera de proveedores</h3>
-			    </div>
-			    	<div class="row title_conf">
-			    	<!-- Facturación -->
-			    	<div class="row">
-			    		<div class="col m6 s12">
-			    			<div class="card brown lighten-5">
-					            <div class="card-content grey-text darken-4">
-					            	<span class="card-title">Concentración de mi empresa</span>
-					            	<div class="row center-align">
-					            		<div class="col m3 s12 line">
-					            			<p>Proveedores</p>
-					            			<h5><small><i class="fa fa-user" aria-hidden="true"></i></small>  {{hhi_providers|floatformat:2}}</h5>
-					            			<h5><small><i class="fa fa-users" aria-hidden="true"></i></small> {{company.hhi_providers_sector|floatformat:2}}</h5>
-					            		</div>
-					            		<div class="col m3 s12 line">
-					            			<p>Geográfica</p>
-					            			<h5><small><i class="fa fa-user" aria-hidden="true"></i></small>  {{company.hhi_geografical_providers|floatformat:2}}</h5>
-					            			<h5><small><i class="fa fa-users" aria-hidden="true"></i></small> {{company.hhi_geografical_sector_providers|floatformat:2}}</h5>
-					            		</div>
-					            		<div class="col m3 s12 line">
-					            			<p>Sectorial</p>
-					            			<h5><small><i class="fa fa-user" aria-hidden="true"></i></small>  {{company.hhi_cnae_providers|floatformat:2}}</h5>
-					            			<h5><small><i class="fa fa-users" aria-hidden="true"></i></small> {{company.hhi_cnae_sector_providers|floatformat:2}}</h5>
-					            		</div>
-					            		<div class="col m3 s12">
-					            			<p>Temporal</p>
-					            			<h5><small><i class="fa fa-user" aria-hidden="true"></i></small>  {{company.hhi_temporal_providers|floatformat:2}}</h5>
-					            			<h5><small><i class="fa fa-users" aria-hidden="true"></i></small> {{company.hhi_temporal_sector_providers|floatformat:2}}</h5>
-					            		</div>
-									</div>
-									<div class="divider"></div>
-									<div class="row center-align">
-					            		<div class="col m3 s12">
-					            			{% if company.hhi_providers|sub:company.hhi_providers_sector < 0 %}
-					            				<h5 style="color: green"> <i class="fa fa-sort-down" aria-hidden="true"></i> {{company.hhi_providers|sub:company.hhi_providers_sector|floatformat:2}}</h5>
-					            			{%else%}
-					            				<h5 style="color: red"> <i class="fa fa-sort-up" aria-hidden="true"></i> {{company.hhi_providers|sub:company.hhi_providers_sector|floatformat:2}}</h5>
-					            			{% endif %}
-					            			
-					            		</div>
-					            		<div class="col m3 s12">
-					            			{% if company.hhi_geografical_providers|sub:company.hhi_geografical_sector_providers < 0 %}
-					            				<h5 style="color: green"> <i class="fa fa-sort-down" aria-hidden="true"></i> {{company.hhi_geografical_providers|sub:company.hhi_geografical_sector_providers|floatformat:2}}</h5>
-					            			{%else%}
-					            				<h5 style="color: red"> <i class="fa fa-sort-up" aria-hidden="true"></i> {{company.hhi_geografical_providers|sub:company.hhi_geografical_sector_providers|floatformat:2}}</h5>
-					            			{% endif %}
-					            		</div>
-					            		<div class="col m3 s12">
-					            			{% if company.hhi_cnae_providers|sub:company.hhi_cnae_sector_providers < 0 %}
-					            				<h5 style="color: green"> <i class="fa fa-sort-down" aria-hidden="true"></i> {{company.hhi_cnae_providers|sub:company.hhi_cnae_sector_providers|floatformat:2}}</h5>
-					            			{%else%}
-					            				<h5 style="color: red"> <i class="fa fa-sort-up" aria-hidden="true"></i> {{company.hhi_cnae_providers|sub:company.hhi_cnae_sector_providers|floatformat:2}}</h5>
-					            			{% endif %}
-					            		</div>
-					            		<div class="col m3 s12">
-					            			{% if company.hhi_temporal_providers|sub:company.hhi_temporal_sector_providers < 0 %}
-					            				<h5 style="color: green"> <i class="fa fa-sort-down" aria-hidden="true"></i> {{company.hhi_temporal_providers|sub:company.hhi_temporal_sector_providers|floatformat:2}}</h5>
-					            			{%else%}
-					            				<h5 style="color: red"> <i class="fa fa-sort-up" aria-hidden="true"></i> {{company.hhi_temporal_providers|sub:company.hhi_temporal_sector_providers|floatformat:2}}</h5>
-					            			{% endif %}
-					            		</div>
-									</div>
-					            </div>
-					        </div>
-			    		</div>
-			    		<div class="col m6 s12">
-			    			<div class="card brown lighten-5">
-					            <div class="card-content grey-text darken-4">
-					              <blockquote>
-					    				<p class="light"><i class="tiny material-icons indigo-text darken-4">live_help</i> {{company.respuesta_providers_concentracion_info}}</p>
-					    				<p class="light"><i class="tiny material-icons indigo-text darken-4">info</i> {{company.respuesta_providers_concentracion_interpretation}}</p>
-					    				
-					    				<p class="light"><i class="tiny material-icons indigo-text darken-4">new_releases</i> {{company.respuesta_providers_concentracion_hint}} </p>
-					    				<div class="row">
-					    					<div class="col m2 s6"></div>
-					    					<div class="col m12 s12 center-align">
-					    						<span class="right-align"><a href="{% url 'empresas:providers' %}" target="_blank" class="btn waves-effect waves-light transparent grey-text text-darken-4 border-grey"> Busca nuevos proveedores </a> </span>
-					    					</div>
-					    				</div>
-					    			
-					    			</blockquote>
-					            </div>
-					        </div>
-			    		</div>
-			    	</div>
-			    </div>
-
-			    <!-- /////////////////////////////////////////////////////////////
 				 ////// ¿Cómo podría hacerlo?
 				 ///////////////////////////////////////////////////////////// -->
 
@@ -543,40 +556,6 @@
 			    	</div>	
 			    </div>
 
-
-					<div class="white_back title_conf">
-				    	<h3 class="flow-text">  Riesgo de incumplimiento - ¿Conoces el estado de tus proveedores?</h3>
-				    </div>
-			    	<div class="row title_conf">
-			    	<!-- Resultado explotaciones -->
-			    	<div class="row">
-			    		<div class="col m6 s12">
-			    			<div class="card grey lighten-4">
-					            <div class="card-content grey-text darken-4">
-					            	<span class="card-title">Riesgo de incumplimiento</span>
-					              <canvas id="hats_graph" width="300" height="140"></canvas>
-					            </div>
-					        </div>
-			    		</div>
-			    		<div class="col m6 s12">
-			    			<div class="card grey lighten-4">
-					            <div class="card-content grey-text darken-4">
-					              <blockquote>
-					    				<p class="light"><i class="tiny material-icons indigo-text darken-4">live_help</i> Nuestra métrica de riesgo de impago clasifica tus proveedores según su probabilidad de entrar en problemas financieros en los próximos meses. Una alta concentración de proveedores en estado rojo podría ser preocupante para la evolución de tu negocio</p>
-					    				<p class="light"><i class="tiny material-icons indigo-text darken-4">new_releases</i> <span class="bold"> En promedio, el riesgo de impago de tus proveedores es parecido al de los de tu competencia</p>
-					    				<p class="light"><i class="tiny material-icons indigo-text darken-4">info</i> Puedes cubrir tu riesgo ampliando tu cartera de proveedores</p>
-					    				<div class="row">
-					    					<div class="col m3 s12"></div>
-					    					<div class="col m12 s12 center-align">
-					    						<span class="right-align"><a href="{% url 'empresas:providers' %}" id="download-button" target="_blank" class="btn waves-effect waves-light transparent grey-text text-darken-4 border-grey"> Busca nuevos proveedores </a> </span>
-					    					</div>
-					    				</div>
-					    			</blockquote>
-					            </div>
-					        </div>
-			    		</div>
-			    	</div>
-			    </div>
 	  </div>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.1.4/Chart.bundle.min.js"></script>

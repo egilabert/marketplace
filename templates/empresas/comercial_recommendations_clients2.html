@@ -191,41 +191,12 @@
 				    
 				    </div>
 				 </div>
-
-				 <!-- <div class="row">
-				 	<div class="col m6 s12">
-				 		<div class="list_top">
-						  <ol>
-						    <li><span class="span_list">1.</span><p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent euismod ultrices ante, ac laoreet nulla vestibulum adipiscing. Nam quis justo in augue auctor imperdiet. Curabitur aliquet orci sit amet est posuere consectetur. Fusce nec leo ut massa viverra venenatis. Nam accumsan libero a elit aliquet quis ullamcorper arcu tincidunt. Praesent purus turpis, consectetur quis congue vel, pulvinar at lorem. Vivamus varius condimentum dolor, quis ultricies ipsum porta quis. </p></li>
-						    
-						    <li><span class="span_list">2.</span><p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent euismod ultrices ante, ac laoreet nulla vestibulum adipiscing. Nam quis justo in augue auctor imperdiet. Curabitur aliquet orci sit amet est posuere consectetur.  </p></li>
-						    
-						    <li><span class="span_list">3.</span><p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent euismod ultrices ante, ac laoreet nulla vestibulum adipiscing. Nam quis justo in augue auctor imperdiet. Curabitur aliquet orci sit amet est posuere consectetur.  </p></li>
-						  </ol> 
-						</div>
-				 	</div>
-				 	<div class="col m6 s12">
-				 		<div>
-						  <ol>
-						    <li><span class="span_list">1.</span><p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent euismod ultrices ante, ac laoreet nulla vestibulum adipiscing. Nam quis justo in augue auctor imperdiet. Curabitur aliquet orci sit amet est posuere consectetur. Fusce nec leo ut massa viverra venenatis. Nam accumsan libero a elit aliquet quis ullamcorper arcu tincidunt. Praesent purus turpis, consectetur quis congue vel, pulvinar at lorem. Vivamus varius condimentum dolor, quis ultricies ipsum porta quis. </p></li>
-						    
-						    <li><span class="span_list">2.</span><p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent euismod ultrices ante, ac laoreet nulla vestibulum adipiscing. Nam quis justo in augue auctor imperdiet. Curabitur aliquet orci sit amet est posuere consectetur.  </p></li>
-						    
-						    <li><span class="span_list">3.</span><p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent euismod ultrices ante, ac laoreet nulla vestibulum adipiscing. Nam quis justo in augue auctor imperdiet. Curabitur aliquet orci sit amet est posuere consectetur.  </p></li>
-						  </ol> 
-						</div>
-				 	</div>
-				 </div>	
- -->
 				 <!-- /////////////////////////////////////////////////////////////
 				 ////// ¿Como son mis clientes?
 				 ///////////////////////////////////////////////////////////// -->
 
-				
-				
-				
 					<div class="white_back title_conf">
-				    	<h3 class="flow-text">¿Cómo son mis clientes?  <i class="fa fa-caret-right" aria-hidden="true"></i>  Mejora la calidad de tus clientes</h3>
+				    	<h3 class="flow-text">Análisis de demanda - ¿Cómo son mis clientes?  <i class="fa fa-caret-right" aria-hidden="true"></i>  Mejora la calidad de tus clientes</h3>
 				    </div>
 			    	<div class="row title_conf">
 			    	<!-- Facturación -->
@@ -325,7 +296,7 @@
 				 ///////////////////////////////////////////////////////////// -->
 
 			    <div class="white_back title_conf">
-			    	<h3 class="flow-text">¿Cómo me relaciono con ellos?  <i class="fa fa-caret-right" aria-hidden="true"></i>  Amplia y mejora la relación con tus clientes</h3>
+			    	<h3 class="flow-text">Análisis de fidelidad - ¿Cómo me relaciono con ellos?  <i class="fa fa-caret-right" aria-hidden="true"></i>  Amplia y mejora la relación con tus clientes</h3>
 			    </div>
 			    	<div class="row title_conf">
 			    	<!-- Facturación -->
@@ -516,7 +487,49 @@
 				 ///////////////////////////////////////////////////////////// -->
 
 			    <div class="white_back title_conf">
-			    	<h3 class="flow-text">¿Debería buscar nuevas oportunidades?  <i class="fa fa-caret-right" aria-hidden="true"></i>  Amplia y mejora la calidad de tu cartera de clientes</h3>
+				    	<h3 class="flow-text">  Análisis de solvencia - ¿Conoces el estado de tus clientes?</h3>
+				    </div>
+			    	<div class="row title_conf">
+			    	<!-- Resultado explotaciones -->
+			    	<div class="row">
+			    		<div class="col m6 s12">
+			    			<div class="card grey lighten-4">
+					            <div class="card-content grey-text darken-4">
+					            	<span class="card-title">Riesgo de impago</span>
+					              <canvas id="hats_graph" width="300" height="140"></canvas>
+					            </div>
+					        </div>
+			    		</div>
+			    		<div class="col m6 s12">
+			    			<div class="card grey lighten-4">
+					            <div class="card-content grey-text darken-4">
+					              <blockquote>
+					    				<p class="light"><i class="tiny material-icons indigo-text darken-4">live_help</i> Nuestra métrica de riesgo de impago clasifica tus clientes según su probabilidad de impago en los próximos meses. Una alta concentración de clientes en estado rojo debería ser preocupante para la evolución de tu negocio</p>
+					    				<p class="light"><i class="tiny material-icons indigo-text darken-4">new_releases</i> <span class="bold"> En promedio, el riesgo de impago de tus clientes es parecido al de los de tu competencia</p>
+					    				<p class="light"><i class="tiny material-icons indigo-text darken-4">info</i> Puedes cubrir tu riesgo ampliando tu cartera de clientes o contratando una linea de factoring</p>
+					    				<div class="row center-align">
+					    					<div class="col m6 s6">
+					    						<a href="{% url 'empresas:clients' %}" id="download-button" target="_blank" class="btn waves-effect waves-light transparent grey-text text-darken-4 border-grey">Nuevos clientes </a>
+					    					</div>
+					    					<div class="col m6 s6">
+					    						<a href="https://www.bancsabadell.com/cs/Satellite/SabAtl/Factoring/1191332201741/es/" id="download-button" target="_blank" class="btn waves-effect waves-light transparent grey-text text-darken-4 border-grey">Factoring </a>
+					    						<!-- https://www.bancosantander.es/es/empresas-advance/productos-y-servicios/cobros/factoring -->
+					    					</div>
+					    				</div>
+					    			</blockquote>
+					            </div>
+					        </div>
+			    		</div>
+			    	</div>
+			    	</div>
+
+
+			    <!-- /////////////////////////////////////////////////////////////
+				 ////// ¿Debería buscar nuevas oportunidades?
+				 ///////////////////////////////////////////////////////////// -->
+
+			    <div class="white_back title_conf">
+			    	<h3 class="flow-text">Análisis de concentración - ¿Debería buscar nuevas oportunidades?  <i class="fa fa-caret-right" aria-hidden="true"></i>  Amplia y mejora tu cartera de clientes</h3>
 			    </div>
 			    	<div class="row title_conf">
 			    	<!-- Facturación -->
@@ -686,44 +699,6 @@
 			    		
 			    	
 			    </div>
-
-			    <div class="white_back title_conf">
-				    	<h3 class="flow-text">  Riesgo de impago - ¿Conoces el estado de tus clientes?</h3>
-				    </div>
-			    	<div class="row title_conf">
-			    	<!-- Resultado explotaciones -->
-			    	<div class="row">
-			    		<div class="col m6 s12">
-			    			<div class="card grey lighten-4">
-					            <div class="card-content grey-text darken-4">
-					            	<span class="card-title">Riesgo de impago</span>
-					              <canvas id="hats_graph" width="300" height="140"></canvas>
-					            </div>
-					        </div>
-			    		</div>
-			    		<div class="col m6 s12">
-			    			<div class="card grey lighten-4">
-					            <div class="card-content grey-text darken-4">
-					              <blockquote>
-					    				<p class="light"><i class="tiny material-icons indigo-text darken-4">live_help</i> Nuestra métrica de riesgo de impago clasifica tus clientes según su probabilidad de impago en los próximos meses. Una alta concentración de clientes en estado rojo debería ser preocupante para la evolución de tu negocio</p>
-					    				<p class="light"><i class="tiny material-icons indigo-text darken-4">new_releases</i> <span class="bold"> En promedio, el riesgo de impago de tus clientes es parecido al de los de tu competencia</p>
-					    				<p class="light"><i class="tiny material-icons indigo-text darken-4">info</i> Puedes cubrir tu riesgo ampliando tu cartera de clientes o contratando una linea de factoring</p>
-					    				<div class="row center-align">
-					    					<div class="col m6 s6">
-					    						<a href="{% url 'empresas:clients' %}" id="download-button" target="_blank" class="btn waves-effect waves-light transparent grey-text text-darken-4 border-grey">Nuevos clientes </a>
-					    					</div>
-					    					<div class="col m6 s6">
-					    						<a href="https://www.bancsabadell.com/cs/Satellite/SabAtl/Factoring/1191332201741/es/" id="download-button" target="_blank" class="btn waves-effect waves-light transparent grey-text text-darken-4 border-grey">Factoring </a>
-					    						<!-- https://www.bancosantander.es/es/empresas-advance/productos-y-servicios/cobros/factoring -->
-					    					</div>
-					    				</div>
-					    			</blockquote>
-					            </div>
-					        </div>
-			    		</div>
-			    	</div>
-			    	</div>
-
 
 	  </div>
 
