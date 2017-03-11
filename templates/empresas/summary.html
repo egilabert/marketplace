@@ -483,11 +483,14 @@ Home - {{ company.name }}
 			} else {
 				noTint();
 				image(img, this.x + this.offset/2, this.y + this.offset/2, this.width - this.offset, this.height - this.offset);
-				// filter(GRAY);
 				textFont(myFont_Bold);
 				textSize(14);
 				textAlign(CENTER, CENTER);
-				fill(255);
+				if (this.label == "Oferta") {
+					fill(0);
+				} else {
+					fill(255);
+				}
 				text(this.label, this.x + this.width/2, this.y + this.height/2);
 			}
 		    fill(this.color);
