@@ -13,17 +13,19 @@ Home - {{ company.name }}
 <div class="parallax-container">
 	<!-- <h3 class="center-align white-text text-darken-3 light">Rocky clients are not all the same</h3> -->
 	<h3 class="center-align light white-text">Linea cero de defensa</h3>
-	<h5 class="center-align light white-text">{{company.name}}</h5>
+	<h6 class="center-align light white-text">by PILLANGO &copy;</h6>
 	<div class="parallax"><img src="{% static 'images/free-diving.jpg' %}"></div>
 </div>
-<div class="dark_grey_back title_conf">
-	<h4 class="flow-text white-text">  Tu perfil - Esta es tu información básica mostrada </h4>
+<div class="dark_grey_back title_conf center-align white-text">
+	<i class="material-icons large" style="margin-top: 40px;">visibility</i>
+	<h3 class="center-align light" style="margin-top: 10px;">Tu perfil</h3>
+	<h5 class="light">  Esta es tu información básica mostrada  </h5>
 </div>
 
 <div class="dark_grey_back">
 	<div class="row container white-text">
-      <div class="col s9">
-          <h4>{{ empresa.name }}</h4>
+      <div class="col s9" style="margin-top: 40px;"">
+          <h5>{{ empresa.name }}</h5>
       </div>
       <div class="col s3 white-text">
           {% if referrer == 'client' %}
@@ -98,7 +100,7 @@ Home - {{ company.name }}
           <div><i class="tiny material-icons">business</i> Sector: {{ empresa.sector }}</div>   
           <div><i class="tiny material-icons">info</i> CNAE: {{ empresa.cnae_2 }}</div>  
           <div><i class="tiny material-icons">schedule</i> Created in {{ empresa.creation_date }}</div>
-          <div class="right-align"><a href="mailto:{{empresa.email}}?Subject=Hello%20{{empresa.name}}" target="_top" class="btn-large waves-effect waves-light right-align"><i class="material-icons right">email</i>Contacto</a></div>
+          <div class="right-align"><a href="{% url 'empresas:detail' pk=company.pk %}" target="_top" class="btn-large waves-effect waves-light right-align bott"><i class="material-icons right">airplay</i>Ver ficha</a></div>
       </div>
       <div class="col s12 m6">
       		<img src="{{ company.image }}" alt="{{ company.name }}" style="width:100%;height:100%;">
@@ -107,8 +109,10 @@ Home - {{ company.name }}
   </div>
 </div>
 
-<div class="grey_back title_conf">
-	<h4 class="flow-text">  Gestiona tus riesgos - ¿Cuáles son tus principales exposiciones? </h4>
+<div class="grey_back title_conf center-align">
+	<i class="material-icons large" style="margin-top: 40px;">insert_chart</i>
+	<h3 class="center-align light" style="margin-top: 10px;">Gestiona tus riesgos</h3>
+	<h5 class="light">  ¿Cuáles son tus principales exposiciones?  </h5>
 </div>
 
 <div class="grey_back">
@@ -299,8 +303,10 @@ Home - {{ company.name }}
 	</div>
 	<div class="col s12 m1"></div>
 </div>
-<div class=" title_conf">
-	<h4 class="flow-text">  Marketplace - Accede a nuestras recomendaciones personalizadas </h4>
+<div class=" title_conf center-align">
+	<i class="material-icons large center-align" style="margin-top: 40px;">person_pin</i>
+	<h3 class=" light" style="margin-top: 10px;">Marketplace</h3>
+	<h5 class="light">  Accede a nuestras recomendaciones personalizadas  </h5>
 </div>
 	<div class="row container padding_landing">
         <div class="col s12 m6">
@@ -313,7 +319,7 @@ Home - {{ company.name }}
               <p>Visita nuestro marketplace. Descubre y contacta con potenciales nuevos clientes y haz crecer tu negocio. Nuestro algoritmo te recomendará aquellos con los que podrías entenderte.</p>
             </div>
             <div class="card-action">
-              <a href="{% url 'empresas:clients' %}">Accede a tus clientes recomendados</a>
+              <a href="{% url 'empresas:clients' %}">Accede al marketplace de clientes</a>
             </div>
           </div>
         </div>
@@ -327,7 +333,7 @@ Home - {{ company.name }}
               <p>Visita nuestro marketplace. Descubre y contacta con potenciales nuevos proveedores y haz crecer tu negocio. Nuestro algoritmo te recomendará aquellos con los que podrías entenderte.</p>
             </div>
             <div class="card-action">
-              <a href="{% url 'empresas:providers' %}">Accede a tus proveedores recomendados</a>
+              <a href="{% url 'empresas:providers' %}">Accede al marketplace de proveedores</a>
             </div>
           </div>
         </div>
@@ -487,7 +493,7 @@ Home - {{ company.name }}
 				textSize(14);
 				textAlign(CENTER, CENTER);
 				if (this.label == "Oferta") {
-					fill(0);
+					fill(200);
 				} else {
 					fill(255);
 				}

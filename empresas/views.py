@@ -18,7 +18,6 @@ import datetime
 from django.utils import timezone
 from random import randint
 from faker import Factory
-from django.conf import settings
 from .als_recommender import *
 from .item_based import *
 import numpy
