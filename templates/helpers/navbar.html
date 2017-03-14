@@ -8,9 +8,10 @@
     <li class="divider"></li>
     <li><a href="#modal3">Logout</a></li>
   </ul>
-  <nav class="white" role="navigation">
+  <div class="navbar-fixed ">
+  <nav class="navbar-transparent" role="navigation">
     <div class="nav-wrapper container">
-      <a id="logo-container" href="{% url 'landing' %}" class="brand-logo"><img src="{% static 'images/pillango_logo.png' %}" alt="Pillango data"></a>
+      <!-- <a id="logo-container" href="{% url 'landing' %}" class="brand-logo"><img src="{% static 'images/pillango_logo.png' %}" alt="Pillango data"></a> -->
       <ul class="right hide-on-med-and-down">
           <!-- Dropdown Trigger -->
           <li><a href="{% url 'landing' %}" class='modal-trigger'>Home</a></li>
@@ -22,3 +23,4 @@
       <a href="#" data-activates="nav-mobile" class="button-collapse"><i class="material-icons">menu</i></a>
     </div>
   </nav>
+  </div>

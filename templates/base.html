@@ -38,6 +38,7 @@
   {% endblock cdn_css %}
 
   {% compress css %}
+  <link rel="stylesheet" href="{% static 'css/materialize.min.css' %}">
   <link rel="stylesheet" href="{% static 'css/main.css' %}">
   <link href="{% static 'css/style.css'  %}" type="text/css" rel="stylesheet" media="screen,projection"/>
   {% block css %}{% endblock %}
@@ -98,6 +99,8 @@
   <!-- scripts concatenated and minified via django-compressor -->
   {% compress js %}
   {% block js %}
+    <script src="{% static 'js/jquery-2.2.4.min.js' %}"></script>
+    <script src="{% static 'js/materialize.min.js' %}"></script>
     <script src="{% static 'js/main.js' %}"></script>
     <script src="{% static 'js/init.js' %}"></script>
   {% endblock js %}

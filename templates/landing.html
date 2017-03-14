@@ -26,22 +26,25 @@
       <li class="divider"></li>
       <li><a href="#modal3">Logout</a></li>
     </ul>
-    <nav class="white" role="navigation">
+
+    <div class="navbar-fixed ">
+    <nav class="navbar-transparent" role="navigation">
       <div class="nav-wrapper container">
-        <a id="logo-container" href="{% url 'landing' %}" class="brand-logo"><img src="{% static 'images/pillango_logo.png' %}" alt="Pillango data"></a>
+        <a id="logo-container" href="{% url 'landing' %}" class="brand-logo hidden"><img src="{% static 'images/C--fakepath-pillango_logo.png' %}" alt="Pillango data"></a>
         <ul class="right hide-on-med-and-down">
             <!-- Dropdown Trigger -->
-            <li><a href="#" class='modal-trigger'>Home</a></li>
-            <li><a href="{% url 'home' %}" rel="" id="anchor1" class="anchorLink modal-trigger">Pillstore</a></li>
-            <li><a href="#about_anchor" rel="" id="anchor3" class="anchorLink modal-trigger">About</a></li>
-            <li><a href="#contact_anchor" rel="" id="anchor4" class="anchorLink modal-trigger">Contact</a></li>
-            <!-- <li><a class="dropdown-button" href="#!" data-activates="dropdown1">{{ request.user.username}}<i class="material-icons right">arrow_drop_down</i></a></li> -->
+            <li><a href="{% url 'landing' %}" class='modal-trigger grey-text text-lighten-5'>Home</a></li>
+            <li><a href="{% url 'home' %}" rel="" id="anchor1" class="anchorLink modal-trigger grey-text text-lighten-5">Pillstore</a></li>
+            <li><a href="#about_anchor" rel="" id="anchor3" class="anchorLink modal-trigger grey-text text-lighten-5">About</a></li>
+            <li><a href="#contact_anchor" rel="" id="anchor4" class="anchorLink modal-trigger grey-text text-lighten-5">Contact</a></li>
+            <!-- <li><a class="dropdown-button hidden" href="#!" data-activates="dropdown1">{{ request.user.username}}<i class="material-icons right">arrow_drop_down</i></a></li> -->
         </ul>
         <a href="#" data-activates="nav-mobile" class="button-collapse"><i class="material-icons">menu</i></a>
       </div>
     </nav>
+    </div>
 
-  <div id="index-banner" class="parallax-container padding_landing">
+  <div id="index-banner" class="parallax-container padding_landing parallax-container-landing">
     <div class="section no-pad-bot">
       <div class="container">
         <div class="row">
@@ -50,20 +53,20 @@
             </div>
 
             <div class="col s6">
-              <h1 class="header center light ">Pillango</h1>
+              <h1 class="header center light grey-text text-darken-3" style="padding-top: 13rem;">Pillango</h1>
               <div class="row center">
-                  <h6 class="header light">Data&Analytics</h6>
+                  <h6 class="header light grey-text text-darken-1">Data&Analytics</h6>
               </div>
               <div class="row center">
 
-                  <a href="{% url 'home' %}" id="download-button" class="btn-large waves-effect waves-light transparent pad_top border-white"><i class="material-icons right">skip_next</i>Go to the  PillStore  </a>
+                  <a href="{% url 'home' %}" id="download-button" class="btn-large waves-effect waves-light transparent pad_top grey-text text-darken-3 border-white"><i class="material-icons right">skip_next</i>Go to the  PillStore  </a>
               </div>
             </div>
         </div>
       </div>
     </div>
     <div class="parallax">
-        <img src="{% static 'images/Chaos_Hompage_1.png' %}" alt="Unsplashed background img 1">
+        <img src="{% static 'images/image.png' %}" style="width: 60% !important;" alt="Unsplashed background img 1">
     </div>
   </div>
 
@@ -215,8 +218,21 @@
         e.preventDefault();
        scrollToAnchor('contact_anchor');
     });
+
+    $(window).scroll(function(){
+        if ($(this).scrollTop() > 750) {
+          console.log('Ahoraaa....')
+          $('nav').removeClass("navbar-transparent").addClass("white");
+          $('.hidden').removeClass("hidden").addClass("visible");
+          $('.text-lighten-5').removeClass("grey-text text-lighten-5").addClass("grey-text text-darken-2");
+        } else {
+          $('nav').removeClass("white").addClass("navbar-transparent");
+          $('.visible').removeClass("visible").addClass("hidden");
+          $('.text-darken-2').removeClass("grey-text text-darken-2").addClass("grey-text text-lighten-5");
+        }
+    });
+});
     
-  });
   </script>
 
   </body>

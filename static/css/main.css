@@ -1,6 +1,43 @@
 {% load staticfiles %}
 
 /* Simple setup for this demo */
+.navbar-transparent {
+    background: transparent;
+    background-image: none;
+    border-color: transparent;
+    box-shadow: 0px 0px 0px 0px;
+    
+}
+
+.height_pillstore {
+  min-height: 550px !important;
+}
+
+.hidden {
+  visibility: hidden;
+}
+
+.visible {
+  visibility: visible;
+}
+
+/*.brand-logo {
+  transition: all 0.4s ease;
+  -webkit-transition: all 0.4s ease;
+}*/
+
+nav {
+    transition: all 0.4s ease;
+    -webkit-transition: all 0.4s ease;
+}
+
+.navbar-fixed  {
+  position: absolute !important;
+}
+
+.button-collapse {
+    color: #ffffff; /*#0d47a1;*/
+}
 
 .btn {
   padding: 0 1rem !important;
@@ -435,6 +472,10 @@ li p {
 }
 .parallax-container {
       height: 500px;
+}
+
+.parallax-container-landing {
+      height: 680px;
 }
 
 .bottom_positioning {
