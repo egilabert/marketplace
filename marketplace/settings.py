@@ -15,7 +15,6 @@ import os
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
-
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/1.10/howto/deployment/checklist/
 
@@ -30,8 +29,8 @@ ALLOWED_HOSTS = ['85.214.97.85','127.0.0.1','h2277182.stratoserver.net', 'www.pi
 # Application definition
 
 INSTALLED_APPS = [
+    # Django main apps
     'django.contrib.admin',
-    'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
@@ -39,10 +38,15 @@ INSTALLED_APPS = [
     'django.contrib.humanize',
 
     #Allauth ---
+    'django.contrib.auth',
     'django.contrib.sites',
     'allauth',
     'allauth.account',
     'allauth.socialaccount',
+    # 'allauth.socialaccount.providers.facebook',
+    # 'allauth.socialaccount.providers.google',
+    # 'allauth.socialaccount.providers.linkedin',
+    # 'allauth.socialaccount.providers.twitter',
     'mathfilters',
     'debug_toolbar',
 
@@ -74,7 +78,7 @@ TEMPLATES = [
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
         'DIRS': [os.path.join(BASE_DIR, 'templates'), 
                 os.path.join(BASE_DIR, 'templates')+"/empresas",
-                os.path.join(BASE_DIR, 'templates')+"/accounts", 
+                os.path.join(BASE_DIR, 'templates')+"/account",
                 os.path.join(BASE_DIR, 'templates')+"/helpers",
                 os.path.join(BASE_DIR, 'templates')+"/LCX",
                 os.path.join(BASE_DIR, 'templates')+"/risk_cro"],
@@ -93,13 +97,11 @@ TEMPLATES = [
 AUTHENTICATION_BACKENDS = (
     # Needed to login by username in Django admin, regardless of `allauth`
     'django.contrib.auth.backends.ModelBackend',
-
     # `allauth` specific authentication methods, such as login by e-mail
     'allauth.account.auth_backends.AuthenticationBackend',
 )
 
 WSGI_APPLICATION = 'marketplace.wsgi.application'
-
 
 # Database
 # https://docs.djangoproject.com/en/1.10/ref/settings/#databases
@@ -114,7 +116,6 @@ DATABASES = {
         'PORT': '3306',
     }
 }
-
 
 # Password validation
 # https://docs.djangoproject.com/en/1.10/ref/settings/#auth-password-validators

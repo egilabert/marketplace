@@ -426,6 +426,18 @@ li p {
 .background_grey {
   background-color: rgb(237, 243, 249)
 }
+
+.wrap_login {
+  background: url("../images/banksy.jpg") no-repeat center center fixed; 
+        -webkit-background-size: cover;
+        -moz-background-size: cover;
+        -o-background-size: cover;
+        background-size: cover;
+    padding: 5em 0em 10em 3em;
+    min-height: 50em;
+    color: black;
+}
+
 .wrap_register {
   background: url("../images/register.jpg") no-repeat center center fixed; 
         -webkit-background-size: cover;
@@ -433,7 +445,7 @@ li p {
         -o-background-size: cover;
         background-size: cover;
     padding: 5em 0em 10em 3em;
-    min-height: 43em;
+    min-height: 50em;
     color: black;
 }
 
@@ -475,7 +487,7 @@ li p {
 }
 
 .parallax-container-landing {
-      height: 680px;
+      height: 700px;
 }
 
 .bottom_positioning {

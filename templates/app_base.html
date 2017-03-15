@@ -54,6 +54,16 @@
     {% load i18n %}
   </header>
 
+    {% if messages %}
+      <div>
+        <strong>Messages:</strong>
+        <ul>
+        {% for message in messages %}
+          <li>{{message}}</li>
+        {% endfor %}
+        </ul>
+      </div>
+    {% endif %}
   <!-- {% include "messages_display.html" %} -->
 
   <div role="main">

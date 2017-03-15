@@ -27,6 +27,7 @@
       <li><a href="#modal3">Logout</a></li>
     </ul>
 
+    <!-- Navbar de navegación -->
     <div class="navbar-fixed ">
     <nav class="navbar-transparent" role="navigation">
       <div class="nav-wrapper container">
@@ -35,8 +36,8 @@
             <!-- Dropdown Trigger -->
             <li><a href="{% url 'landing' %}" class='modal-trigger grey-text text-lighten-5 light'>Home</a></li>
             <li><a href="{% url 'home' %}" rel="" id="anchor1" class="anchorLink modal-trigger grey-text text-lighten-5 light">Pillstore</a></li>
-            <li><a href="#about_anchor" rel="" id="anchor3" class="anchorLink modal-trigger grey-text text-lighten-5 light">About</a></li>
-            <li><a href="#contact_anchor" rel="" id="anchor4" class="anchorLink modal-trigger grey-text text-lighten-5 light">Contact</a></li>
+            <li><a href="#about_anchor" onclick="return false" id="anchor3" class="anchorLink modal-trigger grey-text text-lighten-5 light">About</a></li>
+            <li><a href="#contact_anchor" id="anchor4" class="anchorLink modal-trigger grey-text text-lighten-5 light">Contact</a></li>
             <!-- <li><a class="dropdown-button hidden" href="#!" data-activates="dropdown1">{{ request.user.username}}<i class="material-icons right">arrow_drop_down</i></a></li> -->
         </ul>
         <a href="#" data-activates="nav-mobile" class="button-collapse"><i class="material-icons">menu</i></a>
@@ -72,7 +73,7 @@
 
 
   <div class="container padding_landing">
-    <div class="section" name="about_anchor">
+    <div class="section" name="about_anchor" id="about_anchor">
       <h5 class="header center col s12 flow-text">
       <p>The word <span class="italic">pillangó</span> means butterfly in Hungarian</p>
       <p>The butterfly is a symbol of color and transformation, an impressive process of metamorphosis</p>
@@ -200,18 +201,18 @@
   $(document).ready(function () {
 
     function scrollToAnchor(aid){
-        var aTag = $("div[name='"+ aid +"']");
+        var aTag = $("div[id='"+ aid +"']");
         if (aid=='about_anchor') {
           $('html,body').animate({scrollTop: aTag.offset().top},1000);
         } else if (aid=='contact_anchor') {
           $('html,body').animate({scrollTop: aTag.offset().top},2000);
         }
-        
     }
 
-    $("#anchor3").click(function(e) {
-        e.preventDefault();
-       scrollToAnchor('about_anchor');
+    $("#anchor3").click(function(e) 
+    {
+      e.preventDefault();
+      scrollToAnchor('about_anchor');
     });
 
     $("#anchor4").click(function(e) {
@@ -221,7 +222,6 @@
 
     $(window).scroll(function(){
         if ($(this).scrollTop() > 750) {
-          console.log('Ahoraaa....')
           $('nav').removeClass("navbar-transparent").addClass("white");
           $('.hidden').removeClass("hidden").addClass("visible");
           $('.text-lighten-5').removeClass("grey-text text-lighten-5").addClass("grey-text text-darken-2");
