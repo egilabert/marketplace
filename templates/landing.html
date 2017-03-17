@@ -36,8 +36,8 @@
             <!-- Dropdown Trigger -->
             <li><a href="{% url 'landing' %}" class='modal-trigger grey-text text-lighten-5 light'>Home</a></li>
             <li><a href="{% url 'home' %}" rel="" id="anchor1" class="anchorLink modal-trigger grey-text text-lighten-5 light">Pillstore</a></li>
-            <li><a href="#about_anchor" onclick="return false" id="anchor3" class="anchorLink modal-trigger grey-text text-lighten-5 light">About</a></li>
-            <li><a href="#contact_anchor" id="anchor4" class="anchorLink modal-trigger grey-text text-lighten-5 light">Contact</a></li>
+            <li><a href="#" onclick="return false" id="anchor3" class="anchorLink modal-trigger grey-text text-lighten-5 light">About</a></li>
+            <li><a href="#" id="anchor4" class="anchorLink modal-trigger grey-text text-lighten-5 light">Contact</a></li>
             <!-- <li><a class="dropdown-button hidden" href="#!" data-activates="dropdown1">{{ request.user.username}}<i class="material-icons right">arrow_drop_down</i></a></li> -->
         </ul>
         <a href="#" data-activates="nav-mobile" class="button-collapse"><i class="material-icons">menu</i></a>
@@ -221,7 +221,7 @@
     });
 
     $(window).scroll(function(){
-        if ($(this).scrollTop() > 750) {
+        if ($(this).scrollTop() > 780) {
           $('nav').removeClass("navbar-transparent").addClass("white");
           $('.hidden').removeClass("hidden").addClass("visible");
           $('.text-lighten-5').removeClass("grey-text text-lighten-5").addClass("grey-text text-darken-2");
