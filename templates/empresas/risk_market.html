@@ -145,7 +145,7 @@ Riesgo mercado - {{ company.name }}
 			    		<div class="col m6 s12">
 			    			<div class="card grey lighten-4">
 					            <div class="card-content grey-text darken-4">
-					            	<span class="card-title">PIB España</span>
+					            	<span class="card-title">PIB España vs. Mis ventas</span>
 					              <canvas id="pib_graph" width="300" height="140"></canvas>
 					            </div>
 					        </div>
@@ -153,20 +153,8 @@ Riesgo mercado - {{ company.name }}
 			    		<div class="col m6 s12">
 			    			<div class="card grey lighten-4">
 					            <div class="card-content grey-text darken-4">
-					              <blockquote>
-					    				<p class="light"><i class="tiny material-icons indigo-text darken-4">live_help</i> Nuestra métrica de riesgo de impago clasifica tus clientes según su probabilidad de impago en los próximos meses. Una alta concentración de clientes en estado rojo debería ser preocupante para la evolución de tu negocio</p>
-					    				<p class="light"><i class="tiny material-icons indigo-text darken-4">new_releases</i> <span class="bold"> En promedio, el riesgo de impago de tus clientes es parecido al de los de tu competencia</p>
-					    				<p class="light"><i class="tiny material-icons indigo-text darken-4">info</i> Puedes cubrir tu riesgo ampliando tu cartera de clientes o contratando una linea de factoring</p>
-					    				<div class="row center-align">
-					    					<div class="col m6 s6">
-					    						<a href="{% url 'empresas:clients' %}" id="download-button" target="_blank" class="btn waves-effect waves-light transparent grey-text text-darken-4 border-grey">Nuevos clientes </a>
-					    					</div>
-					    					<div class="col m6 s6">
-					    						<a href="https://www.bancosantander.es/es/empresas-advance/productos-y-servicios/cobros/factoring" id="download-button" target="_blank" class="btn waves-effect waves-light transparent grey-text text-darken-4 border-grey">Factoring </a>
-					    						<!-- https://www.bancsabadell.com/cs/Satellite/SabAtl/Factoring/1191332201741/es/ -->
-					    					</div>
-					    				</div>
-					    			</blockquote>
+					            	<span class="card-title">PIB España vs. Ventas de mi competencia</span>
+					              <canvas id="pib_graph_sec" width="300" height="140"></canvas>
 					            </div>
 					        </div>
 			    		</div>
@@ -270,6 +258,7 @@ Riesgo mercado - {{ company.name }}
 	Chart.defaults.global.legend.display = false;
 	// And for a doughnut chart
   	var pib_graph = document.getElementById("pib_graph");
+  	var pib_graph_sec = document.getElementById("pib_graph_sec");
   	var frecuencia_graph = document.getElementById("frecuencia_graph");
   	var penetration_graph = document.getElementById("penetration_graph");
   	var penetracion_clientes = {{penetracion}}
@@ -280,6 +269,7 @@ Riesgo mercado - {{ company.name }}
 	var ebitda_graph_prov = document.getElementById("ebitda_graph_prov");
   	
   	LineGraph(pib_graph, [{"ejercicio": "2011", "c": 1070413}, {"ejercicio": "2012", "c": 1039758}, {"ejercicio": "2013", "c": 1025634}, {"ejercicio": "2014", "c": 1037025}, {"ejercicio": "2015", "c": 1075639}], {{balance_sells|safe}});
+  	LineGraph(pib_graph_sec, [{"ejercicio": "2011", "c": 1070413}, {"ejercicio": "2012", "c": 1039758}, {"ejercicio": "2013", "c": 1025634}, {"ejercicio": "2014", "c": 1037025}, {"ejercicio": "2015", "c": 1075639}], {{balance_providers_sells_avg_sector|safe}});
   	//LineGraph(frecuencia_graph, {{get_monthly_sector_avg_buys|safe}}, {{get_monthly_buys|safe}});
   	LineGraph(facturacion_graph, {{balance_sells_avg_sector|safe}}, {{balance_sells|safe}});
   	LineGraph(ebitda_graph, {{balance_ebitda_avg_sector|safe}}, {{balance_ebitda|safe}});
