@@ -69,7 +69,10 @@
         <strong>Messages:</strong>
         <ul>
         {% for message in messages %}
-          <li>{{message}}</li>
+            <div class="chip" style="position: absolute; top: 30px; left: 30px;">
+              {{message}}
+              <i class="close material-icons">close</i>
+           </div>
         {% endfor %}
         </ul>
       </div>

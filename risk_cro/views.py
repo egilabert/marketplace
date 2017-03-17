@@ -16,6 +16,19 @@ from django.core.serializers.json import DjangoJSONEncoder
 """				EMPRESAS VIEWS 							  """
 """-------------------------------------------------------"""
 
+def SearchView(request):
+	
+	autofilter = dict()
+	company = Empresa.objects.all()
+	for c in company:
+		autofilter[c.name] = c.image
+
+	context = {
+		'autofilter': json.dumps(autofilter, cls=DjangoJSONEncoder),
+		'buttons': False
+	}
+	return render(request, "risk_cro/search.html", context)
+
 @login_required
 def HomeView(request):
 	try:

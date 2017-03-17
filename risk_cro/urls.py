@@ -6,10 +6,12 @@ from .views import (HomeView,
 					RaterView,
 					ClientRiskView,
 					ClientRiskRecommendationsView,
-					ProviderRiskRecommendationsView)
+					ProviderRiskRecommendationsView,
+                    SearchView)
 
 urlpatterns = [
     url(r'^$', HomeView, name='cro_home'),
+    url(r'^search/$', SearchView, name='search'),
     url(r'^creditrater/$', CreditRaterView, name='credit_risk'),
     url(r'^rating/$', RaterView, name='rater'),
     url(r'^client/$', ClientRiskView, name='client_risk'),

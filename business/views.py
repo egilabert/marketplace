@@ -5,6 +5,7 @@ from django.views.generic import View
 
 import allauth.account.forms as forms
 
+
 class LandingView(View):
 	def get(self, request, *args, **kwargs):
 		# form = forms.LoginForm()

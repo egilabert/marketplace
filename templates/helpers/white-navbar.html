@@ -1,0 +1,18 @@
+{% load static %}
+{% load i18n %}
+
+<div class="navbar-fixed ">
+  <nav class="navbar-transparent" role="navigation">
+    <div class="nav-wrapper container">
+      <!-- <a id="logo-container" href="{% url 'landing' %}" class="brand-logo"><img src="{% static 'images/pillango_logo.png' %}" alt="Pillango data"></a> -->
+      <ul class="right hide-on-med-and-down">
+          <!-- Dropdown Trigger -->
+          <li><a href="{% url 'landing' %}" class='modal-trigger light white-text'>Home</a></li>
+          <li><a href="{% url 'home' %}" rel="" id="anchor1" class="anchorLink modal-trigger light white-text">Pillstore</a></li>
+          <li><a href="{% url 'landing' %}#about_anchor" id="anchor3" class="anchorLink modal-trigger light white-text">About</a></li>
+          <li><a href="{% url 'landing' %}#contact_anchor" id="anchor4" class="anchorLink modal-trigger light white-text">Contact</a></li>
+      </ul>
+      <a href="#" data-activates="nav-mobile" class="button-collapse"><i class="material-icons">menu</i></a>
+    </div>
+  </nav>
+  </div>
