@@ -24,37 +24,43 @@ L0D - {{ company.name }}
       <!--   Icon Section   -->
       <div class="row">
         <div class="col s12 m4">
-          <div class="icon-block">
-            <h2 class="center brown-text"><i class="material-icons">visibility</i></h2>
-            <h5 class="center">Tu perfil</h5>
+        	<a href="#perfil_btn" id="perfil_btn">
+	          <div class="icon-block">
+	            <h2 class="center brown-text"><i class="material-icons">visibility</i></h2>
+	            <h5 class="center grey-text text-darken-3">Tu perfil</h5>
 
-            <p class="light">Edita tu perfil público para que puedan contactar contigo nuevos clientes</p>
-          </div>
+	            <p class="light grey-text">Edita tu perfil público para que puedan contactar contigo nuevos clientes</p>
+	          </div>
+	        </a>
         </div>
 
         <div class="col s12 m4">
+        <a href="#riesgos_btn" id="riesgos_btn">
           <div class="icon-block">
             <h2 class="center brown-text"><i class="material-icons">insert_chart</i></h2>
-            <h5 class="center">Tus riesgos</h5>
+            <h5 class="center grey-text text-darken-3">Tus riesgos</h5>
 
-            <p class="light">Valora tu exposición a los principales riesgo de tu negocio,necesidades y posibilidades de acceso a financiación.</p>
+            <p class="light grey-text">Valora tu exposición a los principales riesgo de tu negocio,necesidades y posibilidades de acceso a financiación.</p>
           </div>
+        </a>
         </div>
 
         <div class="col s12 m4">
+        <a href="#marketplace_btn" id="marketplace_btn">
           <div class="icon-block">
             <h2 class="center brown-text"><i class="material-icons">person_pin</i></h2>
-            <h5 class="center">Tu marketplace</h5>
+            <h5 class="center grey-text text-darken-3">Tu marketplace</h5>
 
-            <p class="light">Visita el marketplace y encuentra nuevas oportunidades para tu negocio con nuestras recomendaciones de clientes y proveedores</p>
+            <p class="light grey-text">Visita el marketplace y encuentra nuevas oportunidades para tu negocio con nuestras recomendaciones de clientes y proveedores</p>
           </div>
+        </a>
         </div>
       </div>
 
     </div>
   </div>
 
-<div class="dark_grey_back title_conf center-align white-text">
+<div class="dark_grey_back title_conf center-align white-text" name="perfil">
 	<i class="material-icons large" style="margin-top: 40px;">visibility</i>
 	<h3 class="center-align light" style="margin-top: 10px;">Tu perfil</h3>
 	<h5 class="light">  Esta es tu información básica mostrada  </h5>
@@ -147,7 +153,7 @@ L0D - {{ company.name }}
   </div>
 </div>
 
-<div class="grey_back title_conf center-align">
+<div class="grey_back title_conf center-align" name="riesgos">
 	<i class="material-icons large" style="margin-top: 40px;">insert_chart</i>
 	<h3 class="center-align light" style="margin-top: 10px;">Gestiona tus riesgos</h3>
 	<h5 class="light">  ¿Cuáles son tus principales exposiciones?  </h5>
@@ -341,7 +347,7 @@ L0D - {{ company.name }}
 	</div>
 	<div class="col s12 m1"></div>
 </div>
-<div class=" title_conf center-align">
+<div class=" title_conf center-align" name="marketplace">
 	<i class="material-icons large center-align" style="margin-top: 40px;">person_pin</i>
 	<h3 class=" light" style="margin-top: 10px;">Marketplace</h3>
 	<h5 class="light">  Accede a nuestras recomendaciones personalizadas  </h5>
@@ -678,6 +684,46 @@ L0D - {{ company.name }}
 
 	$(document).ready(function(){
 
+		function scrollToAnchor(aid){
+	        var aTag = $("div[name='"+ aid +"']");
+	        if (aid=='perfil') {
+	          $('html,body').animate({scrollTop: aTag.offset().top},1000);
+	        } else if (aid=='riesgos_btn') {
+	          $('html,body').animate({scrollTop: aTag.offset().top},1500);
+	        } else if (aid=='marketplace') {
+	          $('html,body').animate({scrollTop: aTag.offset().top},2000);
+	        }
+	    }
+
+	    $("#perfil_btn").click(function(e) 
+	    {
+	    	console.log("clicket")
+	      e.preventDefault();
+	      scrollToAnchor('perfil');
+	    });
+
+	    $("#riesgos_btn").click(function(e) {
+	        e.preventDefault();
+	       scrollToAnchor('riesgos');
+	    });
+
+	    $("#marketplace_btn").click(function(e) 
+	    {
+	      e.preventDefault();
+	      scrollToAnchor('marketplace');
+	    });
+
+	    $(window).scroll(function(){
+	        if ($(this).scrollTop() > 750) {
+	          $('nav').removeClass("navbar-transparent").addClass("white");
+	          $('.hidden').removeClass("hidden").addClass("visible");
+	          $('.text-lighten-5').removeClass("grey-text text-lighten-5").addClass("grey-text text-darken-2");
+	        } else {
+	          $('nav').removeClass("white").addClass("navbar-transparent");
+	          $('.visible').removeClass("visible").addClass("hidden");
+	          $('.text-darken-2').removeClass("grey-text text-darken-2").addClass("grey-text text-lighten-5");
+	        }
+	    });
 
 	});
 

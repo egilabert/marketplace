@@ -497,7 +497,7 @@ li p {
 }
 
 .parallax-container-landing {
-      height: 700px;
+      height: 48rem !important;
 }
 
 .bottom_positioning {
