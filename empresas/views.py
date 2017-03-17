@@ -822,6 +822,111 @@ def FAQView(request):
 	return render(request, 'empresas/faq.html', context)
 
 # @login_required
+def MarketRiskRecommendationsView(request):
+	
+	company_id = request.session.get('company')
+	company = Empresa.objects.filter(pk=company_id)
+	company = company.prefetch_related('estados_financieros','cirbe','productos')[0]
+	try:
+		ultimos_eeff = company.estados_financieros.reverse()[0]
+	except:
+		ultimos_eeff = Empresa()
+	if int(company_id)==990:
+		penetracion = 0.79
+	else:
+		penetracion = company.my_penetration_client()
+
+	if int(company_id) == 990:
+		sells_sector = [{u'ejercicio': u'2011', 'c': 546283.4647849461}, {u'ejercicio': u'2012', 'c': 456645.75040462404}, {u'ejercicio': u'2013', 'c': 378471.62807453406}, {u'ejercicio': u'2014', 'c': 456921.41805970157}]
+		sells_me = [{u'ejercicio': u'2011', 'c': 592696.61117647061}, {u'ejercicio': u'2012', 'c': 534303.62062499998}, {u'ejercicio': u'2013', 'c': 399953.46552631578}, {u'ejercicio': u'2014', 'c': 491070.38647058822}]
+		ebitda_sector = [{u'ejercicio': u'2011', 'c': 49361.97748407643}, {u'ejercicio': u'2012', 'c': 47984.25817891373}, {u'ejercicio': u'2013', 'c': 46471.11822525595}, {u'ejercicio': u'2014', 'c': 54865.1086259542}]
+		ebitda_me = [{u'ejercicio': u'2011', 'c': 51794.07494505495}, {u'ejercicio': u'2012', 'c': 45185.49206521739}, {u'ejercicio': u'2013', 'c': 41847.803749999985}, {u'ejercicio': u'2014', 'c': 54199.451351351345}]
+		resultados_sector = [{u'ejercicio': u'2011', 'c': 66543.67525477704}, {u'ejercicio': u'2012', 'c': 53854.49316293933}, {u'ejercicio': u'2013', 'c': 16644.12122866895}, {u'ejercicio': u'2014', 'c': 76736.3875572519}]
+		resultados_me = [{u'ejercicio': u'2011', 'c': 63690.474505494498}, {u'ejercicio': u'2012', 'c': 42998.05847826087}, {u'ejercicio': u'2013', 'c': 10357.194875000005}, {u'ejercicio': u'2014', 'c': 82367.53648648648}]
+		penetration = 0.79
+		margen_comercial_sector_clientes = 0.17
+		average_transfer_from_client = company.average_transfer_from_client()
+		respuesta_clientes_ventas_interpretation = company.respuesta_clientes_ventas_interpretation()
+		respuesta_clientes_ventas_hint = company.respuesta_clientes_ventas_hint()
+		respuesta_clientes_ebitda_interpretation = company.respuesta_clientes_ebitda_interpretation()
+		respuesta_clientes_ebitda_hint = company.respuesta_clientes_ebitda_hint()
+		respuesta_clientes_resultado_interpretation = company.respuesta_clientes_resultado_interpretation()
+		respuesta_clientes_resultado_hint = company.respuesta_clientes_resultado_hint()
+	elif int(company_id)==1610:
+		average_transfer_from_client = company.average_transfer_from_client()
+		sells_sector = [{u'ejercicio': u'2011', 'c': 2180661.276511628}, {u'ejercicio': u'2012', 'c': 2062934.5268888888}, {u'ejercicio': u'2013', 'c': 2036585.5086363638}, {u'ejercicio': u'2014', 'c': 1840804.0434615384}]
+		sells_me = [{u'ejercicio': u'2011', 'c': 2072914.685151515}, {u'ejercicio': u'2012', 'c': 1997092.5245454542}, {u'ejercicio': u'2013', 'c': 1920736.3365625}, {u'ejercicio': u'2014', 'c': 1786596.690588235}]
+		ebitda_sector = [{u'ejercicio': u'2011', 'c': 122301.15116279075}, {u'ejercicio': u'2012', 'c': 144775.50600000002}, {u'ejercicio': u'2013', 'c': 102894.84340909087}, {u'ejercicio': u'2014', 'c': 103337.52038461539}]
+		ebitda_me = [{u'ejercicio': u'2011', 'c': 112907.07303030306}, {u'ejercicio': u'2012', 'c': 124063.1478787879}, {u'ejercicio': u'2013', 'c': 84667.197499999995}, {u'ejercicio': u'2014', 'c': 94119.011176470583}]
+		resultados_sector = [{u'ejercicio': u'2011', 'c': 83267.03534883722}, {u'ejercicio': u'2012', 'c': 88847.32644444442}, {u'ejercicio': u'2013', 'c': 48103.09454545455}, {u'ejercicio': u'2014', 'c': 37066.20846153845}]
+		resultados_me = [{u'ejercicio': u'2011', 'c': 73000.65969696968}, {u'ejercicio': u'2012', 'c': 75194.46393939393}, {u'ejercicio': u'2013', 'c': 46659.145}, {u'ejercicio': u'2014', 'c': 44551.467058823528}]
+		respuesta_clientes_ventas_interpretation = "En promedio, trabajas con clientes parecidos a los de tu competencia."
+		respuesta_clientes_ventas_hint = "Bien! Si te interesa, puedes encontrar clientes de mayor tamaño utilizando nuestro motor de recomendaciones."
+		respuesta_clientes_ebitda_interpretation = "En promedio, trabajas con clientes parecidos a los de tu competencia."
+		respuesta_clientes_ebitda_hint = "Bien! Si te interesa, puedes encontrar clientes más  fuertes utilizando nuestro motor de recomendaciones."
+		respuesta_clientes_resultado_interpretation = "En promedio, trabajas con clientes parecidos a los de tu competencia."
+		respuesta_clientes_resultado_hint = "Bien! Si te interesa, puedes encontrar mejores clientes utilizando nuestro motor de recomendaciones."
+		penetration = company.my_penetration_client()
+		margen_comercial_sector_clientes = company.margen_comercial_sector_clientes()
+	else:
+		sells_sector = list(company.balance_clients_sells_avg_sector())
+		sells_me = list(company.balance_clients_sells())
+		ebitda_sector = list(company.balance_clients_ebitda_avg_sector())
+		ebitda_me = list(company.balance_clients_ebitda())
+		resultados_sector = list(company.balance_clients_resultado_avg_sector())
+		resultados_me = list(company.balance_clients_resultado())
+		penetration = company.my_penetration_client()
+		margen_comercial_sector_clientes = company.margen_comercial_sector_clientes()
+		average_transfer_from_client = company.average_transfer_from_client()
+		respuesta_clientes_ventas_interpretation = company.respuesta_clientes_ventas_interpretation()
+		respuesta_clientes_ventas_hint = company.respuesta_clientes_ventas_hint()
+		respuesta_clientes_ebitda_interpretation = company.respuesta_clientes_ebitda_interpretation()
+		respuesta_clientes_ebitda_hint = company.respuesta_clientes_ebitda_hint()
+		respuesta_clientes_resultado_interpretation = company.respuesta_clientes_resultado_interpretation()
+		respuesta_clientes_resultado_hint = company.respuesta_clientes_resultado_hint()
+
+	diff_sells = (sells_me[len(sells_me)-1]['c'] - sells_sector[len(sells_sector)-1]['c'])/sells_sector[len(sells_sector)-1]['c']
+	diff_ebitda = (ebitda_me[len(ebitda_me)-1]['c'] - ebitda_sector[len(ebitda_sector)-1]['c'])/ebitda_sector[len(ebitda_sector)-1]['c']
+	diff_resultados = (resultados_me[len(resultados_me)-1]['c'] - resultados_sector[len(resultados_sector)-1]['c'])/resultados_sector[len(resultados_sector)-1]['c']
+	ratio = 1-margen_comercial_sector_clientes
+
+	if len(sells_me)>1:
+		delta_ventas = (sells_me[len(sells_me)-1]['c'] - sells_me[len(sells_me)-2]['c'])/sells_me[len(sells_me)-2]['c']
+	if len(ebitda_me)>1:
+		delta_ebitda = (ebitda_me[len(ebitda_me)-1]['c'] - ebitda_me[len(ebitda_me)-2]['c'])/ebitda_me[len(ebitda_me)-2]['c']
+	if len(resultados_me)>1:
+		delta_resultados_explotacion = (resultados_me[len(resultados_me)-1]['c'] - resultados_me[len(resultados_me)-2]['c'])/resultados_me[len(resultados_me)-2]['c']
+
+	sells_sector_prov = list(company.balance_providers_sells_avg_sector())
+	sells_me_prov = list(company.balance_providers_sells())
+	ebitda_sector_prov = list(company.balance_providers_ebitda_avg_sector())
+	ebitda_me_prov = list(company.balance_providers_ebitda())
+
+	context = {
+		'company':company,
+		'penetracion': penetracion,
+		'riesgo_impago_clientes': json.dumps(list(company.riesgo_impago_clientes()), cls=DjangoJSONEncoder),
+		'riesgo_impago_clientes_sector': json.dumps(list(company.riesgo_impago_clientes_sector()), cls=DjangoJSONEncoder),
+		'get_monthly_buys': json.dumps(list(company.get_monthly_buys_amount()), cls=DjangoJSONEncoder),
+		'get_monthly_sector_avg_buys': json.dumps(list(company.get_sector_total_monthly_buys_amount()), cls=DjangoJSONEncoder),
+		'productos_variable': company.productos_con_tipo_variable().all(),
+		'ultimos_eeff': ultimos_eeff,
+		'PIB_espana': 3.2,
+		'PIB_sector': 2.4,
+		'PIB_comparables': 2.6,
+		'journey': request.session.get('journey'),
+		'balance_sells_avg_sector': json.dumps(sells_sector, cls=DjangoJSONEncoder), #json.dumps(list(empresa.balance_clients_sells_avg_sector()), cls=DjangoJSONEncoder),
+		'balance_sells': json.dumps(sells_me, cls=DjangoJSONEncoder), #json.dumps(list(empresa.balance_clients_sells()), cls=DjangoJSONEncoder),
+		'balance_ebitda_avg_sector': json.dumps(ebitda_sector, cls=DjangoJSONEncoder), #json.dumps(list(empresa.balance_clients_ebitda_avg_sector()), cls=DjangoJSONEncoder),
+		'balance_ebitda': json.dumps(ebitda_me, cls=DjangoJSONEncoder), #json.dumps(list(empresa.balance_clients_ebitda()), cls=DjangoJSONEncoder),
+		'balance_providers_sells_avg_sector': json.dumps(sells_sector_prov, cls=DjangoJSONEncoder),
+		'balance_providers_sells': json.dumps(sells_me_prov, cls=DjangoJSONEncoder),
+		'balance_providers_ebitda_avg_sector': json.dumps(ebitda_sector_prov, cls=DjangoJSONEncoder),
+		'balance_providers_ebitda': json.dumps(ebitda_me_prov, cls=DjangoJSONEncoder),
+		}
+	return render(request, 'empresas/risk_market.html', context)
+
+# @login_required
 def ClientRiskRecommendationsView(request):
 	
 	company_id = request.session.get('company')

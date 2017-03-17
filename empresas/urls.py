@@ -33,7 +33,8 @@ from .views import (HomeView,
                     SwitchView,
                     SummaryView,
                     get_data_mekko,
-                    FinancialRiskRecommendationsView2)
+                    FinancialRiskRecommendationsView2,
+                    MarketRiskRecommendationsView)
 
 urlpatterns = [
 
@@ -63,6 +64,7 @@ urlpatterns = [
     url(r'^recommendations/providers/$', CommercialProvidersRecommendationsView, name='recommendations_providers'),
     url(r'^recommendations/risk/financial$', FinancialRiskRecommendationsView, name='recommendations_financial_risk'),
     url(r'^recommendations/risk/client$', ClientRiskRecommendationsView, name='recommendations_client_risk'),
+    url(r'^recommendations/risk/market$', MarketRiskRecommendationsView, name='risk_market'),
     url(r'^recommendations/risk/provider$', ProviderRiskRecommendationsView, name='recommendations_provider_risk'),
     url(r'^transfers/$', TransferListView, name='transfer_list'),
     url(r'^transfers/(?P<transfer_id>[0-9]+)/$', TransferDetailView, name='transfer_detail'),
