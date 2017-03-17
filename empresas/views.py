@@ -678,13 +678,22 @@ def EmpresaDetailView(request, pk=None):
 		amortizaciones.append(0)
 
 	if key=='client':
-		data = json.dumps(list(empresa.get_monthly_buys_amount()), cls=DjangoJSONEncoder)
+		buys_amount = json.dumps(list(empresa.get_monthly_buys_amount()), cls=DjangoJSONEncoder)
+		buys_count = json.dumps(list(empresa.get_monthly_buys()), cls=DjangoJSONEncoder)
+		sells_amount = json.dumps(list(empresa.get_monthly_sells_amount()), cls=DjangoJSONEncoder)
+		sells_count = json.dumps(list(empresa.get_monthly_sells()), cls=DjangoJSONEncoder)
 		titulo = 'Compras mensuales'
 	elif key=='provider':
-		data = json.dumps(list(empresa.get_monthly_sells_amount()), cls=DjangoJSONEncoder)
+		buys_amount = json.dumps(list(empresa.get_monthly_buys_amount()), cls=DjangoJSONEncoder)
+		buys_count = json.dumps(list(empresa.get_monthly_buys()), cls=DjangoJSONEncoder)
+		sells_amount = json.dumps(list(empresa.get_monthly_sells_amount()), cls=DjangoJSONEncoder)
+		sells_count = json.dumps(list(empresa.get_monthly_sells()), cls=DjangoJSONEncoder)
 		titulo = 'Ventas mensuales'
 	else:
-		data = json.dumps(list(empresa.get_monthly_buys_amount()), cls=DjangoJSONEncoder)
+		buys_amount = json.dumps(list(empresa.get_monthly_buys_amount()), cls=DjangoJSONEncoder)
+		buys_count = json.dumps(list(empresa.get_monthly_buys()), cls=DjangoJSONEncoder)
+		sells_amount = json.dumps(list(empresa.get_monthly_sells_amount()), cls=DjangoJSONEncoder)
+		sells_count = json.dumps(list(empresa.get_monthly_sells()), cls=DjangoJSONEncoder)
 		titulo = 'Ventas mensuales'
 
 	if len(ventas)>1:
@@ -724,7 +733,10 @@ def EmpresaDetailView(request, pk=None):
 		'clients_sector_by_sector': json.dumps(list(empresa.clients_sector_by_sector()), cls=DjangoJSONEncoder),
 		'clients_by_region': json.dumps(list(empresa.clients_by_region()), cls=DjangoJSONEncoder),
 		'clients_sector_by_region': json.dumps(list(empresa.clients_sector_by_region()), cls=DjangoJSONEncoder),
-		'monthly_sells': data,
+		'buys_amount': buys_amount,
+		'buys_count': buys_count,
+		'sells_amount': sells_amount,
+		'sells_count': sells_count,
 		'amortizaciones': json.dumps(amortizaciones),
 		'resultado_explotacion': json.dumps(resultado_explotacion),
 		'fechas': json.dumps(fechas),

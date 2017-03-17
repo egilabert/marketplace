@@ -102,18 +102,6 @@ Riesgo Mercado - {{ empresa.name }}
             <p>Situación de <strong>crecimiento sostenido</strong>, con buenos indicadores en sus estados financieros</p>
           </div>
           <div class="divider"></div>
-          <!-- <div class="card-content black-text">
-            <p><strong>Crecimiento de las ventas</strong> situado en un {{delta_ventas|mul:100|floatformat:1}}% el último año</p>
-          </div>
-          <div class="divider"></div>
-          <div class="card-content black-text">
-            <p><strong>Crecimiento del EBITDA</strong> situado en un {{delta_ebitda|mul:100|floatformat:1}}% el último año</p>
-          </div>
-          <div class="divider"></div>
-          <div class="card-content black-text">
-            <p><strong>Crecimiento de los resultados de explotación</strong> situado en un {{delta_resultados_explotacion|mul:100|floatformat:1}}% el último año</p>
-          </div>
-          <div class="divider"></div> -->
           <div class="card-content black-text">
             <p>Buena <strong>diversificación de sus ventas</strong> en un gran número de clientes</p>
           </div> <!-- {{empresa.hhi_clients_clients|floatformat:2}} -->
@@ -133,10 +121,6 @@ Riesgo Mercado - {{ empresa.name }}
           <div class="card-content black-text">
             <p>Baja <strong>diversificación de sus ventas</strong>, efectuadas en muy pocas provincias</p>
           </div>
-          <!-- <div class="divider"></div>
-          <div class="card-content black-text">
-            <p>Baja <strong>diversificación sectorial</strong> con un índice de concentración del 5/10</p> 
-          </div> -->
           </div>
         </div>
     </div>
@@ -271,6 +255,27 @@ Riesgo Mercado - {{ empresa.name }}
                   {% endif %}
               </div>
           </div>
+
+          <div class="row">
+              <div class="col s12 m6">
+                  <h5>Detalles de contacto</h5>
+                  <div><i class="tiny material-icons">contacts</i> {{empresa.name}} | {{empresa.contact_person}}</div>  
+                  <div><i class="tiny material-icons">email</i> {{empresa.email}}</div>
+                  <div><i class="tiny material-icons">location_on</i>{{empresa.address}}</div>   
+                  <div><i class="tiny material-icons">call</i> {{empresa.phone}}</div>   
+                  <div><i class="tiny material-icons">business</i> Sector: {{ empresa.sector }}</div>   
+                  <div><i class="tiny material-icons">info</i> CNAE: {{ empresa.cnae_2 }}</div>  
+                  <div><i class="tiny material-icons">schedule</i> Created in {{ empresa.creation_date }}</div>
+                  <div class="right-align"><a href="mailto:{{empresa.email}}?Subject=Hello%20{{empresa.name}}" target="_top" class="btn-large waves-effect waves-light right-align"><i class="material-icons right">email</i>Contacto</a></div>
+              </div>
+              <div class="col s12 m6">
+                  <div id="map"> </div>
+              </div>
+          </div>
+          <hr>
+          <!-- Graficos para el dashboard... vamos allà!!! vamonos!! -->
+          {% if empresa.estados_financieros %}
+          <h4 class="light">Últimos ejercicios</h4>
           <div class="row">
               <div class="col s12 m3">
                 <div class="card blue-grey darken-1">
@@ -316,46 +321,7 @@ Riesgo Mercado - {{ empresa.name }}
                   </div>
                 </div>
               </div>
-              <!-- <div class="col s12 m3">
-                <div class="card blue-grey darken-1">
-                  <div class="card-content white-text">
-                    <span class="card-title">Riesgo</span>
-                    {% if empresa.hats_alert %}
-                    {% if empresa.hats_alert == "ROJA" %}
-                    <h5 class="align-right red-text darken-1">{{empresa.hats_alert}}</h5>
-                    {% elif empresa.hats_alert == "AMARILLA" %}
-                    <h5 class="align-right yellow-text darken-1">{{empresa.hats_alert}}</h5>
-                    {% elif empresa.hats_alert == "VERDE" %}
-                    <h5 class="align-right green-text darken-1">{{empresa.hats_alert}}</h5>
-                    {% endif %}
-                    {% else %}
-                    <h5 class="align-right orange-text darken-1">-</h5>
-                    {% endif %}
-                  </div>
-                </div>
-              </div> -->
             </div>
-
-          <div class="row">
-              <div class="col s12 m6">
-                  <h5>Detalles de contacto</h5>
-                  <div><i class="tiny material-icons">contacts</i> {{empresa.name}} | {{empresa.contact_person}}</div>  
-                  <div><i class="tiny material-icons">email</i> {{empresa.email}}</div>
-                  <div><i class="tiny material-icons">location_on</i>{{empresa.address}}</div>   
-                  <div><i class="tiny material-icons">call</i> {{empresa.phone}}</div>   
-                  <div><i class="tiny material-icons">business</i> Sector: {{ empresa.sector }}</div>   
-                  <div><i class="tiny material-icons">info</i> CNAE: {{ empresa.cnae_2 }}</div>  
-                  <div><i class="tiny material-icons">schedule</i> Created in {{ empresa.creation_date }}</div>
-                  <div class="right-align"><a href="mailto:{{empresa.email}}?Subject=Hello%20{{empresa.name}}" target="_top" class="btn-large waves-effect waves-light right-align"><i class="material-icons right">email</i>Contacto</a></div>
-              </div>
-              <div class="col s12 m6">
-                  <div id="map"> </div>
-              </div>
-          </div>
-          <hr>
-          <!-- Graficos para el dashboard... vamos allà!!! vamonos!! -->
-          {% if empresa.estados_financieros %}
-          <h4 class="light">Últimos ejercicios</h4>
           <div class="row">
               <div class="col s12 m6">
                 <!-- <div class="card grey lighten-4">
@@ -401,34 +367,46 @@ Riesgo Mercado - {{ empresa.name }}
           </div>
           <hr>
           {% endif %}
-          <h4 class="light">Información adicional de interés</h4>
+          <h4 class="light">Tú y tu red</h4>
           <div class="row">
-              <div class="col s12 m4">
+              <div class="col s12 m3">
                 <div class="card blue-grey darken-1">
                   <div class="card-content white-text">
                     <span class="card-title"># Clientes</span>
-                    <h3 class="align-right orange-text darken-1">{{empresa.get_clients.count}}</h3>
+                    <h5 class="align-right orange-text darken-1">{{empresa.get_clients.count}}</h5>
                   </div>
                 </div>
               </div>
-              <div class="col s12 m4">
+              <div class="col s12 m3">
                 <div class="card blue-grey darken-1">
                   <div class="card-content white-text">
                     <span class="card-title"># Proveedores</span>
-                    <h3 class="align-right orange-text darken-1">{{num_proveedores}}</h3>
+                    {% if last_ventas > 0 %}
+                    <h5 class="align-right orange-text darken-1">{{num_proveedores}}</h5>
+                    {% else %}
+                    <h5 class="align-right orange-text darken-1">-</h5>
+                    {% endif %}
                   </div>
                 </div>
               </div>
-              <div class="col s12 m4">
+              <div class="col s12 m3">
+                <div class="card blue-grey darken-1">
+                  <div class="card-content white-text">
+                    <span class="card-title">Competencia</span>
+                    <h5 class="align-right orange-text darken-1">{{company.get_sector_companies.count}}</h5>
+                  </div>
+                </div>
+              </div>
+              <div class="col s12 m3">
                 <div class="card blue-grey darken-1">
                   <div class="card-content white-text">
                     <span class="card-title"># Trabajadores</span>
-                    <h3 class="align-right orange-text darken-1">{{trabajadores}}</h3>
+                    <h5 class="align-right orange-text darken-1">{{trabajadores}}</h5>
                   </div>
                 </div>
               </div>
-          </div>
-          
+            </div>
+          <!-- 
           <h5 class="light">¿Como es el portfolio de clientes y proveedores? ¿Cuan diversificado está?</h5>
           <div class="row">
             <div class="col s12 m3">
@@ -458,7 +436,7 @@ Riesgo Mercado - {{ empresa.name }}
                   </div>
                 </div>
               </div>
-          </div>
+          </div> -->
 
           {% if company.id == empresa.id %}
           <h5 class="light">¿Cuál es tu estacionalidad?</h5>
@@ -466,18 +444,57 @@ Riesgo Mercado - {{ empresa.name }}
           <h5 class="light">¿Cuál es el mejor momento para empezar a trabajar juntos?</h5>
           {% endif %}
           <div class="row">
-            <div class="col m12 s12">
+            <div class="col m6 s12">
                 <div class="card grey lighten-4">
                       <div class="card-content grey-text darken-4">
-                      {% if company.id == empresa.id %}
+                      <!-- {% if company.id == empresa.id %}
                         <span class="card-title">Visualiza tu estacionalidad en ventas</span>
                       {% else %}
                         <span class="card-title">Identifica la estacionalidad para contactar en el momento idóneo</span>
-                      {% endif %}
-                          <canvas id="frecuencia_graph" width="300" height="100"></canvas>
+                      {% endif %} -->
+                          <canvas id="buys_amount_graph" width="300" height="200"></canvas>
                       </div>
                   </div>
               </div>
+              <div class="col m6 s12">
+                <div class="card grey lighten-4">
+                      <div class="card-content grey-text darken-4">
+                      <!-- {% if company.id == empresa.id %}
+                        <span class="card-title">Visualiza tu estacionalidad en ventas</span>
+                      {% else %}
+                        <span class="card-title">Identifica la estacionalidad para contactar en el momento idóneo</span>
+                      {% endif %} -->
+                          <canvas id="buys_count_graph" width="300" height="200"></canvas>
+                      </div>
+                  </div>
+              </div>
+            </div>
+            <div class="row">
+            <div class="col m6 s12">
+                <div class="card grey lighten-4">
+                      <div class="card-content grey-text darken-4">
+                      <!-- {% if company.id == empresa.id %}
+                        <span class="card-title">Visualiza tu estacionalidad en ventas</span>
+                      {% else %}
+                        <span class="card-title">Identifica la estacionalidad para contactar en el momento idóneo</span>
+                      {% endif %} -->
+                          <canvas id="sells_amount_graph" width="300" height="200"></canvas>
+                      </div>
+                  </div>
+              </div>
+              <div class="col m6 s12">
+                <div class="card grey lighten-4">
+                      <div class="card-content grey-text darken-4">
+                      <!-- {% if company.id == empresa.id %}
+                        <span class="card-title">Visualiza tu estacionalidad en ventas</span>
+                      {% else %}
+                        <span class="card-title">Identifica la estacionalidad para contactar en el momento idóneo</span>
+                      {% endif %} -->
+                          <canvas id="sells_count_graph" width="300" height="200"></canvas>
+                      </div>
+                  </div>
+              </div>
+            </div>
               <div class="col s12 m12">
                 <div class="card blue-grey lighten-1">
                   <div class="card-content white-text">
@@ -493,7 +510,7 @@ Riesgo Mercado - {{ empresa.name }}
                 </div>
               </div>
           </div>
-
+<!-- 
           <h5 class="light">¿Dónde trabaja?</h5>
           <div class="row">
             <div class="col m6 s12">
@@ -555,7 +572,7 @@ Riesgo Mercado - {{ empresa.name }}
                   </div>
                 </div>
               </div>
-          </div>
+          </div> -->
           
       </div>
     </div>
@@ -667,7 +684,10 @@ Riesgo Mercado - {{ empresa.name }}
 
 {% block alt_js %}
 <script type="text/javascript">
-    var frecuencia_graph = document.getElementById("frecuencia_graph");
+    var buys_amount_graph = document.getElementById("buys_amount_graph");
+    var buys_count_graph = document.getElementById("buys_count_graph");
+    var sells_amount_graph = document.getElementById("sells_amount_graph");
+    var sells_count_graph = document.getElementById("sells_count_graph");
     var geo_graph = document.getElementById("geo_graph");
     var geo_graph_sec = document.getElementById("geo_graph_sec");
     var sector_graph = document.getElementById("sector_graph");
@@ -679,7 +699,10 @@ Riesgo Mercado - {{ empresa.name }}
     LineGraph(facturacion_graph, {{balance_sells_avg_sector|safe}}, {{balance_sells|safe}}, "Ventas");
     LineGraph(ebitda_graph, {{balance_ebitda_avg_sector|safe}}, {{balance_ebitda|safe}}, "EBITDA");
     LineGraph(resultados_graph, {{balance_resultado_avg_sector|safe}}, {{balance_resultado|safe}}, "Resultado");
-    BarGraph(frecuencia_graph, {{monthly_sells|safe}}, "{{titulo}}");
+    BarGraph(buys_amount_graph, {{buys_amount|safe}}, "Compras mensuales €");
+    BarGraph(buys_count_graph, {{buys_count|safe}}, "Compras mensuales #");
+    BarGraph(sells_amount_graph, {{sells_amount|safe}}, "Ventas mensuales €");
+    BarGraph(sells_count_graph, {{sells_count|safe}}, "Ventas mensuales #");
     DonutGraph(geo_graph, {{clients_by_region|safe}} );
     DonutGraph(geo_graph_sec, {{clients_sector_by_region|safe}} );
     DonutGraphSector(sector_graph, {{clients_by_sector|safe}});
@@ -692,11 +715,11 @@ Riesgo Mercado - {{ empresa.name }}
           var ebitda_s = ebitda_sec[ebitda_sec.length-1].c
           var ebitda_m = ebitda_me[ebitda_me.length-1].c
 
-          var ratios= [(ventas_m-ebitda_m) / ventas_m * 100, (ventas_s-ebitda_s) * 100 / ventas_s]
+          var ratios= [(ventas_m-ebitda_m) / ventas_m * 100] //, (ventas_s-ebitda_s) * 100 / ventas_s]
           var myChart = new Chart(div, {
             type: 'bar',
             data: {
-                labels: ["Tú","Comparables"],
+                labels: ["Tú"],//,"Comparables"],
                 datasets: [{
                   type: 'bar',
                     label: "Ratio de eficiencia",
@@ -781,15 +804,17 @@ Riesgo Mercado - {{ empresa.name }}
           type: 'line',
           data: {
               labels: labels,
-              datasets: [{
-              label: "Comparables",
-              backgroundColor: "rgba(220,220,220,0.5)",
-              borderColor: "rgba(220,220,220,0.8)",
-              highlightFill: "rgba(220,220,220,0.75)",
-              pointHoverBackgroundColor: "rgba(220,220,220,1)",
-              showTooltip: false, //NEW OPTION DON"T NEED TO INCLUDE IT IF YOU WANT TO DISPLAY BUT WON"T HURT IF YOU DO
-              data: data1
-          }, {
+              datasets: [
+          // {
+          //     label: "Comparables",
+          //     backgroundColor: "rgba(220,220,220,0.5)",
+          //     borderColor: "rgba(220,220,220,0.8)",
+          //     highlightFill: "rgba(220,220,220,0.75)",
+          //     pointHoverBackgroundColor: "rgba(220,220,220,1)",
+          //     showTooltip: false, //NEW OPTION DON"T NEED TO INCLUDE IT IF YOU WANT TO DISPLAY BUT WON"T HURT IF YOU DO
+          //     data: data1
+          // },
+          {
               label: "{{empresa.name|safe}}",
               backgroundColor: "rgba(47,79,79,0.5)",
               borderColor: "rgba(47,79,79,0.8)",
@@ -797,7 +822,8 @@ Riesgo Mercado - {{ empresa.name }}
               pointHoverBackgroundColor: "rgba(47,79,79,1)",
               showTooltip: false, //NEW OPTION DON"T NEED TO INCLUDE IT IF YOU WANT TO DISPLAY BUT WON"T HURT IF YOU DO
               data: data2
-          }]},
+          }
+          ]},
           options: {
             responsive: true,
             pointDotRadius: 10,
