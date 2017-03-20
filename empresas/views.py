@@ -30,6 +30,7 @@ from django.db.models import Avg, Max, Min, Count, Sum, Q
 from django.core.serializers.json import DjangoJSONEncoder
 from django.db.models import Prefetch
 
+BANCO_PRESENTACION = 2
 
 def get_data_mekko(request, *args, **kwargs):
 	data = dict([
@@ -173,7 +174,9 @@ def SearchView(request):
 	if request.user.is_staff:
 		autofilter = dict()
 		company = Empresa.objects.all()
-		request.session['banco'] = 1
+		request.session['banco'] = BANCO_PRESENTACION
+		request.session['journey'] = False
+		request.session['summary'] = True
 		request.session.modified = True
 		for c in company:
 			autofilter[c.name] = c.image
@@ -192,7 +195,7 @@ def SearchView(request):
 		except:
 			pass
 		company_id = 990
-		request.session['banco'] = 1
+		request.session['banco'] = BANCO_PRESENTACION
 		request.session['company'] = company_id
 		request.session['summary'] = True
 		request.session.modified = True
@@ -422,7 +425,8 @@ def SwitchView(request, pk=None):
 		'balance_ebitda': json.dumps(ebitda_me, cls=DjangoJSONEncoder),
 		'balance_resultado_avg_sector': json.dumps(resultados_sector, cls=DjangoJSONEncoder),
 		'balance_resultado': json.dumps(resultados_me, cls=DjangoJSONEncoder),
-		'journey': request.session.get('journey')
+		'journey': request.session.get('journey'),
+		'banco': request.session.get('banco')
 		}
 	return render(request, 'empresas/empresa_detail.html', context)
 
@@ -434,7 +438,8 @@ def InformeView(request):
 		'company': company,
 		'recommended_clients': company.recommended_clients.all(),
 		'recommended_providers': company.recommended_providers.all(),
-		'journey': request.session.get('journey')
+		'journey': request.session.get('journey'),
+		'banco': request.session.get('banco')
 	}
 	return render(request, "empresas/journey.html", context)
 
@@ -728,7 +733,8 @@ def EmpresaDetailView(request, pk=None):
 		'balance_resultado_avg_sector': json.dumps(resultados_sector, cls=DjangoJSONEncoder),
 		'balance_resultado': json.dumps(resultados_me, cls=DjangoJSONEncoder),
 		'journey': request.session.get('journey'),
-		'summary': request.session.get('summary')
+		'summary': request.session.get('summary'),
+		'banco': request.session.get('banco')
 		}
 
 	return render(request, 'empresas/empresa_detail.html', context)
@@ -796,7 +802,8 @@ def FinancialRiskRecommendationsView(request):
 		'deuda_corto': deuda_corto,
 		'productos_variable': company.productos_con_tipo_variable().all(),
 		'ultimos_eeff': ultimos_eeff,
-		'journey': request.session.get('journey')
+		'journey': request.session.get('journey'),
+		'banco': request.session.get('banco')
 		}
 	return render(request, 'empresas/financial_risk.html', context)
 
@@ -806,7 +813,8 @@ def FAQView(request):
 	company_id = request.session.get('company')
 	company = Empresa.objects.filter(pk=company_id)[0]
 	context = {
-		'company':company
+		'company':company,
+		'banco': request.session.get('banco')
 	}
 	return render(request, 'empresas/faq.html', context)
 
@@ -948,6 +956,7 @@ def MarketRiskRecommendationsView(request):
 		'balance_providers_sells': json.dumps(sells_me_prov, cls=DjangoJSONEncoder),
 		'balance_providers_ebitda_avg_sector': json.dumps(ebitda_sector_prov, cls=DjangoJSONEncoder),
 		'balance_providers_ebitda': json.dumps(ebitda_me_prov, cls=DjangoJSONEncoder),
+		'banco': request.session.get('banco')
 		}
 	return render(request, 'empresas/risk_market.html', context)
 
@@ -974,7 +983,8 @@ def ClientRiskRecommendationsView(request):
 		'get_monthly_sector_avg_buys': json.dumps(list(company.get_sector_total_monthly_buys_amount()), cls=DjangoJSONEncoder),
 		'productos_variable': company.productos_con_tipo_variable().all(),
 		'ultimos_eeff': ultimos_eeff,
-		'journey': request.session.get('journey')
+		'journey': request.session.get('journey'),
+		'banco': request.session.get('banco')
 		}
 	return render(request, 'empresas/risk_client.html', context)
 
@@ -1007,7 +1017,8 @@ def ProviderRiskRecommendationsView(request):
 		'get_monthly_sector_avg_sells': json.dumps(list(company.get_sector_total_monthly_sells_amount()), cls=DjangoJSONEncoder),
 		'productos_variable': company.productos_con_tipo_variable().all(),
 		'ultimos_eeff': ultimos_eeff,
-		'journey': request.session.get('journey')
+		'journey': request.session.get('journey'),
+		'banco': request.session.get('banco')
 		}
 	return render(request, 'empresas/risk_providers.html', context)
 
@@ -1094,7 +1105,8 @@ def CommercialProvidersRecommendationsView(request):
 		'balance_providers_ebitda': json.dumps(ebitda_me, cls=DjangoJSONEncoder),
 		'balance_providers_resultado_avg_sector': json.dumps(resultados_sector, cls=DjangoJSONEncoder),
 		'balance_providers_resultado': json.dumps(resultados_me, cls=DjangoJSONEncoder),
-		'journey': request.session.get('journey')
+		'journey': request.session.get('journey'),
+		'banco': request.session.get('banco')
 		}
 
 	return render(request, 'empresas/comercial_recommendations_providers.html', context)
@@ -1202,7 +1214,8 @@ def CommercialClientsRecommendationsView(request):
 		'balance_resultado_avg_sector': json.dumps(resultados_sector, cls=DjangoJSONEncoder), #json.dumps(list(empresa.balance_clients_resultado_avg_sector()), cls=DjangoJSONEncoder),
 		'balance_resultado': json.dumps(resultados_me, cls=DjangoJSONEncoder), #json.dumps(list(empresa.balance_clients_resultado()), cls=DjangoJSONEncoder),
 		'penetration': penetration,
-		'journey': request.session.get('journey')
+		'journey': request.session.get('journey'),
+		'banco': request.session.get('banco')
 		}
 
 	return render(request, 'empresas/comercial_recommendations_clients.html', context)
@@ -1313,6 +1326,7 @@ def CommercialClientsRecommendationsView2(request):
 		'journey': request.session.get('journey'),
 		'riesgo_impago_clientes': json.dumps(list(empresa.riesgo_impago_clientes()), cls=DjangoJSONEncoder),
 		'riesgo_impago_clientes_sector': json.dumps(list(empresa.riesgo_impago_clientes_sector()), cls=DjangoJSONEncoder),
+		'banco': request.session.get('banco')
 		}
 
 	return render(request, 'empresas/comercial_recommendations_clients2.html', context)
@@ -1395,6 +1409,7 @@ def CommercialProvidersRecommendationsView2(request):
 		'journey': request.session.get('journey'),
 		'riesgo_impago_proveedores': json.dumps(list(empresa.riesgo_impago_proveedores()), cls=DjangoJSONEncoder),
 		'riesgo_impago_providers_sector': json.dumps(list(empresa.riesgo_impago_providers_sector()), cls=DjangoJSONEncoder),
+		'banco': request.session.get('banco')
 		}
 
 	return render(request, 'empresas/comercial_recommendations_providers2.html', context)
@@ -1451,9 +1466,11 @@ def FinancialRiskRecommendationsView2(request):
 		'deuda_corto': deuda_corto,
 		'productos_variable': company.productos_con_tipo_variable().all(),
 		'ultimos_eeff': ultimos_eeff,
-		'journey': request.session.get('journey')
+		'journey': request.session.get('journey'),
+		'banco': request.session.get('banco')
 		}
 	return render(request, 'empresas/financial_risk2.html', context)
+	
 """-------------------------------------------------------"""
 """				TRANFERS VIEWS 							  """
 """-------------------------------------------------------"""
@@ -1546,7 +1563,8 @@ def ClientView(request):
 			context = {
 				"company": company, 
 				"recommended_clients": recommended_clients[:50],
-				"loading_times": request.session['recommended_clients_page']
+				"loading_times": request.session['recommended_clients_page'],
+				'banco': request.session.get('banco')
 			}
 			return render(request, "empresas/cards_layout.html", context)
 		else:
@@ -1554,7 +1572,8 @@ def ClientView(request):
 			context = {
 				"company": company, 
 				"recommended_clients": recommended_clients[:50],
-				"loading_times": request.session['recommended_clients_page']
+				"loading_times": request.session['recommended_clients_page'],
+				'banco': request.session.get('banco')
 			}
 			return render(request, "empresas/cards_layout.html", context)
 
@@ -1564,7 +1583,8 @@ def ClientView(request):
 		"today": today,
 		'recommended_clients': recommended_clients[:50],
 		"loading_times": request.session['recommended_clients_page'],
-		'journey': request.session.get('journey')
+		'journey': request.session.get('journey'),
+		'banco': request.session.get('banco')
 	}
 	return render(request, "empresas/recommended_clients.html", context)
 

@@ -10,6 +10,7 @@ Riesgo financiero - {{ company.name }}
 {% block side-nav %}{% include "side-nav.html" %}{% endblock %}
 
 {% block content %}
+
 <div class="parallax-container">
 		<h3 class="center-align white-text text-darken-3 light">El riesgo financiero... ¿Podré seguir pagando?</h3>
 		<div class="row center">{{company.name}}</div>
@@ -204,8 +205,7 @@ Riesgo financiero - {{ company.name }}
 					    				<div class="row">
 					    					<div class="col m12 s12 center-align"></div>
 					    					<div class="col m12 s12 center-align">
-					    						<span class="right-align"><a href="https://www.bancosantander.es/es/empresas-advance/financiacion" id="download-button" target="_blank" class="btn waves-effect waves-light transparent grey-text text-darken-4 border-grey"> Contrata un préstamo </a> </span>
-					    						<!-- https://www.bancsabadell.com/cs/Satellite/SabAtl/Cuentas-de-empresa/1191357312542/es/ -->
+					    						<span class="right-align"><a href={% if banco == 1 %} "https://www.bancsabadell.com/cs/Satellite/SabAtl/Cuentas-de-empresa/1191357312542/es/" {% elif banco == 2 %} "https://www.bancosantander.es/es/empresas-advance/financiacion" {% endif %} id="download-button" target="_blank" class="btn waves-effect waves-light transparent grey-text text-darken-4 border-grey"> Contrata un préstamo </a> </span>
 					    					</div>
 					    				</div>
 					    				
@@ -256,8 +256,7 @@ Riesgo financiero - {{ company.name }}
 					    				<div class="row">
 					    					<div class="col m12 s12 center-align"></div>
 					    					<div class="col m12 s12 center-align">
-					    						<span class="right-align"><a href="https://www.bancosantander.es/es/empresas-advance/financiacion/financiacion-a-corto-plazo/credito-advance" id="download-button" target="_blank" class="btn waves-effect waves-light transparent grey-text text-darken-4 border-grey"> Contrata nuestra línea de crédito </a> </span>
-					    						<!-- https://www.bancsabadell.com/cs/Satellite/SabAtl/Lineas-de-credito/1191332198814/es/ -->
+					    						<span class="right-align"><a href={% if banco == 1 %} "https://www.bancsabadell.com/cs/Satellite/SabAtl/Lineas-de-credito/1191332198814/es/" {% elif banco == 2 %} "https://www.bancosantander.es/es/empresas-advance/financiacion/financiacion-a-corto-plazo/credito-advance" {% endif %} id="download-button" target="_blank" class="btn waves-effect waves-light transparent grey-text text-darken-4 border-grey"> Contrata nuestra línea de crédito </a> </span>
 					    						
 					    					</div>
 					    				</div>
@@ -266,37 +265,7 @@ Riesgo financiero - {{ company.name }}
 					        </div>
 			    		</div>
 			    	</div>
-			    	<!-- EBITDA -->
-			    	<div class="row">
-			    		<div class="col m7 s12">
-			    			<div class="card grey lighten-4">
-					            <div class="card-content grey-text darken-4">
-					            	<span class="card-title">Deuda por producto</span>
-					            	<div class="row center-align">
-						            		{% for producto in company.productos.all %}
-						            		<div class="col m4 s6">
-						            			<div class="card blue-grey lighten-3">
-						            				<span class="card-title blue-grey-text text-darken-3">{{producto.producto}}</span>
-						              				<h4 class="orange-text text-darken-2">{{producto.dispuesto|floatformat:0|intcomma}}€</h4>
-						              				<small class="blue-grey-text text-darken-3">Fecha vencimiento: {{producto.fecha_vencimiento}}</small><br>
-						              				<small class="blue-grey-text text-darken-3">Cuota anual: {{producto.cuota_anual|floatformat:1|intcomma}}€</small>
-						              			</div>
-						              		</div>
-						              		{% endfor %}
-					            	</div>
-					            </div>
-					        </div>
-			    		</div>
-			    		<div class="col m5 s12">
-			    			<div class="card grey lighten-4">
-					            <div class="card-content grey-text darken-4">
-					              <blockquote>
-					    				<p class="light"><i class="tiny material-icons indigo-text darken-4">live_help</i> {{company.respuesta_finrisk_deudaproducto_info}}</p>
-					    			</blockquote>
-					            </div>
-					        </div>
-			    		</div>
-			    	</div>
+			    
 			    	</div>
 
 			    <!-- /////////////////////////////////////////////////////////////
@@ -327,8 +296,7 @@ Riesgo financiero - {{ company.name }}
 					    				<div class="row">
 					    					<div class="col m12 s12 center-align"></div>
 					    					<div class="col m12 s12 center-align">
-					    						<span class="right-align"><a href="https://www.bancosantander.es/es/empresas-advance/financiacion/financiacion-a-corto-plazo/financiacion-a-corto-plazo" id="download-button" target="_blank" class="btn waves-effect waves-light transparent grey-text text-darken-4 border-grey"> Productos de corto plazo</a> </span>
-					    						<!-- https://www.bancsabadell.com/cs/Satellite/SabAtl/Lineas-de-credito/1191332198814/es/ -->
+					    						<span class="right-align"><a href={% if banco == 1 %} "https://www.bancsabadell.com/cs/Satellite/SabAtl/Lineas-de-credito/1191332198814/es/" {% elif banco == 2 %} "https://www.bancosantander.es/es/empresas-advance/financiacion/financiacion-a-corto-plazo/financiacion-a-corto-plazo" {% endif %} id="download-button" target="_blank" class="btn waves-effect waves-light transparent grey-text text-darken-4 border-grey"> Productos de corto plazo</a> </span>
 					    					</div>
 					    				</div>
 					    			</blockquote>
@@ -421,8 +389,8 @@ Riesgo financiero - {{ company.name }}
 					    				<div class="row">
 					    					<div class="col m12 s12 center-align"></div>
 					    					<div class="col m12 s12 center-align">
-					    						<span class="right-align"><a href="https://www.bancosantander.es/es/empresas-advance/financiacion/financiacion-a-corto-plazo/financiacion-a-corto-plazo" id="download-button" target="_blank" class="btn waves-effect waves-light transparent grey-text text-darken-4 border-grey"> Productos para circulante </a> </span>
-					    						<!-- https://www.bancsabadell.com/cs/Satellite/SabAtl/Lineas-de-credito/1191332198814/es/ -->
+					    						<span class="right-align"><a href={% if banco == 1 %} "https://www.bancsabadell.com/cs/Satellite/SabAtl/Lineas-de-credito/1191332198814/es/" {% elif banco == 2 %} "https://www.bancosantander.es/es/empresas-advance/financiacion/financiacion-a-corto-plazo/financiacion-a-corto-plazo" {% endif %} id="download-button" target="_blank" class="btn waves-effect waves-light transparent grey-text text-darken-4 border-grey"> Productos para circulante </a> </span>
+					    						<!--  -->
 					    					</div>
 					    				</div>
 					    			</blockquote>
@@ -438,7 +406,7 @@ Riesgo financiero - {{ company.name }}
 			    	<div class="white_back title_conf">
 				    	<h3 class="flow-text">Análisis riesgo divisa <i class="fa fa-caret-right" aria-hidden="true"></i> ¿Cómo puedo cubrir mi riesgo divisa?</h3>
 				    </div>
-			    	<div class="row">
+			    	<div class="row title_conf">
 			    		<div class="col m3 s12">
 			    			<div class="card grey lighten-4">
 					            <div class="card-content grey-text darken-4">
@@ -497,8 +465,8 @@ Riesgo financiero - {{ company.name }}
 					    				<div class="row">
 					    					<div class="col m12 s12 center-align"></div>
 					    					<div class="col m12 s12 center-align">
-					    						<span class="right-align"><a href="https://www.bancosantander.es/es/empresas-advance/productos-y-servicios/proteccion/coberturas-de-tipo-de-cambio" id="download-button" target="_blank" class="btn waves-effect waves-light transparent grey-text text-darken-4 border-grey"> Coberturas de divisas</a> </span>
-					    						<!-- https://www.bancsabadell.com/cs/Satellite/SabAtl/Coberturas-de-riesgo/1191332203628/es/ -->
+					    						<span class="right-align"><a href={% if banco == 1 %}"https://www.bancsabadell.com/cs/Satellite/SabAtl/Coberturas-de-riesgo/1191332203628/es/" {% elif banco == 2 %} "https://www.bancosantander.es/es/empresas-advance/productos-y-servicios/proteccion/coberturas-de-tipo-de-cambio" {% endif %} id="download-button" target="_blank" class="btn waves-effect waves-light transparent grey-text text-darken-4 border-grey"> Coberturas de divisas</a> </span>
+					    						<!-- -->
 					    					</div>
 					    				</div>
 					    			</blockquote>
@@ -515,7 +483,38 @@ Riesgo financiero - {{ company.name }}
 			    	<div class="white_back title_conf">
 				    	<h3 class="flow-text">Análisis riesgo de tipo de interés <i class="fa fa-caret-right" aria-hidden="true"></i> ¿Cómo puedo cubrir variaciones de precio?</h3>
 				    </div>
-			    	<div class="row">
+				    <!-- EBITDA -->
+			    	<div class="row title_conf">
+			    		<div class="col m7 s12">
+			    			<div class="card grey lighten-4">
+					            <div class="card-content grey-text darken-4">
+					            	<span class="card-title">Deuda por producto</span>
+					            	<div class="row center-align">
+						            		{% for producto in company.productos.all %}
+						            		<div class="col m4 s6">
+						            			<div class="card blue-grey lighten-3">
+						            				<span class="card-title blue-grey-text text-darken-3">{{producto.producto}}</span>
+						              				<h4 class="orange-text text-darken-2">{{producto.dispuesto|floatformat:0|intcomma}}€</h4>
+						              				<small class="blue-grey-text text-darken-3">Fecha vencimiento: {{producto.fecha_vencimiento}}</small><br>
+						              				<small class="blue-grey-text text-darken-3">Cuota anual: {{producto.cuota_anual|floatformat:1|intcomma}}€</small>
+						              			</div>
+						              		</div>
+						              		{% endfor %}
+					            	</div>
+					            </div>
+					        </div>
+			    		</div>
+			    		<div class="col m5 s12">
+			    			<div class="card grey lighten-4">
+					            <div class="card-content grey-text darken-4">
+					              <blockquote>
+					    				<p class="light"><i class="tiny material-icons indigo-text darken-4">live_help</i> {{company.respuesta_finrisk_deudaproducto_info}}</p>
+					    			</blockquote>
+					            </div>
+					        </div>
+			    		</div>
+			    	</div>
+			    	<div class="row title_conf">
 			    		<div class="col m6 s12">
 			    			<div class="card grey lighten-4">
 					            <div class="card-content grey-text darken-4">
@@ -554,8 +553,8 @@ Riesgo financiero - {{ company.name }}
 					    				<div class="row">
 					    					<div class="col m12 s12 center-align"></div>
 					    					<div class="col m12 s12 center-align">
-					    						<span class="right-align"><a href="https://www.bancosantander.es/es/empresas-advance/productos-y-servicios/proteccion/coberturas-de-tipo-de-interes" id="download-button" target="_blank" class="btn waves-effect waves-light transparent grey-text text-darken-4 border-grey"> Coberturas de tipo de interés</a> </span>
-					    						<!-- https://www.bancsabadell.com/cs/Satellite/SabAtl/Coberturas-de-riesgo/1191332203628/es/ -->
+					    						<span class="right-align"><a href={% if banco == 1 %} "https://www.bancsabadell.com/cs/Satellite/SabAtl/Coberturas-de-riesgo/1191332203628/es/" {% elif banco == 2 %} "https://www.bancosantander.es/es/empresas-advance/productos-y-servicios/proteccion/coberturas-de-tipo-de-interes" {% endif %} id="download-button" target="_blank" class="btn waves-effect waves-light transparent grey-text text-darken-4 border-grey"> Coberturas de tipo de interés</a> </span>
+					    						<!--  -->
 					    					</div>
 					    				</div>
 					    			</blockquote>

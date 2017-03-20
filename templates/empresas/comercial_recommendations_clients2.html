@@ -512,8 +512,8 @@ Riesgo Cliente - {{ company.name }}
 					    						<a href="{% url 'empresas:clients' %}" id="download-button" target="_blank" class="btn waves-effect waves-light transparent grey-text text-darken-4 border-grey">Nuevos clientes </a>
 					    					</div>
 					    					<div class="col m6 s6">
-					    						<a href="https://www.bancosantander.es/es/empresas-advance/productos-y-servicios/cobros/factoring" id="download-button" target="_blank" class="btn waves-effect waves-light transparent grey-text text-darken-4 border-grey">Factoring </a>
-					    						<!-- https://www.bancsabadell.com/cs/Satellite/SabAtl/Factoring/1191332201741/es/ -->
+					    						<a href={% if banco == 1 %} "https://www.bancsabadell.com/cs/Satellite/SabAtl/Factoring/1191332201741/es/" {% elif banco == 2 %} "https://www.bancosantander.es/es/empresas-advance/productos-y-servicios/cobros/factoring" {% endif %} id="download-button" target="_blank" class="btn waves-effect waves-light transparent grey-text text-darken-4 border-grey">Factoring </a>
+					    						<!-- -->
 					    					</div>
 					    				</div>
 					    			</blockquote>
