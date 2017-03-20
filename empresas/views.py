@@ -2,6 +2,7 @@
 # -*- coding: utf-8 -*-
 
 from django.http import HttpResponse, HttpResponseRedirect, HttpRequest, JsonResponse
+from django.contrib import messages
 from django.shortcuts import redirect
 from django.conf import settings
 from django.shortcuts import render, get_object_or_404
@@ -31,6 +32,9 @@ from django.core.serializers.json import DjangoJSONEncoder
 from django.db.models import Prefetch
 
 BANCO_PRESENTACION = 2
+
+def has_l0d_permission(user):
+    return user.groups.filter(name='L0D').exists()
 
 def get_data_mekko(request, *args, **kwargs):
 	data = dict([
@@ -171,37 +175,41 @@ def get_data_mekko(request, *args, **kwargs):
 
 @login_required
 def SearchView(request):
-	if request.user.is_staff:
-		autofilter = dict()
-		company = Empresa.objects.all()
-		request.session['banco'] = BANCO_PRESENTACION
-		request.session['journey'] = False
-		request.session['summary'] = True
-		request.session.modified = True
-		for c in company:
-			autofilter[c.name] = c.image
+	if has_l0d_permission(request.user):
+		if request.user.is_staff:
+			autofilter = dict()
+			company = Empresa.objects.all()
+			request.session['banco'] = BANCO_PRESENTACION
+			request.session['journey'] = False
+			request.session['summary'] = True
+			request.session.modified = True
+			for c in company:
+				autofilter[c.name] = c.image
 
-		context = {
-			'autofilter': json.dumps(autofilter, cls=DjangoJSONEncoder),
-			'buttons': False
-		}
-		return render(request, "empresas/search_company.html", context)
+			context = {
+				'autofilter': json.dumps(autofilter, cls=DjangoJSONEncoder),
+				'buttons': False
+			}
+			return render(request, "empresas/search_company.html", context)
+		else:
+			try:
+				del request.session['company']
+				del request.session['recommended_clients_page']
+				del request.session['summary']
+				del request.session['banco']
+			except:
+				pass
+			company_id = 990
+			request.session['banco'] = BANCO_PRESENTACION
+			request.session['company'] = company_id
+			request.session['summary'] = True
+			request.session.modified = True
+			company = Empresa.objects.filter(pk=company_id)
+			company = company.prefetch_related('estados_financieros','transfers')[0]
+			return redirect("/empresas/summary", {'empresa': company, 'company': company})
 	else:
-		try:
-			del request.session['company']
-			del request.session['recommended_clients_page']
-			del request.session['summary']
-			del request.session['banco']
-		except:
-			pass
-		company_id = 990
-		request.session['banco'] = BANCO_PRESENTACION
-		request.session['company'] = company_id
-		request.session['summary'] = True
-		request.session.modified = True
-		company = Empresa.objects.filter(pk=company_id)
-		company = company.prefetch_related('estados_financieros','transfers')[0]
-		return redirect("/empresas/summary", {'empresa': company, 'company': company})
+		messages.warning(request, 'A pesar de tener un usuario activo, no tienes permiso para entrar en esta aplicación')
+		return redirect("/pillstore", {})
 
 @login_required
 def SummaryView(request):

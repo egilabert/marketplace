@@ -1,6 +1,6 @@
 {% load compress %}
 {% load static %}
-
+{% load mathfilters %}
 
 <!doctype html>
 <!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
@@ -55,10 +55,10 @@
 
     {% if messages %}
         {% for message in messages %}
-          <div class="chip" style="position: absolute; top: 30px; left: 30px;">
+            <div class="chip {% if message.tags %}{{ message.tags }}{% endif %}" style="position: fixed; z-index: 10000; top: {{40|mul:forloop.counter}}px; left: 40px;">
               {{message}}
               <i class="close material-icons">close</i>
-          </div>
+           </div>
         {% endfor %}
     {% endif %}
   <!-- {% include "messages_display.html" %} -->

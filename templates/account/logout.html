@@ -1,21 +1,35 @@
-{% extends "account/base.html" %}
-
+{% extends "base_accounts.html" %}
+{% load static %}
 {% load i18n %}
 
 {% block head_title %}{% trans "Sign Out" %}{% endblock %}
 
 {% block content %}
-<h1>{% trans "Sign Out" %}</h1>
 
-<p>{% trans 'Are you sure you want to sign out?' %}</p>
+<div class="row padding_top">
+      <div class="col m4"></div>
+      <div class="col m4">
+        <div class="row padding_top">
+          <div class="col s12 m12">
+            <div class="card-panel grey lighten-5">
+            	<h4 class="light">{% trans "Sign Out" %}</h4 class="light">
+				<p>{% trans 'Are you sure you want to sign out?' %}</p>
 
-<form method="post" action="{% url 'account_logout' %}">
-  {% csrf_token %}
-  {% if redirect_field_value %}
-  <input type="hidden" name="{{ redirect_field_name }}" value="{{ redirect_field_value }}"/>
-  {% endif %}
-  <button type="submit">{% trans 'Sign Out' %}</button>
-</form>
+				<form method="post" action="{% url 'account_logout' %}">
+				  {% csrf_token %}
+				  {% if redirect_field_value %}
+				  <input type="hidden" name="{{ redirect_field_name }}" value="{{ redirect_field_value }}"/>
+				  {% endif %}
+				  <button class="btn" type="submit">{% trans 'Sign Out' %}</button>
+				</form>
+			</div>
+          </div>
+        </div>
+        
+      </div>
+    
+  </div>
 
+<img src="{% static 'images/pexels-photo-132192.jpeg' %}" id="bg" alt="">
 
 {% endblock %}

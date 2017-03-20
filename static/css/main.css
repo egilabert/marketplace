@@ -1,5 +1,25 @@
 {% load staticfiles %}
 
+.warning {
+  background-color: #ffcc80;
+}
+.debug {
+  background-color: #eeeeee;
+}
+.info {
+  background-color: #b3e5fc;
+}
+.success {
+  background-color: #81c784;
+}
+.success {
+  background-color: #81c784;
+}
+.error {
+  background-color: #e53935;
+  color: white;
+}
+
 #bg {
   position: fixed; 
   top: 0; 
