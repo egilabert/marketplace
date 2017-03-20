@@ -9,6 +9,7 @@ from django.core.urlresolvers import reverse
 from empresas.models import Empresa
 from .models import Rating
 from .forms import RatingForm
+from .permissions import *
 import json
 from django.core.serializers.json import DjangoJSONEncoder
 
@@ -31,20 +32,24 @@ def SearchView(request):
 
 @login_required
 def HomeView(request):
-	try:
-		del request.session['company']
-		del request.session['recommended_clients_page']
-	except:
-		pass
-	request.session.modified = True
-	queryset = Empresa.objects.all()
-	if request.session.get('company') is None:
-		company = 990 #1492 #randint(0, queryset.count() - 1) # # ## 865 865-1 
-		request.session['company'] = company
+	if has_roborisk_permission(request.user):
+		try:
+			del request.session['company']
+			del request.session['recommended_clients_page']
+		except:
+			pass
+		request.session.modified = True
+		queryset = Empresa.objects.all()
+		if request.session.get('company') is None:
+			company = 990 #1492 #randint(0, queryset.count() - 1) # # ## 865 865-1 
+			request.session['company'] = company
+		else:
+			company_id = request.session.get('company')
+			company = Empresa.objects.filter(pk=company_id).first()
+		return render(request, "cro_home.html", {'company': queryset[company-1], 'menu': False})
 	else:
-		company_id = request.session.get('company')
-		company = Empresa.objects.filter(pk=company_id).first()
-	return render(request, "cro_home.html", {'company': queryset[company-1], 'menu': False})
+		messages.warning(request, 'A pesar de tener un usuario activo, no tienes permiso para entrar en esta aplicación')
+		return redirect("/pillstore", {})
 
 @login_required
 def CreditRaterView(request):

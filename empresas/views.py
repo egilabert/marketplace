@@ -14,6 +14,7 @@ from django.contrib.staticfiles.templatetags.staticfiles import static
 import pandas as pd
 from django.core.urlresolvers import reverse
 from .models import Empresa, Transfer, EstadosFinancieros, Productos, CIRBE
+from .permissions import *
 import dateutil.parser
 from .forms import TransferForm
 import datetime
@@ -32,9 +33,6 @@ from django.core.serializers.json import DjangoJSONEncoder
 from django.db.models import Prefetch
 
 BANCO_PRESENTACION = 2
-
-def has_l0d_permission(user):
-    return user.groups.filter(name='L0D').exists()
 
 def get_data_mekko(request, *args, **kwargs):
 	data = dict([
