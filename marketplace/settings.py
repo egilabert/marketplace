@@ -24,7 +24,7 @@ SECRET_KEY = 'e$(6=d78djczabypvpy-w-6l7+ja-vfsp1(wyv&()_)q1i$-un'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['85.214.97.85','127.0.0.1','h2277182.stratoserver.net', 'www.pillango.eu', 'pillango.eu']
+ALLOWED_HOSTS = ['*'] #,'85.214.97.85','127.0.0.1','h2277182.stratoserver.net', 'www.pillango.eu', 'pillango.eu']
 
 # Application definition
 
