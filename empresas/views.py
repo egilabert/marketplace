@@ -2,6 +2,7 @@
 # -*- coding: utf-8 -*-
 
 from django.http import HttpResponse, HttpResponseRedirect, HttpRequest, JsonResponse
+from django.shortcuts import redirect
 from django.conf import settings
 from django.shortcuts import render, get_object_or_404
 from django.contrib.auth.decorators import login_required
@@ -167,16 +168,44 @@ def get_data_mekko(request, *args, **kwargs):
 		])
 	return JsonResponse(data, safe=False)
 
+@login_required
+def SearchView(request):
+	if request.user.is_staff:
+		autofilter = dict()
+		company = Empresa.objects.all()
+		request.session['banco'] = 1
+		request.session.modified = True
+		for c in company:
+			autofilter[c.name] = c.image
+
+		context = {
+			'autofilter': json.dumps(autofilter, cls=DjangoJSONEncoder),
+			'buttons': False
+		}
+		return render(request, "empresas/search_company.html", context)
+	else:
+		try:
+			del request.session['company']
+			del request.session['recommended_clients_page']
+			del request.session['summary']
+			del request.session['banco']
+		except:
+			pass
+		company_id = 990
+		request.session['banco'] = 1
+		request.session['company'] = company_id
+		request.session['summary'] = True
+		request.session.modified = True
+		company = Empresa.objects.filter(pk=company_id)
+		company = company.prefetch_related('estados_financieros','transfers')[0]
+		return redirect("/empresas/summary", {'empresa': company, 'company': company})
+
+@login_required
 def SummaryView(request):
 	try:
 		referrer = request.META['HTTP_REFERER']
-		print('---------------')
-		print(request.GET)
-		print(request.GET.get('company_name',None))
 		if request.GET and request.GET.get('company_name',None):
 			name = request.GET['company_name']
-			print('---------------')
-			print(name)
 			try:
 				del request.session['company']
 				del request.session['recommended_clients_page']
@@ -194,7 +223,6 @@ def SummaryView(request):
 			company = Empresa.objects.filter(pk=company_id)
 			company = company.prefetch_related('estados_financieros','transfers')[0]
 			return render(request, "empresas/summary.html", {'empresa': company, 'company': company})
-
 		else:
 			company_id = request.session.get('company')
 			company = Empresa.objects.filter(pk=company_id)
@@ -209,43 +237,6 @@ def SummaryView(request):
 """-------------------------------------------------------"""
 """				EMPRESAS VIEWS 							  """
 """-------------------------------------------------------"""
-
-# @login_required
-def DebugView(request):
-	company_id = request.session.get('company')
-	company = Empresa.objects.filter(pk=company_id)[0]
-
-	transferencias_clientes = Transfer.objects.filter(destination_reference=company).values('origin_reference', 'destination_reference').annotate(c=Count('amount'))
-	transferencias_proveedores = Transfer.objects.filter(origin_reference=company).values('origin_reference', 'destination_reference').annotate(c=Count('amount'))
-	transferencias_competencia_a_proveedores = Transfer.objects.filter(destination_reference__in=company.get_providers()).filter(origin_reference__in=company.get_sector_companies()).values('origin_reference', 'destination_reference').annotate(c=Count('amount'))
-	transferencias_clientes_a_competencia = Transfer.objects.filter(destination_reference__in=company.get_sector_companies()).filter(origin_reference__in=company.get_clients()).values('origin_reference', 'destination_reference').annotate(c=Count('amount'))
-
-	transferencias = list(transferencias_clientes)+list(transferencias_proveedores)+list(transferencias_competencia_a_proveedores)+list(transferencias_clientes_a_competencia)
-	links = list(transferencias)
-	links_list = list()
-	for l in links:
-		links_list.append({"source": l['origin_reference'], "target": l['destination_reference'], "value": l['c']})
-
-	nodes = list(company.get_providers()) + list(company.get_clients()) + list(company.get_sector_companies())#+ list(additive) + list(additive2)
-	nodes_list = [{'id': company.id, 'group': 1}]
-	for n in nodes:
-		if n in list(company.get_providers()):
-			nodes_list.append({'id': n.id, 'group': 8})
-		elif n in list(company.get_clients()):
-			nodes_list.append({'id': n.id, 'group': 3})
-		elif n in list(company.get_sector_companies()):
-			nodes_list.append({'id': n.id, 'group': 4})
-
-	network = {"nodes": nodes_list, "links": links_list}
-
-	context = {
-		'company': company,
-		'network': json.dumps(network, cls=DjangoJSONEncoder),
-		'rec': company.clients_of_sector_companies().exclude(id__in=company.get_clients()),
-		'recommended_clients': company.get_recommended_clients(),
-		'recommended_providers': company.get_recommended_providers(),
-	}
-	return render(request, "empresas/debugging_recommender.html", context)
 
 # @login_required
 def SwitchView(request, pk=None):
@@ -446,20 +437,6 @@ def InformeView(request):
 		'journey': request.session.get('journey')
 	}
 	return render(request, "empresas/journey.html", context)
-
-@login_required
-def SearchView(request):
-	
-	autofilter = dict()
-	company = Empresa.objects.all()
-	for c in company:
-		autofilter[c.name] = c.image
-
-	context = {
-		'autofilter': json.dumps(autofilter, cls=DjangoJSONEncoder),
-		'buttons': False
-	}
-	return render(request, "empresas/search_company.html", context)
 
 def IntroView(request):
 	company = request.session['company']
@@ -1932,3 +1909,42 @@ def random_image(path):
     filenames = [f for f in os.listdir(fullpath) if is_image_file(f)]
     pick = random.choice(filenames)
     return posixpath.join(settings.STATIC_URL, path, pick)
+
+
+
+# @login_required
+def DebugView(request):
+	company_id = request.session.get('company')
+	company = Empresa.objects.filter(pk=company_id)[0]
+
+	transferencias_clientes = Transfer.objects.filter(destination_reference=company).values('origin_reference', 'destination_reference').annotate(c=Count('amount'))
+	transferencias_proveedores = Transfer.objects.filter(origin_reference=company).values('origin_reference', 'destination_reference').annotate(c=Count('amount'))
+	transferencias_competencia_a_proveedores = Transfer.objects.filter(destination_reference__in=company.get_providers()).filter(origin_reference__in=company.get_sector_companies()).values('origin_reference', 'destination_reference').annotate(c=Count('amount'))
+	transferencias_clientes_a_competencia = Transfer.objects.filter(destination_reference__in=company.get_sector_companies()).filter(origin_reference__in=company.get_clients()).values('origin_reference', 'destination_reference').annotate(c=Count('amount'))
+
+	transferencias = list(transferencias_clientes)+list(transferencias_proveedores)+list(transferencias_competencia_a_proveedores)+list(transferencias_clientes_a_competencia)
+	links = list(transferencias)
+	links_list = list()
+	for l in links:
+		links_list.append({"source": l['origin_reference'], "target": l['destination_reference'], "value": l['c']})
+
+	nodes = list(company.get_providers()) + list(company.get_clients()) + list(company.get_sector_companies())#+ list(additive) + list(additive2)
+	nodes_list = [{'id': company.id, 'group': 1}]
+	for n in nodes:
+		if n in list(company.get_providers()):
+			nodes_list.append({'id': n.id, 'group': 8})
+		elif n in list(company.get_clients()):
+			nodes_list.append({'id': n.id, 'group': 3})
+		elif n in list(company.get_sector_companies()):
+			nodes_list.append({'id': n.id, 'group': 4})
+
+	network = {"nodes": nodes_list, "links": links_list}
+
+	context = {
+		'company': company,
+		'network': json.dumps(network, cls=DjangoJSONEncoder),
+		'rec': company.clients_of_sector_companies().exclude(id__in=company.get_clients()),
+		'recommended_clients': company.get_recommended_clients(),
+		'recommended_providers': company.get_recommended_providers(),
+	}
+	return render(request, "empresas/debugging_recommender.html", context)
