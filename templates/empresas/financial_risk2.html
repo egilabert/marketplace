@@ -182,7 +182,7 @@ Riesgo financiero - {{ company.name }}
 				 ///////////////////////////////////////////////////////////// -->
 
 					<div class="white_back title_conf">
-				    	<h4 class="flow-text">  Acceso a la inversión - Riesgo de crédito <i class="fa fa-caret-right" aria-hidden="true"></i> ¿Puedo asumir más endeudamiento?</h4>
+				    	<h4 class="flow-text">  Acceso a la inversión - ¿Puedo asumir más endeudamiento? Compara tus niveles de deuda</h4>
 				    </div>
 			    	<div class="row title_conf">
 			    	<!-- Resultado explotaciones -->
@@ -191,28 +191,30 @@ Riesgo financiero - {{ company.name }}
 			    			<div class="card grey lighten-4">
 					            <div class="card-content grey-text darken-4">
 					            	<span class="card-title">Ratio de endeudamiento</span>
-					              <canvas id="ratio_endeudamiento_graph" width="300" height="150"></canvas>
+					              <canvas id="ratio_endeudamiento_graph" width="300" height="140"></canvas>
 					            </div>
 					        </div>
 			    		</div>
 			    		<div class="col m6 s12">
 			    			<div class="card grey lighten-4">
-					            <div class="card-content grey-text darken-4">
-					              <blockquote>
-					    				<p class="light"><i class="tiny material-icons indigo-text darken-4">live_help</i> {{company.respuesta_finrisk_ratiodeuda_info}}</p>
-					    				<p class="light"><i class="tiny material-icons indigo-text darken-4">info</i> {{company.respuesta_finrisk_ratiodeuda_interpretation}}</p>
-					    				<p class="light"><i class="tiny material-icons indigo-text darken-4">new_releases</i> {{company.respuesta_finrisk_ratiodeuda_hint}} </p>
-					    				<div class="row">
-					    					<div class="col m12 s12 center-align"></div>
+					            <div class="card-content grey-text darken-4 cards_comments">
+					              		<div class=row>
+					              			<div class="col m12 s12" >
+					              			<h2 class="center-align light grey-text text-darken-3 comment_bar_success">¡Bien!</h2> 
+					              				<p class="light"> <i class="tiny material-icons grey-text text-darken-3">info_outline</i> {{company.respuesta_finrisk_ratiodeuda_interpretation}}</p>
+					              				<p class="light"><i class="tiny material-icons grey-text text-darken-3">chat_bubble_outline</i> {{company.respuesta_finrisk_ratiodeuda_hint}}</p>
+						              		</div>
 					    					<div class="col m12 s12 center-align">
-					    						<span class="right-align"><a href={% if banco == 1 %} "https://www.bancsabadell.com/cs/Satellite/SabAtl/Cuentas-de-empresa/1191357312542/es/" {% elif banco == 2 %} "https://www.bancosantander.es/es/empresas-advance/financiacion" {% endif %} id="download-button" target="_blank" class="btn waves-effect waves-light transparent grey-text text-darken-4 border-grey"> Contrata un préstamo </a> </span>
+					    						<a href={% if banco == 1 %} "https://www.bancsabadell.com/cs/Satellite/SabAtl/Cuentas-de-empresa/1191357312542/es/" {% elif banco == 2 %} "https://www.bancosantander.es/es/empresas-advance/financiacion" {% endif %} id="download-button" target="_blank" class="btn waves-effect waves-light transparent grey-text text-darken-4 border-grey"> Contrata un préstamo </a>
 					    					</div>
-					    				</div>
-					    				
-					    			</blockquote>
+					              		</div>
 					            </div>
 					        </div>
+			    			
 			    		</div>
+			    	</div>
+			    	<div class="row">
+			    		<p class="light"><i class="tiny material-icons grey-text text-darken-3">live_help</i> {{company.respuesta_finrisk_ratiodeuda_info}}</p>
 			    	</div>
 			    	<!-- EBITDA -->
 			    	<div class="row">
@@ -220,21 +222,29 @@ Riesgo financiero - {{ company.name }}
 			    			<div class="card grey lighten-4">
 					            <div class="card-content grey-text darken-4">
 					            	<span class="card-title">Deuda total / EBITDA</span>
-					              <canvas id="deuda_largo_graph" width="300" height="150"></canvas>
+					              <canvas id="deuda_largo_graph" width="300" height="140"></canvas>
 					            </div>
 					        </div>
 			    		</div>
 			    		<div class="col m6 s12">
 			    			<div class="card grey lighten-4">
-					            <div class="card-content grey-text darken-4">
-					              <blockquote>
-					    				<p class="light"><i class="tiny material-icons indigo-text darken-4">live_help</i> {{company.respuesta_finrisk_deudatotal_info}}</p>
-					    				<p class="light"><i class="tiny material-icons indigo-text darken-4">info</i> {{company.respuesta_finrisk_deudatotal_interpretation}}</p>
-					    				<p class="light"><i class="tiny material-icons indigo-text darken-4">new_releases</i> {{company.respuesta_finrisk_deudatotal_hint}} </p>
-					    			</blockquote>
+					            <div class="card-content grey-text darken-4 cards_comments">
+					              		<div class=row>
+					              			<div class="col m12 s12" >
+					              			<h2 class="center-align light grey-text text-darken-3 comment_bar_success">¡Bien!</h2> 
+					              				<p class="light"> <i class="tiny material-icons grey-text text-darken-3">info_outline</i> {{company.respuesta_finrisk_deudatotal_interpretation}}</p>
+					              				<p class="light"><i class="tiny material-icons grey-text text-darken-3">chat_bubble_outline</i> {{company.respuesta_finrisk_deudatotal_hint}}</p>
+						              		</div>
+					    					<div class="col m12 s12 center-align">
+					    						<a href={% if banco == 1 %} "https://www.bancsabadell.com/cs/Satellite/SabAtl/Cuentas-de-empresa/1191357312542/es/" {% elif banco == 2 %} "https://www.bancosantander.es/es/empresas-advance/financiacion" {% endif %} id="download-button" target="_blank" class="btn waves-effect waves-light transparent grey-text text-darken-4 border-grey"> Contrata un préstamo </a>
+					    					</div>
+					              		</div>
 					            </div>
 					        </div>
 			    		</div>
+			    	</div>
+			    	<div class="row">
+			    		<p class="light"><i class="tiny material-icons grey-text text-darken-3">live_help</i> {{company.respuesta_finrisk_deudatotal_info}}</p>
 			    	</div>
 			    	<!-- EBITDA -->
 			    	<div class="row">
@@ -242,30 +252,30 @@ Riesgo financiero - {{ company.name }}
 			    			<div class="card grey lighten-4">
 					            <div class="card-content grey-text darken-4">
 					            	<span class="card-title">Ratio deuda corto/largo plazo</span>
-					              <canvas id="ratio_corto_largo_graph" width="300" height="150"></canvas>
+					              <canvas id="ratio_corto_largo_graph" width="300" height="140"></canvas>
 					            </div>
 					        </div>
 			    		</div>
 			    		<div class="col m6 s12">
 			    			<div class="card grey lighten-4">
-					            <div class="card-content grey-text darken-4">
-					              <blockquote>
-					    				<p class="light"><i class="tiny material-icons indigo-text darken-4">live_help</i> {{company.respuesta_finrisk_cortolargo_info}}</p>
-					    				<p class="light"><i class="tiny material-icons indigo-text darken-4">info</i> {{company.respuesta_finrisk_cortolargo_interpretation}}</p>
-					    				<p class="light"><i class="tiny material-icons indigo-text darken-4">new_releases</i> {{company.respuesta_finrisk_cortolargo_hint}} </p>
-					    				<div class="row">
-					    					<div class="col m12 s12 center-align"></div>
+					            <div class="card-content grey-text darken-4 cards_comments">
+					              		<div class=row>
+					              			<div class="col m12 s12" >
+					              			<h2 class="center-align light grey-text text-darken-3 comment_bar_success">¡Bien!</h2> 
+					              				<p class="light"> <i class="tiny material-icons grey-text text-darken-3">info_outline</i> {{company.respuesta_finrisk_cortolargo_interpretation}}</p>
+					              				<p class="light"><i class="tiny material-icons grey-text text-darken-3">chat_bubble_outline</i> {{company.respuesta_finrisk_cortolargo_hint}}</p>
+						              		</div>
 					    					<div class="col m12 s12 center-align">
 					    						<span class="right-align"><a href={% if banco == 1 %} "https://www.bancsabadell.com/cs/Satellite/SabAtl/Lineas-de-credito/1191332198814/es/" {% elif banco == 2 %} "https://www.bancosantander.es/es/empresas-advance/financiacion/financiacion-a-corto-plazo/credito-advance" {% endif %} id="download-button" target="_blank" class="btn waves-effect waves-light transparent grey-text text-darken-4 border-grey"> Contrata nuestra línea de crédito </a> </span>
-					    						
 					    					</div>
-					    				</div>
-					    			</blockquote>
+					              		</div>
 					            </div>
 					        </div>
 			    		</div>
 			    	</div>
-			    
+			    	<div class="row">
+			    		<p class="light"><i class="tiny material-icons grey-text text-darken-3">live_help</i> {{company.respuesta_finrisk_cortolargo_info}}</p>
+			    	</div>
 			    	</div>
 
 			    <!-- /////////////////////////////////////////////////////////////
@@ -273,7 +283,7 @@ Riesgo financiero - {{ company.name }}
 				 ///////////////////////////////////////////////////////////// -->
 
 			    <div class="white_back title_conf">
-			    	<h3 class="flow-text">Acceso a circulante - Riesgo de liquidez <i class="fa fa-caret-right" aria-hidden="true"></i> ¿Puedo mejorar mi situación de caja?</h3>
+			    	<h3 class="flow-text">Acceso a circulante - En caso de imprevistos, ¿tendré capacidad de reacción? </h3>
 			    </div>
 			    	<div class="row title_conf">
 			    	<!-- Facturación -->
@@ -282,31 +292,35 @@ Riesgo financiero - {{ company.name }}
 			    			<div class="card grey lighten-4">
 					            <div class="card-content grey-text darken-4">
 					            	<span class="card-title">Deuda a corto / EBITDA</span>
-					              <canvas id="deuda_corto_graph" width="300" height="150"></canvas>
+					              <canvas id="deuda_corto_graph" width="300" height="140"></canvas>
 					            </div>
 					        </div>
 			    		</div>
 			    		<div class="col m6 s12">
 			    			<div class="card grey lighten-4">
-					            <div class="card-content grey-text darken-4">
-					              <blockquote>
-					    				<p class="light"><i class="tiny material-icons indigo-text darken-4">live_help</i> {{company.respuesta_finrisk_cortoebitda_info}}</p>
-					    				<p class="light"><i class="tiny material-icons indigo-text darken-4">info</i> {{company.respuesta_finrisk_cortoebitda_interpretation}}</p>
-					    				<p class="light"><i class="tiny material-icons indigo-text darken-4">new_releases</i> {{company.respuesta_finrisk_cortoebitda_hint}}</p>
-					    				<div class="row">
-					    					<div class="col m12 s12 center-align"></div>
+					            <div class="card-content grey-text darken-4 cards_comments">
+					              		<div class=row>
+					              			<div class="col m12 s12" >
+					              			<h2 class="center-align light grey-text text-darken-3 comment_bar_success">¡Bien!</h2> 
+					              				<p class="light"> <i class="tiny material-icons grey-text text-darken-3">info_outline</i> {{company.respuesta_finrisk_cortoebitda_interpretation}}</p>
+					              				<p class="light"><i class="tiny material-icons grey-text text-darken-3">chat_bubble_outline</i> {{company.respuesta_finrisk_cortoebitda_hint}}</p>
+						              		</div>
+					    					<div class="row">
 					    					<div class="col m12 s12 center-align">
-					    						<span class="right-align"><a href={% if banco == 1 %} "https://www.bancsabadell.com/cs/Satellite/SabAtl/Lineas-de-credito/1191332198814/es/" {% elif banco == 2 %} "https://www.bancosantander.es/es/empresas-advance/financiacion/financiacion-a-corto-plazo/financiacion-a-corto-plazo" {% endif %} id="download-button" target="_blank" class="btn waves-effect waves-light transparent grey-text text-darken-4 border-grey"> Productos de corto plazo</a> </span>
+					    						<span class="right-align"><a href={% if banco == 1 %} "https://www.bancsabadell.com/cs/Satellite/SabAtl/Lineas-de-credito/1191332198814/es/" {% elif banco == 2 %} "https://www.bancosantander.es/es/empresas-advance/financiacion/financiacion-a-corto-plazo/financiacion-a-corto-plazo" {% endif %} id="download-button" target="_blank" class="btn waves-effect waves-light transparent grey-text text-darken-4 border-grey"> Financiación circulante</a> </span>
 					    					</div>
 					    				</div>
-					    			</blockquote>
+					              		</div>
 					            </div>
 					        </div>
 			    		</div>
 			    	</div>
+			    	<div class="row">
+			    		<p class="light"><i class="tiny material-icons grey-text text-darken-3">live_help</i> {{company.respuesta_finrisk_cortoebitda_info}}</p>
+			    	</div>
 			    </div>
 			    	<div class="white_back title_conf">
-				    	<h3 class="flow-text">Working capital - Gestiona las fluctuaciones de working capital <i class="fa fa-caret-right" aria-hidden="true"></i> ¿Puedo mejorar mi situación de caja?</h3>
+				    	<h3 class="flow-text">Working capital - ¿Puedo mejorar mi situación de caja? Gestiona las fluctuaciones de tesorería</h3>
 				    </div>
 			    	<!-- Resultado explotaciones -->
 			    	<div class="row">
@@ -346,6 +360,7 @@ Riesgo financiero - {{ company.name }}
 						    </div>
 
 						    <div class="col m6 s12">
+
 						    	<div class="card grey lighten-4">
 						    	<div class="card-content grey-text darken-4">
 							    		<span class="card-title">Días a pagar</span>
@@ -381,22 +396,26 @@ Riesgo financiero - {{ company.name }}
 			    		</div>
 			    		<div class="col m6 s12">
 			    			<div class="card grey lighten-4">
-					            <div class="card-content grey-text darken-4">
-					              <blockquote>
-					    				<p class="light"><i class="tiny material-icons indigo-text darken-4">live_help</i> {{company.respuesta_finrisk_workingcapital_info}}</p>
-					    				<p class="light"><i class="tiny material-icons indigo-text darken-4">info</i> {{company.respuesta_finrisk_workingcapital_interpretation}}</p>
-					    				<p class="light"><i class="tiny material-icons indigo-text darken-4">new_releases</i> {{company.respuesta_finrisk_workingcapital_hint}}</p>
-					    				<div class="row">
-					    					<div class="col m12 s12 center-align"></div>
+					            <div class="card-content grey-text darken-4 cards_comments">
+					              		<div class=row>
+					              			<div class="col m12 s12" >
+					              			<h2 class="center-align light grey-text text-darken-3 comment_bar_success">¡Bien!</h2> 
+					              				<p class="light"> <i class="tiny material-icons grey-text text-darken-3">info_outline</i> {{company.respuesta_finrisk_workingcapital_interpretation}}</p>
+					              				<p class="light"><i class="tiny material-icons grey-text text-darken-3">chat_bubble_outline</i> {{company.respuesta_finrisk_workingcapital_hint}}</p>
+						              		</div>
+					    					<div class="row">
 					    					<div class="col m12 s12 center-align">
 					    						<span class="right-align"><a href={% if banco == 1 %} "https://www.bancsabadell.com/cs/Satellite/SabAtl/Lineas-de-credito/1191332198814/es/" {% elif banco == 2 %} "https://www.bancosantander.es/es/empresas-advance/financiacion/financiacion-a-corto-plazo/financiacion-a-corto-plazo" {% endif %} id="download-button" target="_blank" class="btn waves-effect waves-light transparent grey-text text-darken-4 border-grey"> Productos para circulante </a> </span>
-					    						<!--  -->
 					    					</div>
 					    				</div>
-					    			</blockquote>
+					              		</div>
 					            </div>
 					        </div>
 			    		</div>
+			    		<div class="row title_conf">
+			    			<p class="light"><i class="tiny material-icons grey-text text-darken-3">live_help</i> {{company.respuesta_finrisk_workingcapital_info}}</p>
+			    		</div>
+			    	
 			    	</div>
 
 			    <!-- /////////////////////////////////////////////////////////////
@@ -404,7 +423,7 @@ Riesgo financiero - {{ company.name }}
 				 ///////////////////////////////////////////////////////////// -->
 
 			    	<div class="white_back title_conf">
-				    	<h3 class="flow-text">Análisis riesgo divisa <i class="fa fa-caret-right" aria-hidden="true"></i> ¿Cómo puedo cubrir mi riesgo divisa?</h3>
+				    	<h3 class="flow-text">Riesgo divisa - ¿Qué exposición tengo? Cubre tu riesgo</h3>
 				    </div>
 			    	<div class="row title_conf">
 			    		<div class="col m3 s12">
@@ -415,7 +434,7 @@ Riesgo financiero - {{ company.name }}
 					            </div>
 					        </div>
 			    		</div>
-			    		<div class="col m4 s12">
+			    		<div class="col m5 s12">
 			    			<div class="card grey lighten-4">
 					            <div class="card-content grey-text darken-4">
 					            	<span class="card-title">Volumen en riesgo</span>
@@ -455,23 +474,28 @@ Riesgo financiero - {{ company.name }}
 					            </div>
 					        </div>
 			    		</div>
-			    		<div class="col m5 s12">
+			    		<div class="col m4 s12">
 			    			<div class="card grey lighten-4">
-					            <div class="card-content grey-text darken-4">
-					              <blockquote>
-					    				<p class="light"><i class="tiny material-icons indigo-text darken-4">live_help</i> {{company.respuesta_finrisk_divisa_info}}</p>
-					    				<p class="light"><i class="tiny material-icons indigo-text darken-4">info</i> {{company.respuesta_finrisk_divisa_interpretation}}</p>
-					    				<p class="light"><i class="tiny material-icons indigo-text darken-4">new_releases</i> {{company.respuesta_finrisk_divisa_hint}} </p>
-					    				<div class="row">
-					    					<div class="col m12 s12 center-align"></div>
+					            <div class="card-content grey-text darken-4 cards_comments">
+					              		<div class=row>
+					              			<div class="col m12 s12" >
+					              			<h2 class="center-align light grey-text text-darken-3 comment_bar_warning">¡Atención!</h2> 
+					              				<p class="light"> <i class="tiny material-icons grey-text text-darken-3">info_outline</i> {{company.respuesta_finrisk_divisa_interpretation}}</p>
+					              				<p class="light"><i class="tiny material-icons grey-text text-darken-3">chat_bubble_outline</i> {{company.respuesta_finrisk_divisa_hint}}</p>
+						              		</div>
+					    					<div class="row">
 					    					<div class="col m12 s12 center-align">
 					    						<span class="right-align"><a href={% if banco == 1 %}"https://www.bancsabadell.com/cs/Satellite/SabAtl/Coberturas-de-riesgo/1191332203628/es/" {% elif banco == 2 %} "https://www.bancosantander.es/es/empresas-advance/productos-y-servicios/proteccion/coberturas-de-tipo-de-cambio" {% endif %} id="download-button" target="_blank" class="btn waves-effect waves-light transparent grey-text text-darken-4 border-grey"> Coberturas de divisas</a> </span>
-					    						<!-- -->
 					    					</div>
 					    				</div>
-					    			</blockquote>
+					              		</div>
 					            </div>
 					        </div>
+			    		</div>
+			    		
+			    		</div>
+			    		<div class="row title_conf">
+			    			<p class="light"><i class="tiny material-icons grey-text text-darken-3">live_help</i> {{company.respuesta_finrisk_divisa_info}}</p>
 			    		</div>
 			    	</div>
 			    
@@ -481,7 +505,7 @@ Riesgo financiero - {{ company.name }}
 				 ///////////////////////////////////////////////////////////// -->
 
 			    	<div class="white_back title_conf">
-				    	<h3 class="flow-text">Análisis riesgo de tipo de interés <i class="fa fa-caret-right" aria-hidden="true"></i> ¿Cómo puedo cubrir variaciones de precio?</h3>
+				    	<h3 class="flow-text">Riesgo de tipo de interés - ¿Pueden variar mis gastos financieros? Cubre tu riesgo por tipo de interés</h3>
 				    </div>
 				    <!-- EBITDA -->
 			    	<div class="row title_conf">
@@ -506,10 +530,13 @@ Riesgo financiero - {{ company.name }}
 			    		</div>
 			    		<div class="col m5 s12">
 			    			<div class="card grey lighten-4">
-					            <div class="card-content grey-text darken-4">
-					              <blockquote>
-					    				<p class="light"><i class="tiny material-icons indigo-text darken-4">live_help</i> {{company.respuesta_finrisk_deudaproducto_info}}</p>
-					    			</blockquote>
+					            <div class="card-content grey-text darken-4 cards_comments">
+					              		<div class=row>
+					              			<div class="col m12 s12" >
+					              			<h2 class="center-align light grey-text text-darken-3 comment_bar_info">¡Info!</h2>
+					              				<p class="light"> <i class="tiny material-icons grey-text text-darken-3">info_outline</i> {{company.respuesta_finrisk_deudaproducto_info}}</p>
+						              		</div>
+					              		</div>
 					            </div>
 					        </div>
 			    		</div>
@@ -545,21 +572,27 @@ Riesgo financiero - {{ company.name }}
 			    		</div>
 			    		<div class="col m6 s12">
 			    			<div class="card grey lighten-4">
-					            <div class="card-content grey-text darken-4">
-					              <blockquote>
-					    				<p class="light"><i class="tiny material-icons indigo-text darken-4">live_help</i> {{company.respuesta_finrisk_interes_info}}</p>
-					    				<p class="light"><i class="tiny material-icons indigo-text darken-4">info</i> {{company.respuesta_finrisk_interes_interpretation}}</p>
-					    				<p class="light"><i class="tiny material-icons indigo-text darken-4">new_releases</i> {{company.respuesta_finrisk_interes_hint}} </p>
-					    				<div class="row">
-					    					<div class="col m12 s12 center-align"></div>
+					            <div class="card-content grey-text darken-4 cards_comments">
+					              		<div class=row>
+					              			<div class="col m12 s12" >
+					              			<h2 class="center-align light grey-text text-darken-3 comment_bar_warning">¡Atención!</h2> 
+					              				<p class="light"> <i class="tiny material-icons grey-text text-darken-3">info_outline</i> {{company.respuesta_finrisk_interes_interpretation}}</p>
+					              				<p class="light"><i class="tiny material-icons grey-text text-darken-3">chat_bubble_outline</i> {{company.respuesta_finrisk_interes_hint}}</p>
+						              		</div>
+					    					<div class="row">
 					    					<div class="col m12 s12 center-align">
 					    						<span class="right-align"><a href={% if banco == 1 %} "https://www.bancsabadell.com/cs/Satellite/SabAtl/Coberturas-de-riesgo/1191332203628/es/" {% elif banco == 2 %} "https://www.bancosantander.es/es/empresas-advance/productos-y-servicios/proteccion/coberturas-de-tipo-de-interes" {% endif %} id="download-button" target="_blank" class="btn waves-effect waves-light transparent grey-text text-darken-4 border-grey"> Coberturas de tipo de interés</a> </span>
 					    						<!--  -->
 					    					</div>
 					    				</div>
-					    			</blockquote>
+					              		</div>
 					            </div>
 					        </div>
+			    		</div>
+			    		
+			    		</div>
+			    		<div class="row title_conf">
+			    			<p class="light"><i class="tiny material-icons grey-text text-darken-3">live_help</i> {{company.respuesta_finrisk_interes_info}}</p>
 			    		</div>
 			    	</div>
 	  </div>

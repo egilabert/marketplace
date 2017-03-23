@@ -42,9 +42,9 @@ def get_data_mekko(request, *args, **kwargs):
 				('name','Riesgo Macro / Sectorial'),
 				('value',5),
 				('image', os.path.join(settings.STATIC_ROOT, 'images/Macroeconomico.jpg') ),
-				('info', 'Analizamos la evolución macroeconómica y de tu sector por ti. Te ayudamos a predecir posibles tendencias del mercado'),
-				('fuertes', 'Funcionalidad no disponible. Disculpa las molestias! Estamos trabajando para incluir este análisis y ofrecerte un mejor servicio'),
-				('mejorar', 'Funcionalidad no disponible. Disculpa las molestias! Estamos trabajando para incluir este análisis y ofrecerte un mejor servicio')])
+				('info', 'Analizamos la evolución macroeconómica y sectorial por ti. Te ayudamos a predecir posibles tendencias del mercado'),
+				('fuertes', 'Tu crecimiento en facturación es superior al crecimiento macroeconómico/sectorial'),
+				('mejorar', '<p></p>')])
 			,
 			dict([
 				('name','Riesgo Competencia'),
@@ -52,7 +52,7 @@ def get_data_mekko(request, *args, **kwargs):
 				('image', os.path.join(settings.STATIC_ROOT, 'images/Competencia.jpg') ),
 				('info', 'Analizamos tu competencia por ti. Te ayudamos a visualizar las tendencias de tu competencia más directa'),
 				('fuertes', 'Tu empresa muestra mejores resultados y evolución que tu competencia'),
-				('mejorar', '<p>Tu competencia ha experimentado un crecimiento destacable en volumen de ventas en el útlimo ejercicio</p><p>Tu competencia diversifica mejor sus ventas geográficamente</p>')])
+				('mejorar', '<p>Tu competencia ha experimentado un crecimiento destacable en volumen de ventas en el útlimo ejercicio</p>')])
 			,
 			dict([
 				('name','Riesgo Normativo'),
@@ -70,14 +70,14 @@ def get_data_mekko(request, *args, **kwargs):
 				('value',10),
 				('image', os.path.join(settings.STATIC_ROOT, 'images/demanda.jpg') ),
 				('info', 'Analizamos tus clientes por ti. Te ayudamos a predecir posibles desviaciones en la demanda'),
-				('fuertes', '<p>Tus clientes son parecidos en tamaño y resultados a los clientes de tu competencia</p><div class="divider></div><p>Tus clientes han crecido en el último año</p>'),
+				('fuertes', '<p>Tus clientes han crecido en el último año.</p><p>Tus clientes son parecidos en tamaño y resultados a los clientes de tu competencia.</p>'),
 				('mejorar', '')])
 			,
 			dict([
 				('name','Riesgo Fidelidad'),
 				('value',20),
 				('image', os.path.join(settings.STATIC_ROOT, 'images/Fidelidad.jpg') ),
-				('info', 'Analizamos la fidelidad de tus clientes. Te ayudamos a medir el riesgo de fuga de clientes'),
+				('info', 'Analizamos la fidelidad de tus clientes. Te ayudamos a medir el riesgo de fuga de tus clientes'),
 				('fuertes', '<p>Tus clientes te son fieles, con relaciones duraderas y elevado índice de penetración</p>'),
 				('mejorar', 'Tus clientes te tienen como proveedor principal, por lo que existe poco margen de crecimiento con ellos')])
 			,
@@ -87,14 +87,14 @@ def get_data_mekko(request, *args, **kwargs):
 				('image', os.path.join(settings.STATIC_ROOT, 'images/incumplimiento.jpg') ),
 				('info', 'Analizamos la solvencia de tus clientes. Te ayudamos a medir el riesgo de impago de sus facturas'),
 				('fuertes', '<p>Tus clientes tienen una solvencia en línea con la de los clientes de la competencia</p>'),
-				('mejorar', '<p>Tus clientes tienen un riesgo de concentración geográfica más elevado que los clientes de tu competencia</p>')])
+				('mejorar', '')])
 			,
 			dict([
 				('name','Riesgo Concentración'),
 				('value',20),
 				('image', os.path.join(settings.STATIC_ROOT, 'images/concentration_clients.jpg') ),
-				('info', 'Analizamos los riesgos de concentración de tu empresa. Te ayudamos a medir las necesidades de diversificación de tu negocio'),
-				('fuertes', '<p>Buena diversificación en tus ventas con un gran número de clientes</p>'),
+				('info', 'Analizamos los riesgos de concentración de tus ventas. Te ayudamos a medir las necesidades de diversificación de tu negocio'),
+				('fuertes', '<p>Buena diversificación en tus ventas, en un gran número de clientes</p>'),
 				('mejorar', '<p>Baja diversificación de tus ventas, efectuadas en muy pocas provincias</p>')])
 			])
 		]), dict([
@@ -104,7 +104,7 @@ def get_data_mekko(request, *args, **kwargs):
 				('name','Riesgo Oferta'),
 				('value',10),
 				('image', os.path.join(settings.STATIC_ROOT, 'images/oferta.jpg') ),
-				('info', 'Analizamos tus proveedores por ti. Te ayudamos a predecir posibles cambios de precios de tus proveedores'),
+				('info', 'Analizamos tus proveedores por ti. Te ayudamos a predecir posibles cambios en tus proveedores'),
 				('fuertes', '<p>Tus proveedores son más fuertes y con mejores resultados que los proveedores de tu competencia</p>'),
 				('mejorar', '<p>Tus proveedores han disminuido sus volúmenes de negocio en el último año</p>')])
 			,
@@ -113,15 +113,15 @@ def get_data_mekko(request, *args, **kwargs):
 				('value',10),
 				('image', os.path.join(settings.STATIC_ROOT, 'images/incumplimiento.jpg') ),
 				('info', 'Analizamos la solvencia de tus proveedores. Te ayudamos a medir el riesgo de incumplimiento de sus obligaciones'),
-				('fuertes', '<p>Tus proveedores tienen una solvencia en línea con la de los proveedores de la competencia</p><p>Tus proveedores tienen un riesgo de concentración en línea con los proveedores de tu competencia</p>'),
-				('mejorar', '<p>Tus proveedores han disminuido sus volúmenes de negocio en el último año</p>')])
+				('fuertes', '<p>Tus proveedores tienen una solvencia en línea con la de los proveedores de la competencia</p>'),
+				('mejorar', '<p>Tus proveedores han disminuido su volúmen de negocio en el último año</p>')])
 			,
 			dict([
 				('name','Riesgo Concentración'),
 				('value',10),
 				('image', os.path.join(settings.STATIC_ROOT, 'images/concentration_providers.jpg') ),
-				('info', 'Analizamos los riesgos de concentración de tu empresa. Te ayudamos a medir las oportunidades de diversificación de proveedores'),
-				('fuertes', '<p>Buena diversificación en tus compras con un gran número de proveedores</p>'),
+				('info', 'Analizamos los riesgos de concentración de tus compras. Te ayudamos a medir las oportunidades de diversificación de proveedores'),
+				('fuertes', '<p>Buena diversificación en tus compras, con un gran número de proveedores</p>'),
 				('mejorar', '<p>Baja diversificación de tus compras, efectuadas en muy pocas provincias</p>')])
 			])
 		]), dict([
@@ -131,7 +131,7 @@ def get_data_mekko(request, *args, **kwargs):
 				('name','Riesgo Acceso a inversión'),
 				('value',5),
 				('image', os.path.join(settings.STATIC_ROOT, 'images/acceso inversion.jpg') ),
-				('info', 'Analizamos tu balance. Te ayudamos a entender como vemos tu solvencia para que puedas financiar tus inversiones'),
+				('info', 'Analizamos tu balance. Te ayudamos a entender como vemos tu solvencia para que puedas financiar tus inversiones a largo plazo'),
 				('fuertes', '<p>Dispones de una buena salud financiera</p><p>Ratios de endeudadmiento globales sensiblemente inferiores a los de tu competencia</p>'),
 				('mejorar', '<p></p>')])
 			,
@@ -139,7 +139,7 @@ def get_data_mekko(request, *args, **kwargs):
 				('name','Riesgo Acceso a circulante'),
 				('value',10),
 				('image', os.path.join(settings.STATIC_ROOT, 'images/acceso circulante.jpg') ),
-				('info', 'Analizamos tu balance. Te ayudamos a entender como vemos tu solvencia para que puedas calibrar tu acceso a financiación del circulante en caso de imprevistos'),
+				('info', 'Analizamos tu balance. Te ayudamos a entender como vemos tu solvencia para que puedas anticipar tu acceso financiación circulante en caso de imprevistos'),
 				('fuertes', '<p>Dispones de una buena salud financiera</p><p>Ratios de endeudadmiento a corto plazo sensiblemente inferiores a los de tu competencia</p>'),
 				('mejorar', '<p></p>')])
 			,
@@ -843,11 +843,13 @@ def MarketRiskRecommendationsView(request):
 	ventas = []
 	fechas = []
 	ebitda = []
+	ebit = []
 	depreciaciones = []
 	resultado_explotacion = []
 	amortizaciones = []
 	sells_sector = []
 	sells_me = []
+	ebit_me = []
 	ebitda_sector = []
 	ebitda_me = []
 	resultados_sector = []
@@ -855,6 +857,9 @@ def MarketRiskRecommendationsView(request):
 	num_proveedores = company.get_providers().count()
 	hhi_providers = company.hhi_providers()
 	for i, estado in enumerate(company.estados_financieros.all()):
+		print(i)
+		print(estado.amortizaciones)
+		print(estado.depreciaciones)
 		if i == 0:
 			fechas.append(estado.ejercicio)
 			depreciaciones.append(estado.depreciaciones)
@@ -862,13 +867,16 @@ def MarketRiskRecommendationsView(request):
 			resultado_explotacion.append(estado.resultado_explotacion)
 			ventas.append(estado.ventas)
 			amortizaciones.append(estado.amortizaciones)
+			ebit.append(estado.ebitda + estado.amortizaciones + estado.depreciaciones)
 			sells_me.append({'ejercicio': estado.ejercicio, 'c': ventas[len(ventas)-1]})
 			ebitda_me.append({'ejercicio': estado.ejercicio, 'c': ebitda[len(ebitda)-1]})
+			ebit_me.append({'ejercicio': estado.ejercicio, 'c': ebit[len(ebit)-1]})
 			resultados_me.append({'ejercicio': estado.ejercicio, 'c': resultado_explotacion[len(resultado_explotacion)-1]})
 		if int(company_id)==990 and (i != 0):
 			fechas.append(estado.ejercicio)
 			depreciaciones.append(depreciaciones[i-1]*random.uniform(1, 1.1))
 			ebitda.append(ebitda[i-1]*random.uniform(1, 1.1))
+			ebit.append(ebitda[i] + estado.amortizaciones + estado.depreciaciones)
 			resultado_explotacion.append(resultado_explotacion[i-1]*random.uniform(1, 1.1))
 			ventas.append(ventas[i-1]*random.uniform(1, 1.1))
 			amortizaciones.append(amortizaciones[i-1]*random.uniform(1, 1.1))
@@ -877,12 +885,14 @@ def MarketRiskRecommendationsView(request):
 			margen_comercial_sector_clientes = 0.16
 			sells_me.append({'ejercicio': estado.ejercicio, 'c': ventas[len(ventas)-1]})
 			ebitda_me.append({'ejercicio': estado.ejercicio, 'c': ebitda[len(ebitda)-1]})
+			ebit_me.append({'ejercicio': estado.ejercicio, 'c': ebit[len(ebit)-1]})
 			resultados_me.append({'ejercicio': estado.ejercicio, 'c': resultado_explotacion[len(resultado_explotacion)-1]})
 			
 		if int(company_id)==1610 and (i != 0):
 			fechas.append(estado.ejercicio)
 			depreciaciones.append(depreciaciones[i-1]*random.uniform(1, 1.1))
 			ebitda.append(ebitda[i-1]*random.uniform(0.93, 1.001))
+			ebit.append(ebitda[i]*random.uniform(0.93, 1.001) + estado.amortizaciones + estado.depreciaciones)
 			resultado_explotacion.append(resultado_explotacion[i-1]*random.uniform(0.93, 1.001))
 			ventas.append(ventas[i-1]*random.uniform(0.99, 1.05))
 			amortizaciones.append(amortizaciones[i-1]*random.uniform(1, 1.1))
@@ -891,6 +901,7 @@ def MarketRiskRecommendationsView(request):
 			margen_comercial_sector_clientes = company.margen_comercial_sector_clientes()
 			sells_me.append({'ejercicio': estado.ejercicio, 'c': ventas[len(ventas)-1]})
 			ebitda_me.append({'ejercicio': estado.ejercicio, 'c': ebitda[len(ebitda)-1]})
+			ebit_me.append({'ejercicio': estado.ejercicio, 'c': ebit[len(ebit)-1]})
 			resultados_me.append({'ejercicio': estado.ejercicio, 'c': resultado_explotacion[len(resultado_explotacion)-1]})
 		elif i!=0 and int(company_id)!=1610 and int(company_id)!=990:
 			fechas.append(estado.ejercicio)
@@ -903,11 +914,6 @@ def MarketRiskRecommendationsView(request):
 			sells_me = list(company.balance_sells())
 			ebitda_me = list(company.balance_ebitda())
 			resultados_me = list(company.resultado_explotacion())
-		print('he llegado al final')
-
-	resultados_sector = list(company.resultado_explotacion_avg_sector())
-	ebitda_sector = list(company.balance_ebitda_avg_sector())
-	sells_sector = list(company.balance_sells_avg_sector())
 
 	if not fechas:
 		fechas.append(0)
@@ -934,12 +940,12 @@ def MarketRiskRecommendationsView(request):
 	if len(resultados_me)>1:
 		delta_resultados_explotacion = (resultados_me[len(resultados_me)-1]['c'] - resultados_me[len(resultados_me)-2]['c'])/resultados_me[len(resultados_me)-2]['c']
 
-	sells_sector_prov = list(company.balance_providers_sells_avg_sector())
-	sells_me_prov = list(company.balance_providers_sells())
-	ebitda_sector_prov = list(company.balance_providers_ebitda_avg_sector())
-	ebitda_me_prov = list(company.balance_providers_ebitda())
-
-	print(sells_me)
+	# sells_sector_prov = list(company.balance_providers_sells_avg_sector())
+	# sells_me_prov = list(company.balance_providers_sells())
+	# ebitda_sector_prov = list(company.balance_providers_ebitda_avg_sector())
+	# ebitda_me_prov = list(company.balance_providers_ebitda())
+	print(company.resultado_explotacion_avg_sector())
+	print(company.balance_ebit_avg_sector())
 	context = {
 		'company':company,
 		'penetracion': penetracion,
@@ -954,14 +960,18 @@ def MarketRiskRecommendationsView(request):
 		'PIB_comparables': 2.6,
 		'journey': request.session.get('journey'),
 		'balance_providers_sells_avg_sector': json.dumps(list(company.balance_providers_sells_avg_sector()), cls=DjangoJSONEncoder),
-		'balance_sells_avg_sector': json.dumps(sells_sector, cls=DjangoJSONEncoder), #json.dumps(list(company.balance_clients_sells_avg_sector()), cls=DjangoJSONEncoder),
+		'balance_sells_avg_sector': json.dumps(list(company.balance_sells_avg_sector()), cls=DjangoJSONEncoder), #json.dumps(list(company.balance_clients_sells_avg_sector()), cls=DjangoJSONEncoder),
 		'balance_sells': json.dumps(sells_me, cls=DjangoJSONEncoder), #json.dumps(list(company.balance_clients_sells()), cls=DjangoJSONEncoder),
-		'balance_ebitda_avg_sector': json.dumps(ebitda_sector, cls=DjangoJSONEncoder), #json.dumps(list(company.balance_clients_ebitda_avg_sector()), cls=DjangoJSONEncoder),
+		'balance_ebitda_avg_sector': json.dumps(list(company.balance_ebitda_avg_sector()), cls=DjangoJSONEncoder), #json.dumps(list(company.balance_clients_ebitda_avg_sector()), cls=DjangoJSONEncoder),
 		'balance_ebitda': json.dumps(ebitda_me, cls=DjangoJSONEncoder), #json.dumps(list(company.balance_clients_ebitda()), cls=DjangoJSONEncoder),
-		'balance_providers_sells_avg_sector': json.dumps(sells_sector_prov, cls=DjangoJSONEncoder),
-		'balance_providers_sells': json.dumps(sells_me_prov, cls=DjangoJSONEncoder),
-		'balance_providers_ebitda_avg_sector': json.dumps(ebitda_sector_prov, cls=DjangoJSONEncoder),
-		'balance_providers_ebitda': json.dumps(ebitda_me_prov, cls=DjangoJSONEncoder),
+		'balance_ebit_avg_sector': json.dumps(list(company.balance_ebit_avg_sector()), cls=DjangoJSONEncoder), #json.dumps(list(company.balance_clients_ebit_avg_sector()), cls=DjangoJSONEncoder),
+		'balance_ebit': json.dumps(list(ebit_me), cls=DjangoJSONEncoder), #json.dumps(list(company.balance_clients_ebit()), cls=DjangoJSONEncoder),
+		'balance_resultados_avg_sector': json.dumps(list(company.resultado_explotacion_avg_sector()), cls=DjangoJSONEncoder), #json.dumps(list(company.balance_clients_resultados_avg_sector()), cls=DjangoJSONEncoder),
+		'balance_resultados': json.dumps(list(resultados_me), cls=DjangoJSONEncoder), #json.dumps(list(company.balance_clients_ebit()), cls=DjangoJSONEncoder),
+		#'balance_providers_sells_avg_sector': json.dumps(sells_sector_prov, cls=DjangoJSONEncoder),
+		#'balance_providers_sells': json.dumps(sells_me_prov, cls=DjangoJSONEncoder),
+		#'balance_providers_ebitda_avg_sector': json.dumps(ebitda_sector_prov, cls=DjangoJSONEncoder),
+		#'balance_providers_ebitda': json.dumps(ebitda_me_prov, cls=DjangoJSONEncoder),
 		'banco': request.session.get('banco')
 		}
 	return render(request, 'empresas/risk_market.html', context)

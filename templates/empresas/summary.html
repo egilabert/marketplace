@@ -12,7 +12,7 @@ L0D - {{ company.name }}
 
 <div class="parallax-container">
 	<!-- <h3 class="center-align white-text text-darken-3 light">Rocky clients are not all the same</h3> -->
-	<h3 class="center-align light white-text">Linea cero de defensa</h3>
+	<h3 class="center-align light white-text">Línea Cero de Defensa</h3>
 	<h6 class="center-align light white-text">by PILLANGO &copy;</h6>
 	<div class="parallax"><img src="{% static 'images/free-diving.jpg' %}"></div>
 </div>
@@ -29,7 +29,7 @@ L0D - {{ company.name }}
 	            <h2 class="center brown-text"><i class="material-icons">visibility</i></h2>
 	            <h5 class="center grey-text text-darken-3">Tu perfil</h5>
 
-	            <p class="light grey-text">Edita tu perfil público para que puedan contactar contigo nuevos clientes</p>
+	            <p class="light grey-text">Edita tu perfil público y controla la información de contacto que podremos mostrar al resto de usuarios</p>
 	          </div>
 	        </a>
         </div>
@@ -40,7 +40,7 @@ L0D - {{ company.name }}
             <h2 class="center brown-text"><i class="material-icons">insert_chart</i></h2>
             <h5 class="center grey-text text-darken-3">Tus riesgos</h5>
 
-            <p class="light grey-text">Valora tu exposición a los principales riesgo de tu negocio,necesidades y posibilidades de acceso a financiación.</p>
+            <p class="light grey-text">Identifica tu exposición a los principales riesgos de tu negocio y valora tus necesidades de acceso a financiación.</p>
           </div>
         </a>
         </div>
@@ -51,7 +51,7 @@ L0D - {{ company.name }}
             <h2 class="center brown-text"><i class="material-icons">person_pin</i></h2>
             <h5 class="center grey-text text-darken-3">Tu marketplace</h5>
 
-            <p class="light grey-text">Visita el marketplace y encuentra nuevas oportunidades para tu negocio con nuestras recomendaciones de clientes y proveedores</p>
+            <p class="light grey-text">Visita el marketplace y encuentra nuevas oportunidades de negocio con nuestras recomendaciones de clientes y proveedores</p>
           </div>
         </a>
         </div>
@@ -69,7 +69,7 @@ L0D - {{ company.name }}
 <div class="dark_grey_back">
 	<div class="row container white-text">
       <div class="col s9" style="margin-top: 40px;"">
-          <h5>{{ empresa.name }}</h5>
+          <h5>Detalles de contacto - {{ empresa.name }}</h5>
       </div>
       <div class="col s3 white-text">
           {% if referrer == 'client' %}
@@ -87,7 +87,33 @@ L0D - {{ company.name }}
           {% endif %}
       </div>
   </div>
-  <div class="row container white-text">
+
+  	<div class="row container white-text" style="margin-bottom: 0px; padding-bottom: 2rem;">
+  		<div class="row">
+	  		<div class="col s12 m5">
+	      		<img src="{{ company.image }}" alt="{{ company.name }}" style="width:100%;height:100%;">
+	      	</div>
+	      	<div class="col s12 m7">
+	          <div><i class="tiny material-icons">contacts</i> {{empresa.name}} | {{empresa.contact_person}}</div>  
+	          <div><i class="tiny material-icons">email</i> {{empresa.email}}</div>
+	          <div><i class="tiny material-icons">location_on</i>{{empresa.address}}</div>   
+	          <div><i class="tiny material-icons">call</i> {{empresa.phone}}</div>   
+	          <div><i class="tiny material-icons">business</i> Sector: {{ empresa.sector }}</div>   
+	          <div><i class="tiny material-icons">info</i> CNAE: {{ empresa.cnae_2 }}</div>  
+	          <div><i class="tiny material-icons">schedule</i> Created in {{ empresa.creation_date }}</div>
+	      	</div>
+	    </div>
+      	<div class="row right-align">
+  			<span ><a href="{% url 'empresas:detail' pk=company.pk %}" target="_top" class="btn waves-effect waves-light right-align bott"><i class="material-icons right">airplay</i>Ver ficha</a></span>
+  			<span ><a href="{% url 'empresas:detail' pk=company.pk %}" target="_top" class="btn waves-effect waves-light right-align bott"><i class="material-icons right">airplay</i>Editar</a></span>
+  		</div>
+  	</div>
+  	<div class="row container white-text">
+	  	<div class="col s9" style="margin-top: 40px;"">
+	      <h5>Información financiera disponible</h5>
+	 	</div>
+	</div>
+	<div class="row container white-text">
       <div class="col s12 m3">
         <div class="card blue-grey darken-1">
           <div class="card-content white-text">
@@ -133,25 +159,22 @@ L0D - {{ company.name }}
         </div>
       </div>
     </div>
+    <div class="row container white-text" style="padding-bottom: 2rem;">
+    	<h5 class="light">¿Quieres actualizar tu información? Súbela y la incorporamos.</h5>
+    	<form action="#">
+		    <div class="file-field input-field">
+		      <div class="btn">
+		        <span>Buscar...</span>
+		        <input type="file" multiple>
+		      </div>
+		      <div class="file-path-wrapper">
+		        <input class="file-path validate" type="text" placeholder="Sube tus archivos...">
+		      </div>
+		    </div>
+		  </form>
+    </div>
 
-  <div class="row container white-text" style="margin-bottom: 0px; padding-bottom: 5rem;">
-      <div class="col s12 m6">
-          <h5>Detalles de contacto</h5>
-          <div><i class="tiny material-icons">contacts</i> {{empresa.name}} | {{empresa.contact_person}}</div>  
-          <div><i class="tiny material-icons">email</i> {{empresa.email}}</div>
-          <div><i class="tiny material-icons">location_on</i>{{empresa.address}}</div>   
-          <div><i class="tiny material-icons">call</i> {{empresa.phone}}</div>   
-          <div><i class="tiny material-icons">business</i> Sector: {{ empresa.sector }}</div>   
-          <div><i class="tiny material-icons">info</i> CNAE: {{ empresa.cnae_2 }}</div>  
-          <div><i class="tiny material-icons">schedule</i> Created in {{ empresa.creation_date }}</div>
-          <div class="right-align"><a href="{% url 'empresas:detail' pk=company.pk %}" target="_top" class="btn-large waves-effect waves-light right-align bott"><i class="material-icons right">airplay</i>Ver ficha</a></div>
-      </div>
-      <div class="col s12 m6">
-      		<img src="{{ company.image }}" alt="{{ company.name }}" style="width:100%;height:100%;">
-          <!-- <div id="map"> </div> -->
-      </div>
-  </div>
-</div>
+<!-- </div> -->
 
 <div class="grey_back title_conf center-align" name="riesgos">
 	<i class="material-icons large" style="margin-top: 40px;">insert_chart</i>
@@ -347,6 +370,7 @@ L0D - {{ company.name }}
 	</div>
 	<div class="col s12 m1"></div>
 </div>
+</div> 
 <div class=" title_conf center-align" name="marketplace">
 	<i class="material-icons large center-align" style="margin-top: 40px;">person_pin</i>
 	<h3 class=" light" style="margin-top: 10px;">Marketplace</h3>
@@ -382,7 +406,7 @@ L0D - {{ company.name }}
           </div>
         </div>
       </div>
-</div>
+<!-- -->
 
   {% include "footer.html" %}
 
@@ -598,7 +622,7 @@ L0D - {{ company.name }}
 	}
 
 	function mousePressed() {
-		var link1 = "{% url 'empresas:detail' pk=company.pk %}"
+		var link1 = "{% url 'empresas:risk_market' %}"
 		var link2 = "{% url 'empresas:recommendations_clients2' %}"
 		var link3 = "{% url 'empresas:recommendations_providers2' %}"
 		var link4 = "{% url 'empresas:recommendations_financial2' %}"

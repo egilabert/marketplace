@@ -57,6 +57,7 @@
   <!--[if lt IE 7]>
     <p class="chromeframe">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> or <a href="http://www.google.com/chromeframe/?redirect=true">activate Google Chrome Frame</a> to improve your experience.</p>
   <![endif]-->
+  <img src="{% block image_bg %}{% endblock %}" id="bg" alt="">
   <header>
     {% load i18n %}
   </header>
@@ -102,6 +103,9 @@
     <script src="{% static 'js/main.js' %}"></script>
     <script src="{% static 'js/init.js' %}"></script>
   {% endblock js %}
+
+  {% block alt_js %}{% endblock alt_js %}
+
   {% endcompress %}
   <!-- end scripts -->
 

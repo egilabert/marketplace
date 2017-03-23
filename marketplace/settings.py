@@ -71,6 +71,8 @@ MIDDLEWARE = [
 
 ]
 
+REST_SESSION_LOGIN = False
+
 ROOT_URLCONF = 'marketplace.urls'
 
 TEMPLATES = [

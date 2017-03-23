@@ -301,7 +301,7 @@ class Recommendations_clients:
 
     # Como me relaciono con ellos? - Fidelización
     def respuesta_clientes_fidelizacion_info(self):
-        return "La interacción media y años de antigüedad son métricas de fielización: miden la frecuencia con que interactuas con tus clientes a través de las transferencias realizadas y los años transcurridos desde vuestra primera interacción"
+        return "La interacción media y años de antigüedad son métricas de fidelización: miden la frecuencia con que interactúas con tus clientes a través de las transferencias realizadas y los años transcurridos desde vuestra primera interacción"
     
     def respuesta_clientes_fidelizacion_interacciones_interpretation(self):
         if self.get_monthly_sector_avg_sells()[len(self.get_monthly_sector_avg_sells())-1].get('c',0) > 0:

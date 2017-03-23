@@ -87,6 +87,8 @@ class Empresa(models.Model, r_clients.Recommendations_clients,
     temp_average_transfer_from_client = None
     temp_balance_providers_ebitda_avg_sector = None
     temp_get_total_buys = None
+    temp_balance_ebit_avg_sector = None
+    temp_balance_ebit = None
     temp_balance_providers_ebitda = None
     temp_my_penetration_provider = None
     temp_balance_providers_sells = None
@@ -754,6 +756,17 @@ class Empresa(models.Model, r_clients.Recommendations_clients,
             self.temp_balance_clients_payments_avg_sector = payments
             return self.temp_balance_clients_payments_avg_sector
         return self.temp_balance_clients_payments_avg_sector
+
+    def balance_ebit(self):
+        if self.temp_balance_ebit is None:
+            self.temp_balance_ebit = self.estados_financieros.all().values('ejercicio').annotate(c=Sum(F('ebitda')+F('depreciaciones')+F('amortizaciones') )).order_by('ejercicio')
+        return self.temp_balance_ebit
+
+    def balance_ebit_avg_sector(self):
+        if self.temp_balance_ebit_avg_sector is None:
+            self.temp_balance_ebit_avg_sector = EstadosFinancieros.objects.filter(empresa__in=self.get_sector_companies().all()).exclude(ebitda=0).values('ejercicio').annotate(c=Avg(F('ebitda')+F('depreciaciones')+F('amortizaciones'))).order_by('ejercicio')
+            return self.temp_balance_ebit_avg_sector
+        return self.temp_balance_ebit_avg_sector
 
     def balance_ebitda(self):
         if self.temp_balance_ebitda is None:

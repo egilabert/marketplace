@@ -16,31 +16,6 @@ Riesgo Cliente - {{ company.name }}
 	<div class="parallax-container">
 		<h3 class="center-align white-text text-darken-3 light">¿Cómo son tus clientes?</h3>
 		<div class="row center">{{company.name}}</div>
-		{% if journey %}
-		<div class="row center">
-			<!-- <div class="col m4 s1"></div>
-			<div class="col m2 s4">
-				<a href="{% url 'empresas:recommendations' %}" id="download-button" class="btn-large waves-effect waves-light alpha_back pad_top orange-text text-darken-4 border-grey">Clientes  </a>
-			</div>
-			<div class="col m2 s4">
-				<a href="{% url 'empresas:recommendations_providers' %}" id="download-button" class="btn-large waves-effect waves-light transparent pad_top border-white">Proveedores  </a>
-			</div> -->
-        </div>
-        {% else %}
-        <div class="row center">
-
-			<!-- <div class="col m4 s3">
-				<a href="{% url 'empresas:detail' pk=company.pk %}" id="download-button" class="btn-large waves-effect waves-light transparent pad_top border-white">Mi empresa  </a>
-			</div>
-			<div class="col m4 s3">
-				<a href="{% url 'empresas:recommendations' %}" id="download-button" class="btn-large waves-effect waves-light alpha_back pad_top orange-text text-darken-4 border-grey">Clientes  </a>
-			</div>
-			<div class="col m4 s3">
-				<a href="{% url 'empresas:recommendations_providers' %}" id="download-button" class="btn-large waves-effect waves-light transparent pad_top border-white">Proveedores  </a>
-			</div> -->
-			
-        </div>
-        {% endif %}
 	    <div class="parallax"><img src="{% static 'images/testimonial-bg.jpg' %}"></div>
 	</div>
 
@@ -151,7 +126,7 @@ Riesgo Cliente - {{ company.name }}
 
 				        <div class="col s12 m2 line">
 		      	  			<div class="center-align ">
-				            <i class="fa fa-cubes" aria-hidden="true"></i><span class="card-title"> Competencia</span>
+				            <i class="fa fa-cubes" aria-hidden="true"></i><span class="card-title"> Tu Competencia</span>
 				            <h4 class="align-right orange-text darken-1">{{company.get_sector_companies.count}}</h4>
 				            <span class="red-text text-darken-1"><i class="fa fa-sort-down" aria-hidden="true"></i><span class="card-title">7%</span></span> <span class="light">Desde el mes pasado</span>
 				            </div>
@@ -196,7 +171,7 @@ Riesgo Cliente - {{ company.name }}
 				 ///////////////////////////////////////////////////////////// -->
 
 					<div class="white_back title_conf">
-				    	<h3 class="flow-text">Análisis de demanda - ¿Cómo son mis clientes?  <i class="fa fa-caret-right" aria-hidden="true"></i>  Mejora la calidad de tus clientes</h3>
+				    	<h3 class="flow-text">Análisis de demanda - ¿Cómo son mis clientes?  Mejora la calidad de tu cartera</h3>
 				    </div>
 			    	<div class="row title_conf">
 			    	<!-- Facturación -->
@@ -205,30 +180,31 @@ Riesgo Cliente - {{ company.name }}
 			    			<div class="card grey lighten-4">
 					            <div class="card-content grey-text darken-4">
 					            	<span class="card-title">Ventas</span>
-					              <canvas id="facturacion_graph" width="300" height="150"></canvas>
+					              <canvas id="facturacion_graph" width="300" height="140"></canvas>
 					            </div>
 					        </div>
 			    		</div>
 			    		<div class="col m6 s12">
 			    			<div class="card grey lighten-4">
-					            <div class="card-content grey-text darken-4">
-					              <blockquote>
-					    				<p class="light"><i class="tiny material-icons indigo-text darken-4">live_help</i> {{company.respuesta_clientes_ventas_info}}</p>
-					    				<p class="light"><i class="tiny material-icons indigo-text darken-4">info</i> {{respuesta_clientes_ventas_interpretation}}</p>
-					    				<!-- <p class="light">{{company.respuesta_clientes_ventas_interpretation_delta}}</p> -->
-					    				<p class="light"><i class="tiny material-icons indigo-text darken-4">new_releases</i> {{respuesta_clientes_ventas_hint}} </p>
-					    				<!-- <p class="light">{{company.respuesta_clientes_ventas_hint_delta}}</p> -->
-					    				<div class="row">
-					    					<div class="col m4 s6"></div>
+					            <div class="card-content grey-text darken-4 cards_comments">
+					              		<div class=row>
+					              			<div class="col m12 s12" >
+					              			<h2 class="center-align light grey-text text-darken-3 comment_bar_success">¡Bien!</h2> 
+					              				<p class="light"> <i class="tiny material-icons grey-text text-darken-3">info_outline</i> {{respuesta_clientes_ventas_interpretation}}</p>
+					              				<p class="light"><i class="tiny material-icons grey-text text-darken-3">chat_bubble_outline</i> {{respuesta_clientes_ventas_hint}}</p>
+						              		</div>
 					    					<div class="col m12 s12 center-align">
-					    						<span class="right-align"><a href="{% url 'empresas:clients' %}" class="btn waves-effect waves-light transparent grey-text text-darken-4 border-grey"> Busca nuevos clientes </a> </span>
+					    						<a href="{% url 'empresas:clients' %}" id="download-button" target="_blank" class="btn waves-effect waves-light transparent grey-text text-darken-4 border-grey button_margin">Nuevos clientes </a>
 					    					</div>
-					    				</div>
-					    			</blockquote>
+					              		</div>
 					            </div>
 					        </div>
 			    		</div>
 			    		</div>
+			    		<div class="row">
+				    		<p class="light"><i class="tiny material-icons grey-text text-darken-3">live_help</i> {{company.respuesta_clientes_ventas_info}}</p>
+				    	</div>
+			    		
 			    	<!-- EBITDA -->
 			    		<div class="row">
 			    		<div class="col m6 s12">
@@ -241,24 +217,25 @@ Riesgo Cliente - {{ company.name }}
 			    		</div>
 			    		<div class="col m6 s12">
 			    			<div class="card grey lighten-4">
-					            <div class="card-content grey-text darken-4">
-					              <blockquote>
-					    				<p class="light"><i class="tiny material-icons indigo-text darken-4">live_help</i> {{company.respuesta_clientes_ebitda_info}}</p>
-					    				<p class="light"><i class="tiny material-icons indigo-text darken-4">info</i> {{respuesta_clientes_ebitda_interpretation}}</p>
-					    				<!-- <p class="light">{{company.respuesta_clientes_ebitda_interpretation_delta}}</p> -->
-					    				<p class="light"><i class="tiny material-icons indigo-text darken-4">new_releases</i> {{respuesta_clientes_ebitda_hint}}</p>
-					    				<!-- <p class="light">{{company.respuesta_clientes_ebitda_hint_delta}} </p> -->
-					    				<div class="row">
-					    					<div class="col m4 s6"></div>
+					            <div class="card-content grey-text darken-4 cards_comments">
+					              		<div class=row>
+					              			<div class="col m12 s12" >
+					              			<h2 class="center-align light grey-text text-darken-3 comment_bar_success">¡Bien!</h2> 
+					              				<p class="light"> <i class="tiny material-icons grey-text text-darken-3">info_outline</i> {{respuesta_clientes_ebitda_interpretation}}</p>
+					              				<p class="light"><i class="tiny material-icons grey-text text-darken-3">chat_bubble_outline</i> {{respuesta_clientes_ebitda_hint}}</p>
+						              		</div>
 					    					<div class="col m12 s12 center-align">
-					    						<span class="right-align"><a href="{% url 'empresas:clients' %}" class="btn waves-effect waves-light transparent grey-text text-darken-4 border-grey"> Busca nuevos clientes </a> </span>
+					    						<a href="{% url 'empresas:clients' %}" id="download-button" target="_blank" class="btn waves-effect waves-light transparent grey-text text-darken-4 border-grey button_margin">Nuevos clientes </a>
 					    					</div>
-					    				</div>
-					    			</blockquote>
+					              		</div>
 					            </div>
 					        </div>
 			    		</div>
 			    		</div>
+			    		<div class="row">
+				    		<p class="light"><i class="tiny material-icons grey-text text-darken-3">live_help</i> {{company.respuesta_clientes_ebitda_info}}</p>
+				    	</div>
+			    		
 			    	<!-- Resultado explotaciones -->
 			    		<div class="row">
 			    		<div class="col m6 s12">
@@ -271,24 +248,24 @@ Riesgo Cliente - {{ company.name }}
 			    		</div>
 			    		<div class="col m6 s12">
 			    			<div class="card grey lighten-4">
-					            <div class="card-content grey-text darken-4">
-					              <blockquote>
-					    				<p class="light"><i class="tiny material-icons indigo-text darken-4">live_help</i> {{company.respuesta_clientes_resultado_info}}</p>
-					    				<p class="light"><i class="tiny material-icons indigo-text darken-4">info</i> {{respuesta_clientes_resultado_interpretation}}</p>
-					    				<!-- <p class="light">{{company.respuesta_clientes_resultado_interpretation_delta}}</p> -->
-					    				<p class="light"><i class="tiny material-icons indigo-text darken-4">new_releases</i> {{respuesta_clientes_resultado_hint}} </p>
-					    				<!-- <p class="light">{{company.respuesta_clientes_resultado_hint_delta}} </p> -->
-					    				<div class="row">
-					    					<div class="col m4 s6"></div>
+					            <div class="card-content grey-text darken-4 cards_comments">
+					              		<div class=row>
+					              			<div class="col m12 s12" >
+					              			<h2 class="center-align light grey-text text-darken-3 comment_bar_success">¡Bien!</h2> 
+					              				<p class="light"> <i class="tiny material-icons grey-text text-darken-3">info_outline</i> {{respuesta_clientes_resultado_interpretation}}</p>
+					              				<p class="light"><i class="tiny material-icons grey-text text-darken-3">chat_bubble_outline</i> {{respuesta_clientes_resultado_hint}}</p>
+						              		</div>
 					    					<div class="col m12 s12 center-align">
-					    						<span class="right-align"><a href="{% url 'empresas:clients' %}" class="btn waves-effect waves-light transparent grey-text text-darken-4 border-grey"> Busca nuevos clientes </a> </span>
+					    						<a href="{% url 'empresas:clients' %}" id="download-button" target="_blank" class="btn waves-effect waves-light transparent grey-text text-darken-4 border-grey button_margin">Nuevos clientes </a>
 					    					</div>
-					    				</div>
-					    			</blockquote>
+					              		</div>
 					            </div>
 					        </div>
+					        </div>
 			    		</div>
-			    		</div>
+			    		<div class="row">
+				    		<p class="light"><i class="tiny material-icons grey-text text-darken-3">live_help</i> {{company.respuesta_clientes_resultado_info}}</p>
+				    	</div>
 			    	</div>
 
 			    <!-- /////////////////////////////////////////////////////////////
@@ -296,7 +273,7 @@ Riesgo Cliente - {{ company.name }}
 				 ///////////////////////////////////////////////////////////// -->
 
 			    <div class="white_back title_conf">
-			    	<h3 class="flow-text">Análisis de fidelidad - ¿Cómo me relaciono con ellos?  <i class="fa fa-caret-right" aria-hidden="true"></i>  Amplia y mejora la relación con tus clientes</h3>
+			    	<h3 class="flow-text">Análisis de fidelidad - ¿Cómo interactúo con ellos? Amplia y mejora la relación con tus clientes</h3>
 			    </div>
 			    	<div class="row title_conf">
 			    	<!-- Facturación -->
@@ -307,7 +284,7 @@ Riesgo Cliente - {{ company.name }}
 					            	<span class="card-title">Fidelización</span>
 					              	<div class="row">
 					              		<div class="col m6 s12 line center-align">
-					              			¿Cada cuando tengo una interacción con mis clientes?
+					              			¿Cada cuando interacciono con mis clientes?
 					              			<div class="row">
 						              			<div class="col m12 s12">
 						              				<i class="fa fa-user" aria-hidden="true"></i>
@@ -335,7 +312,7 @@ Riesgo Cliente - {{ company.name }}
 					              		</div>
 
 					              		<div class="col m6 s12 center-align">
-					              			Trabajo con ellos desde
+					              			¿Desde cuando trabajo con ellos?
 					              			<div class="row">
 						              			<div class="col m12 s12">
 						              				<i class="fa fa-user" aria-hidden="true"></i>
@@ -367,50 +344,48 @@ Riesgo Cliente - {{ company.name }}
 			    		</div>
 			    		<div class="col m6 s12">
 			    			<div class="card grey lighten-4">
-					            <div class="card-content grey-text darken-4">
-					              <blockquote>
-					    				<p class="light"><i class="tiny material-icons indigo-text darken-4">live_help</i> {{company.respuesta_clientes_fidelizacion_info}}</p>
-					    				<p class="light"><i class="tiny material-icons indigo-text darken-4">info</i> {{company.respuesta_clientes_fidelizacion_interacciones_interpretation}}</p>
-					    				
-					    				<p class="light"><i class="tiny material-icons indigo-text darken-4">new_releases</i> {{company.respuesta_clientes_fidelizacion_interacciones_hint}} </p>
-					    				<div class="row">
-					    					<div class="col m4 s6"></div>
+					            <div class="card-content grey-text darken-4 cards_comments">
+					              		<div class=row>
+					              			<div class="col m12 s12" >
+					              			<h2 class="center-align light grey-text text-darken-3 comment_bar_success">¡Bien!</h2> 
+					              				<p class="light"> <i class="tiny material-icons grey-text text-darken-3">info_outline</i> {{company.respuesta_clientes_fidelizacion_interacciones_interpretation}}</p>
+					              				<p class="light"><i class="tiny material-icons grey-text text-darken-3">chat_bubble_outline</i> {{company.respuesta_clientes_fidelizacion_interacciones_hint}}</p>
+						              		</div>
 					    					<div class="col m12 s12 center-align">
-					    						<span class="right-align"><a href="{% url 'empresas:clients' %}" class="btn waves-effect waves-light transparent grey-text text-darken-4 border-grey"> Busca nuevos clientes </a> </span>
+					    						<a href="{% url 'empresas:clients' %}" id="download-button" target="_blank" class="btn waves-effect waves-light transparent grey-text text-darken-4 border-grey button_margin">Nuevos clientes </a>
 					    					</div>
-					    				</div>
-					    			
-					    			</blockquote>
+					              		</div>
 					            </div>
 					        </div>
+			    			
 			    		</div>
 			    		</div>
+			    		<div class="row">
+				    		<p class="light"><i class="tiny material-icons grey-text text-darken-3">live_help</i> {{company.respuesta_clientes_fidelizacion_info}}</p>
+				    	</div>
+			    		
 			    	<!-- EBITDA -->
 			    	<div class="row">
 			    		<div class="col m6 s12">
 			    			<div class="card grey lighten-4">
 					            <div class="card-content grey-text darken-4">
 					            	<span class="card-title">Frecuencia</span>
-					              	<canvas id="frecuencia_graph" width="300" height="150"></canvas>
+					              	<canvas id="frecuencia_graph" width="300" height="140"></canvas>
 					            </div>
 					        </div>
 			    		</div>
 			    		<div class="col m6 s12">
 			    			<div class="card grey lighten-4">
-					            <div class="card-content grey-text darken-4">
-					              <blockquote>
-					    				<p class="light"><i class="tiny material-icons indigo-text darken-4">live_help</i> {{company.respuesta_clientes_frecuenca_info}}</p>
-					    				<!-- <p class="light"><i class="tiny material-icons indigo-text darken-4">info</i> {{company.respuesta_clientes_frecuenca_interpretation}}</p>
-					    				
-					    				<p class="light"><i class="tiny material-icons indigo-text darken-4">new_releases</i> {{company.respuesta_clientes_frecuenca_hint}}</p> -->
-					    				<div class="row">
-					    					<div class="col m4 s6"></div>
+					            <div class="card-content grey-text darken-4 cards_comments">
+					              		<div class=row>
+					              			<div class="col m12 s12" >
+					              			<h2 class="center-align light grey-text text-darken-3 comment_bar_info">¡Info!</h2> 
+					              				<p class="light"> <i class="tiny material-icons grey-text text-darken-3">info_outline</i> {{company.respuesta_clientes_frecuenca_info}}</p>
+						              		</div>
 					    					<div class="col m12 s12 center-align">
-					    						<span class="right-align"><a href="{% url 'empresas:clients' %}" class="btn waves-effect waves-light transparent grey-text text-darken-4 border-grey"> Busca nuevos clientes </a> </span>
+					    						<a href="{% url 'empresas:clients' %}" id="download-button" target="_blank" class="btn waves-effect waves-light transparent grey-text text-darken-4 border-grey button_margin">Nuevos clientes </a>
 					    					</div>
-					    				</div>
-					    			
-					    			</blockquote>
+					              		</div>
 					            </div>
 					        </div>
 			    		</div>
@@ -427,7 +402,7 @@ Riesgo Cliente - {{ company.name }}
 						        </div>
 						    </div>
 						    <div class="col m12 s12">
-						    	<div class="card grey lighten-4">
+						    	<div class="card grey lighten-4 cards_comments">
 						    	<div class="card-content grey-text darken-4">
 							    		<span class="card-title">Evolución</span>
 				              			<div class="row center-align">
@@ -462,24 +437,26 @@ Riesgo Cliente - {{ company.name }}
 			    		</div>
 			    		<div class="col m6 s12">
 			    			<div class="card grey lighten-4">
-					            <div class="card-content grey-text darken-4">
-					              <blockquote>
-					    				<p class="light"><i class="tiny material-icons indigo-text darken-4">live_help</i> {{company.respuesta_clientes_penetracion_info}}</p>
-					    				<p class="light"><i class="tiny material-icons indigo-text darken-4">info</i> {{company.respuesta_clientes_penetracion_interpretation}}</p>
-					    				
-					    				<p class="light"><i class="tiny material-icons indigo-text darken-4">new_releases</i> {{company.respuesta_clientes_penetracion_hint}} </p>
-					    				<div class="row">
-					    					<div class="col m4 s6"></div>
+					            <div class="card-content grey-text darken-4 cards_comments">
+					              		<div class=row>
+					              			<div class="col m12 s12" >
+					              			<h2 class="center-align light grey-text text-darken-3 comment_bar_error">¡Mejorar!</h2> 
+					              				<p class="light"> <i class="tiny material-icons grey-text text-darken-3">info_outline</i> {{company.respuesta_clientes_penetracion_interpretation}}</p>
+					              				<p class="light"><i class="tiny material-icons grey-text text-darken-3">chat_bubble_outline</i> {{company.respuesta_clientes_penetracion_hint}}</p>
+						              		</div>
 					    					<div class="col m12 s12 center-align">
-					    						<span class="right-align"><a href="{% url 'empresas:clients' %}" class="btn waves-effect waves-light transparent grey-text text-darken-4 border-grey"> Busca nuevos clientes </a> </span>
+					    						<a href="{% url 'empresas:clients' %}" id="download-button" target="_blank" class="btn waves-effect waves-light transparent grey-text text-darken-4 border-grey button_margin">Nuevos clientes </a>
 					    					</div>
-					    				</div>
-					    			
-					    			</blockquote>
+					              		</div>
 					            </div>
 					        </div>
+			    			
 			    		</div>
 			    	</div>
+			    	<div class="row">
+			    		<p class="light"><i class="tiny material-icons grey-text text-darken-3">live_help</i> {{company.respuesta_clientes_penetracion_info}}</p>
+			    	</div>
+			    	
 			    </div>
 
 			    <!-- /////////////////////////////////////////////////////////////
@@ -502,26 +479,100 @@ Riesgo Cliente - {{ company.name }}
 			    		</div>
 			    		<div class="col m6 s12">
 			    			<div class="card grey lighten-4">
-					            <div class="card-content grey-text darken-4">
-					              <blockquote>
-					    				<p class="light"><i class="tiny material-icons indigo-text darken-4">live_help</i> Nuestra métrica de riesgo de impago clasifica tus clientes según su probabilidad de impago en los próximos meses. Una alta concentración de clientes en estado rojo debería ser preocupante para la evolución de tu negocio</p>
-					    				<p class="light"><i class="tiny material-icons indigo-text darken-4">new_releases</i> <span class="bold"> En promedio, el riesgo de impago de tus clientes es parecido al de los de tu competencia</p>
-					    				<p class="light"><i class="tiny material-icons indigo-text darken-4">info</i> Puedes cubrir tu riesgo ampliando tu cartera de clientes o contratando una linea de factoring</p>
-					    				<div class="row center-align">
-					    					<div class="col m6 s6">
-					    						<a href="{% url 'empresas:clients' %}" id="download-button" target="_blank" class="btn waves-effect waves-light transparent grey-text text-darken-4 border-grey">Nuevos clientes </a>
+					            <div class="card-content grey-text darken-4 cards_comments">
+					              		<div class=row>
+					              			<div class="col m12 s12" >
+					              			<h2 class="center-align light grey-text text-darken-3 comment_bar_success">¡Bien!</h2> 
+					              				<p class="light"> <i class="tiny material-icons grey-text text-darken-3">info_outline</i> En promedio, el riesgo de impago de tus clientes es parecido al de los de tu competencia</p>
+					              				<p class="light"><i class="tiny material-icons grey-text text-darken-3">chat_bubble_outline</i> Puedes cubrir tu riesgo ampliando tu cartera de clientes o contratando una linea de factoring</p>
+						              		</div>
+					    					<div class="col m6 s6 center-align">
+					    						<a href="{% url 'empresas:clients' %}" id="download-button" target="_blank" class="btn waves-effect waves-light transparent grey-text text-darken-4 border-grey button_margin">Nuevos clientes </a>
 					    					</div>
-					    					<div class="col m6 s6">
-					    						<a href={% if banco == 1 %} "https://www.bancsabadell.com/cs/Satellite/SabAtl/Factoring/1191332201741/es/" {% elif banco == 2 %} "https://www.bancosantander.es/es/empresas-advance/productos-y-servicios/cobros/factoring" {% endif %} id="download-button" target="_blank" class="btn waves-effect waves-light transparent grey-text text-darken-4 border-grey">Factoring </a>
-					    						<!-- -->
+					    					<div class="col m6 s6 center-align">
+					    						<a href={% if banco == 1 %} "https://www.bancsabadell.com/cs/Satellite/SabAtl/Factoring/1191332201741/es/" {% elif banco == 2 %}"https://www.bancosantander.es/es/empresas-advance/productos-y-servicios/cobros/factoring" {% endif %} id="download-button" target="_blank" class="btn waves-effect waves-light transparent grey-text text-darken-4 border-grey button_margin">Factoring </a>
 					    					</div>
-					    				</div>
-					    			</blockquote>
+					              		</div>
 					            </div>
 					        </div>
 			    		</div>
 			    	</div>
+			    	<div class="row">
+		    			<p class="light"><i class="tiny material-icons grey-text text-darken-3">live_help</i> Nuestra métrica de riesgo de impago clasifica tus clientes según su probabilidad de impago en los próximos meses. Una alta concentración de clientes en estado rojo debería ser preocupante para la evolución de tu negocio</p>
+		    		</div>
+		    		<div class="row">
+			    		<div class="col m6 s12">
+			    			<div class="card grey lighten-4">
+					            <div class="card-content grey-text darken-4">
+					            	<span class="card-title">Margen de venta</span>
+					              	<div class="row center-align">
+					            		<div class="col m4 s12 line">
+					            			<p>Margen comercial</p>
+					            			<h5><i class="fa fa-user" aria-hidden="true"></i> {{company.margen_comercial_clientes|floatformat:2}}</h5>
+					            			<h5><i class="fa fa-users" aria-hidden="true"></i> {{margen_comercial_sector_clientes|floatformat:2}}</h5>
+					            		</div>
+					            		<div class="col m4 s12 line">
+					            			<p>Ratio de eficiencia</p>
+					            			<h5><i class="fa fa-user" aria-hidden="true"></i> {{company.ratio_comercial_clientes|floatformat:2}}</h5>
+					            			<h5><i class="fa fa-users" aria-hidden="true"></i> {{ratio_comercial_sector_clientes|floatformat:2}}</h5>
+					            		</div>
+					            		<div class="col m4 s12">
+					            			<p>Ticket medio</p>
+					            			<h5><i class="fa fa-user" aria-hidden="true"></i> {{average_transfer_from_client|floatformat:0}}</h5>
+					            			<h5><i class="fa fa-users" aria-hidden="true"></i> {{company.average_sector_sells|floatformat:0}}</h5>
+					            		</div>
+									</div>
+									<div class="divider"></div>
+									<div class="row center-align">
+					            		<div class="col m4 s12">
+					            			{% if company.margen_comercial_clientes|sub:company.margen_comercial_sector_clientes < 0 %}
+					            				<h5 style="color: red"> <i class="fa fa-sort-down" aria-hidden="true"></i> {{company.margen_comercial_clientes|sub:margen_comercial_sector_clientes|floatformat:2}}</h5>
+					            			{%else%}
+					            				<h5 style="color: green"> <i class="fa fa-sort-up" aria-hidden="true"></i> {{company.margen_comercial_clientes|sub:margen_comercial_sector_clientes|floatformat:2}}</h5>
+					            			{% endif %}
+					            			
+					            		</div>
+					            		<div class="col m4 s12">
+					            			{% if company.ratio_comercial_clientes|sub:ratio_comercial_sector_clientes < 0 %}
+					            				<h5 style="color: green"> <i class="fa fa-sort-down" aria-hidden="true"></i> {{company.ratio_comercial_clientes|sub:ratio_comercial_sector_clientes|floatformat:2}}</h5>
+					            			{%else%}
+					            				<h5 style="color: red"> <i class="fa fa-sort-up" aria-hidden="true"></i> {{company.ratio_comercial_clientes|sub:ratio_comercial_sector_clientes|floatformat:2}}</h5>
+					            			{% endif %}
+					            		</div>
+					            		<div class="col m4 s12">
+					            			{% if company.average_transfer_from_client|sub:company.average_sector_sells < 0 %}
+					            				<h5 style="color: red"> <i class="fa fa-sort-down" aria-hidden="true"></i> {{company.average_transfer_from_client|sub:company.average_sector_sells|floatformat:2}}</h5>
+					            			{%else%}
+					            				<h5 style="color: green"> <i class="fa fa-sort-up" aria-hidden="true"></i> {{company.average_transfer_from_client|sub:company.average_sector_sells|floatformat:2}}</h5>
+					            			{% endif %}
+					            		</div>
+									</div>
+					            </div>
+					        </div>
+			    		</div>
+			    		<div class="col m6 s12">
+			    			<div class="card grey lighten-4">
+					            <div class="card-content grey-text darken-4 cards_comments">
+					              		<div class=row>
+					              			<div class="col m12 s12" >
+					              			<h2 class="center-align light grey-text text-darken-3 comment_bar_warning">Atención!</h2> 
+					              				<p class="light"> <i class="tiny material-icons grey-text text-darken-3">info_outline</i> {{company.respuesta_clientes_margen_interpretation}}</p>
+					              				<p class="light"><i class="tiny material-icons grey-text text-darken-3">chat_bubble_outline</i> {{company.respuesta_clientes_margen_hint}}</p>
+						              		</div>
+					    					<div class="col m12 s12 center-align">
+					    						<a href="{% url 'empresas:clients' %}" id="download-button" target="_blank" class="btn waves-effect waves-light transparent grey-text text-darken-4 border-grey button_margin">Nuevos clientes </a>
+					    					</div>
+					              		</div>
+					            </div>
+					        </div>
+			    		</div>
 			    	</div>
+			    	<div class="row">
+		    			<p class="light"><i class="tiny material-icons grey-text text-darken-3">live_help</i>{{company.respuesta_clientes_margen_info}}</p>
+		    		</div>
+			    	
+			    </div>
+			   	</div>
 
 
 			    <!-- /////////////////////////////////////////////////////////////
@@ -529,7 +580,7 @@ Riesgo Cliente - {{ company.name }}
 				 ///////////////////////////////////////////////////////////// -->
 
 			    <div class="white_back title_conf">
-			    	<h3 class="flow-text">Análisis de concentración - ¿Debería buscar nuevas oportunidades?  <i class="fa fa-caret-right" aria-hidden="true"></i>  Amplia y mejora tu cartera de clientes</h3>
+			    	<h3 class="flow-text">Análisis de concentración - ¿Debería buscar nuevas oportunidades? Diversifica tu negocio</h3>
 			    </div>
 			    	<div class="row title_conf">
 			    	<!-- Facturación -->
@@ -537,7 +588,7 @@ Riesgo Cliente - {{ company.name }}
 			    		<div class="col m7 s12">
 			    			<div class="card grey lighten-4">
 					            <div class="card-content grey-text darken-4">
-					            	<span class="card-title">Concentración de mi empresa</span>
+					            	<span class="card-title">Concentración de ventas</span>
 					            	<div class="row center-align">
 					            		<div class="col m3 s12 line">
 					            			<p>Clientes</p>
@@ -597,108 +648,32 @@ Riesgo Cliente - {{ company.name }}
 			    		</div>
 			    		<div class="col m5 s12">
 			    			<div class="card grey lighten-4">
-					            <div class="card-content grey-text darken-4">
-					              <blockquote>
-					    				<p class="light"><i class="tiny material-icons indigo-text darken-4">live_help</i> {{company.respuesta_clientes_concentracion_info}}</p>
-					    				<p class="light"><i class="tiny material-icons indigo-text darken-4">info</i> {{company.respuesta_clientes_concentracion_interpretation}}</p>
-					    				
-					    				<p class="light"><i class="tiny material-icons indigo-text darken-4">new_releases</i> {{company.respuesta_clientes_concentracion_hint}} </p>
-					    				<div class="row">
-					    					<div class="col m2 s6"></div>
+					            <div class="card-content grey-text darken-4 cards_comments">
+					              		<div class=row>
+					              			<div class="col m12 s12" >
+					              			<h2 class="center-align light grey-text text-darken-3 comment_bar_error">¡Mejorar!</h2> 
+					              				<p class="light"> <i class="tiny material-icons grey-text text-darken-3">info_outline</i> {{company.respuesta_clientes_concentracion_interpretation}}</p>
+					              				<p class="light"><i class="tiny material-icons grey-text text-darken-3">chat_bubble_outline</i> {{company.respuesta_clientes_concentracion_hint}}</p>
+						              		</div>
 					    					<div class="col m12 s12 center-align">
-					    						<span class="right-align"><a href="{% url 'empresas:clients' %}" class="btn waves-effect waves-light transparent grey-text text-darken-4 border-grey"> Busca nuevos clientes </a> </span>
+					    						<a href="{% url 'empresas:clients' %}" id="download-button" target="_blank" class="btn waves-effect waves-light transparent grey-text text-darken-4 border-grey button_margin">Nuevos clientes </a>
 					    					</div>
-					    				</div>
-					    			
-					    			</blockquote>
+					              		</div>
 					            </div>
 					        </div>
+			    			
 			    		</div>
 			    	</div>
+			    	<div class="row">
+		    			<p class="light"><i class="tiny material-icons grey-text text-darken-3">live_help</i> {{company.respuesta_clientes_concentracion_info}}</p>
+		    		</div>
+			    	
 			    </div>
 
 			    <!-- /////////////////////////////////////////////////////////////
 				 ////// ¿Cómo podría hacerlo?
 				 ///////////////////////////////////////////////////////////// -->
-
-			    <div class="white_back title_conf">
-			    	<h3 class="flow-text">¿Cómo podría hacerlo? </h3>
-			    </div>
-			    	<div class="row title_conf">
-			    	<!-- Facturación -->
-			    	<div class="row">
-			    		<div class="col m7 s12">
-			    			<div class="card grey lighten-4">
-					            <div class="card-content grey-text darken-4">
-					            	<span class="card-title">Margen de venta</span>
-					              	<div class="row center-align">
-					            		<div class="col m4 s12 line">
-					            			<p>Margen comercial</p>
-					            			<h5><i class="fa fa-user" aria-hidden="true"></i> {{company.margen_comercial_clientes|floatformat:2}}</h5>
-					            			<h5><i class="fa fa-users" aria-hidden="true"></i> {{margen_comercial_sector_clientes|floatformat:2}}</h5>
-					            		</div>
-					            		<div class="col m4 s12 line">
-					            			<p>Ratio de eficiencia</p>
-					            			<h5><i class="fa fa-user" aria-hidden="true"></i> {{company.ratio_comercial_clientes|floatformat:2}}</h5>
-					            			<h5><i class="fa fa-users" aria-hidden="true"></i> {{ratio_comercial_sector_clientes|floatformat:2}}</h5>
-					            		</div>
-					            		<div class="col m4 s12">
-					            			<p>Ticket medio</p>
-					            			<h5><i class="fa fa-user" aria-hidden="true"></i> {{average_transfer_from_client|floatformat:0}}</h5>
-					            			<h5><i class="fa fa-users" aria-hidden="true"></i> {{company.average_sector_sells|floatformat:0}}</h5>
-					            		</div>
-									</div>
-									<div class="divider"></div>
-									<div class="row center-align">
-					            		<div class="col m4 s12">
-					            			{% if company.margen_comercial_clientes|sub:company.margen_comercial_sector_clientes < 0 %}
-					            				<h5 style="color: red"> <i class="fa fa-sort-down" aria-hidden="true"></i> {{company.margen_comercial_clientes|sub:margen_comercial_sector_clientes|floatformat:2}}</h5>
-					            			{%else%}
-					            				<h5 style="color: green"> <i class="fa fa-sort-up" aria-hidden="true"></i> {{company.margen_comercial_clientes|sub:margen_comercial_sector_clientes|floatformat:2}}</h5>
-					            			{% endif %}
-					            			
-					            		</div>
-					            		<div class="col m4 s12">
-					            			{% if company.ratio_comercial_clientes|sub:ratio_comercial_sector_clientes < 0 %}
-					            				<h5 style="color: green"> <i class="fa fa-sort-down" aria-hidden="true"></i> {{company.ratio_comercial_clientes|sub:ratio_comercial_sector_clientes|floatformat:2}}</h5>
-					            			{%else%}
-					            				<h5 style="color: red"> <i class="fa fa-sort-up" aria-hidden="true"></i> {{company.ratio_comercial_clientes|sub:ratio_comercial_sector_clientes|floatformat:2}}</h5>
-					            			{% endif %}
-					            		</div>
-					            		<div class="col m4 s12">
-					            			{% if company.average_transfer_from_client|sub:company.average_sector_sells < 0 %}
-					            				<h5 style="color: red"> <i class="fa fa-sort-down" aria-hidden="true"></i> {{company.average_transfer_from_client|sub:company.average_sector_sells|floatformat:2}}</h5>
-					            			{%else%}
-					            				<h5 style="color: green"> <i class="fa fa-sort-up" aria-hidden="true"></i> {{company.average_transfer_from_client|sub:company.average_sector_sells|floatformat:2}}</h5>
-					            			{% endif %}
-					            		</div>
-									</div>
-					            </div>
-					        </div>
-			    		</div>
-			    		<div class="col m5 s12">
-			    			<div class="card grey lighten-4">
-					            <div class="card-content grey-text darken-4">
-					              <blockquote>
-					    				<p class="light"><i class="tiny material-icons indigo-text darken-4">live_help</i> {{company.respuesta_clientes_margen_info}}</p>
-					    				<p class="light"><i class="tiny material-icons indigo-text darken-4">info</i> {{company.respuesta_clientes_margen_interpretation}}</p>
-					    				
-					    				<p class="light"><i class="tiny material-icons indigo-text darken-4">new_releases</i> {{company.respuesta_clientes_margen_hint}} </p>
-					    				<div class="row">
-					    					<div class="col m2 s6"></div>
-					    					<div class="col m12 s12 center-align">
-					    						<span class="right-align"><a href="{% url 'empresas:clients' %}" class="btn waves-effect waves-light transparent grey-text text-darken-4 border-grey"> Busca nuevos clientes </a> </span>
-					    					</div>
-					    				</div>
-					    			
-					    			</blockquote>
-					            </div>
-					        </div>
-			    		</div>
-			    	</div>
-			    		
 			    	
-			    </div>
 
 	  </div>
 
@@ -918,10 +893,10 @@ Riesgo Cliente - {{ company.name }}
 		                    fontColor: 'rgb(255, 99, 132)'
 		                }
 		            },
-		            title: {
-		                display: true,
-		                text: title
-		            },
+		            // title: {
+		            //     display: true,
+		            //     text: title
+		            // },
 		            responsive: true,
 		            scales: {
 					      yAxes: [{

@@ -1,4 +1,5 @@
-{% extends "base.html" %}
+{% extends "base_accounts.html" %}
+{% load static %}
 
 {% load i18n %}
 {% load account socialaccount %}
@@ -7,9 +8,10 @@
 
 {% block head_title %}{% trans "Sign In" %}{% endblock %}
 
-{% block content %}
+{% block image_bg %} {% static 'images/pexels-photo-121500.jpeg' %} {% endblock %}
 
-<div class="wrap_login">
+{% block content %}
+<div class="padding_landing">
   <div class="row ">
       <div class="col m6"></div>
       <div class="col m5">
@@ -42,7 +44,7 @@
                 <a href="{{ signup_url }}">sign up</a> first.{% endblocktrans %}</p>
                 {% endif %}
 
-                <form class="login" method="POST" action="{% url 'account_login' %}" class="black-text">
+                <form class="login" method="POST" action="{% url 'account_login' %}" class="black-text" id="login_form">
                   {% csrf_token %}
                     {{ form.as_p }}
                   {% if redirect_field_value %}
@@ -51,16 +53,44 @@
                   <a class="button secondaryAction" href="{% url 'account_reset_password' %}">{% trans "Forgot Password?" %}</a>
                   <div class="row">
                     <div class="col m9"></div>
-                    <div class="col m3"><button class="primaryAction btn right-align" type="submit">{% trans "Sign In" %}</button></div>
+                    <div class="col m3">
+                      <button class="primaryAction btn right-align" type="submit" id="submit_button">{% trans "Sign In" %}</button>
+                    </div>
                   </div>
-                  
                 </form>
             </div>
           </div>
         </div>
-        
       </div>
-    
   </div>
 </div>
 {% endblock %}
+
+{% block alt_js %}
+<script type="text/javascript">
+
+  $(document).ready(function(){
+
+    $("#submit_button").click(function() {
+      console.log("Holaaaaaa")
+      $('.primaryAction').addClass("disabled");
+    });
+
+
+    // .submit(function( event ) {
+    //   console.log("Holaaaaaa")
+    //   $('.primaryAction').addClass("disabled");
+    //   alert( "Handler for .submit() called." );
+    //   event.preventDefault();
+    // });
+
+      // $(".primaryAction").click(function() {
+      //   console.log("Holaaaaaa")
+      //   $('.primaryAction').addClass("disabled");
+      // })
+
+  });
+
+
+</script>
+{% endblock alt_js %}

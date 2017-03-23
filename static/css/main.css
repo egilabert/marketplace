@@ -1,5 +1,48 @@
 {% load staticfiles %}
 
+.cards_comments {
+  padding-top: 5px !important; 
+  padding-left: 12px !important;
+  padding-bottom: 5px !important; 
+  padding-right: 12px !important;
+}
+
+.comment_bar_info {
+   border-top-color: #2196f3; 
+   border-top-width: 10px; 
+   border-top-style: solid; 
+   padding-top: 20px;
+}
+
+.comment_bar_success {
+   border-top-color: green; 
+   border-top-width: 10px; 
+   border-top-style: solid; 
+   padding-top: 20px;
+}
+
+.comment_bar_warning {
+   border-top-color: orange; 
+   border-top-width: 10px; 
+   border-top-style: solid; 
+   padding-top: 20px;
+}
+
+.comment_bar_error {
+   border-top-color: red; 
+   border-top-width: 10px; 
+   border-top-style: solid; 
+   padding-top: 20px;
+}
+
+.button_margin {
+   margin-top: 20px;
+}
+
+.padding_bottom_title {
+  padding-bottom: 1rem;
+}
+
 .warning {
   background-color: #ffcc80;
 }

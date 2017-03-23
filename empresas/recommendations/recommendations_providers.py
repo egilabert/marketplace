@@ -279,7 +279,7 @@ class Recommendations_providers:
 
 # Como me relaciono con ellos? - Penetración
     def respuesta_providers_penetracion_info(self):
-        return "El porcentaje de penetración mide el volumen de tu facturación con tus proveedores sobre el total de ventas de los proveedores; su varianza, indica el cambio respecto al periodo anterior."
+        return "El porcentaje de dependencia mide el volumen de tus compras sobre el total de ventas de tus proveedores y su evolución, indica el cambio respecto al periodo anterior."
     
     def respuesta_providers_penetracion_interpretation(self):
         if len(self.balance_providers_ebitda())>0:

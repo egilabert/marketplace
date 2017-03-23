@@ -63,7 +63,7 @@ class Recommendations_clients_risk:
 
     # Riesgo de fuga - Penetración
     def respuesta_riskcliente_penetracion_info(self):
-        return "El porcentaje de penetración mide el volumen de tu facturación con tus clientes sobre el total de gasto de los clientes; su varianza, indica el cambio respecto al periodo anterior."
+        return "El porcentaje de penetración mide el volumen de tu facturación con tus clientes sobre el total de gasto de los clientes; su evolución, indica el cambio respecto al periodo anterior."
     
     def respuesta_riskcliente_penetracion_interpretation(self):
         if len(self.balance_clients_ebitda())>0:

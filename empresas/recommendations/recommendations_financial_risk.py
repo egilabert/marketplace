@@ -29,7 +29,7 @@ class Recommendations_financial_risk:
             elif margen_comercial_providers_deviation > -0.20:
                 return "Bien! Te recordamos que tu ratio de endeudamiento puede tener efecto en el acceso a nueva financiación para futuras inversiones o necesidades de circulante.."
             else:
-                return "Sigue así! Tu bajo ratio de endeudamiento te favorece a la hora de buscar nueva financiación. Crees que es el momento de generar nueva inversión? Informate sobre nuestros productos de activo."
+                return "Sigue así! Tu bajo ratio de endeudamiento te favorece a la hora de buscar nueva financiación. Tienes nuevos proyectos en la cabeza? Informate sobre nuestros productos de activo."
         else:
             return "No disponemos de los estados financieros de tu competencia"
     ### Falta actualizar el calculo del ratio de endeudamiento....Enric, lo ha calculado?
