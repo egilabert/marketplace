@@ -81,6 +81,7 @@ TEMPLATES = [
         'DIRS': [os.path.join(BASE_DIR, 'templates'), 
                 os.path.join(BASE_DIR, 'templates')+"/empresas",
                 os.path.join(BASE_DIR, 'templates')+"/account",
+                os.path.join(BASE_DIR, 'templates')+"/recommender",
                 os.path.join(BASE_DIR, 'templates')+"/helpers",
                 os.path.join(BASE_DIR, 'templates')+"/LCX",
                 os.path.join(BASE_DIR, 'templates')+"/risk_cro"],

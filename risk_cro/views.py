@@ -61,6 +61,7 @@ def SearchView(request):
 	else:
 		messages.warning(request, 'A pesar de tener un usuario activo, no tienes permiso para entrar en esta aplicación')
 		return redirect("/cro/", {})
+		
 def HomeView(request):
 	return render(request, "cro_home.html", {'menu': False})
 

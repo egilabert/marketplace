@@ -745,7 +745,7 @@ def EmpresaDetailView(request, pk=None):
 
 	return render(request, 'empresas/empresa_detail.html', context)
 
-# @login_required
+@login_required
 def OpportunityClientsView(request):
 	
 	company_id = request.session.get('company')
@@ -755,7 +755,7 @@ def OpportunityClientsView(request):
 		}
 	return render(request, 'empresas/opportunities_clients.html', context)
 
-# @login_required
+@login_required
 def FinancialRiskRecommendationsView(request):
 	
 	try:
@@ -1038,7 +1038,7 @@ def ProviderRiskRecommendationsView(request):
 		}
 	return render(request, 'empresas/risk_providers.html', context)
 
-# @login_required
+@login_required
 def OpportunityProviderView(request):
 	company_id = request.session.get('company')
 	company = Empresa.objects.filter(pk=company_id).first()
@@ -1534,7 +1534,7 @@ def TrasferCreateView(request, empresa_id):
 """				CLIENTS VIEWS 							  """
 """-------------------------------------------------------"""
 
-# @login_required
+@login_required
 def ClientView(request):
 
 	try:

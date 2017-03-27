@@ -1,0 +1,101 @@
+{% extends "app_base.html" %}
+{% load static %}
+{% load humanize %}
+{% load mathfilters %}
+{% block page_title %}
+Marketplace B2B
+{% endblock %}
+
+{% block body_class %}background_grey{% endblock %}
+
+{% block content %}
+<style type="text/css">
+  /* label color */
+   .input-field label {
+     color: #ffffff;
+     border-bottom: 0px solid #ffffff;
+   }
+   /* label focus color */
+   .input-field input[type=text]:focus + label {
+     color: #f6f9ff;
+     border-bottom: 0px solid #ffffff;
+   }
+   /* label underline focus color */
+   .input-field input[type=text]:focus {
+     border-bottom: 1px solid #ffffff;
+     box-shadow: 0 1px 0 0 #ffffff;
+   }
+   /* valid color */
+   .input-field input[type=text].valid {
+     border-bottom: 1px solid #000;
+     box-shadow: 0 1px 0 0 #000;
+   }
+   /* invalid color */
+   .input-field input[type=text].invalid {
+     border-bottom: 1px solid #000;
+     box-shadow: 0 1px 0 0 #000;
+   }
+   /* icon prefix focus color */
+   .input-field .prefix.active {
+     color: #ffffff;
+   }
+   /* icon prefix focus color */
+   .input-field .prefix {
+     color: #ffffff;
+   }
+</style>
+
+{% include "navbar.html" %}
+
+<div class="row" style="padding-top: 10rem;">
+  <div class="col s12 m3"></div>
+  <div class="col s12 m6">
+    <!-- <div class="card-panel grey "> -->
+        <div class="row">
+          <div class="col m12 s12">
+            <h3 class="light grey-text center-align">Nuevos compañeros de viaje</h3>
+            <div class="row padding_title">
+              <div class="col m12 s12" style="padding-top: 3rem;">
+                <form action="{% url 'recommender:home' %}" method="get" id="search_company">
+                  {% csrf_token %}
+                  <div class="input-field col s12" >
+                    <i class="material-icons prefix">search</i>
+                    <input type="text" id="autocomplete-input-search" name="company_name" class="autocomplete_search">
+                    <label for="autocomplete-input-search">Buscar recomendaciones para la empresa...</label>
+                  </div>
+                </form>
+              </div>
+            </div>
+          </div>
+          
+      </div>
+    <!-- </div> -->
+  </div>
+  <div class="col s12 m3"></div>
+</div>
+
+
+<img src="{% static 'images/pexels-photo-143967.jpeg' %}" id="bg" alt="">
+
+{% endblock %}
+
+{% block alt_js %}
+  <script type="text/javascript">
+  (function($){
+    $(function(){
+
+      $('input.autocomplete_search').autocomplete({
+        data: {{autofilter|safe}},
+        limit: 5, // The max amount of results that can be shown at once. Default: Infinity.
+      });
+
+    $("input").keypress(function(event) {
+      if (event.which == 13) {
+          event.preventDefault();
+          $("#search_company").submit();
+      }
+  });
+    }); // end of document ready
+  })(jQuery); // end of jQuery name space
+  </script>
+{% endblock alt_js %}

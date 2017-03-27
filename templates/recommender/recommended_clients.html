@@ -1,0 +1,387 @@
+{% extends "app_base.html" %}
+{% load static %}
+{% load humanize %}
+{% block page_title %}
+{{ title }}
+{% endblock %}
+{% load random_image %}
+{% load mathfilters %}
+
+{% block body_class %}background_grey{% endblock %}
+{% block side-nav %}{% include "side-nav_market.html" %}{% endblock %}
+{% block content %}
+
+
+
+<div class="parallax-container">
+		<!-- <h3 class="center-align grey-text text-darken-3 light">Rocky clients are not all the same</h3> -->
+		<h3 class="center-align grey-text text-darken-3 light">No todos los clientes son iguales</h3>
+	    <div class="parallax"><img src="{% static 'images/rocks.jpg' %}"></div>
+	</div>
+
+	{% if journey %}
+<div class="mdl-card mdl-shadow--2dp">
+
+      <div class="mdl-card__supporting-text">
+
+        <div class="mdl-stepper-horizontal-alternative">
+          
+          <div class="mdl-stepper-step active-step editable-step">
+            <a href="{% url 'empresas:detail' pk=company.pk %}">
+              <div class="mdl-stepper-circle"><span>1</span></div>
+              <div class="mdl-stepper-title">Mi empresa</div>
+              <div class="mdl-stepper-bar-left"></div>
+              <div class="mdl-stepper-bar-right"></div>
+            </a>
+          </div>
+          
+          <div class="mdl-stepper-step active-step editable-step">
+            <a href="{% url 'empresas:recommendations' %}">
+              <div class="mdl-stepper-circle"><span>2</span></div>
+              <div class="mdl-stepper-title">Mis Clientes/Proveedores</div>
+              <div class="mdl-stepper-bar-left"></div>
+              <div class="mdl-stepper-bar-right"></div>
+            </a>
+          </div>
+          <div class="mdl-stepper-step active-step editable-step">
+            <a href="{% url 'empresas:recommendations_financial_risk' %}">
+              <div class="mdl-stepper-circle"><span>3</span></div>
+              <div class="mdl-stepper-title">Mis Riesgos</div>
+              <div class="mdl-stepper-optional"></div>
+              <div class="mdl-stepper-bar-left"></div>
+              <div class="mdl-stepper-bar-right"></div>
+            </a>
+          </div>
+          <div class="mdl-stepper-step active-step editable-step">
+            <a href="{% url 'empresas:informe' %}">
+              <div class="mdl-stepper-circle"><span>4</span></div>
+              <div class="mdl-stepper-title">Mi Informe</div>
+              <div class="mdl-stepper-bar-left"></div>
+              <div class="mdl-stepper-bar-right"></div>
+            </a>
+          </div>
+        </div>
+
+      </div>
+
+  </div>
+  {% endif %}
+	
+    <h5 class="center title light padding_title"><a href='{{ company.get_absolute_url }}'>{{company.name}}</a>, has hablado antes con estos potenciales clientes?</h5>
+    <h5 class="center title light">Ayúdanos a entender qué estás buscando - <a href="#" class="client_form_button">Búsqueda avanzada</a></h5>
+      <div class="row">
+      	  <div class="col s12 m3">
+
+      	  		<div class="col s12 m12">
+		          <div class="card blue-grey darken-1">
+		            <div class="card-content white-text">
+		              <span class="card-title">“Love is in the cloud”... </span>
+		              <p>Nuestro algoritmo ha seleccionado para ti una serie de empresas con las que creemos que podrías trabajar para agrandar y mejorar tu cartera de clientes. Si buscas algo más específico no dudes en utilizar nuestros filtros</p>
+		            </div>
+		            <div class="card-action">
+		              <a href="#" class="client_form_button">Filtrar recomendaciones</a>
+		            </div>
+		          </div>
+		        </div>
+
+		        <div class="col s12 m12">
+		          <div class="card blue-grey darken-1">
+		            <div class="card-content white-text">
+		              <span class="card-title">… y ¿cómo se mide el amor? </span>
+		              <p>Usando tus movimientos bancarios y los de tu competencia, así como información financiera de las empresas, nuestro algoritmo pone una nota a vuestra potencial relación comercial. Igual que Spotify te recomienda canciones, o Amazon libros, nosotros queremos proponerte clientes potenciales para ayudarte  a crecer.</p>
+		            </div>
+		            <div class="card-action">
+		              <a href="{% url 'empresas:faq' %}">FAQs & COMMENTS</a>
+		            </div>
+		          </div>
+		        </div>
+
+		        <div class="col s12 m12">
+		          <div class="card blue-grey darken-1">
+		            <div class="card-content white-text">
+		              <span class="card-title">Aýudanos a mejorar</span>
+		              <p>Cada vez que interactúas con nuestra aplicación nos ayudas a mejorar. Por favor, puedes descartar o incluir empresas que ya conozcas, o compartir tus propuestas de mejora en nuestro apartado de comentarios</p>
+		            </div>
+		            <div class="card-action">
+		              <a href="{% url 'empresas:faq' %}">Contáctanos</a>
+		            </div>
+		          </div>
+		        </div>
+
+      	  </div>
+
+
+	      <div class="col s9 l9">
+			<!-- Page Layout here -->
+		    	<div id="cards_container">
+		    		<div class="row">
+		    		<div class="col s12 m4 cards-container">
+
+					{% for obj in recommended_clients %}
+						{% if  obj.similarity > -1000 %}
+							{% if  forloop.counter|add:"-1"|divisibleby:3 %}
+							<div class="card blue-grey lighten-4 hoverable">
+							    <div class="card-image waves-effect waves-block waves-light">
+							      <img class="activator" src="{{ obj.clientes_recomendados.image}}">
+							    </div>
+							    <div class="card-content">
+							    	<div class="row">
+							      		<span class="activator center-align grey-text text-darken-4"> {{ obj.clientes_recomendados.name}}</span>
+							      	</div>
+							      	<div class="divider"></div>
+							      	<br>
+							      	<div class="row">
+							      		<div class="col s6">
+							      			<i class="fa fa-bullseye left-align" aria-hidden="true"></i><span class="grey-text light text-darken-4"> Match: 
+							      		</div>
+							      		<div class="col s6">
+							      			<span class="right-align flow-text" style="color: {% if obj.similarity > 0.7 %}green{% elif obj.similarity > 0.3 %} orange{% else %}red{% endif %}"> {{ obj.similarity|mul:10|floatformat }}</span>
+							      		</div>
+							      	</div>
+
+							      	<div class="row">
+							      		<div class="col s6">
+							      			<i class="fa fa-money left-align" aria-hidden="true"></i></i><span class="grey-text light text-darken-4"> Financing:
+							      			<br>
+							      			<small>¿Necesitarás financiar tus facturas?</small>	
+							      		</div>
+							      		<div class="col s6">
+							      			<span class="right-align" style="color: {% if obj.factoring_preaprobado > 0 %}green{% else %}red{% endif %}"> {% if obj.factoring_preaprobado > 0 %} Te financiamos hasta  <a href={% if banco == 1 %} "https://www.bancsabadell.com/cs/Satellite/SabAtl/Factoring/1191332201741/es/" {% elif banco == 2 %} "https://www.bancosantander.es/es/empresas-advance/productos-y-servicios/cobros/factoring" {% endif %} id="download-button" target="_blank" class="btn waves-effect waves-light transparent grey-text text-darken-4 border-grey"> {{ obj.factoring_preaprobado|floatformat|intcomma }}€ </a>  {% else %} Sin preaprobación {% endif %}</span>
+							      			<!--  -->
+							      		</div>
+							      	</div>
+							      	<div class="row">
+							      		<div class="col l8 s8">
+							      			<i class="fa fa-user left-align" aria-hidden="true"></i><span class="grey-text light text-darken-4"> Cliente propio: 
+							      		</div>
+							      		<div class="col l4 s4">
+							      			<span class="right-align black-text "> {{ obj.clientes_recomendados.own_client}} </span>
+							      		</div>
+							      	</div>
+								    <div class="card-action">
+								    	<a class="blue-grey-text text-darken-3" href="{% url 'recommender:detail' pk=obj.clientes_recomendados.pk %}">Ver detalle</a>
+								      	<span ><i class="material-icons right activator center">more_vert</i></span>
+								    </div>
+							    </div>
+							    <div class="card-reveal">
+							    	<span class="card-title">Actividad:<i class="material-icons right">close</i></span>
+							    	<div class="row">
+							      		<p class="grey-text text-darken-4">{{ obj.clientes_recomendados.cnae_2 }}</p>
+							      		<p class="grey-text text-darken-4">{{ obj.clientes_recomendados.cnae }}</p>
+							      	</div>
+							      	<span class="card-title">Localización:</span>
+							      	<div class="row">
+							      		<p class="grey-text text-darken-4">{{ obj.clientes_recomendados.territorial }}</p>
+							      	</div>
+							    </div>
+							</div>
+
+							{% endif %}
+					    {% endif %}
+					{% endfor %}
+					</div>
+
+					<!-- =================== -->
+
+					<div class="col s12 m4 cards-container">
+						{% for obj in recommended_clients %}
+						
+							{% if  obj.similarity > -1000 %}
+
+							{% if forloop.counter|add:"-2"|divisibleby:3 %}
+
+							<div class="card blue-grey lighten-4 hoverable">
+							    <div class="card-image waves-effect waves-block waves-light">
+							      <img class="activator" src='{{ obj.clientes_recomendados.image}}'>
+							    </div>
+							    <div class="card-content">
+							    	<div class="row">
+							      		<span class="activator center-align grey-text text-darken-4"> {{ obj.clientes_recomendados.name}}</span>
+							      	</div>
+							      	<div class="divider"></div>
+							      	<br>
+							      	<div class="row">
+							      		<div class="col s6">
+							      			<i class="fa fa-bullseye left-align" aria-hidden="true"></i><span class="grey-text light text-darken-4"> Match: 
+							      		</div>
+							      		<div class="col s6">
+							      			<span class="right-align flow-text" style="color: {% if obj.similarity > 0.7 %}green{% elif obj.similarity > 0.3 %} orange{% else %}red{% endif %}"> {{ obj.similarity|mul:10|floatformat }}</span></span>
+							      		</div>
+							      	</div>
+
+							      	<div class="row">
+							      		<div class="col s6">
+							      			<i class="fa fa-money left-align" aria-hidden="true"></i></i><span class="grey-text light text-darken-4"> Financing:
+							      			<br>
+							      			<small>¿Necesitarás financiar tus facturas?</small>	
+							      		</div>
+							      		<div class="col s6">
+							      			<span class="right-align" style="color: {% if obj.factoring_preaprobado > 0 %}green{% else %}red{% endif %}"> {% if obj.factoring_preaprobado > 0 %} Te financiamos hasta  <a href= {% if banco == 1 %} "https://www.bancsabadell.com/cs/Satellite/SabAtl/Factoring/1191332201741/es/" {% elif banco == 2 %} "https://www.bancosantander.es/es/empresas-advance/productos-y-servicios/cobros/factoring" {% endif %} id="download-button" target="_blank" class="btn waves-effect waves-light transparent grey-text text-darken-4 border-grey"> {{ obj.factoring_preaprobado|floatformat|intcomma }}€ </a>  {% else %} Sin preaprobación {% endif %}</span>
+							      			<!-- https://www.bancsabadell.com/cs/Satellite/SabAtl/Factoring/1191332201741/es/ -->
+							      		</div>
+							      	</div>
+							      	<div class="row">
+							      		<div class="col l8 s8">
+							      			<i class="fa fa-user left-align" aria-hidden="true"></i><span class="grey-text light text-darken-4"> Cliente propio: 
+							      		</div>
+							      		<div class="col l4 s4">
+							      			<span class="right-align black-text ">  {{ obj.clientes_recomendados.own_client}} </span>
+							      		</div>
+							      	</div>
+								    <div class="card-action">
+								    	<a class="blue-grey-text text-darken-3" href="{% url 'recommender:detail' pk=obj.clientes_recomendados.pk %}">Ver detalle</a>
+								      	<span ><i class="material-icons right activator center">more_vert</i></span>
+								    </div>
+							    </div>
+							    <div class="card-reveal">
+							    	<span class="card-title">Actividad:<i class="material-icons right">close</i></span>
+							    	<div class="row">
+							      		<p class="grey-text text-darken-4">{{ obj.clientes_recomendados.cnae_2 }}</p>
+							      		<p class="grey-text text-darken-4">{{ obj.clientes_recomendados.cnae }}</p>
+							      	</div>
+							      	<span class="card-title">Localización:</span>
+							      	<div class="row">
+							      		<p class="grey-text text-darken-4">{{ obj.clientes_recomendados.territorial }}</p>
+							      	</div>
+							    </div>
+							</div>
+
+							{% endif %}
+					    {% endif %}
+					{% endfor %}
+					</div>
+
+					<div class="col s12 m4 cards-container">
+						{% for obj in recommended_clients %}
+
+							{% if  obj.similarity > -1000 %}
+						
+							{% if forloop.counter|add:"-3"|divisibleby:3 %}
+
+							<div class="card blue-grey lighten-4 hoverable">
+							    <div class="card-image waves-effect waves-block waves-light">
+							      <img class="activator" src='{{ obj.clientes_recomendados.image}}'>
+							    </div>
+							    <div class="card-content">
+							    	<div class="row">
+							      		<span class="activator center-align grey-text text-darken-4"> {{ obj.clientes_recomendados.name}}</span>
+							      	</div>
+							      	<div class="divider"></div>
+							      	<br>
+							      	<div class="row">
+							      		<div class="col s6">
+							      			<i class="fa fa-bullseye left-align" aria-hidden="true"></i><span class="grey-text light text-darken-4"> Match: 
+							      		</div>
+							      		<div class="col s6">
+							      			<span class="right-align flow-text" style="color: {% if obj.similarity > 0.7 %}green{% elif obj.similarity > 0.3 %} orange{% else %}red{% endif %}"> {{ obj.similarity|mul:10|floatformat }}</span></span>
+							      		</div>
+							      	</div>
+
+							      	<div class="row">
+							      		<div class="col s6">
+							      			<i class="fa fa-money left-align" aria-hidden="true"></i></i><span class="grey-text light text-darken-4"> Financing:
+							      			<br>
+							      			<small>¿Necesitarás financiar tus facturas?</small>	
+							      		</div>
+							      		<div class="col s6">
+							      			<span class="right-align" style="color: {% if obj.factoring_preaprobado > 0 %}green{% else %}red{% endif %}"> {% if obj.factoring_preaprobado > 0 %} Te financiamos hasta  <a href={% if banco == 1 %} "https://www.bancsabadell.com/cs/Satellite/SabAtl/Factoring/1191332201741/es/" {% elif banco == 2 %} "https://www.bancosantander.es/es/empresas-advance/productos-y-servicios/cobros/factoring" {% endif %} id="download-button" target="_blank" class="btn waves-effect waves-light transparent grey-text text-darken-4 border-grey"> {{ obj.factoring_preaprobado|floatformat|intcomma }}€ </a>  {% else %} Sin preaprobación {% endif %}</span>
+							      			<!-- https://www.bancsabadell.com/cs/Satellite/SabAtl/Factoring/1191332201741/es/ -->
+							      		</div>
+							      	</div>
+							      	<div class="row">
+							      		<div class="col l8 s8">
+							      			<i class="fa fa-user left-align" aria-hidden="true"></i><span class="grey-text light text-darken-4"> Cliente propio: 
+							      		</div>
+							      		<div class="col l4 s4">
+							      			<span class="right-align black-text ">  {{ obj.clientes_recomendados.own_client}} </span>
+							      		</div>
+							      	</div>
+								    <div class="card-action">
+								    	<a class="blue-grey-text text-darken-3" href="{% url 'recommender:detail' pk=obj.clientes_recomendados.pk %}">Ver detalle</a>
+								      	<span ><i class="material-icons right activator center">more_vert</i></span>
+								    </div>
+							    </div>
+							    <div class="card-reveal">
+							    	<span class="card-title">Actividad:<i class="material-icons right">close</i></span>
+							    	<div class="row">
+							      		<p class="grey-text text-darken-4">{{ obj.clientes_recomendados.cnae_2 }}</p>
+							      		<p class="grey-text text-darken-4">{{ obj.clientes_recomendados.cnae }}</p>
+							      	</div>
+							      	<span class="card-title">Localización:</span>
+							      	<div class="row">
+							      		<p class="grey-text text-darken-4">{{ obj.clientes_recomendados.territorial }}</p>
+							      	</div>
+							    </div>
+							</div>
+
+					    {% endif %}
+
+				    {% endif %}
+
+				{% endfor %}
+				</div>
+
+				</div>
+		    	</div>
+		</div>
+	</div>
+
+	<!-- Modal Structure -->
+	<div id="modal_clients" class="modal">
+		<div class="modal-content">
+			<h4>¿Qué estás buscando?</h4>
+			<div class="divider"></div>
+			<div class="row">
+				<form method="GET" action="">
+				    <div class="row">
+			        	<div class="input-field col s6">
+							<i class="material-icons prefix">business</i>
+							<input type="text" id="autocomplete-input" class="autocomplete">
+							<label for="autocomplete-input">Actividad deseada de tu cliente</label>
+						</div>
+						<div class="input-field col s6">
+				        	<div class="switch">
+						    	<label>
+						      	Sin filtro
+						      	<input type="checkbox" id="region_checkbox">
+						      	<span class="lever"></span>
+						      	Fuera de mi región
+						    	</label>
+							</div>
+					  	</div>
+					</div>
+					<div class="row">
+			        	<div class="col m12 s12">
+			        		<p class="range-field">
+						  		<label>Facturación mínima? (en k€)</label>
+						      	<input type="range" id="test5" min="0" max="1000" />
+						    </p>
+				        </div>
+					</div>
+			    </form>
+			</div>
+
+			<div class="progress ajax_bar">
+		    	<div class="indeterminate"></div>
+		  	</div>
+
+		</div>
+		<div class="modal-footer">
+			<a href="#!" id="client_form" class=" modal-action modal-close waves-effect waves-green btn-flat">Filtra los clientes suggeridos!</a>
+		</div>
+	</div>
+
+{% block alt_js %}
+<script type="text/javascript">
+	console.log({{loading_times}})
+	if ({{loading_times}}==1) {
+	    document.getElementById("modal_clients").modal('open');
+	}
+</script>
+{% endblock alt_js %}
+
+{% endblock %}
+
+
+
+  

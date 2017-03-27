@@ -1,0 +1,33 @@
+  {% load compress %}
+  {% load static %}
+
+  <ul id="slide-out" class="side-nav">
+      <li>
+        <div class="userView">
+          <div class="background">
+            <img src="{% static 'images/testimonial-bg.jpg' %}">
+          </div>
+          <a href="{{ company.get_absolute_url }}"><img class="circle" src="{{ company.image }}"></a>
+          <a href="{{ company.get_absolute_url }}"><span class="white-text name">{{ company.name }}</span></a>
+          <a href="{{ company.get_absolute_url }}"><span class="white-text email">{{ company.email }}</span></a>
+        </div>
+      </li>
+      <li><a href="{% url 'recommender:home' %}"><i class="material-icons">view_quilt</i>Home</a></li>
+      <li><a href="{% url 'recommender:detail' pk=company.pk %}"><i class="material-icons">airplay</i>Mi perfil</a></li>
+      <!-- <li><a href="{% url 'empresas:faq' %}"><i class="material-icons">info_outline</i>FAQ & Comentarios</a></li> -->
+      <li><div class="divider"></div></li>
+      <li><a class="subheader">Marketplace</a></li>
+      <li><a href="{% url 'recommender:clients' %}"><i class="material-icons">person_pin</i>Nuevos clientes!</a></li>
+      <li><a href="{% url 'recommender:providers' %}"><i class="material-icons">settings_input_antenna</i>Nuevos proveedores!</a></li>
+      <li><div class="divider"></div></li>
+      <li><a class="subheader">Seguimiento</a></li>
+      <li><a href="{% url 'recommender:client_opportunities' %}"><i class="material-icons">person_pin</i>Clientes guardados</a></li>
+      <li><a href="{% url 'recommender:provider_opportunities' %}"><i class="material-icons">settings_input_antenna</i>Proveedores guardados</a></li>
+      <!-- <li><a href="{% url 'empresas:recommendations' %}"><i class="material-icons">assessment</i>Commercial monitoring</a></li>
+      <li><a href="{% url 'empresas:recommendations_financial_risk' %}"><i class="material-icons">trending_down</i>Risk monitoring</a></li> -->
+    
+      <li><div class="divider"></div></li>
+      <li><a class="subheader">Opciones</a></li>
+      <!-- <li><a class="waves-effect" href="#!">Ajustes<i class="material-icons">lock_open</i></a></li> -->
+      <li><a class="waves-effect" href="{% url 'empresas:search' %}">Salir<i class="material-icons">input</i></a></li>
+    </ul>
