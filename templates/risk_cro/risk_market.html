@@ -1,0 +1,531 @@
+{% extends "app_base.html" %}
+{% load static %}
+{% load humanize %}
+{% load mathfilters %}
+{% block page_title %}
+Riesgo mercado - {{ company.name }}
+{% endblock %}
+
+{% block body_class %}background_grey{% endblock %}
+{% block side-nav %}{% include "side-nav_cro.html" %}{% endblock %}
+{% block content %}
+<div class="parallax-container">
+		<h3 class="center-align white-text text-darken-3 light">El riesgo mercado</h3>
+		<div class="row center white-text">{{company.name}}</div>
+	    <div class="parallax"><img src="{% static 'images/pexels-photo-41045.jpeg' %}"></div>
+	</div>
+
+
+{% if company.id == 990 %}
+  <div class="row">
+  <div class="col s12 m1"></div>
+  <div class="col s12 m5">
+    <p class="flow-text center-align">Puntos fuertes</p>
+    <div class="card horizontal green lighten-2 black-text">
+      <div class="card-stacked">
+      <div class="card-content">
+           <p>Tu <strong>crecimiento en facturación es superior</strong> al crecimiento macroeconómico/sectorial</p>
+        </div>
+        <div class="divider"></div>
+        <div class="card-content">
+           <p>Tu empresa presenta <strong>mejores resultados y evolución</strong> que tu competencia</p>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <div class="col s12 m5">
+  <p class="flow-text center-align">Puntos a mejorar</p>
+    <div class="card horizontal grey lighten-3 black-text">
+      <div class="card-stacked">
+        <div class="card-content">
+          <p>Tu competencia ha experimentado un <strong>crecimiento destacable en volumen de ventas</strong> en el último ejercicio</p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="col s12 m1"></div>
+</div>
+{% elif company.id == 1610 %}
+<div class="row">
+  <div class="col s12 m1"></div>
+  <div class="col s12 m5">
+    <p class="flow-text center-align">Puntos fuertes</p>
+    <div class="card horizontal green lighten-2 black-text">
+      <div class="card-stacked">
+      	<div class="card-content">
+          <p>El riesgo de impago de los clientes està en linea con el de la competencia</p>
+        </div>
+        <div class="divider"></div>
+        <div class="card-content">
+           <p>Buena <strong>diversificación de sus ventas</strong> en un gran número de clientes</p>
+        </div>
+        <div class="divider"></div>
+        <div class="card-content">
+        	<p>Buena <strong>diversificación de sus ventas</strong> repartidas a lo largo del año</p>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <div class="col s12 m5">
+  <p class="flow-text center-align">Puntos a mejorar</p>
+    <div class="card horizontal grey lighten-3 black-text">
+      <div class="card-stacked">
+        <div class="card-content">
+          <p>Baja <strong>diversificación de sus ventas</strong>, efectuadas en muy pocas provincias</p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="col s12 m1"></div>
+</div>
+{% endif %}
+	
+	<div class="row">
+			    <div class="grey-bckg">
+			    	<div class="row grey-bckg padding_title">
+		      	  		<div class="col s12 m2 line">
+		      	  			<div class="center-align">
+				            <i class="fa fa-money" aria-hidden="true"></i><span class="card-title"> Tus ventas</span>
+				            <h4 class="align-right orange-text darken-1">{{company.get_total_sells|div:1000|floatformat:0|intcomma}}k€</h4>
+				            <span class="green-text text-darken-1"><i class="fa fa-sort-up" aria-hidden="true"></i><span class="card-title">34%</span></span> <span class="light">Desde el mes pasado</span>
+				            </div>
+				        </div>
+
+				        <div class="col s12 m2 line">
+		      	  			<div class="center-align ">
+				            <i class="fa fa-cubes" aria-hidden="true"></i><span class="card-title"> EBITDA</span>
+				            <h4 class="align-right orange-text darken-1">{{ultimos_eeff.ebitda|div:1000|floatformat:0|intcomma}}k€</h4>
+				            <span class="red-text text-darken-1"><i class="fa fa-sort-down" aria-hidden="true"></i><span class="card-title">7%</span></span> <span class="light">Desde el mes pasado</span>
+				            </div>
+				        </div>
+
+				        <div class="col s12 m2 line">
+		      	  			<div class="center-align ">
+				            <i class="fa fa-users" aria-hidden="true"></i><span class="card-title"> Resultado</span>
+				            <h4 class="align-right orange-text darken-1">{{ultimos_eeff.resultado_explotacion|div:1000|floatformat:0|intcomma}}k€</h4>
+				            <span class="green-text text-darken-1"><i class="fa fa-sort-up" aria-hidden="true"></i><span class="card-title">10%</span></span> <span class="light">Desde el mes pasado</span>
+				            </div>
+				        </div>
+
+				        <div class="col s12 m2 line">
+		      	  			<div class="center-align ">
+				            <i class="fa fa-rocket" aria-hidden="true"></i><span class="card-title"> PIB España</span>
+				            <h4 class="align-right orange-text darken-1">{{PIB_espana|floatformat:1}}%</h4>
+				            <span class="green-text text-darken-1"><i class="fa fa-sort-up" aria-hidden="true"></i><span class="card-title">34%</span></span> <span class="light">Desde el mes pasado</span>
+				            </div>
+				        </div>
+
+				        <div class="col s12 m2 line">
+		      	  			<div class="center-align ">
+				            <i class="fa fa-eur" aria-hidden="true"></i><span class="card-title"> PIB Sector</span>
+				            <h4 class="align-right orange-text darken-1">{{PIB_sector|floatformat:1}}%</h4>
+				            <span class="red-text text-darken-1"><i class="fa fa-sort-down" aria-hidden="true"></i><span class="card-title">4%</span></span> <span class="light">Desde el mes pasado</span>
+				            </div>
+				        </div>
+
+				        <div class="col s12 m2">
+		      	  			<div class="center-align ">
+				            <i class="fa fa-money" aria-hidden="true"></i><span class="card-title"> Facturación competencia</span>
+				            <h4 class="align-right orange-text darken-1">{{PIB_comparables|floatformat:1}}%</h4>
+				            <span class="green-text text-darken-1"><i class="fa fa-sort-up" aria-hidden="true"></i><span class="card-title">1%</span></span> <span class="light">Desde el mes pasado</span>
+				            </div>
+				        </div>
+				    
+				    </div>
+				 </div>
+
+				 <!-- /////////////////////////////////////////////////////////////
+				 ////// ¿Como son mis clientes?
+				 ///////////////////////////////////////////////////////////// -->
+
+					<div class="white_back title_conf">
+				    	<h3 class="flow-text">  Análisis Macroenconómico / Sectorial - ¿Cómo está evolucionando el mercado?</h3>
+				    </div>
+			    	<div class="row title_conf">
+			    	<!-- Resultado explotaciones -->
+			    	<div class="row">
+			    		<div class="col m6 s12">
+			    			<div class="card grey lighten-4">
+					            <div class="card-content grey-text darken-4">
+					            	<span class="card-title">PIB España vs. Mis ventas</span>
+					              <canvas id="pib_graph" width="300" height="140"></canvas>
+					            </div>
+					        </div>
+			    		</div>
+			    		<div class="col m6 s12">
+			    			<div class="card grey lighten-4">
+					            <div class="card-content grey-text darken-4 cards_comments">
+					              		<div class=row>
+					              			<div class="col m12 s12" >
+					              			<h2 class="center-align light grey-text text-darken-3 comment_bar_success">¡Bien!</h2> 
+					              				<p class="light"> <i class="tiny material-icons grey-text text-darken-3">info_outline</i> En promedio, el riesgo de impago de tus clientes es parecido al de los de tu competencia</p>
+					              				<p class="light"><i class="tiny material-icons grey-text text-darken-3">chat_bubble_outline</i> Puedes cubrir tu riesgo ampliando tu cartera de clientes o contratando una linea de factoring</p>
+						              		</div>
+					    					<div class="col m6 s6 center-align">
+					    						<a href="{% url 'empresas:clients' %}" id="download-button" target="_blank" class="btn waves-effect waves-light transparent grey-text text-darken-4 border-grey button_margin">Nuevos clientes </a>
+					    					</div>
+					    					<div class="col m6 s6 center-align">
+					    						<a href={% if banco == 1 %} "https://www.bancsabadell.com/cs/Satellite/SabAtl/Factoring/1191332201741/es/" {% elif banco == 2 %}"https://www.bancosantander.es/es/empresas-advance/productos-y-servicios/cobros/factoring" {% endif %} id="download-button" target="_blank" class="btn waves-effect waves-light transparent grey-text text-darken-4 border-grey button_margin">Factoring </a>
+					    					</div>
+					              		</div>
+					            </div>
+					        </div>
+			    		</div>
+			    	</div>
+			    	<div class="row">
+			    		<p class="light"><i class="tiny material-icons grey-text text-darken-3">live_help</i> Nuestra métrica de riesgo de impago clasifica tus clientes según su probabilidad de impago en los próximos meses. Una alta concentración de clientes en estado rojo debería ser preocupante para la evolución de tu negocio</p>
+			    	</div>
+			    	
+			    	<div class="row">
+			    		<div class="col m6 s12">
+			    			<div class="card grey lighten-4">
+					            <div class="card-content grey-text darken-4">
+					            	<span class="card-title">PIB España vs. Ventas de mi competencia</span>
+					              <canvas id="pib_graph_sec" width="300" height="140"></canvas>
+					            </div>
+					        </div>
+			    		</div>
+			    		<div class="col m6 s12">
+			    			<div class="card grey lighten-4">
+					            <div class="card-content grey-text darken-4 cards_comments">
+					              		<div class=row>
+					              			<div class="col m12 s12" >
+					              			<h2 class="center-align light grey-text text-darken-3 comment_bar_warning">¡Atención!</h2> 
+					              				<p class="light"> <i class="tiny material-icons grey-text text-darken-3">info_outline</i> En promedio, el riesgo de impago de tus clientes es parecido al de los de tu competencia</p>
+					              				<p class="light"><i class="tiny material-icons grey-text text-darken-3">chat_bubble_outline</i> Puedes cubrir tu riesgo ampliando tu cartera de clientes o contratando una linea de factoring</p>
+						              		</div>
+					    					<div class="col m6 s6 center-align">
+					    						<a href="{% url 'empresas:clients' %}" id="download-button" target="_blank" class="btn waves-effect waves-light transparent grey-text text-darken-4 border-grey button_margin">Nuevos clientes </a>
+					    					</div>
+					    					<div class="col m6 s6 center-align">
+					    						<a href={% if banco == 1 %} "https://www.bancsabadell.com/cs/Satellite/SabAtl/Factoring/1191332201741/es/" {% elif banco == 2 %}"https://www.bancosantander.es/es/empresas-advance/productos-y-servicios/cobros/factoring" {% endif %} id="download-button" target="_blank" class="btn waves-effect waves-light transparent grey-text text-darken-4 border-grey button_margin">Factoring </a>
+					    					</div>
+					              		</div>
+					            </div>
+					        </div>
+			    		</div>
+			    	</div>
+			    	<div class="row">
+			    		<p class="light"><i class="tiny material-icons grey-text text-darken-3">live_help</i> Nuestra métrica de riesgo de impago clasifica tus clientes según su probabilidad de impago en los próximos meses. Una alta concentración de clientes en estado rojo debería ser preocupante para la evolución de tu negocio</p>
+			    	</div>
+			    	</div>
+			    	<!-- /////////////////////////////////////////////////////////////
+					 ////// ¿Como son mis clientes?
+					 ///////////////////////////////////////////////////////////// -->
+
+			    	<div class="white_back title_conf">
+				    	<h3 class="flow-text">Análisis de tu competencia - ¿Cómo está mi competencia?</h3>
+				    </div>
+				    <div class="row title_conf">
+			    	<!-- EBITDA -->
+
+			    	<div class="row ">
+			          <div class="row">
+			              <div class="col s12 m3">
+			                <div class="card blue-grey darken-1">
+			                  <div class="card-content white-text">
+			                    <span class="card-title">Competencia</span>
+			                    <h5 class="align-right orange-text darken-1">{{company.get_sector_companies.count}}</h5>
+			                    <span class="red-text text-darken-1"><i class="fa fa-sort-up" aria-hidden="true"></i><span class="">1</span></span> <span class="light">Desde el mes pasado</span>
+			                  </div>
+			                </div>
+			              </div>
+			              <div class="col s12 m3">
+			                <div class="card blue-grey darken-1">
+			                  <div class="card-content white-text">
+			                    <span class="card-title">Sus Clientes</span>
+			                    <h5 class="align-right orange-text darken-1">Total: {{company.get_sector_clients|floatformat:0|intcomma}}</h5>
+			                    <h5 class="align-right orange-text darken-1">Promedio: {{company.get_sector_clients|div:company.get_sector_companies.count|floatformat:0|intcomma}}</h5>
+			                    <span class="green-text text-darken-1"><i class="fa fa-sort-down" aria-hidden="true"></i><span class="">2</span></span> <span class="light">Desde el mes pasado</span>
+			                  </div>
+			                </div>
+			              </div>
+			              <div class="col s12 m3">
+			                <div class="card blue-grey darken-1">
+			                  <div class="card-content white-text">
+			                    <span class="card-title">Sus Proveedores</span>
+			                    <h5 class="align-right orange-text darken-1">Total: {{company.get_sector_providers|floatformat:0|intcomma}}</h5>
+			                    <h5 class="align-right orange-text darken-1">Promedio: {{company.get_sector_providers|div:company.get_sector_companies.count|floatformat:0|intcomma}}</h5>
+			                    <span class="green-text text-darken-1"><i class="fa fa-sort-down" aria-hidden="true"></i><span class="">1</span></span> <span class="light">Desde el mes pasado</span>
+			                  </div>
+			                </div>
+			              </div>
+			              <div class="col s12 m3">
+			                <div class="card blue-grey darken-1">
+			                  <div class="card-content white-text">
+			                    <span class="card-title"># empleados</span>
+			                    <h5 class="align-right orange-text darken-1">{{ultimos_eeff.ebitda|div:1500|floatformat:0}}</h5>
+			                    <span class="green-text text-darken-1"><i class="fa fa-sort-down" aria-hidden="true"></i><span class="">1</span></span> <span class="light">Desde el mes pasado</span>
+			                  </div>
+			                </div>
+			              </div>
+			            </div>
+			    	</div>
+			    	</div>
+			    	<!-- EBITDA -->
+			    	<div class="row title_conf">
+			    	<!-- Resultado explotaciones -->
+			    	<div class="row">
+			    		<div class="col m6 s12">
+			    			<div class="card grey lighten-4">
+					            <div class="card-content grey-text darken-4">
+					            	<span class="card-title">Ventas - Tu vs. Competencia</span>
+					              <canvas id="facturacion_graph" width="300" height="140"></canvas>
+					            </div>
+					        </div>
+			    		</div>
+			    		<div class="col m6 s12">
+			    			<div class="card grey lighten-4">
+					            <div class="card-content grey-text darken-4 cards_comments">
+					              		<div class=row>
+					              			<div class="col m12 s12" >
+					              			<h2 class="center-align light grey-text text-darken-3 comment_bar_success">¡Bien!</h2> 
+					              				<p class="light"> <i class="tiny material-icons grey-text text-darken-3">info_outline</i> En promedio, el riesgo de impago de tus clientes es parecido al de los de tu competencia</p>
+					              				<p class="light"><i class="tiny material-icons grey-text text-darken-3">chat_bubble_outline</i> Puedes cubrir tu riesgo ampliando tu cartera de clientes o contratando una linea de factoring</p>
+						              		</div>
+					    					<div class="col m6 s6 center-align">
+					    						<a href="{% url 'empresas:clients' %}" id="download-button" target="_blank" class="btn waves-effect waves-light transparent grey-text text-darken-4 border-grey button_margin">Nuevos clientes </a>
+					    					</div>
+					    					<div class="col m6 s6 center-align">
+					    						<a href={% if banco == 1 %} "https://www.bancsabadell.com/cs/Satellite/SabAtl/Factoring/1191332201741/es/" {% elif banco == 2 %}"https://www.bancosantander.es/es/empresas-advance/productos-y-servicios/cobros/factoring" {% endif %} id="download-button" target="_blank" class="btn waves-effect waves-light transparent grey-text text-darken-4 border-grey button_margin">Factoring </a>
+					    					</div>
+					              		</div>
+					            </div>
+					        </div>
+			    		</div>
+			    	</div>
+			    	<div class="row">
+			    		<div class="col m6 s12">
+			    			<div class="card grey lighten-4">
+					            <div class="card-content grey-text darken-4">
+					            	<span class="card-title">EBITDA - Tu vs. Competencia</span>
+					              <canvas id="ebitda_graph" width="300" height="140"></canvas>
+					            </div>
+					        </div>
+			    		</div>
+			    		<div class="col m6 s12">
+			    			<div class="card grey lighten-4">
+					            <div class="card-content grey-text darken-4 cards_comments">
+					              		<div class=row>
+					              			<div class="col m12 s12" >
+					              			<h2 class="center-align light grey-text text-darken-3 comment_bar_success">¡Bien!</h2> 
+					              				<p class="light"> <i class="tiny material-icons grey-text text-darken-3">info_outline</i> En promedio, el riesgo de impago de tus clientes es parecido al de los de tu competencia</p>
+					              				<p class="light"><i class="tiny material-icons grey-text text-darken-3">chat_bubble_outline</i> Puedes cubrir tu riesgo ampliando tu cartera de clientes o contratando una linea de factoring</p>
+						              		</div>
+					    					<div class="col m6 s6 center-align">
+					    						<a href="{% url 'empresas:clients' %}" id="download-button" target="_blank" class="btn waves-effect waves-light transparent grey-text text-darken-4 border-grey button_margin">Nuevos clientes </a>
+					    					</div>
+					    					<div class="col m6 s6 center-align">
+					    						<a href={% if banco == 1 %} "https://www.bancsabadell.com/cs/Satellite/SabAtl/Factoring/1191332201741/es/" {% elif banco == 2 %}"https://www.bancosantander.es/es/empresas-advance/productos-y-servicios/cobros/factoring" {% endif %} id="download-button" target="_blank" class="btn waves-effect waves-light transparent grey-text text-darken-4 border-grey button_margin">Factoring </a>
+					    					</div>
+					              		</div>
+					            </div>
+					        </div>
+			    		</div>
+			    	</div>
+			    	<div class="row">
+			    		<div class="col m6 s12">
+			    			<div class="card grey lighten-4">
+					            <div class="card-content grey-text darken-4">
+					            	<span class="card-title">EBIT - Tu vs. Competencia</span>
+					              <canvas id="ebit_graph" width="300" height="140"></canvas>
+					            </div>
+					        </div>
+			    		</div>
+			    		<div class="col m6 s12">
+			    			<div class="card grey lighten-4">
+					            <div class="card-content grey-text darken-4 cards_comments">
+					              		<div class=row>
+					              			<div class="col m12 s12" >
+					              			<h2 class="center-align light grey-text text-darken-3 comment_bar_success">¡Bien!</h2> 
+					              				<p class="light"> <i class="tiny material-icons grey-text text-darken-3">info_outline</i> En promedio, el riesgo de impago de tus clientes es parecido al de los de tu competencia</p>
+					              				<p class="light"><i class="tiny material-icons grey-text text-darken-3">chat_bubble_outline</i> Puedes cubrir tu riesgo ampliando tu cartera de clientes o contratando una linea de factoring</p>
+						              		</div>
+					    					<div class="col m6 s6 center-align">
+					    						<a href="{% url 'empresas:clients' %}" id="download-button" target="_blank" class="btn waves-effect waves-light transparent grey-text text-darken-4 border-grey button_margin">Nuevos clientes </a>
+					    					</div>
+					    					<div class="col m6 s6 center-align">
+					    						<a href={% if banco == 1 %} "https://www.bancsabadell.com/cs/Satellite/SabAtl/Factoring/1191332201741/es/" {% elif banco == 2 %}"https://www.bancosantander.es/es/empresas-advance/productos-y-servicios/cobros/factoring" {% endif %} id="download-button" target="_blank" class="btn waves-effect waves-light transparent grey-text text-darken-4 border-grey button_margin">Factoring </a>
+					    					</div>
+					              		</div>
+					            </div>
+					        </div>
+			    		</div>
+			    	</div>
+			    	<div class="row">
+			    		<div class="col m6 s12">
+			    			<div class="card grey lighten-4">
+					            <div class="card-content grey-text darken-4">
+					            	<span class="card-title">Resultado - Tu vs. Competencia</span>
+					              <canvas id="resultados_graph" width="300" height="140"></canvas>
+					            </div>
+					        </div>
+			    		</div>
+			    		<div class="col m6 s12">
+			    			<div class="card grey lighten-4">
+					            <div class="card-content grey-text darken-4 cards_comments">
+					              		<div class=row>
+					              			<div class="col m12 s12" >
+					              			<h2 class="center-align light grey-text text-darken-3 comment_bar_success">¡Bien!</h2> 
+					              				<p class="light"> <i class="tiny material-icons grey-text text-darken-3">info_outline</i> En promedio, el riesgo de impago de tus clientes es parecido al de los de tu competencia</p>
+					              				<p class="light"><i class="tiny material-icons grey-text text-darken-3">chat_bubble_outline</i> Puedes cubrir tu riesgo ampliando tu cartera de clientes o contratando una linea de factoring</p>
+						              		</div>
+					    					<div class="col m6 s6 center-align">
+					    						<a href="{% url 'empresas:clients' %}" id="download-button" target="_blank" class="btn waves-effect waves-light transparent grey-text text-darken-4 border-grey button_margin">Nuevos clientes </a>
+					    					</div>
+					    					<div class="col m6 s6 center-align">
+					    						<a href={% if banco == 1 %} "https://www.bancsabadell.com/cs/Satellite/SabAtl/Factoring/1191332201741/es/" {% elif banco == 2 %}"https://www.bancosantander.es/es/empresas-advance/productos-y-servicios/cobros/factoring" {% endif %} id="download-button" target="_blank" class="btn waves-effect waves-light transparent grey-text text-darken-4 border-grey button_margin">Factoring </a>
+					    					</div>
+					              		</div>
+					            </div>
+					        </div>
+			    		</div>
+			    	</div>
+			    	</div>
+	  </div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.1.4/Chart.bundle.min.js"></script>
+
+<script type="text/javascript">
+
+	Chart.defaults.global.legend.display = false;
+	// And for a doughnut chart
+  	var pib_graph = document.getElementById("pib_graph");
+  	var pib_graph_sec = document.getElementById("pib_graph_sec");
+  	var frecuencia_graph = document.getElementById("frecuencia_graph");
+  	var penetration_graph = document.getElementById("penetration_graph");
+  	var penetracion_clientes = {{penetracion}}
+	var penetracion_clientes_sector = 0.35//{{company.my_sector_penetration}}
+	var facturacion_graph = document.getElementById("facturacion_graph");
+	var ebitda_graph = document.getElementById("ebitda_graph");
+	var ebit_graph = document.getElementById("ebit_graph");
+	var resultados_graph = document.getElementById("resultados_graph");
+  	
+  	LineGraph(pib_graph, [{"ejercicio": "2011", "c": 1070413}, {"ejercicio": "2012", "c": 1039758}, {"ejercicio": "2013", "c": 1025634}, {"ejercicio": "2014", "c": 1037025}, {"ejercicio": "2015", "c": 1075639}], {{balance_sells|safe}});
+  	LineGraph(pib_graph_sec, [{"ejercicio": "2011", "c": 1070413}, {"ejercicio": "2012", "c": 1039758}, {"ejercicio": "2013", "c": 1025634}, {"ejercicio": "2014", "c": 1037025}, {"ejercicio": "2015", "c": 1075639}], {{balance_sells_avg_sector|safe}}); //balance_providers_sells_avg_sector|safe}});
+  	//LineGraph(frecuencia_graph, {{get_monthly_sector_avg_buys|safe}}, {{get_monthly_buys|safe}});
+  	LineGraph(facturacion_graph, {{balance_sells_avg_sector|safe}}, {{balance_sells|safe}});
+  	LineGraph(ebitda_graph, {{balance_ebitda_avg_sector|safe}}, {{balance_ebitda|safe}});
+  	LineGraph(ebit_graph, {{balance_ebit_avg_sector|safe}}, {{balance_ebit|safe}});
+  	LineGraph(resultados_graph, {{balance_resultados_avg_sector|safe}}, {{balance_resultados|safe}});
+  	//stackedbarchart(penetration_graph, 'hola_2', 'hola_2', penetracion_clientes, penetracion_clientes_sector, 'Penetration')
+
+  	// prepare data...
+  	function LineGraph(div, data_sector, data_you, label) {
+      var labels_1 = [];
+      var labels_2 = []; 
+      var data_1=[];
+      var data_2=[];
+      var sector = data_sector
+      var you = data_you
+      function arrayUnique(array) {
+            var a = array.concat();
+            for(var i=0; i<a.length; ++i) {
+                for(var j=i+1; j<a.length; ++j) {
+                    if(a[i] === a[j])
+                        a.splice(j--, 1);
+                }
+            }
+
+            return a;
+        }
+      var years = []
+      sector.forEach(function(packet, i) {
+        years.push(packet.ejercicio);
+      });
+      you.forEach(function(packet, i) {
+        years.push(packet.ejercicio);
+      });
+      var years = arrayUnique(years);
+
+      labels_1 = years
+      labels_2 = years
+      data_1 = new Array(years.length) //.fill(0)
+      data_2 = new Array(years.length) //.fill(0)
+
+      sector.forEach(function(packet, i) {
+        if (years.includes(packet.ejercicio)==true) {
+            labels_1[years.indexOf(packet.ejercicio)] = packet.ejercicio;
+            data_1[years.indexOf(packet.ejercicio)] = packet.c;
+        } else {
+            labels_1[years.indexOf(packet.ejercicio)] = years[i];
+            data_1[years.indexOf(packet.ejercicio)] = 0;
+        }
+      });
+      you.forEach(function(packet, i) {
+          if (years.includes(packet.ejercicio)==true) {
+            labels_2[years.indexOf(packet.ejercicio)] = packet.ejercicio;
+            data_2[years.indexOf(packet.ejercicio)] = packet.c;
+          } else {
+              labels_2[years.indexOf(packet.ejercicio)] = years[i];
+              data_2[years.indexOf(packet.ejercicio)] = 0;
+          }
+      });
+      console.log(sector[0])
+      console.log((sector[0]== 1070413))
+      if (sector[0].c == 1070413) {
+   	  	label = "PIB"
+   	  } else {
+   	  	label = "Comparables"
+   	  }
+      line(div, labels_1, labels_2, data_1, data_2, label)
+    }
+
+    function line(div, labels, labels2, data1, data2, label) {
+    	console.log(label)
+    	var scatterChart = new Chart(div, {
+        type: 'line',
+        data: {
+            labels: labels,
+            datasets: [{
+            label: label,
+            backgroundColor: "rgba(220,220,220,0.5)",
+            borderColor: "rgba(220,220,220,0.8)",
+            highlightFill: "rgba(220,220,220,0.75)",
+            pointHoverBackgroundColor: "rgba(220,220,220,1)",
+            showTooltip: false, //NEW OPTION DON"T NEED TO INCLUDE IT IF YOU WANT TO DISPLAY BUT WON"T HURT IF YOU DO
+            yAxisID: "y-axis-0",
+            data: data1
+        }, {
+            label: "{{company.name|safe}}",
+            backgroundColor: "rgba(47,79,79,0.5)",
+            borderColor: "rgba(47,79,79,0.8)",
+            highlightFill: "rgba(47,79,79,0.75)",
+            pointHoverBackgroundColor: "rgba(47,79,79,1)",
+            showTooltip: false, //NEW OPTION DON"T NEED TO INCLUDE IT IF YOU WANT TO DISPLAY BUT WON"T HURT IF YOU DO
+            yAxisID: "y-axis-1",
+            data: data2
+        }]},
+        options: {
+          responsive: true,
+          pointDotRadius: 10,
+          bezierCurve: false,
+          scaleShowVerticalLines: false,
+          scaleGridLineColor: 'black',
+          scales: {
+		      yAxes: [{
+		        position: "left",
+		        "id": "y-axis-0"
+		      }, {
+		        position: "right",
+		        "id": "y-axis-1"
+		      }]
+		  }
+        }
+    });
+    }
+</script>
+{% endblock %}
+
+ {% block alt_js %}
+<script type="text/javascript">
+
+	$(document).ready(function(){
+
+	});
+
+
+</script>
+{% endblock alt_js %}

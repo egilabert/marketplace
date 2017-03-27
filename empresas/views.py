@@ -518,7 +518,7 @@ def HomeView(request):
 	return HttpResponseRedirect(reverse('empresas:empresas_intro'))
 	#return render(request, "empresas/journey.html", {'empresa': Empresa.objects.all()[company-1]})
 
-# @login_required
+@login_required
 def EmpresaDetailView(request, pk=None):
 
 	try:
@@ -824,7 +824,7 @@ def FAQView(request):
 	}
 	return render(request, 'empresas/faq.html', context)
 
-# @login_required
+@login_required
 def MarketRiskRecommendationsView(request):
 	
 	company_id = request.session.get('company')

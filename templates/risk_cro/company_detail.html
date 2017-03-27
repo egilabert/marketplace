@@ -7,8 +7,7 @@ Perfil - {{ empresa.name }}
 {% endblock %}
 
 {% block body_class %}background_grey{% endblock %}
-
-{% block side-nav %}{% include "side-nav.html" %}{% endblock %}
+{% block side-nav %}{% include "side-nav_cro.html" %}{% endblock %}
 
 {% block cdn_css %}
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.0.2/dist/leaflet.css" />
@@ -25,71 +24,8 @@ Perfil - {{ empresa.name }}
     <h3 class="center-align white-text text-darken-3 light">Conoce tus principales indicadores</h3>
     <h5 class="center-align white-text text-darken-3 light">{{company.name}}</h5>
     {% endif %}
-    {% if not journey and not summary %}
-      <div class="row center">
-
-          <div class="col m4 s3">
-            <a href="{% url 'empresas:detail' pk=company.pk %}" id="download-button" class="btn-large waves-effect waves-light alpha_back pad_top orange-text text-darken-4 border-grey">Mi empresa  </a>
-          </div>
-          <div class="col m4 s3">
-            <a href="{% url 'empresas:recommendations' %}" id="download-button" class="btn-large waves-effect waves-light transparent pad_top border-white">Clientes  </a>
-          </div>
-          <div class="col m4 s3">
-            <a href="{% url 'empresas:recommendations_providers' %}" id="download-button" class="btn-large waves-effect waves-light transparent pad_top border-white">Proveedores  </a>
-          </div>
-      
-        </div>
-    {% endif %}
     <div class="parallax"><img src="{% static 'images/cambodia-1476378_1920.jpg' %}"></div>
 </div>
-
-{% if referrer != 'client' and referrer != 'provider' and journey and not summary %}
-
-<div class="mdl-card mdl-shadow--2dp">
-
-      <div class="mdl-card__supporting-text">
-
-        <div class="mdl-stepper-horizontal-alternative">
-          
-          <div class="mdl-stepper-step active-step">
-            <a href="{% url 'empresas:detail' pk=company.pk %}">
-              <div class="mdl-stepper-circle"><span>1</span></div>
-              <div class="mdl-stepper-title">Mi empresa</div>
-              <div class="mdl-stepper-bar-left"></div>
-              <div class="mdl-stepper-bar-right"></div>
-            </a>
-          </div>
-          
-          <div class="mdl-stepper-step">
-            <a href="{% url 'empresas:recommendations' %}">
-              <div class="mdl-stepper-circle"><span>2</span></div>
-              <div class="mdl-stepper-title">Mis Clientes/Proveedores</div>
-              <div class="mdl-stepper-bar-left"></div>
-              <div class="mdl-stepper-bar-right"></div>
-            </a>
-          </div>
-          <div class="mdl-stepper-step">
-            <a href="{% url 'empresas:recommendations_financial_risk' %}">
-              <div class="mdl-stepper-circle"><span>3</span></div>
-              <div class="mdl-stepper-title">Mis Riesgos</div>
-              <div class="mdl-stepper-optional"></div>
-              <div class="mdl-stepper-bar-left"></div>
-              <div class="mdl-stepper-bar-right"></div>
-            </a>
-          </div>
-          <div class="mdl-stepper-step">
-            <a href="{% url 'empresas:informe' %}">
-              <div class="mdl-stepper-circle"><span>4</span></div>
-              <div class="mdl-stepper-title">Mi Informe</div>
-              <div class="mdl-stepper-bar-left"></div>
-              <div class="mdl-stepper-bar-right"></div>
-            </a>
-          </div>
-        </div>
-
-      </div>
-
-  </div>
 
 {% if company.id == 990 %}
   <div class="row">
@@ -171,7 +107,6 @@ Perfil - {{ empresa.name }}
 
 
 <div class="divider"></div>
-{% endif %}
 
 
 
@@ -186,39 +121,7 @@ Perfil - {{ empresa.name }}
                  </div>
                 </div>
               </div>
-
-                {% else %}
-                <div class="col s12 m12">
-                  <div class="card blue-grey darken-1">
-                    <div class="card-content white-text">
-                      <span class="card-title">Contacta con esta empresa... </span>
-                      <p>Ponemos a tu disposición los principales indicadores de esta empresa y sus datos de contacto para que puedas empezar a negociar con ella. Si te interesa la empresa, puedes guardar el contacto para gestionarlo a posteriori</p>
-                    </div>
-                    <div class="card-action">
-                      {% if referrer == 'client' %}
-                      <a href="#">GUARDAR CLIENTE</a>
-                      {% elif referrer == 'provider' %}
-                      <a href="#">GUARDAR PROVEEDOR</a>
-                      {% endif %}
-                      
-                        </div>
-                      </div>
-                  </div>
-                  {% endif %}
-
-            {% if company.id != empresa.id %}
-            <div class="col s12 m12">
-              <div class="card blue-grey darken-1">
-                <div class="card-content white-text">
-                  <span class="card-title">…¿por qué te la recomendamos? </span>
-                  <p>Si estás viendo esta empresa es porque nuestro algoritmo de recomendación ha detectado una potencial interacción comercial. ¡Seguramente ya es cliente de empresas parecidas a ti o es una empresa parecida a tus clientes!</p>
-                </div>
-                <div class="card-action">
-                  <a href="#">CONTACTA CON LA EMPRESA</a>
-                </div>
-              </div>
-            </div>
-            {% endif %}
+              {% endif %}
 
             <div class="col s12 m12">
               <div class="card blue-grey darken-1">
@@ -324,12 +227,6 @@ Perfil - {{ empresa.name }}
             </div>
           <div class="row">
               <div class="col s12 m6">
-                <!-- <div class="card grey lighten-4">
-                  <div class="card-content grey-text darken-4">
-                    <span class="card-title">Volumen de ventas</span>
-                    <canvas id="barChart" width="400" height="400"></canvas>
-                  </div>
-                </div> -->
                 <div class="card grey lighten-4">
                       <div class="card-content grey-text darken-4">
                         <span class="card-title">Volumen de Ventas</span>
@@ -345,12 +242,6 @@ Perfil - {{ empresa.name }}
                   
               </div>
               <div class="col s12 m6">
-                <!-- <div class="card grey lighten-4">
-                  <div class="card-content grey-text darken-4">
-                    <span class="card-title">EBITDA - Resultado Explotación</span>
-                    <canvas id="lineChart" width="400" height="400"></canvas>
-                  </div>
-                </div> -->
                 <div class="card grey lighten-4">
                       <div class="card-content grey-text darken-4">
                         <span class="card-title">EBITDA</span>
@@ -366,7 +257,9 @@ Perfil - {{ empresa.name }}
               </div>
           </div>
           <hr>
+
           {% endif %}
+
           <h4 class="light">Tú y tu red</h4>
           <div class="row">
               <div class="col s12 m3">
@@ -406,52 +299,13 @@ Perfil - {{ empresa.name }}
                 </div>
               </div>
             </div>
-          <!-- 
-          <h5 class="light">¿Como es el portfolio de clientes y proveedores? ¿Cuan diversificado está?</h5>
-          <div class="row">
-            <div class="col s12 m3">
-                <div class="card blue-grey lighten-1">
-                  <div class="card-content white-text">
-                    <h6 class="light">Clientes</h6>
-                    <h4><i class="fa fa-user" aria-hidden="true"></i> {{empresa.hhi_clients_clients|floatformat:2}}   <small style="color: red"><i class="fa fa-sort-down" aria-hidden="true"></i>  4%</small></h4>
-                  </div>
-                </div>
-              </div>
-              <div class="col s12 m3">
-                <div class="card blue-grey lighten-1">
-                  <div class="card-content white-text">
-                    <h6 class="light">Proveedores</h6>
-                    <h4><i class="fa fa-user" aria-hidden="true"></i> {{hhi_providers|floatformat:2}}   <small style="color: green"><i class="fa fa-sort-up" aria-hidden="true"></i>  4%</small></h4>
-                  </div>
-                </div>
-              </div>
-              <div class="col s12 m6">
-                <div class="card blue-grey lighten-1">
-                  <div class="card-content white-text">
-                    {% if referrer == 'client' %}
-                    El índice de Herfindahl es una medida, empleada en economía, que informa sobre la concentración económica de un mercado. En este caso, medimos la concentración de esta empresa en términos de ventas y compras o, lo que es lo mismo, te mostramos si tiene una cartera de clientes y proveedores bien diversificada.
-                    {% else %}
-                    El índice de Herfindahl es una medida, empleada en economía, que informa sobre la concentración económica de un mercado. En este caso, medimos la concentración de esta empresa en términos de ventas y compras o, lo que es lo mismo, te mostramos si tiene una cartera de clientes y proveedores bien diversificada.
-                    {% endif %}
-                  </div>
-                </div>
-              </div>
-          </div> -->
 
-          {% if company.id == empresa.id %}
           <h5 class="light">¿Cuál es tu estacionalidad?</h5>
-          {% else %}
-          <h5 class="light">¿Cuál es el mejor momento para empezar a trabajar juntos?</h5>
-          {% endif %}
+      
           <div class="row">
             <div class="col m6 s12">
                 <div class="card grey lighten-4">
                       <div class="card-content grey-text darken-4">
-                      <!-- {% if company.id == empresa.id %}
-                        <span class="card-title">Visualiza tu estacionalidad en ventas</span>
-                      {% else %}
-                        <span class="card-title">Identifica la estacionalidad para contactar en el momento idóneo</span>
-                      {% endif %} -->
                           <canvas id="buys_amount_graph" width="300" height="200"></canvas>
                       </div>
                   </div>
@@ -459,11 +313,6 @@ Perfil - {{ empresa.name }}
               <div class="col m6 s12">
                 <div class="card grey lighten-4">
                       <div class="card-content grey-text darken-4">
-                      <!-- {% if company.id == empresa.id %}
-                        <span class="card-title">Visualiza tu estacionalidad en ventas</span>
-                      {% else %}
-                        <span class="card-title">Identifica la estacionalidad para contactar en el momento idóneo</span>
-                      {% endif %} -->
                           <canvas id="buys_count_graph" width="300" height="200"></canvas>
                       </div>
                   </div>
@@ -473,11 +322,6 @@ Perfil - {{ empresa.name }}
             <div class="col m6 s12">
                 <div class="card grey lighten-4">
                       <div class="card-content grey-text darken-4">
-                      <!-- {% if company.id == empresa.id %}
-                        <span class="card-title">Visualiza tu estacionalidad en ventas</span>
-                      {% else %}
-                        <span class="card-title">Identifica la estacionalidad para contactar en el momento idóneo</span>
-                      {% endif %} -->
                           <canvas id="sells_amount_graph" width="300" height="200"></canvas>
                       </div>
                   </div>
@@ -485,11 +329,6 @@ Perfil - {{ empresa.name }}
               <div class="col m6 s12">
                 <div class="card grey lighten-4">
                       <div class="card-content grey-text darken-4">
-                      <!-- {% if company.id == empresa.id %}
-                        <span class="card-title">Visualiza tu estacionalidad en ventas</span>
-                      {% else %}
-                        <span class="card-title">Identifica la estacionalidad para contactar en el momento idóneo</span>
-                      {% endif %} -->
                           <canvas id="sells_count_graph" width="300" height="200"></canvas>
                       </div>
                   </div>
@@ -498,83 +337,12 @@ Perfil - {{ empresa.name }}
               <div class="col s12 m12">
                 <div class="card blue-grey lighten-1">
                   <div class="card-content white-text">
-                  {% if referrer == 'client' %}
-                    El histograma te muestra la actividad económica (compras) de la empresa a lo largo del año. De esta manera puedes interpretar cuales son los picos y momentos valle de actividad y, en consecuencia, cuando podría ser mejor momento para entablar relaciones comerciales (p.e. 3-6 meses antes de sus compras).
-                  {% elif company.id == empresa.id %}
                     El histograma te muestra la actividad económica (ventas) de la empresa a lo largo del año. De esta manera puedes interpretar cuales son los picos y momentos valle de actividad.
-                  {% else %}
-                    El histograma te muestra la actividad económica (ventas) de la empresa a lo largo del año. De esta manera puedes interpretar cuales son los picos y momentos valle de actividad y, en consecuencia, cuando podría ser mejor momento para entablar relaciones comerciales.
-                  {% endif %}
-                    
                   </div>
                 </div>
               </div>
-          </div>
-<!-- 
-          <h5 class="light">¿Dónde trabaja?</h5>
-          <div class="row">
-            <div class="col m6 s12">
-                <div class="card grey lighten-4">
-                      <div class="card-content grey-text darken-4">
-                        <span class="card-title">Tu deslocalización</span>
-                          <canvas id="geo_graph" width="200" height="150"></canvas>
-                      </div>
-                  </div>
-              </div>
-              <div class="col m6 s12">
-                <div class="card grey lighten-4">
-                      <div class="card-content grey-text darken-4">
-                        <span class="card-title">Deslocalización comparables</span>
-                          <canvas id="geo_graph_sec" width="200" height="150"></canvas>
-                      </div>
-                  </div>
-              </div>
-              <div class="col s12 m12">
-                <div class="card blue-grey lighten-1">
-                  <div class="card-content white-text">
-                    {% if referrer == 'client' %}
-                    Este gráfico muestra dónde concentra geográficamente su actividad la empresa. Te permite entender hasta qué punto está acostumbrada at rabajar a nivel local, nacional o internacional.
-                    {% else %}
-                    Este gráfico muestra dónde concentra geográficamente su actividad la empresa. Te permite entender hasta qué punto está acostumbrada a trabajar a nivel local, nacional o internacional.
-                    {% endif %}
-                    
-                  </div>
-                </div>
-              </div>
-          </div>
-
-          <h5 class="light">¿Trabaja de un modo diversificado en diversos sectores?</h5>
-          <div class="row">
-            <div class="col m6 s12">
-                <div class="card grey lighten-4">
-                      <div class="card-content grey-text darken-4">
-                        <span class="card-title">Grado de diversificación</span>
-                          <canvas id="sector_graph" width="200" height="150"></canvas>
-                      </div>
-                  </div>
-              </div>
-              <div class="col m6 s12">
-                <div class="card grey lighten-4">
-                      <div class="card-content grey-text darken-4">
-                        <span class="card-title">Grado de diversificación</span>
-                          <canvas id="sector_graph_sec" width="200" height="150"></canvas>
-                      </div>
-                  </div>
-              </div>
-              <div class="col s12 m12">
-                <div class="card blue-grey lighten-1">
-                  <div class="card-content white-text">
-                    {% if referrer == 'client' %}
-                    Este gráfico muestra dónde concentra sectorialmente sus compras la empresa. Te permite entender hasta qué punto está acostumbrada a trabajar con proveedores de tu sector por lo que puedes ajustar tu estrategia comercial acorde a tu poder de negociación.
-                    {% else %}
-                    Este gráfico muestra dónde concentra sectorialmente sus ventas la empresa. Te permite entender hasta qué punto está acostumbrada a trabajar con clientes de tu sector por lo que puedes ajustar tu estrategia comercial acorde a tu poder de negociación.
-                    {% endif %}
-                  </div>
-                </div>
-              </div>
-          </div> -->
-          
-      </div>
+          </div> 
+        </div>
     </div>
 
 

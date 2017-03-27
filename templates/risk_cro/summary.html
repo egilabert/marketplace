@@ -1,0 +1,702 @@
+{% extends "app_base.html" %}
+{% load static %}
+{% load humanize %}
+{% load mathfilters %}
+{% block page_title %}
+Risk Robo Advisor - {{ company.name }}
+{% endblock %}
+
+{% block body_class %}background_grey{% endblock %}
+{% block side-nav %}{% include "side-nav_cro.html" %}{% endblock %}
+{% block content %}
+
+<div class="parallax-container">
+	<!-- <h3 class="center-align white-text text-darken-3 light">Rocky clients are not all the same</h3> -->
+	<h3 class="center-align light white-text">Risk Robo Advisor</h3>
+	<h6 class="center-align light white-text">by PILLANGO &copy;</h6>
+	<div class="parallax"><img src="{% static 'images/free-diving.jpg' %}"></div>
+</div>
+
+<div class="container padding_landing" >
+    <div class="section" id="products_anchor">
+
+      <!--   Icon Section   -->
+      <!--   Icon Section   -->
+      <div class="row">
+        <div class="col s12 m4">
+        	<a href="#" id="perfil_btn">
+	          <div class="icon-block">
+	            <h2 class="center brown-text"><i class="material-icons">visibility</i></h2>
+	            <h5 class="center grey-text text-darken-3">Tu perfil</h5>
+	            <p class="light grey-text">Edita tu perfil público y controla la información de contacto que podremos mostrar al resto de usuarios</p>
+	          </div>
+	        </a>
+        </div>
+
+        <div class="col s12 m4">
+        <a href="#" id="riesgos_btn">
+          <div class="icon-block">
+            <h2 class="center brown-text"><i class="material-icons">insert_chart</i></h2>
+            <h5 class="center grey-text text-darken-3">Tus riesgos</h5>
+            <p class="light grey-text">Identifica tu exposición a los principales riesgos de tu negocio y valora tus necesidades de acceso a financiación.</p>
+          </div>
+        </a>
+        </div>
+
+        <div class="col s12 m4">
+        <a href="#" id="marketplace_btn">
+          <div class="icon-block">
+            <h2 class="center brown-text"><i class="material-icons">person_pin</i></h2>
+            <h5 class="center grey-text text-darken-3">Tu marketplace</h5>
+            <p class="light grey-text">Visita el marketplace y encuentra nuevas oportunidades de negocio con nuestras recomendaciones de clientes y proveedores</p>
+          </div>
+        </a>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+<div class="dark_grey_back title_conf center-align white-text" name="perfil">
+	<i class="material-icons large" style="margin-top: 40px;">visibility</i>
+	<h3 class="center-align light" style="margin-top: 10px;">Tu perfil</h3>
+	<h5 class="light">  Esta es tu información básica mostrada  </h5>
+</div>
+
+<div class="dark_grey_back">
+	<div class="row container white-text">
+      <div class="col s9" style="margin-top: 40px;"">
+          <h5>Detalles de contacto - {{ empresa.name }}</h5>
+      </div>
+ 	</div>
+
+  	<div class="row container white-text" style="margin-bottom: 0px; padding-bottom: 2rem;">
+  		<div class="row">
+	  		<div class="col s12 m5">
+	      		<img src="{{ company.image }}" alt="{{ company.name }}" style="width:100%;height:100%;">
+	      	</div>
+	      	<div class="col s12 m7">
+	          <div><i class="tiny material-icons">contacts</i> {{empresa.name}} | {{empresa.contact_person}}</div>  
+	          <div><i class="tiny material-icons">email</i> {{empresa.email}}</div>
+	          <div><i class="tiny material-icons">location_on</i>{{empresa.address}}</div>   
+	          <div><i class="tiny material-icons">call</i> {{empresa.phone}}</div>   
+	          <div><i class="tiny material-icons">business</i> Sector: {{ empresa.sector }}</div>   
+	          <div><i class="tiny material-icons">info</i> CNAE: {{ empresa.cnae_2 }}</div>  
+	          <div><i class="tiny material-icons">schedule</i> Created in {{ empresa.creation_date }}</div>
+	      	</div>
+	    </div>
+      	<div class="row right-align">
+  			<span ><a href="{% url 'risk_cro:detail' pk=company.pk %}" target="_top" class="btn waves-effect waves-light right-align bott"><i class="material-icons right">airplay</i>Ver ficha</a></span>
+  			<span ><a href="{% url 'risk_cro:detail' pk=company.pk %}" target="_top" class="btn waves-effect waves-light right-align bott"><i class="material-icons right">airplay</i>Editar</a></span>
+  		</div>
+  	</div>
+  	<div class="row container white-text">
+	  	<div class="col s9" style="margin-top: 40px;"">
+	      <h5>Información financiera disponible</h5>
+	 	</div>
+	</div>
+	<div class="row container white-text">
+      <div class="col s12 m3">
+        <div class="card blue-grey darken-1">
+          <div class="card-content white-text">
+            <span class="card-title">Ejercicio</span>
+            {% if empresa.estados_financieros.last.ejercicio > 0 %}
+            <h5 class="align-right orange-text darken-1">{{empresa.estados_financieros.last.ejercicio }}</h5>
+            {% else %}
+            <h5 class="align-right orange-text darken-1">Sin balances</h5>
+            {% endif %}
+          </div>
+        </div>
+      </div>
+      <div class="col s12 m3">
+        <div class="card blue-grey darken-1">
+          <div class="card-content white-text">
+            <span class="card-title">Ventas</span>
+            {% if empresa.estados_financieros.last.ventas > 0 %}
+            <h5 class="align-right orange-text darken-1">{{empresa.estados_financieros.last.ventas|floatformat|intcomma}}€</h5>
+            {% else %}
+            <h5 class="align-right orange-text darken-1">-</h5>
+            {% endif %}
+          </div>
+        </div>
+      </div>
+      <div class="col s12 m3">
+        <div class="card blue-grey darken-1">
+          <div class="card-content white-text">
+            <span class="card-title">EBITDA</span>
+            {% if empresa.estados_financieros.last.ebitda > 0 %}
+            <h5 class="align-right orange-text darken-1">{{empresa.estados_financieros.last.ebitda|floatformat|intcomma}}€</h5>
+            {% else %}
+            <h5 class="align-right orange-text darken-1">-</h5>
+            {% endif %}
+          </div>
+        </div>
+      </div>
+      <div class="col s12 m3">
+        <div class="card blue-grey darken-1">
+          <div class="card-content white-text">
+            <span class="card-title">Comparables</span>
+            <h5 class="align-right orange-text darken-1">{{company.get_sector_companies.count}}</h5>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row container white-text" style="padding-bottom: 2rem;">
+    	<h5 class="light">¿Quieres actualizar tu información? Súbela y la incorporamos.</h5>
+    	<form action="#">
+		    <div class="file-field input-field">
+		      <div class="btn">
+		        <span>Buscar...</span>
+		        <input type="file" multiple>
+		      </div>
+		      <div class="file-path-wrapper">
+		        <input class="file-path validate" type="text" placeholder="Sube tus archivos...">
+		      </div>
+		    </div>
+		  </form>
+    </div>
+
+<!-- </div> -->
+
+<div class="grey_back title_conf center-align" name="riesgos">
+	<i class="material-icons large" style="margin-top: 40px;">insert_chart</i>
+	<h3 class="center-align light" style="margin-top: 10px;">Gestiona tus riesgos</h3>
+	<h5 class="light">  ¿Cuáles son tus principales exposiciones?  </h5>
+</div>
+
+<div class="grey_back">
+	<div class="padding_landing" >
+		<div class="row">
+			<div class="col s12 m11">
+				<div class="row">
+					<div class="col s12 m3 center-align">
+						<a href="{% url 'risk_cro:market_risk' %}" id="download-button" class="btn waves-effect waves-light transparent red-text text-darken-3 border-grey" style="margin-left: 70px;"" >Mercado</a>
+					</div>
+					<div class="col s12 m3 center-align">
+						<a href="{% url 'risk_cro:client_risk' %}" id="download-button" class="btn waves-effect waves-light transparent green-text text-darken-3 border-grey" style="margin-left: 80px;"> Clientes</a>
+					</div>
+					<div class="col s12 m4 center-align">
+						<a href="{% url 'risk_cro:provider_risk' %}" id="download-button" class="btn waves-effect waves-light transparent blue-text text-darken-3 border-grey" style="margin-left: 80px;"> Proveedores</a>
+					</div>
+					<div class="col s12 m2 center-align">
+						<a href="{% url 'risk_cro:financial_risk' %}" id="download-button" class="btn waves-effect waves-light transparent orange-text text-darken-3 border-grey" style="margin-right: 60px;">Financiero</a>
+					</div>
+				</div>
+			</div>
+			<div class="col s12 m1"></div>
+			
+		</div>
+		<div class="row">
+			<div class="col s12 m1"></div>
+			<div class="col s12 m10">
+				<div id="sketch-holder">
+				    <!-- Our sketch will go here! -->
+				</div>
+				<small>El área de cada foto es proporcional a la importancia que le otorgamos a ese concepto para tu empresa. ¡Aprovéchalo para priorizar tus gestiones!</small>
+			</div>
+			<div class="col s12 m1"></div>
+			
+		</div>
+		<div class="row">
+			<div class="col s12 m1"></div>
+		    <div class="col s12 m5">
+		      <div class="card horizontal green lighten-2">
+		        <div class="card-stacked">
+		        <div class="card-content black-text">
+		            <p id="puntos_fuertes">Buena <strong>diversificación de sus compras</strong> en un gran número de proveedores</p>
+		          </div>
+		        </div>
+		      </div>
+		    </div>
+			    
+		    <div class="col s12 m5">
+		      <div class="card horizontal grey lighten-3">
+		        <div class="card-stacked">
+		          <div class="card-content black-text">
+		            <p id="puntos_mejorar">Baja <strong>diversificación de sus ventas</strong>, efectuadas en muy pocas provincias</p>
+		          </div>
+		          </div>
+		        </div>
+		    </div>
+		    <div class="col s12 m1"></div>
+		</div>
+		
+	</div>
+</div>
+
+<!-- <div class="white_back title_conf">
+	<h4 class="flow-text">  Noticias - Conoce las novedades de tu red y sigue informado de las notícias mas relevantes </h4>
+</div> -->
+
+<div class="row grey_back" style="margin-bottom: 0px; padding-bottom: 5rem;">
+	<div class="col s12 m1"></div>
+	<div class="col s12 m5">
+		<p class="flow-text center-align">¿Qué está pasando en tu red?</p>
+		<ul class="collection" style="height: 338px; overflow:auto;">
+		    <li class="collection-item avatar">
+		      <i class="material-icons circle red">trending_up</i>
+		      <span class="title">Tu competencia ha aumentado el número de clientes en el último mes (+10%)</span>
+		      <p class="right-align">13/03/2017 <br>
+		      </p>
+		    </li>
+		    <li class="collection-item avatar">
+		      <i class="material-icons circle">assessment</i>
+		      <span class="title">Tu competencia ha aumentado su ticket medio en el último mes (+6%)</span>
+		      <p class="right-align">13/03/2017 <br>
+		      </p>
+		    </li>
+		    <li class="collection-item avatar">
+		      <i class="material-icons circle green">insert_chart</i>
+		      <span class="title">Tus clientes han aumentado su deuda esta semana (+5%)</span>
+		      <p class="right-align">12/03/2017 <br>
+		      </p>
+		    </li>
+		    <li class="collection-item avatar">
+		      <i class="material-icons circle red">repeat</i>
+		      <span class="title">Tu red ha disminuido el número de transacciones esta semana (-8%)</span>
+		      <p class="right-align">12/03/2017 <br>
+		      </p>
+		    </li>
+		    <li class="collection-item avatar">
+		      <i class="material-icons circle red">query_builder</i>
+		      <span class="title">Tus clientes han retrasado pagos a proveedores esta semana</span>
+		      <p class="right-align">11/03/2017 <br>
+		      </p>
+		    </li>
+		    <li class="collection-item avatar">
+		      <i class="material-icons circle red">play_arrow</i>
+		      <span class="title">Alguno de tus competidores ha facturado con una nueva divisa esta semana</span>
+		      <p class="right-align">11/03/2017 <br>
+		      </p>
+		    </li>
+		    <li class="collection-item avatar">
+		      <i class="material-icons circle green">query_builder</i>
+		      <span class="title">Alguno de tus competidores se ha retrasado en el pago de su deuda</span>
+		      <p class="right-align">10/03/2017 <br>
+		      </p>
+		    </li>
+		    
+		  </ul>
+	</div>
+
+	<div class="col s12 m5">
+		<div style="">
+		<p class="flow-text center-align">¿Qué dice la prensa?</p>
+		<ul class="collection" style="height: 338px; overflow:auto;">
+
+			<li class="collection-item avatar">
+		    <a href="http://elpais.com/elpais/2017/03/06/buenavida/1488794532_900723.html" target="_blank">
+		      <img src="{% static 'images/promo_og_elpais.png' %}" alt="" class="circle">
+		      <span class="title grey-text text-darken-1">En esta comida ecológica sí merece la pena rascarse el bolsillo</span>
+		      <p class="right-align">09/03/2017 <br>
+		      </p>
+		    </a>
+		    </li>
+
+		    <li class="collection-item avatar">
+		    <a href="http://www.europapress.es/economia/noticia-sector-catalan-distribucion-bebidas-alimentacion-crecio-44-2015-20160317173300.html" target="_blank">
+		      <img src="{% static 'images/Europapress.jpg' %}" alt="" class="circle">
+		      <span class="title grey-text text-darken-1">El sector catalán de la distribución de bebidas y alimentación creció un 4,4% en 2015</span>
+		      <p class="right-align">17/03/2016 <br>
+		      </p>
+		    </a>
+		    </li>
+
+		    <li class="collection-item avatar">
+		    <a href="http://www.elmundo.es/cataluna/2016/01/28/56a9fd79e2704e8d3d8b4580.html" target="_blank">
+		      <img src="{% static 'images/logoelmundo_rrss.png' %}" alt="" class="circle">
+		      <span class="title grey-text text-darken-1">Alimentaria potenciará la gastronomía y dejará más 170 millones en Barcelona</span>
+		      <p class="right-align">28/01/2016 <br>
+		      </p>
+		    </a>
+		    </li>
+
+		    <li class="collection-item avatar">
+		    <a href="http://www.expansion.com/catalunya/2016/12/23/585cfd5eca474122418b4588.html" target="_blank">
+		      <img src="{% static 'images/expansion-logo.jpg' %}" alt="" class="circle">
+		      <span class="title grey-text text-darken-1">Alimentaria y Hostelco se celebrarán a la vez en 2018</span>
+		      <p class="right-align">23/12/2016 <br>
+		      </p>
+		    </a>
+		    </li>
+
+		    <li class="collection-item avatar">
+		    <a href="http://noticias.juridicas.com/base_datos/Laboral/569373-convenio-colectivo-marco-de-mayoristas-de-alimentacion-de-cataluna-r-tsf-384-2016.html" target="_blank">
+		      <img src="{% static 'images/noticias-jurdicas.jpg' %}" alt="" class="circle">
+		      <span class="title grey-text text-darken-1">Resolución TSF/384/2016, de 15 de febrero, por la que se dispone la inscripción y la publicación del Convenio colectivo marco de mayoristas de alimentación de Cataluña</span>
+		      <p class="right-align">15/02/2016 <br>
+		      </p>
+		    </a>
+		    </li>
+
+		    <li class="collection-item avatar">
+		    <a href="http://www.diaridetarragona.com/uploads/74571a50e280904.pdf" target="_blank">
+		      <img src="{% static 'images/diari_tarragona.jpg' %}" alt="" class="circle">
+		      <span class="title grey-text text-darken-1">Guía Empresarial de Tarragona</span>
+		      <p class="right-align">15/12/2016 <br>
+		      </p>
+		    </a>
+		    </li>
+
+		    <li class="collection-item avatar">
+		    <a href="https://www.alimarket.es/noticia/157837/fragadis-impulsa-la-marca--spar--en-tarragona" target="_blank">
+		      <img src="{% static 'images/alimarket.jpg' %}" alt="" class="circle">
+		      <span class="title grey-text text-darken-1">Fragadis impulsa la marca 'Spar' en Tarragona</span>
+		      <p class="right-align">12/06/2014 <br>
+		      </p>
+		    </a>
+		    </li>
+
+		  </ul>
+		</div>
+	</div>
+	<div class="col s12 m1"></div>
+</div>
+</div> 
+<!-- -->
+
+  {% include "footer.html" %}
+
+<script src="//cdnjs.cloudflare.com/ajax/libs/p5.js/0.5.7/p5.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/p5.js/0.5.7/addons/p5.dom.min.js"></script>
+<script src="https://unpkg.com/leaflet@1.0.2/dist/leaflet.js"></script>
+<script src="{% static 'js/sketch.js' %}"></script>
+{% endblock %}
+
+ {% block alt_js %}
+
+<script type="text/javascript">
+
+	// var map = L.map('map').setView([41.3931129,2.1448724], 15);
+	//         mapLink = 
+	//             '<a href="http://openstreetmap.org">OpenStreetMap</a>';
+	//         L.tileLayer(
+	//             'http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+	//             attribution: '&copy; ' + mapLink + ' Contributors',
+	//             maxZoom: 18,
+	//     }).addTo(map);
+
+	var img = [];
+	var x_perc = [0,0,0,0];
+	var total = 0;
+	var y_perc = [[]];
+	var risc_data;
+	var mejorar;
+	var fuertes;
+	elements = []
+	var strWindowFeatures = "menubar=yes,location=yes,resizable=yes,scrollbars=yes,status=yes";
+
+	function setup() {
+		var parent_width = document.getElementById('sketch-holder').offsetWidth;
+		var parent_height = document.getElementById('sketch-holder').offsetHeight;
+		fuertes = select('#puntos_fuertes')
+		mejorar = select('#puntos_mejorar')
+		pop_w = 300;
+		pop_h = 100;
+		canvas = createCanvas(parent_width, windowHeight/3*2);
+		canvas.parent('sketch-holder');
+		loadJSON("/empresas/get_data_mekko/", drawMekko);
+	}
+
+	function draw() {
+		cursor(ARROW);
+	  	background(237, 243, 249);
+	  	frameRate(30);
+	  	fuertes.html("Resumimos los <strong>puntos fuertes</strong> detectados")
+	  	mejorar.html("Resumimos los <strong>puntos a mejorar</strong> detectados")
+	  	for (var i = 0; i < elements.length; i = i + 1) {
+	  		if (elements[i].height > 0) {
+	  			elements[i].draw();
+	  		}
+	  		if (elements[i].mouseOn()) {
+	  			cursor(HAND);
+	  			fuertes.html(elements[i].fuertes)
+	  			mejorar.html(elements[i].mejorar)
+	  		}
+	  	}
+	  	for (var i = 0; i < elements.length; i = i + 1) {
+	  		if (elements[i].mouseOn()) {
+	  			textFont(myFont);
+				textSize(12);
+				textAlign(CENTER, CENTER);
+				fill(255, 230)
+				if (mouseX < width/2) {
+					if (mouseY < height/2) {
+						rectMode(CORNER);
+						rect(mouseX, mouseY, pop_w, pop_h)
+						fill(0);
+						text(elements[i].info, mouseX, mouseY, pop_w, pop_h);
+						rectMode(CORNER);
+					} else {
+						rectMode(CORNER);
+						rect(mouseX, mouseY, pop_w, -pop_h)
+						fill(0);
+						text(elements[i].info, mouseX, mouseY-pop_h, pop_w, pop_h);
+						rectMode(CORNER);
+					}
+				} else {
+					if (mouseY < height/2) {
+						rectMode(CORNER);
+						rect(mouseX-pop_w, mouseY, pop_w, pop_h)
+						fill(0);
+						text(elements[i].info, mouseX-pop_w, mouseY, pop_w, pop_h);
+						rectMode(CORNER);
+					} else {
+						rectMode(CORNER);
+						rect(mouseX-pop_w, mouseY, pop_w, -pop_h)
+						fill(0);
+						text(elements[i].info, mouseX-pop_w, mouseY-pop_h, pop_w, pop_h);
+						rectMode(CORNER);
+					}
+				}
+				
+	  		}
+	  	}
+	}
+
+	function windowResized() {
+		var parent_width = document.getElementById('sketch-holder').offsetWidth;
+	  	resizeCanvas(parent_width, windowHeight);
+	}
+
+	// --------------------------------------------------------
+	// Mekko element Object
+	// --------------------------------------------------------
+	function MekkoElement(x, y, w, h, label, img, col, alpha, info, fuertes, mejorar) {
+		this.offset = 0
+		this.x = x,
+		this.y = y,
+		this.width = w,
+		this.height = h,
+		this.label = label.replace("Riesgo ", "");
+		this.alpha_col = alpha
+		this.info = info
+		this.fuertes = fuertes
+		this.mejorar = mejorar
+
+		if (col==0) {
+			this.color = color(255,0,0, this.alpha_col)
+		} else if (col==1) {
+			this.color = color(0,255,0, this.alpha_col)
+		} else if (col==2) {
+			this.color = color(0,0,255, this.alpha_col)
+		} else if (col==3) {
+			this.color = color(255,255,0, this.alpha_col)
+		}
+
+		this.mouseOn = function() {
+			if (mouseX >this.x && mouseX < (this.x + this.width) && mouseY > this.y && mouseY < (this.y + this.height)) {
+				return true;
+			} else {
+				return false;
+			}
+		}
+
+		this.draw = function() {
+			if (this.mouseOn()) {
+				//image(img, this.x + this.offset/2, this.y + this.offset/2, this.width - this.offset, this.height - this.offset);
+				textFont(myFont);
+				textSize(16);
+				textAlign(CENTER, CENTER);
+				fill(0);
+				text(this.label, this.x + this.width/2, this.y + this.height/2);
+				
+			} else {
+				noTint();
+				image(img, this.x + this.offset/2, this.y + this.offset/2, this.width - this.offset, this.height - this.offset);
+				textFont(myFont_Bold);
+				textSize(14);
+				textAlign(CENTER, CENTER);
+				if (this.label == "Oferta") {
+					fill(200);
+				} else {
+					fill(255);
+				}
+				text(this.label, this.x + this.width/2, this.y + this.height/2);
+			}
+		    fill(this.color);
+		    noStroke()
+		    rect(this.x + this.offset/2, this.y + this.offset/2, this.width - this.offset, this.height - this.offset);
+		}
+
+		this.nextTop = function() {
+			top_y = this.y
+		    return top_y
+		}
+
+		this.nextDown = function() {
+			down_y = this.y + this.height
+		    return down_y
+		}
+
+		this.nextRight = function() {
+			right_x = this.x + this.width
+		    return right_x
+		}
+
+		this.nextLeft = function() {
+			left_x = this.x
+		    return left_x
+		}
+	}
+
+	// Preloading images and fonts
+	function preload() {
+	  img[0] = loadImage("{% static 'images/Macroeconomico.jpg' %}");
+	  img[1] = loadImage("{% static 'images/Competencia.jpg' %}");
+	  img[2] = loadImage("{% static 'images/Fidelidad.jpg' %}");
+	  img[3] = loadImage("{% static 'images/demanda.jpg' %}");
+	  img[4] = loadImage("{% static 'images/Fidelidad.jpg' %}");
+	  img[5] = loadImage("{% static 'images/TBR/Resized/186H_resized.jpg' %}");
+	  img[6] = loadImage("{% static 'images/concentration_clients.jpg' %}");
+	  img[7] = loadImage("{% static 'images/oferta.jpg' %}");
+	  img[8] = loadImage("{% static 'images/incumplimiento.jpg' %}");
+	  img[9] = loadImage("{% static 'images/concentration_providers.jpg' %}");
+	  img[10] = loadImage("{% static 'images/acceso inversion.jpg' %}");
+	  img[11] = loadImage("{% static 'images/acceso circulante.jpg' %}");
+	  img[12] = loadImage("{% static 'images/working capital.jpg' %}");
+	  img[13] = loadImage("{% static 'images/divisa.jpg' %}");
+	  img[14] = loadImage("{% static 'images/riesog tipo interes.jpg' %}");
+	  img[15] = loadImage("{% static 'images/Fidelidad.jpg' %}");
+	  img[16] = loadImage("{% static 'images/Fidelidad.jpg' %}");
+	  img[17] = loadImage("{% static 'images/Fidelidad.jpg' %}");
+	  img[18] = loadImage("{% static 'images/Fidelidad.jpg' %}");
+	  img[19] = loadImage("{% static 'images/Fidelidad.jpg' %}");
+	  img[20] = loadImage("{% static 'images/Fidelidad.jpg' %}");
+
+	  myFont = loadFont("{% static 'fonts/roboto/Roboto-Light.ttf' %}");
+	  myFont_Bold = loadFont("{% static 'fonts/roboto/Roboto-Bold.ttf' %}");
+	}
+
+	function mousePressed() {
+		var link1 = "{% url 'empresas:risk_market' %}"
+		var link2 = "{% url 'empresas:recommendations_clients2' %}"
+		var link3 = "{% url 'empresas:recommendations_providers2' %}"
+		var link4 = "{% url 'empresas:recommendations_financial2' %}"
+
+		function link(url, winName, options) {
+			winName && open(url, winName, options) || (location = url);
+		}
+
+		for (var i = 0; i < elements.length; i = i + 1) {
+			if (elements[i].mouseOn()) {
+				if (i==0 || i==1 || i==2) {
+					link(link1,'link', strWindowFeatures)
+				} else if (i==3 || i==4 || i==5 || i==6) {
+					link(link2,'link', strWindowFeatures)
+				} else if (i==7 || i==8 || i==9) {
+					link(link3,'link', strWindowFeatures)
+				} else {
+					link(link4,'link', strWindowFeatures)
+				}
+			}
+		}
+		
+	}
+	// Callback function for drawing the Mekko once the images are loaded
+	function drawMekko(data) {
+	  
+	  // Declaración e Inicialización de variables 
+	  risc_data = data
+	  x_index = 0
+	  y_index = 0
+	  y_perc = zeros([data.length, data[0].data.length])
+	  Mekko_width = width
+	  Mekko_height = height
+
+	  for (var i = 0; i < data.length; i = i + 1) {
+	  	for (var j = 0; j < data[i].data.length; j = j + 1) {
+	  		total = total + data[i].data[j].value
+	  		x_perc[i] = x_perc[i] + data[i].data[j].value
+	  		y_perc[i][j] = data[i].data[j].value //+ y_perc[i][j]
+	  	}
+	  }
+	  var counter = 0;
+	  // Creación de las Coordenadas y Dimensiones de los elementos del Mekko
+	  for (var i = 0; i < data.length; i = i + 1) {
+		  	if (i!=0) {
+
+		  		x_index = elements[elements.length-1].nextRight()
+		  	}
+
+		  	y_index = 0;
+		  	for (var j = 0; j < data[i].data.length; j = j + 1) {
+		  		counter = counter + 1
+		  		elements.push(
+		  			new MekkoElement(
+		  				x_index, 
+		  				y_index, 
+		  				Mekko_width*x_perc[i]/total, 
+		  				Mekko_height*y_perc[i][j]/x_perc[i], 
+		  				data[i].data[j].name, 
+		  				img[counter-1],
+		  				i,
+		  				60,
+		  				data[i].data[j].info,
+		  				data[i].data[j].fuertes,
+		  				data[i].data[j].mejorar
+		  			)
+		  		);
+		  		y_index = y_index + Mekko_height*y_perc[i][j]/x_perc[i] //elements[elements.length-1].nextDown()
+		  	}
+	  }
+	}
+
+	// Intializer helper
+	function zeros(dimensions) {
+	    var array = [];
+
+	    for (var i = 0; i < dimensions[0]; ++i) {
+	        array.push(dimensions.length == 1 ? 0 : zeros(dimensions.slice(1)));
+	    }
+
+	    return array;
+	}
+
+	$(document).ready(function(){
+
+		function scrollToAnchor(aid){
+	        var aTag = $("div[name='"+ aid +"']");
+	        if (aid=='perfil') {
+	          $('html,body').animate({scrollTop: aTag.offset().top},1000);
+	        } else if (aid=='riesgos') {
+	          $('html,body').animate({scrollTop: aTag.offset().top},1500);
+	        } else if (aid=='marketplace') {
+	          $('html,body').animate({scrollTop: aTag.offset().top},2000);
+	        }
+	    }
+
+	    $("#perfil_btn").click(function(e) 
+	    {
+	      e.preventDefault();
+	      scrollToAnchor('perfil');
+	    });
+
+	    $("#riesgos_btn").click(function(e) {
+	        e.preventDefault();
+	       scrollToAnchor('riesgos');
+	    });
+
+	    $("#marketplace_btn").click(function(e) 
+	    {
+	      e.preventDefault();
+	      scrollToAnchor('marketplace');
+	    });
+
+	    $(window).scroll(function(){
+	        if ($(this).scrollTop() > 750) {
+	          $('nav').removeClass("navbar-transparent").addClass("white");
+	          $('.hidden').removeClass("hidden").addClass("visible");
+	          $('.text-lighten-5').removeClass("grey-text text-lighten-5").addClass("grey-text text-darken-2");
+	        } else {
+	          $('nav').removeClass("white").addClass("navbar-transparent");
+	          $('.visible').removeClass("visible").addClass("hidden");
+	          $('.text-darken-2').removeClass("grey-text text-darken-2").addClass("grey-text text-lighten-5");
+	        }
+	    });
+
+	});
+
+
+</script>
+{% endblock alt_js %}

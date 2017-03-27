@@ -1,32 +1,36 @@
   {% load compress %}
-  {% load staticfiles %}
   {% load static %}
 
   <ul id="slide-out" class="side-nav">
       <li>
         <div class="userView">
           <div class="background">
-            <img src="{% static 'images/casa_mila.jpg' %}">
+            <img src="{% static 'images/testimonial-bg.jpg' %}">
           </div>
+          {% if company %}
           <a href="{{ company.get_absolute_url }}"><img class="circle" src="{{ company.image }}"></a>
           <a href="{{ company.get_absolute_url }}"><span class="white-text name">{{ company.name }}</span></a>
           <a href="{{ company.get_absolute_url }}"><span class="white-text email">{{ company.email }}</span></a>
+          {% endif %}
         </div>
       </li>
       <!-- <li class="">
         <li><span class="center-text tiny light"><small>{{ company.cnae }}</small></span></li>
       </li> -->
-      <li><a href="{% url 'risk_cro:cro_home' %}"><i class="material-icons">airplay</i>Home</a></li>
+      <li><a href="{% url 'risk_cro:summary' %}"><i class="material-icons">view_quilt</i>Home</a></li>
+      {% if company %}
+      <li><a href="{% url 'risk_cro:detail' pk=company.pk %}"><i class="material-icons">airplay</i>Mi perfil</a></li>
+      {% endif %}
       <li><a href="{% url 'empresas:faq' %}"><i class="material-icons">info_outline</i>FAQ & Comentarios</a></li>
       <li><div class="divider"></div></li>
-      <li><a class="subheader">Look & Find</a></li>
-      <li><a href="{% url 'risk_cro:client_risk' %}"><i class="material-icons">trending_down</i>Tus riesgos!</a></li>
-      
-      <!-- <li><a href="{% url 'empresas:recommendations' %}"><i class="material-icons">assessment</i>Commercial monitoring</a></li>
-      <li><a href="{% url 'empresas:recommendations_financial_risk' %}"><i class="material-icons">trending_down</i>Risk monitoring</a></li> -->
+      <li><a class="subheader">Análisis riesgos</a></li>
+      <li><a href="{% url 'risk_cro:market_risk' %}"><i class="material-icons">assessment</i>Mercado!</a></li>
+      <li><a href="{% url 'risk_cro:client_risk' %}"><i class="material-icons">assignment</i>Tus clientes!</a></li>
+      <li><a href="{% url 'risk_cro:provider_risk' %}"><i class="material-icons">assignment</i>Tus proveedores!</a></li>
+      <li><a href="{% url 'risk_cro:financial_risk' %}"><i class="material-icons">trending_down</i>Financiero!</a></li>
     
       <li><div class="divider"></div></li>
       <li><a class="subheader">Opciones</a></li>
-      <li><a class="waves-effect" href="#!">Ajustes<i class="material-icons">lock_open</i></a></li>
-      <li><a class="waves-effect" href="{% url 'home' %}">Salir<i class="material-icons">input</i></a></li>
+      <li><a class="waves-effect" href="#">Ajustes<i class="material-icons">lock_open</i></a></li>
+      <li><a class="waves-effect" href="/accounts/logout/">Salir<i class="material-icons">input</i></a></li>
     </ul>

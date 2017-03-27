@@ -75,7 +75,7 @@
        <a href="#" data-activates="slide-out" class="button-collapse show-on-medium top-left" {% block hide %}{% endblock hide %}><i class="material-icons medium white-text">menu</i> <small class="white-text"> Beta 0.3</small></a>
       {% endif %}
       {% if power != False %}
-            <a label="Exit" href={% if 1 == 0 %} "{% url 'empresas:search' %}" {% else %} "/accounts/logout/" {% endif %} class="show-on-medium positioning" {% block hide_2 %}{% endblock hide_2 %}><i class="material-icons medium white-text">power_settings_new</i></a>
+            <a label="Exit" href={% if 1 == 0 %} "{% url 'empresas:search' %}" {% else %} "/accounts/logout/" {% endif %} class="show-on-medium positioning" {% block hide_2 %}{% endblock hide_2 %}><i class="material-icons medium {% if power_but_black == True %} grey-text {% else %} white-text {% endif %} ">power_settings_new</i></a>
       {% endif %}
   {% endif %}
 
