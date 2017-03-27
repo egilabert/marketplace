@@ -15,7 +15,7 @@ Proveedores guardados
 		<h3 class="center-align grey-text text-darken-3 light padding_title">Your providers opportunities</h3>
 	    <div class="parallax"><img src="{% static 'images/supplier.jpg' %}"></div>
 	</div>
-    <h4 class="center title light padding_title">New clients found for <a href="{% url 'recommender:detail' pk=obj.clientes_recomendados.pk %}">{{company.name}}</a></h4>
+    <h4 class="center title light padding_title">New clients found for <a href="{% url 'recommender:detail' pk=company.pk %}">{{company.name}}</a></h4>
     <h5 class="light center">CNAE: {{ company.cnae }}</h5>
     <!-- <h6 class="light center">{{ company.transfers.count }} transfers ({{ company.average_transfer | floatformat }}€ average transfer amount)</h6> -->
     <h6 class="light center">{{ saved_providers.count }} Recomendaciones</h6>
