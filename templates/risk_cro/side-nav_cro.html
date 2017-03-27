@@ -8,10 +8,10 @@
             <img src="{% static 'images/testimonial-bg.jpg' %}">
           </div>
           {% if company %}
-          <a href="{{ company.get_absolute_url }}"><img class="circle" src="{{ company.image }}"></a>
-          <a href="{{ company.get_absolute_url }}"><span class="white-text name">{{ company.name }}</span></a>
-          <a href="{{ company.get_absolute_url }}"><span class="white-text email">{{ company.email }}</span></a>
-          <a href="{{ company.get_absolute_url }}"><span class="white-text light email">Usuario: {{ request.user.get_full_name }}</span></a>
+          <a href="{% url 'risk_cro:detail' pk=company.pk %}"><img class="circle" src="{{ company.image }}"></a>
+          <a href="{% url 'risk_cro:detail' pk=company.pk %}"><span class="white-text name">{{ company.name }}</span></a>
+          <a href="{% url 'risk_cro:detail' pk=company.pk %}"><span class="white-text email">{{ company.email }}</span></a>
+          <a href="{% url 'risk_cro:detail' pk=company.pk %}"><span class="white-text light email">Usuario: {{ request.user.get_full_name }}</span></a>
           {% endif %}
         </div>
       </li>
@@ -22,7 +22,7 @@
       {% if company %}
       <li><a href="{% url 'risk_cro:detail' pk=company.pk %}"><i class="material-icons">airplay</i>Mi perfil</a></li>
       {% endif %}
-      <li><a href="{% url 'empresas:faq' %}"><i class="material-icons">info_outline</i>FAQ & Comentarios</a></li>
+      <!-- <li><a href="{% url 'empresas:faq' %}"><i class="material-icons">info_outline</i>FAQ & Comentarios</a></li> -->
       <li><div class="divider"></div></li>
       <li><a class="subheader">Análisis riesgos</a></li>
       <li><a href="{% url 'risk_cro:market_risk' %}"><i class="material-icons">assessment</i>Mercado!</a></li>
@@ -32,6 +32,6 @@
     
       <li><div class="divider"></div></li>
       <li><a class="subheader">Opciones</a></li>
-      <li><a class="waves-effect" href="#">Ajustes<i class="material-icons">lock_open</i></a></li>
+      <!-- <li><a class="waves-effect" href="#">Ajustes<i class="material-icons">lock_open</i></a></li> -->
       <li><a class="waves-effect" href="/accounts/logout/">Salir<i class="material-icons">input</i></a></li>
     </ul>
