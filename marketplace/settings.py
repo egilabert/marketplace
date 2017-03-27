@@ -168,7 +168,7 @@ STATICFILES_DIRS = [
 DATA_FOLDER = os.path.join(BASE_DIR, 'static/data/')
 
 def show_toolbar(request):
-    if not request.is_ajax() and request.user and request.user.is_staff:
+    if not request.is_ajax() and request.user and request.user.username == "enric":
         return True
     return False
 
