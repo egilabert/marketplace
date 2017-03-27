@@ -11,6 +11,7 @@
           <a href="{{ company.get_absolute_url }}"><img class="circle" src="{{ company.image }}"></a>
           <a href="{{ company.get_absolute_url }}"><span class="white-text name">{{ company.name }}</span></a>
           <a href="{{ company.get_absolute_url }}"><span class="white-text email">{{ company.email }}</span></a>
+          <a href="{{ company.get_absolute_url }}"><span class="white-text light email">Usuario: {{ request.user.get_full_name }}</span></a>
           {% endif %}
         </div>
       </li>
