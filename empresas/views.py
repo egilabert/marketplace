@@ -201,6 +201,7 @@ def SearchView(request):
 			request.session['banco'] = BANCO_PRESENTACION
 			request.session['company'] = company_id
 			request.session['summary'] = True
+			request.session['journey'] = False
 			request.session.modified = True
 			company = Empresa.objects.filter(pk=company_id)
 			company = company.prefetch_related('estados_financieros','transfers')[0]
