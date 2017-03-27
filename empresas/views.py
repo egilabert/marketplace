@@ -750,8 +750,10 @@ def OpportunityClientsView(request):
 	
 	company_id = request.session.get('company')
 	company = Empresa.objects.filter(pk=company_id).first()
+	saved_clients = RecommendedClients.objects.filter(empresa=company).filter(clientes_recomendados__in=company.recommended_clients.all())
 	context = {
-		'company':company
+		'company':company,
+		'saved_clients': saved_clients
 		}
 	return render(request, 'empresas/opportunities_clients.html', context)
 
@@ -1042,8 +1044,10 @@ def ProviderRiskRecommendationsView(request):
 def OpportunityProviderView(request):
 	company_id = request.session.get('company')
 	company = Empresa.objects.filter(pk=company_id).first()
+	saved_providers = RecommendedProviders.objects.filter(empresa=company).filter(clientes_recomendados__in=company.recommended_providers.all())
 	context = {
-		'company':company
+		'company':company,
+		'saved_providers': saved_providers
 		}
 	return render(request, 'empresas/opportunities_providers.html', context)
 

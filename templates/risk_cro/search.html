@@ -12,8 +12,8 @@ Zero line of defense
 <style type="text/css">
   /* label color */
    .input-field label {
-     color: #ffffff;
-     border-bottom: 1px solid #ffffff;
+     color: #424242;
+     border-bottom: 0px solid #ffffff;
    }
    /* label focus color */
    .input-field input[type=text]:focus + label {
@@ -41,19 +41,18 @@ Zero line of defense
    }
    /* icon prefix focus color */
    .input-field .prefix {
-     color: #ffffff;
+     color: #424242;
    }
 </style>
 
-{% include "white-navbar.html" %}
+{% include "navbar.html" %}
 
-<div class="row" style="padding-top: 10rem;">
+<div class="row" style="padding-top: 5rem;">
   <div class="col s12 m3"></div>
   <div class="col s12 m6">
-    <div class="card-panel grey ">
         <div class="row">
           <div class="col m12 s12">
-            <h3 class="light white-text center-align">Gestiona tus riesgos</h3>
+            <h3 class="light grey-text text-darken-3 center-align">Gestiona tus riesgos</h3>
             <div class="row padding_title">
               <div class="col m12 s12">
                 <form action="{% url 'risk_cro:summary' %}" method="get" id="search_company">
@@ -69,13 +68,12 @@ Zero line of defense
           </div>
           
       </div>
-    </div>
   </div>
   <div class="col s12 m3"></div>
 </div>
 
 
-<img src="{% static 'images/pexels-photo-226589.jpeg' %}" id="bg" alt="">
+<img src="{% static 'images/pexels-photo-194098.jpeg' %}" id="bg" alt="">
 
 {% endblock %}
 
