@@ -57,7 +57,7 @@ def SearchView(request):
 			request.session.modified = True
 			company = Empresa.objects.filter(pk=company_id)
 			company = company.prefetch_related('estados_financieros','transfers')[0]
-			return redirect("/empresas/summary", {'empresa': company, 'company': company})
+			return redirect("/risk_cro/summary", {'empresa': company, 'company': company})
 	else:
 		messages.warning(request, 'A pesar de tener un usuario activo, no tienes permiso para entrar en esta aplicación')
 		return redirect("/cro/", {})
