@@ -22,6 +22,13 @@ BANCO_PRESENTACION = 1
 
 @login_required
 def SearchView(request):
+	if has_santander_permission(request.user):
+		BANCO_PRESENTACION = 2
+	elif has_sabadell_permission(request.user):
+		BANCO_PRESENTACION = 1
+	else:
+		BANCO_PRESENTACION = 1
+		
 	if has_recommender_permission(request.user) or request.user.is_superuser:
 		if request.user.is_staff or request.user.is_superuser:
 			autofilter = dict()

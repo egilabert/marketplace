@@ -12,3 +12,9 @@ def has_shopgo_permission(user):
 
 def has_bidloan_permission(user):
     return user.groups.filter(name='BidLoan').exists()
+
+def has_santander_permission(user):
+    return user.groups.filter(name='santander').exists()
+
+def has_sabadell_permission(user):
+    return user.groups.filter(name='sabadell').exists()

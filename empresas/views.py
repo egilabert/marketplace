@@ -32,7 +32,6 @@ from django.db.models import Avg, Max, Min, Count, Sum, Q
 from django.core.serializers.json import DjangoJSONEncoder
 from django.db.models import Prefetch
 
-BANCO_PRESENTACION = 2
 
 def get_data_mekko(request, *args, **kwargs):
 	data = dict([
@@ -173,6 +172,13 @@ def get_data_mekko(request, *args, **kwargs):
 
 @login_required
 def SearchView(request):
+	if has_santander_permission(request.user):
+		BANCO_PRESENTACION = 2
+	elif has_sabadell_permission(request.user):
+		BANCO_PRESENTACION = 1
+	else:
+		BANCO_PRESENTACION = 1
+		
 	if has_l0d_permission(request.user):
 		if request.user.is_staff:
 			autofilter = dict()
