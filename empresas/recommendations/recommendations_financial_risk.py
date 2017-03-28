@@ -11,7 +11,7 @@ class Recommendations_financial_risk:
     
     def respuesta_finrisk_ratiodeuda_interpretation(self):
         if self.ratio_endeudamiento_sector() > 0:
-            ratio_endeudamiento_deviation = float(self.ratio_endeudamiento()-self.ratio_endeudamiento_sector())/float(self.ratio_endeudamiento_sector())
+            ratio_endeudamiento_deviation = float(self.ratio_endeudamiento()-self.ratio_endeudamiento_sector())/abs(float(self.ratio_endeudamiento_sector()))
             if ratio_endeudamiento_deviation > 0.20:
                 return "Tu ratio de endeudamiento es sensiblemente superior a la media de tu competencia."
             elif ratio_endeudamiento_deviation > -0.20:
@@ -23,7 +23,7 @@ class Recommendations_financial_risk:
 
     def respuesta_finrisk_ratiodeuda_hint(self):
         if self.ratio_endeudamiento_sector() > 0:
-            margen_comercial_providers_deviation = float(self.ratio_endeudamiento()-self.ratio_endeudamiento_sector())/float(self.ratio_endeudamiento_sector())
+            margen_comercial_providers_deviation = float(self.ratio_endeudamiento()-self.ratio_endeudamiento_sector())/abs(float(self.ratio_endeudamiento_sector()))
             if margen_comercial_providers_deviation > 0.20:
                 return "Atención! Tener altos ratios de endeudamiento puede generar costes financieros elevados o dificultar tu acceso a la financiación. Además, limita tus posibilidades de inversión el corto plazo."
             elif margen_comercial_providers_deviation > -0.20:
@@ -40,7 +40,7 @@ class Recommendations_financial_risk:
     
     def respuesta_finrisk_deudatotal_interpretation(self):
         if self.deuda_total_sector_pond()>0:
-            deuda_total_deviation = float(self.deuda_total_pond()-self.deuda_total_sector_pond())/float(self.deuda_total_sector_pond())
+            deuda_total_deviation = float(self.deuda_total_pond()-self.deuda_total_sector_pond())/abs(float(self.deuda_total_sector_pond()))
             if deuda_total_deviation > 0.50:
                 return "Tu ratio de endeudamiento sobre ebitda es sensiblemente superior a la media de tu competencia."
             elif deuda_total_deviation > -0.50:
@@ -52,7 +52,7 @@ class Recommendations_financial_risk:
 
     def respuesta_finrisk_deudatotal_hint(self):
         if self.deuda_total_sector_pond()>0:
-            deuda_total_deviation = float(self.deuda_total_pond()-self.deuda_total_sector_pond())/float(self.deuda_total_sector_pond())
+            deuda_total_deviation = float(self.deuda_total_pond()-self.deuda_total_sector_pond())/abs(float(self.deuda_total_sector_pond()))
             if deuda_total_deviation > 0.50:
                 return "Atención! Tener altos ratios de endeudamiento puede generar costes financieros elevados o dificultar tu acceso a la financiación. Además, limita tus posibilidades de inversión el corto plazo.."
             elif deuda_total_deviation > -0.50:
@@ -73,7 +73,7 @@ class Recommendations_financial_risk:
             deuda_largo = 154199.451351351345 * deuda_ebitda * 0.8
             deuda_corto = 154199.451351351345 * deuda_ebitda * 0.2
             ratio_cortolargo = deuda_corto / deuda_largo
-            ratio_cortolargo_deviation = float(ratio_cortolargo-self.ratio_sector_corto_largo())/float(self.ratio_sector_corto_largo())
+            ratio_cortolargo_deviation = float(ratio_cortolargo-self.ratio_sector_corto_largo())/abs(float(self.ratio_sector_corto_largo()))
             if ratio_cortolargo_deviation > 0.50:
                 return "Tu ratio corto / largo es sensiblemente superior a la media de tu competencia."
             elif ratio_cortolargo_deviation > -0.50:
@@ -81,7 +81,7 @@ class Recommendations_financial_risk:
             else:
                 return "Tu ratio corto / largo es sensiblemente inferior a la media de tu competencia."
         elif len(self.balance_ebitda())>0:
-            ratio_cortolargo_deviation = float(self.ratio_corto_largo()-self.ratio_sector_corto_largo())/float(self.ratio_sector_corto_largo())
+            ratio_cortolargo_deviation = float(self.ratio_corto_largo()-self.ratio_sector_corto_largo())/abs(float(self.ratio_sector_corto_largo()))
             if ratio_cortolargo_deviation > 0.50:
                 return "Tu ratio corto / largo es sensiblemente superior a la media de tu competencia."
             elif ratio_cortolargo_deviation > -0.50:
@@ -97,7 +97,7 @@ class Recommendations_financial_risk:
             deuda_largo = 154199.451351351345 * deuda_ebitda * 0.8
             deuda_corto = 154199.451351351345 * deuda_ebitda * 0.2
             ratio_cortolargo = deuda_corto / deuda_largo
-            ratio_cortolargo_deviation = float(ratio_cortolargo-self.ratio_sector_corto_largo())/float(self.ratio_sector_corto_largo())
+            ratio_cortolargo_deviation = float(ratio_cortolargo-self.ratio_sector_corto_largo())/abs(float(self.ratio_sector_corto_largo()))
             if ratio_cortolargo_deviation > 0.50:
                 return "Atención! Tener altos ratios de endeudamiento puede generar costes financieros elevados o dificultar tu acceso a la financiación circulante. Has pensado en restructurar tu deuda? Si quieres, puedes hablar con tu gestor."
             elif ratio_cortolargo_deviation > -0.50:
@@ -105,7 +105,7 @@ class Recommendations_financial_risk:
             else:
                 return "Sigue así! Tu bajo ratio corto/largo parece indicar que no tienes problemas de liquidez. Sin embargo, si tu ratio de endeudamiento es muy elevado debes tener en cuenta que el acceso a nueva financiación puede verse afectado."
         elif len(self.balance_ebitda())>0:
-            ratio_cortolargo_deviation = float(self.ratio_corto_largo()-self.ratio_sector_corto_largo())/float(self.ratio_sector_corto_largo())
+            ratio_cortolargo_deviation = float(self.ratio_corto_largo()-self.ratio_sector_corto_largo())/abs(float(self.ratio_sector_corto_largo()))
             if ratio_cortolargo_deviation > 0.50:
                 return "Atención! Tener altos ratios de endeudamiento puede generar costes financieros elevados o dificultar tu acceso a la financiación circulante. Has pensado en restructurar tu deuda? Si quieres, puedes hablar con tu gestor."
             elif ratio_cortolargo_deviation > -0.50:
@@ -122,7 +122,7 @@ class Recommendations_financial_risk:
     
     def respuesta_finrisk_costefin_interpretation(self):
         if len(self.balance_ebitda())>0:
-            costes_financiacion_deviation = float(self.costes_financiacion()-self.costes_financiacion_sector())/float(self.costes_financiacion_sector())
+            costes_financiacion_deviation = float(self.costes_financiacion()-self.costes_financiacion_sector())/abs(float(self.costes_financiacion_sector()))
             if costes_financiacion_deviation > 0.50:
                 return "Tu coste de financiación es sensiblemente superior a la media de tu competencia"
             elif costes_financiacion_deviation > -0.50:
@@ -134,7 +134,7 @@ class Recommendations_financial_risk:
 
     def respuesta_finrisk_costefin_hint(self):
         if len(self.balance_ebitda())>0:
-            costes_financiacion_deviation = float(self.costes_financiacion()-self.costes_financiacion_sector())/float(self.costes_financiacion_sector())
+            costes_financiacion_deviation = float(self.costes_financiacion()-self.costes_financiacion_sector())/abs(float(self.costes_financiacion_sector()))
             if costes_financiacion_deviation > 0.50:
                 return "Atención! Tus elevados costes de financiación puede reflejar una estructura de financiación inadecuada. Si quieres puedes hablar con tu gestor"
             elif costes_financiacion_deviation > -0.50:
@@ -155,7 +155,7 @@ class Recommendations_financial_risk:
     
     def respuesta_finrisk_cortoebitda_interpretation(self):
         if self.deuda_corto_sector_pond() > 0:
-            ratio_cortoebitda_deviation = float(self.deuda_corto_pond()-self.deuda_corto_sector_pond())/float(self.deuda_corto_sector_pond())
+            ratio_cortoebitda_deviation = float(self.deuda_corto_pond()-self.deuda_corto_sector_pond())/abs(float(self.deuda_corto_sector_pond()))
             if ratio_cortoebitda_deviation > 0.50:
                 return "Tu ratio de endeudamiento en el corto plazo es sensiblemente superior a la media de tu competencia"
             elif ratio_cortoebitda_deviation > -0.50:
@@ -167,7 +167,7 @@ class Recommendations_financial_risk:
 
     def respuesta_finrisk_cortoebitda_hint(self):
         if self.deuda_corto_sector_pond() > 0:
-            ratio_cortoebitda_deviation = float(self.deuda_corto_pond()-self.deuda_corto_sector_pond())/float(self.deuda_corto_sector_pond())
+            ratio_cortoebitda_deviation = float(self.deuda_corto_pond()-self.deuda_corto_sector_pond())/abs(float(self.deuda_corto_sector_pond()))
             if ratio_cortoebitda_deviation > 0.50:
                 return "Atención! Un ratio de endeudamiento a corto plazo tan elevado puede ser una alerta de problemas financieros, y no te permiten tener agilidad y acceso a financiación para cubrir potenciales riesgos de liquidez. Has pensado en restructurar tu deuda? Habla con nosotros..."
             elif ratio_cortoebitda_deviation > -0.50:
@@ -190,7 +190,7 @@ class Recommendations_financial_risk:
         if self.id==1610:
             return "Tus necesidades de working capital son sensiblemente superiores a la media de tu competencia"
         elif self.dias_a_pagar_sector()!=0:
-            working_capital_deviation = float(self.dias_a_pagar()-self.dias_a_pagar_sector())/float(self.dias_a_pagar_sector())
+            working_capital_deviation = float(self.dias_a_pagar()-self.dias_a_pagar_sector())/abs(float(self.dias_a_pagar_sector()))
             if working_capital_deviation > 0.50:
                 return "Tus necesidades de working capital son sensiblemente superiores a la media de tu competencia"
             elif working_capital_deviation > -0.50:
@@ -204,7 +204,7 @@ class Recommendations_financial_risk:
         if self.id==1610:
             return "Atención! Una elevada necesidad de working capital puede generar un problema de tesorería. Has probado a optimizar tus existencias o el cobro a tus clientes? Si quieres estabilizar tu tesorería dispones de nuestros productos de factoring"
         elif self.dias_a_pagar_sector()!=0:
-            working_capital_deviation = float(self.dias_a_pagar()-self.dias_a_pagar_sector())/float(self.dias_a_pagar_sector())
+            working_capital_deviation = float(self.dias_a_pagar()-self.dias_a_pagar_sector())/abs(float(self.dias_a_pagar_sector()))
             if working_capital_deviation > 0.50:
                 return "Atención! Una elevada necesidad de working capital puede generar un problema de tesorería. Has probado a optimizar tus existencias o el cobro a tus clientes? Si quieres estabilizar tu tesorería dispones de nuestros productos de factoring"
             elif working_capital_deviation > -0.50:
@@ -221,7 +221,7 @@ class Recommendations_financial_risk:
     
     def respuesta_finrisk_divisa_interpretation(self):
         if len(self.balance_ebitda())>0:
-            riesgo_divisa_deviation = float(self.costes_financiacion()-self.costes_financiacion_sector())/float(self.costes_financiacion_sector())
+            riesgo_divisa_deviation = float(self.costes_financiacion()-self.costes_financiacion_sector())/abs(float(self.costes_financiacion_sector()))
             if riesgo_divisa_deviation > 0.50:
                 return "Tu riesgo de divisa es sensiblemente superior al de tu competencia"
             elif riesgo_divisa_deviation > -0.50:
@@ -233,7 +233,7 @@ class Recommendations_financial_risk:
 
     def respuesta_finrisk_divisa_hint(self):
         if len(self.balance_ebitda())>0:
-            riesgo_divisa_deviation = float(self.costes_financiacion()-self.costes_financiacion_sector())/float(self.costes_financiacion_sector())
+            riesgo_divisa_deviation = float(self.costes_financiacion()-self.costes_financiacion_sector())/abs(float(self.costes_financiacion_sector()))
             if riesgo_divisa_deviation > 0.50:
                 return "Tu negocio está expuesto a variaciones en el mercado de divisas. Si quieres, contrata coberturas con nosotros"
             elif riesgo_divisa_deviation > -0.50:
@@ -251,7 +251,7 @@ class Recommendations_financial_risk:
     
     def respuesta_finrisk_interes_interpretation(self):
         if len(self.balance_ebitda())>0:
-            riesgo_interes_deviation = float(self.costes_financiacion()-self.costes_financiacion_sector())/float(self.costes_financiacion_sector())
+            riesgo_interes_deviation = float(self.costes_financiacion()-self.costes_financiacion_sector())/abs(float(self.costes_financiacion_sector()))
             if riesgo_interes_deviation > 0.50:
                 return "Tu riesgo de tipo de interés es sensiblemente superior al de tu competencia"
             elif riesgo_interes_deviation > -0.50:
@@ -263,7 +263,7 @@ class Recommendations_financial_risk:
 
     def respuesta_finrisk_interes_hint(self):
         if len(self.balance_ebitda())>0:
-            riesgo_interes_deviation = float(self.costes_financiacion()-self.costes_financiacion_sector())/float(self.costes_financiacion_sector())
+            riesgo_interes_deviation = float(self.costes_financiacion()-self.costes_financiacion_sector())/abs(float(self.costes_financiacion_sector()))
             if riesgo_interes_deviation > 0.50:
                 return "Tu negocio está expuesto a variaciones en el tipo de interés. Si quieres, contrata coberturas con nosotros"
             elif riesgo_interes_deviation > -0.50:

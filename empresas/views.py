@@ -953,8 +953,18 @@ def MarketRiskRecommendationsView(request):
 	# sells_me_prov = list(company.balance_providers_sells())
 	# ebitda_sector_prov = list(company.balance_providers_ebitda_avg_sector())
 	# ebitda_me_prov = list(company.balance_providers_ebitda())
-	print(company.resultado_explotacion_avg_sector())
-	print(company.balance_ebit_avg_sector())
+	print('-----VENTAS-------------------------------------')
+	print(sells_me)
+	print(list(company.balance_sells_avg_sector()))
+	print('-----EBITDA-------------------------------------')
+	print(ebitda_me)
+	print(list(company.balance_ebitda_avg_sector()))
+	print('-----EBIT-------------------------------------')
+	print(ebit_me)
+	print(list(company.resultado_explotacion_avg_sector()))
+	print('------RESULTADOS------------------------------------')
+	print(resultados_me)
+	print(list(company.resultado_explotacion_avg_sector()))
 	context = {
 		'company':company,
 		'penetracion': penetracion,

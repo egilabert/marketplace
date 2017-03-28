@@ -18,6 +18,7 @@ import recommendations.recommendations_providers as r_providers
 import recommendations.recommendations_financial_risk as r_fin_risk
 import recommendations.recommendations_clients_risk as r_client_risk
 import recommendations.recommendations_providers_risk as r_providers_risk
+import recommendations.recommendations_market_risk as r_market_risk
 
 # ------------------------------------------------------------------
 # Model Empresa
@@ -28,7 +29,8 @@ class Empresa(models.Model, r_clients.Recommendations_clients,
             r_providers.Recommendations_providers, 
             r_fin_risk.Recommendations_financial_risk,
             r_client_risk.Recommendations_clients_risk,
-            r_providers_risk.Recommendations_providers_risk):
+            r_providers_risk.Recommendations_providers_risk,
+            r_market_risk.Recommendations_market_risk):
 
     fiscal_id = models.CharField(max_length=30)
     name = models.CharField(max_length=255)

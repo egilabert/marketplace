@@ -10,7 +10,7 @@ class Recommendations_clients:
     
     def respuesta_clientes_ventas_interpretation(self):
         if self.id!=990 and self.balance_clients_sells_avg_sector()>0:
-            balance_sells_deviation = float(self.balance_clients_sells()[len(self.balance_clients_sells())-1]['c']-self.balance_clients_sells_avg_sector()[len(self.balance_clients_sells_avg_sector())-1]['c'])/float(self.balance_clients_sells_avg_sector()[len(self.balance_clients_sells_avg_sector())-1]['c'])
+            balance_sells_deviation = float(self.balance_clients_sells()[len(self.balance_clients_sells())-1]['c']-self.balance_clients_sells_avg_sector()[len(self.balance_clients_sells_avg_sector())-1]['c'])/abs(float(self.balance_clients_sells_avg_sector()[len(self.balance_clients_sells_avg_sector())-1]['c']))
             if balance_sells_deviation > 0.5:
                 return "En promedio, trabajas con clientes mucho más grandes que tu competencia"
             elif balance_sells_deviation > 0.1:
@@ -24,7 +24,7 @@ class Recommendations_clients:
         elif len(self.balance_clients_sells())>0:
             sells_sector = [{u'ejercicio': u'2011', 'c': 546283.4647849461}, {u'ejercicio': u'2012', 'c': 456645.75040462404}, {u'ejercicio': u'2013', 'c': 378471.62807453406}, {u'ejercicio': u'2014', 'c': 456921.41805970157}]
             sells_me = [{u'ejercicio': u'2011', 'c': 592696.61117647061}, {u'ejercicio': u'2012', 'c': 534303.62062499998}, {u'ejercicio': u'2013', 'c': 399953.46552631578}, {u'ejercicio': u'2014', 'c': 491070.38647058822}]
-            balance_sells_deviation = float(sells_me[len(sells_me)-1]['c']-sells_sector[len(sells_sector)-1]['c'])/float(sells_sector[len(sells_sector)-1]['c']) #float(self.balance_clients_sells()[len(self.balance_clients_sells())-1]['c']-self.balance_clients_sells_avg_sector()[len(self.balance_clients_sells_avg_sector())-1]['c'])/float(self.balance_clients_sells_avg_sector()[len(self.balance_clients_sells_avg_sector())-1]['c'])
+            balance_sells_deviation = float(sells_me[len(sells_me)-1]['c']-sells_sector[len(sells_sector)-1]['c'])/abs(float(sells_sector[len(sells_sector)-1]['c'])) #float(self.balance_clients_sells()[len(self.balance_clients_sells())-1]['c']-self.balance_clients_sells_avg_sector()[len(self.balance_clients_sells_avg_sector())-1]['c'])/abs(float(self.balance_clients_sells_avg_sector()[len(self.balance_clients_sells_avg_sector())-1]['c']))
             if balance_sells_deviation > 0.5:
                 return "En promedio, trabajas con clientes mucho más grandes que tu competencia"
             elif balance_sells_deviation > 0.1:
@@ -41,7 +41,7 @@ class Recommendations_clients:
 
     def respuesta_clientes_ventas_hint(self):
         if self.id!=990 and self.balance_clients_sells_avg_sector()>0:
-            balance_sells_deviation = float(self.balance_clients_sells()[len(self.balance_clients_sells())-1]['c']-self.balance_clients_sells_avg_sector()[len(self.balance_clients_sells_avg_sector())-1]['c'])/float(self.balance_clients_sells_avg_sector()[len(self.balance_clients_sells_avg_sector())-1]['c'])
+            balance_sells_deviation = float(self.balance_clients_sells()[len(self.balance_clients_sells())-1]['c']-self.balance_clients_sells_avg_sector()[len(self.balance_clients_sells_avg_sector())-1]['c'])/abs(float(self.balance_clients_sells_avg_sector()[len(self.balance_clients_sells_avg_sector())-1]['c']))
             if balance_sells_deviation > 0.5:
                 return "Sigue así! Si buscas nuevas oportunidades comerciales utiliza nuestro motor de recomendaciones."
             elif balance_sells_deviation > 0.1:
@@ -55,7 +55,7 @@ class Recommendations_clients:
         elif len(self.balance_clients_sells())>0:
             sells_sector = [{u'ejercicio': u'2011', 'c': 546283.4647849461}, {u'ejercicio': u'2012', 'c': 456645.75040462404}, {u'ejercicio': u'2013', 'c': 378471.62807453406}, {u'ejercicio': u'2014', 'c': 456921.41805970157}]
             sells_me = [{u'ejercicio': u'2011', 'c': 592696.61117647061}, {u'ejercicio': u'2012', 'c': 534303.62062499998}, {u'ejercicio': u'2013', 'c': 399953.46552631578}, {u'ejercicio': u'2014', 'c': 491070.38647058822}]
-            balance_sells_deviation = float(sells_me[len(sells_me)-1]['c']-sells_sector[len(sells_sector)-1]['c'])/float(sells_sector[len(sells_sector)-1]['c']) #float(self.balance_clients_sells()[len(self.balance_clients_sells())-1]['c']-self.balance_clients_sells_avg_sector()[len(self.balance_clients_sells_avg_sector())-1]['c'])/float(self.balance_clients_sells_avg_sector()[len(self.balance_clients_sells_avg_sector())-1]['c'])
+            balance_sells_deviation = float(sells_me[len(sells_me)-1]['c']-sells_sector[len(sells_sector)-1]['c'])/abs(float(sells_sector[len(sells_sector)-1]['c'])) #float(self.balance_clients_sells()[len(self.balance_clients_sells())-1]['c']-self.balance_clients_sells_avg_sector()[len(self.balance_clients_sells_avg_sector())-1]['c'])/abs(float(self.balance_clients_sells_avg_sector()[len(self.balance_clients_sells_avg_sector())-1]['c']))
             if balance_sells_deviation > 0.5:
                 return "Sigue así! Si buscas nuevas oportunidades comerciales utiliza nuestro motor de recomendaciones."
             elif balance_sells_deviation > 0.1:
@@ -72,8 +72,8 @@ class Recommendations_clients:
     
     def respuesta_clientes_ventas_interpretation_delta(self):
         if len(self.balance_clients_sells())>1:
-            balance_clients_sells_delta = float(self.balance_clients_sells()[len(self.balance_clients_sells())-1]['c']-self.balance_clients_sells()[len(self.balance_clients_sells())-2]['c'])/float(self.balance_clients_sells()[len(self.balance_clients_sells())-2]['c'])
-            balance_clients_sells_avg_sector_delta = float(self.balance_clients_sells_avg_sector()[len(self.balance_clients_sells_avg_sector())-1]['c']-self.balance_clients_sells_avg_sector()[len(self.balance_clients_sells_avg_sector())-2]['c'])/float(self.balance_clients_sells_avg_sector()[len(self.balance_clients_sells_avg_sector())-2]['c'])
+            balance_clients_sells_delta = float(self.balance_clients_sells()[len(self.balance_clients_sells())-1]['c']-self.balance_clients_sells()[len(self.balance_clients_sells())-2]['c'])/abs(float(self.balance_clients_sells()[len(self.balance_clients_sells())-2]['c']))
+            balance_clients_sells_avg_sector_delta = float(self.balance_clients_sells_avg_sector()[len(self.balance_clients_sells_avg_sector())-1]['c']-self.balance_clients_sells_avg_sector()[len(self.balance_clients_sells_avg_sector())-2]['c'])/abs(float(self.balance_clients_sells_avg_sector()[len(self.balance_clients_sells_avg_sector())-2]['c']))
             if (balance_clients_sells_delta - balance_clients_sells_avg_sector_delta) > 0.5:
                 return "En promedio, tus clientes están creciendo mucho más que los de tu competencia."
             elif (balance_clients_sells_delta - balance_clients_sells_avg_sector_delta) > 0.1:
@@ -89,8 +89,8 @@ class Recommendations_clients:
 
     def respuesta_clientes_ventas_hint_delta(self):
         if len(self.balance_clients_sells())>1:    
-            balance_clients_sells_delta = float(self.balance_clients_sells()[len(self.balance_clients_sells())-1]['c']-self.balance_clients_sells()[len(self.balance_clients_sells())-2]['c'])/float(self.balance_clients_sells()[len(self.balance_clients_sells())-2]['c'])
-            balance_clients_sells_avg_sector_delta = float(self.balance_clients_sells_avg_sector()[len(self.balance_clients_sells_avg_sector())-1]['c']-self.balance_clients_sells_avg_sector()[len(self.balance_clients_sells_avg_sector())-2]['c'])/float(self.balance_clients_sells_avg_sector()[len(self.balance_clients_sells_avg_sector())-2]['c'])
+            balance_clients_sells_delta = float(self.balance_clients_sells()[len(self.balance_clients_sells())-1]['c']-self.balance_clients_sells()[len(self.balance_clients_sells())-2]['c'])/abs(float(self.balance_clients_sells()[len(self.balance_clients_sells())-2]['c']))
+            balance_clients_sells_avg_sector_delta = float(self.balance_clients_sells_avg_sector()[len(self.balance_clients_sells_avg_sector())-1]['c']-self.balance_clients_sells_avg_sector()[len(self.balance_clients_sells_avg_sector())-2]['c'])/abs(float(self.balance_clients_sells_avg_sector()[len(self.balance_clients_sells_avg_sector())-2]['c']))
             if (balance_clients_sells_delta - balance_clients_sells_avg_sector_delta) > 0.5:
                 return "Sigue así! Parece una buena estrategia realizar acciones de fidelización e intentar crecer con los clientes actuales."
             elif (balance_clients_sells_delta - balance_clients_sells_avg_sector_delta) > 0.1:
@@ -110,7 +110,7 @@ class Recommendations_clients:
     
     def respuesta_clientes_ebitda_interpretation(self):
         if self.id!=990 and self.balance_clients_ebitda_avg_sector()>0:
-            balance_ebitda_deviation = float(self.balance_clients_ebitda()[len(self.balance_clients_ebitda())-1]['c']-self.balance_clients_ebitda_avg_sector()[len(self.balance_clients_ebitda_avg_sector())-1]['c'])/float(self.balance_clients_ebitda_avg_sector()[len(self.balance_clients_ebitda_avg_sector())-1]['c'])
+            balance_ebitda_deviation = float(self.balance_clients_ebitda()[len(self.balance_clients_ebitda())-1]['c']-self.balance_clients_ebitda_avg_sector()[len(self.balance_clients_ebitda_avg_sector())-1]['c'])/abs(float(self.balance_clients_ebitda_avg_sector()[len(self.balance_clients_ebitda_avg_sector())-1]['c']))
             if balance_ebitda_deviation > 0.5:
                 return "En promedio, trabajas con clientes mucho más fuertes que tu competencia"
             elif balance_ebitda_deviation > 0.1:
@@ -124,7 +124,7 @@ class Recommendations_clients:
         if len(self.balance_clients_ebitda())>0:
             ebitda_sector = [{u'ejercicio': u'2011', 'c': 49361.97748407643}, {u'ejercicio': u'2012', 'c': 47984.25817891373}, {u'ejercicio': u'2013', 'c': 46471.11822525595}, {u'ejercicio': u'2014', 'c': 54865.1086259542}]
             ebitda_me = [{u'ejercicio': u'2011', 'c': 51794.07494505495}, {u'ejercicio': u'2012', 'c': 45185.49206521739}, {u'ejercicio': u'2013', 'c': 41847.803749999985}, {u'ejercicio': u'2014', 'c': 54199.451351351345}]
-            balance_ebitda_deviation = float(ebitda_me[len(ebitda_me)-1]['c']-ebitda_sector[len(ebitda_sector)-1]['c'])/float(ebitda_sector[len(ebitda_sector)-1]['c'])
+            balance_ebitda_deviation = float(ebitda_me[len(ebitda_me)-1]['c']-ebitda_sector[len(ebitda_sector)-1]['c'])/abs(float(ebitda_sector[len(ebitda_sector)-1]['c']))
             if balance_ebitda_deviation > 0.5:
                 return "En promedio, trabajas con clientes mucho más fuertes que tu competencia"
             elif balance_ebitda_deviation > 0.1:
@@ -140,7 +140,7 @@ class Recommendations_clients:
 
     def respuesta_clientes_ebitda_hint(self):
         if self.id!=990 and self.balance_clients_ebitda_avg_sector()>0:
-            balance_ebitda_deviation = float(self.balance_clients_ebitda()[len(self.balance_clients_ebitda())-1]['c']-self.balance_clients_ebitda_avg_sector()[len(self.balance_clients_ebitda_avg_sector())-1]['c'])/float(self.balance_clients_ebitda_avg_sector()[len(self.balance_clients_ebitda_avg_sector())-1]['c'])
+            balance_ebitda_deviation = float(self.balance_clients_ebitda()[len(self.balance_clients_ebitda())-1]['c']-self.balance_clients_ebitda_avg_sector()[len(self.balance_clients_ebitda_avg_sector())-1]['c'])/abs(float(self.balance_clients_ebitda_avg_sector()[len(self.balance_clients_ebitda_avg_sector())-1]['c']))
             if balance_ebitda_deviation > 0.5:
                 return "Sigue así! Si buscas nuevas oportunidades comerciales utiliza nuestro motor de recomendaciones."
             elif balance_ebitda_deviation > 0.1:
@@ -154,7 +154,7 @@ class Recommendations_clients:
         if len(self.balance_clients_ebitda())>0:
             ebitda_sector = [{u'ejercicio': u'2011', 'c': 49361.97748407643}, {u'ejercicio': u'2012', 'c': 47984.25817891373}, {u'ejercicio': u'2013', 'c': 46471.11822525595}, {u'ejercicio': u'2014', 'c': 54865.1086259542}]
             ebitda_me = [{u'ejercicio': u'2011', 'c': 51794.07494505495}, {u'ejercicio': u'2012', 'c': 45185.49206521739}, {u'ejercicio': u'2013', 'c': 41847.803749999985}, {u'ejercicio': u'2014', 'c': 54199.451351351345}]
-            balance_ebitda_deviation = float(ebitda_me[len(ebitda_me)-1]['c']-ebitda_sector[len(ebitda_sector)-1]['c'])/float(ebitda_sector[len(ebitda_sector)-1]['c'])
+            balance_ebitda_deviation = float(ebitda_me[len(ebitda_me)-1]['c']-ebitda_sector[len(ebitda_sector)-1]['c'])/abs(float(ebitda_sector[len(ebitda_sector)-1]['c']))
             if balance_ebitda_deviation > 0.5:
                 return "Sigue así! Si buscas nuevas oportunidades comerciales utiliza nuestro motor de recomendaciones."
             elif balance_ebitda_deviation > 0.1:
@@ -170,8 +170,8 @@ class Recommendations_clients:
     
     def respuesta_clientes_ebitda_interpretation_delta(self):
         if len(self.balance_clients_ebitda())>1: 
-            balance_clients_ebitda_delta = float(self.balance_clients_ebitda()[len(self.balance_clients_ebitda())-1]['c']-self.balance_clients_ebitda()[len(self.balance_clients_ebitda())-2]['c'])/float(self.balance_clients_ebitda()[len(self.balance_clients_ebitda())-2]['c'])
-            balance_clients_ebitda_avg_sector_delta = float(self.balance_clients_ebitda_avg_sector()[len(self.balance_clients_ebitda_avg_sector())-1]['c']-self.balance_clients_ebitda_avg_sector()[len(self.balance_clients_ebitda_avg_sector())-2]['c'])/float(self.balance_clients_ebitda_avg_sector()[len(self.balance_clients_ebitda_avg_sector())-2]['c'])
+            balance_clients_ebitda_delta = float(self.balance_clients_ebitda()[len(self.balance_clients_ebitda())-1]['c']-self.balance_clients_ebitda()[len(self.balance_clients_ebitda())-2]['c'])/abs(float(self.balance_clients_ebitda()[len(self.balance_clients_ebitda())-2]['c']))
+            balance_clients_ebitda_avg_sector_delta = float(self.balance_clients_ebitda_avg_sector()[len(self.balance_clients_ebitda_avg_sector())-1]['c']-self.balance_clients_ebitda_avg_sector()[len(self.balance_clients_ebitda_avg_sector())-2]['c'])/abs(float(self.balance_clients_ebitda_avg_sector()[len(self.balance_clients_ebitda_avg_sector())-2]['c']))
             if (balance_clients_ebitda_delta - balance_clients_ebitda_avg_sector_delta) > 0.5:
                 return "En promedio, tus clientes están creciendo mucho más que los de tu competencia."
             elif (balance_clients_ebitda_delta - balance_clients_ebitda_avg_sector_delta) > 0.1:
@@ -187,8 +187,8 @@ class Recommendations_clients:
 
     def respuesta_clientes_ebitda_hint_delta(self):
         if len(self.balance_clients_ebitda())>1: 
-            balance_clients_ebitda_delta = float(self.balance_clients_ebitda()[len(self.balance_clients_ebitda())-1]['c']-self.balance_clients_ebitda()[len(self.balance_clients_ebitda())-2]['c'])/float(self.balance_clients_ebitda()[len(self.balance_clients_ebitda())-2]['c'])
-            balance_clients_ebitda_avg_sector_delta = float(self.balance_clients_ebitda_avg_sector()[len(self.balance_clients_ebitda_avg_sector())-1]['c']-self.balance_clients_ebitda_avg_sector()[len(self.balance_clients_ebitda_avg_sector())-2]['c'])/float(self.balance_clients_ebitda_avg_sector()[len(self.balance_clients_ebitda_avg_sector())-2]['c'])
+            balance_clients_ebitda_delta = float(self.balance_clients_ebitda()[len(self.balance_clients_ebitda())-1]['c']-self.balance_clients_ebitda()[len(self.balance_clients_ebitda())-2]['c'])/abs(float(self.balance_clients_ebitda()[len(self.balance_clients_ebitda())-2]['c']))
+            balance_clients_ebitda_avg_sector_delta = float(self.balance_clients_ebitda_avg_sector()[len(self.balance_clients_ebitda_avg_sector())-1]['c']-self.balance_clients_ebitda_avg_sector()[len(self.balance_clients_ebitda_avg_sector())-2]['c'])/abs(float(self.balance_clients_ebitda_avg_sector()[len(self.balance_clients_ebitda_avg_sector())-2]['c']))
             if (balance_clients_ebitda_delta - balance_clients_ebitda_avg_sector_delta) > 0.5:
                 return "Sigue así! Parece una buena estrategia realizar acciones de fidelización e intentar crecer con los clientes actuales."
             elif (balance_clients_ebitda_delta - balance_clients_ebitda_avg_sector_delta) > 0.1:
@@ -207,7 +207,7 @@ class Recommendations_clients:
     
     def respuesta_clientes_resultado_interpretation(self):
         if self.id!=990 and self.balance_clients_resultado_avg_sector()>0:
-            balance_resultado_deviation = float(self.balance_clients_resultado()[len(self.balance_clients_resultado())-1]['c']-self.balance_clients_resultado_avg_sector()[len(self.balance_clients_resultado_avg_sector())-1]['c'])/float(self.balance_clients_resultado_avg_sector()[len(self.balance_clients_resultado_avg_sector())-1]['c'])
+            balance_resultado_deviation = float(self.balance_clients_resultado()[len(self.balance_clients_resultado())-1]['c']-self.balance_clients_resultado_avg_sector()[len(self.balance_clients_resultado_avg_sector())-1]['c'])/abs(float(self.balance_clients_resultado_avg_sector()[len(self.balance_clients_resultado_avg_sector())-1]['c']))
             if balance_resultado_deviation > 0.5:
                 return "En promedio, trabajas con clientes con mucho mejores resultados que tu competencia."
             elif balance_resultado_deviation > 0.1:
@@ -221,7 +221,7 @@ class Recommendations_clients:
         if len(self.balance_clients_resultado())>0:
             resultados_sector = [{u'ejercicio': u'2011', 'c': 66543.67525477704}, {u'ejercicio': u'2012', 'c': 53854.49316293933}, {u'ejercicio': u'2013', 'c': 16644.12122866895}, {u'ejercicio': u'2014', 'c': 76736.3875572519}]
             resultados_me = [{u'ejercicio': u'2011', 'c': 63690.474505494498}, {u'ejercicio': u'2012', 'c': 42998.05847826087}, {u'ejercicio': u'2013', 'c': 10357.194875000005}, {u'ejercicio': u'2014', 'c': 82367.53648648648}]
-            balance_resultado_deviation = float(resultados_me[len(resultados_me)-1]['c']-resultados_sector[len(resultados_sector)-1]['c'])/float(resultados_sector[len(resultados_sector)-1]['c'])
+            balance_resultado_deviation = float(resultados_me[len(resultados_me)-1]['c']-resultados_sector[len(resultados_sector)-1]['c'])/abs(float(resultados_sector[len(resultados_sector)-1]['c']))
             if balance_resultado_deviation > 0.5:
                 return "En promedio, trabajas con clientes con mucho mejores resultados que tu competencia."
             elif balance_resultado_deviation > 0.1:
@@ -237,7 +237,7 @@ class Recommendations_clients:
 
     def respuesta_clientes_resultado_hint(self):
         if self.id!=990 and self.balance_clients_resultado_avg_sector()>0:
-            balance_resultado_deviation = float(self.balance_clients_resultado()[len(self.balance_clients_resultado())-1]['c']-self.balance_clients_resultado_avg_sector()[len(self.balance_clients_resultado_avg_sector())-1]['c'])/float(self.balance_clients_resultado_avg_sector()[len(self.balance_clients_resultado_avg_sector())-1]['c'])
+            balance_resultado_deviation = float(self.balance_clients_resultado()[len(self.balance_clients_resultado())-1]['c']-self.balance_clients_resultado_avg_sector()[len(self.balance_clients_resultado_avg_sector())-1]['c'])/abs(float(self.balance_clients_resultado_avg_sector()[len(self.balance_clients_resultado_avg_sector())-1]['c']))
             if balance_resultado_deviation > 0.5:
                 return "Sigue así! Si buscas nuevas oportunidades comerciales utiliza nuestro motor de recomendaciones."
             elif balance_resultado_deviation > 0.1:
@@ -251,7 +251,7 @@ class Recommendations_clients:
         if len(self.balance_clients_resultado())>0:
             resultados_sector = [{u'ejercicio': u'2011', 'c': 66543.67525477704}, {u'ejercicio': u'2012', 'c': 53854.49316293933}, {u'ejercicio': u'2013', 'c': 16644.12122866895}, {u'ejercicio': u'2014', 'c': 76736.3875572519}]
             resultados_me = [{u'ejercicio': u'2011', 'c': 63690.474505494498}, {u'ejercicio': u'2012', 'c': 42998.05847826087}, {u'ejercicio': u'2013', 'c': 10357.194875000005}, {u'ejercicio': u'2014', 'c': 82367.53648648648}]
-            balance_resultado_deviation = float(resultados_me[len(resultados_me)-1]['c']-resultados_sector[len(resultados_sector)-1]['c'])/float(resultados_sector[len(resultados_sector)-1]['c'])
+            balance_resultado_deviation = float(resultados_me[len(resultados_me)-1]['c']-resultados_sector[len(resultados_sector)-1]['c'])/abs(float(resultados_sector[len(resultados_sector)-1]['c']))
             if balance_resultado_deviation > 0.5:
                 return "Sigue así! Si buscas nuevas oportunidades comerciales utiliza nuestro motor de recomendaciones."
             elif balance_resultado_deviation > 0.1:
@@ -267,8 +267,8 @@ class Recommendations_clients:
 
     def respuesta_clientes_resultado_interpretation_delta(self):
         if len(self.balance_clients_resultado())>1:
-            balance_clients_resultado_delta = float(self.balance_clients_resultado()[len(self.balance_clients_resultado())-1]['c']-self.balance_clients_resultado()[len(self.balance_clients_resultado())-2]['c'])/float(self.balance_clients_resultado()[len(self.balance_clients_resultado())-2]['c'])
-            balance_clients_resultado_avg_sector_delta = float(self.balance_clients_resultado_avg_sector()[len(self.balance_clients_resultado_avg_sector())-1]['c']-self.balance_clients_resultado_avg_sector()[len(self.balance_clients_resultado_avg_sector())-2]['c'])/float(self.balance_clients_resultado_avg_sector()[len(self.balance_clients_resultado_avg_sector())-2]['c'])
+            balance_clients_resultado_delta = float(self.balance_clients_resultado()[len(self.balance_clients_resultado())-1]['c']-self.balance_clients_resultado()[len(self.balance_clients_resultado())-2]['c'])/abs(float(self.balance_clients_resultado()[len(self.balance_clients_resultado())-2]['c']))
+            balance_clients_resultado_avg_sector_delta = float(self.balance_clients_resultado_avg_sector()[len(self.balance_clients_resultado_avg_sector())-1]['c']-self.balance_clients_resultado_avg_sector()[len(self.balance_clients_resultado_avg_sector())-2]['c'])/abs(float(self.balance_clients_resultado_avg_sector()[len(self.balance_clients_resultado_avg_sector())-2]['c']))
             if (balance_clients_resultado_delta - balance_clients_resultado_avg_sector_delta) > 0.5:
                 return "En promedio, tus clientes están creciendo mucho más que los de tu competencia."
             elif (balance_clients_resultado_delta - balance_clients_resultado_avg_sector_delta) > 0.1:
@@ -284,8 +284,8 @@ class Recommendations_clients:
 
     def respuesta_clientes_resultado_hint_delta(self):
         if len(self.balance_clients_resultado())>1:
-            balance_clients_resultado_delta = float(self.balance_clients_resultado()[len(self.balance_clients_resultado())-1]['c']-self.balance_clients_resultado()[len(self.balance_clients_resultado())-2]['c'])/float(self.balance_clients_resultado()[len(self.balance_clients_resultado())-2]['c'])
-            balance_clients_resultado_avg_sector_delta = float(self.balance_clients_resultado_avg_sector()[len(self.balance_clients_resultado_avg_sector())-1]['c']-self.balance_clients_resultado_avg_sector()[len(self.balance_clients_resultado_avg_sector())-2]['c'])/float(self.balance_clients_resultado_avg_sector()[len(self.balance_clients_resultado_avg_sector())-2]['c'])
+            balance_clients_resultado_delta = float(self.balance_clients_resultado()[len(self.balance_clients_resultado())-1]['c']-self.balance_clients_resultado()[len(self.balance_clients_resultado())-2]['c'])/abs(float(self.balance_clients_resultado()[len(self.balance_clients_resultado())-2]['c']))
+            balance_clients_resultado_avg_sector_delta = float(self.balance_clients_resultado_avg_sector()[len(self.balance_clients_resultado_avg_sector())-1]['c']-self.balance_clients_resultado_avg_sector()[len(self.balance_clients_resultado_avg_sector())-2]['c'])/abs(float(self.balance_clients_resultado_avg_sector()[len(self.balance_clients_resultado_avg_sector())-2]['c']))
             if (balance_clients_resultado_delta - balance_clients_resultado_avg_sector_delta) > 0.5:
                 return "Sigue así! Parece una buena estrategia realizar acciones de fidelización e intentar crecer con los clientes actuales."
             elif (balance_clients_resultado_delta - balance_clients_resultado_avg_sector_delta) > 0.1:
@@ -305,7 +305,7 @@ class Recommendations_clients:
     
     def respuesta_clientes_fidelizacion_interacciones_interpretation(self):
         if self.get_monthly_sector_avg_sells()[len(self.get_monthly_sector_avg_sells())-1].get('c',0) > 0:
-            monthly_sells_deviation = float(self.get_monthly_sells()[len(self.get_monthly_sells())-1]['c']-self.get_monthly_sector_avg_sells()[len(self.get_monthly_sector_avg_sells())-1]['c'])/float(self.get_monthly_sector_avg_sells()[len(self.get_monthly_sector_avg_sells())-1]['c'])
+            monthly_sells_deviation = float(self.get_monthly_sells()[len(self.get_monthly_sells())-1]['c']-self.get_monthly_sector_avg_sells()[len(self.get_monthly_sector_avg_sells())-1]['c'])/abs(float(self.get_monthly_sector_avg_sells()[len(self.get_monthly_sector_avg_sells())-1]['c']))
             if monthly_sells_deviation > 0.20:
                 return "En promedio, interactúas más veces con tus clientes que la competencia con los suyos."
             elif monthly_sells_deviation > -0.20:
@@ -317,7 +317,7 @@ class Recommendations_clients:
 
     def respuesta_clientes_fidelizacion_interacciones_hint(self):
         if self.get_monthly_sector_avg_sells()[len(self.get_monthly_sector_avg_sells())-1].get('c',0) > 0:
-            monthly_sells_deviation = float(self.get_monthly_sells()[len(self.get_monthly_sells())-1]['c']-self.get_monthly_sector_avg_sells()[len(self.get_monthly_sector_avg_sells())-1]['c'])/float(self.get_monthly_sector_avg_sells()[len(self.get_monthly_sector_avg_sells())-1]['c'])
+            monthly_sells_deviation = float(self.get_monthly_sells()[len(self.get_monthly_sells())-1]['c']-self.get_monthly_sector_avg_sells()[len(self.get_monthly_sector_avg_sells())-1]['c'])/abs(float(self.get_monthly_sector_avg_sells()[len(self.get_monthly_sector_avg_sells())-1]['c']))
             if monthly_sells_deviation > 0.20:
                 return "Sigue así! Interactuar a menudo con los clientes es una buena métrica de fidelización, aunque tal vez implique mayor carga administrativa para tu empresa."
             elif monthly_sells_deviation > -0.20:
@@ -333,8 +333,8 @@ class Recommendations_clients:
         return "El histograma muestra el volumen de compras de tus clientes y los de tu competencia mes a mes, permitiendo identificar fortalezas y/o oportunidades comerciales en distintos momentos del año."
     
     def respuesta_clientes_frecuencia_interpretation(self):
-        #hhi_temporal_clients_deviation = float(self.hhi_temporal_clients()[len(self.hhi_temporal_clients())-1]['c']-self.temp_hhi_temporal_sector_clients()[len(self.temp_hhi_temporal_sector_clients())-1]['c'])/float(self.temp_hhi_temporal_sector_clients()[len(self.temp_hhi_temporal_sector_clients())-1]['c'])
-        hhi_temporal_clients_deviation = float(self.hhi_temporal_clients()-self.hhi_temporal_sector_clients())/float(self.hhi_temporal_sector_clients())
+        #hhi_temporal_clients_deviation = float(self.hhi_temporal_clients()[len(self.hhi_temporal_clients())-1]['c']-self.temp_hhi_temporal_sector_clients()[len(self.temp_hhi_temporal_sector_clients())-1]['c'])/abs(float(self.temp_hhi_temporal_sector_clients()[len(self.temp_hhi_temporal_sector_clients())-1]['c']))
+        hhi_temporal_clients_deviation = float(self.hhi_temporal_clients()-self.hhi_temporal_sector_clients())/abs(float(self.hhi_temporal_sector_clients()))
         if hhi_temporal_clients_deviation > 0.50:
             return "Tus clientes tienen una mayor estacionalidad en su ciclo de compras que los clientes de tu competencia."
         elif hhi_temporal_clients_deviation > -0.50:
@@ -343,8 +343,8 @@ class Recommendations_clients:
             return "Tus clientes tienen una menor estacionalidad en su ciclo de compras que los clientes de tu competencia."
 
     def respuesta_clientes_frecuencia_hint(self):
-        #hhi_temporal_clients_deviation = float(self.hhi_temporal_clients()[len(self.hhi_temporal_clients())-1]['c']-self.temp_hhi_temporal_sector_clients()[len(self.temp_hhi_temporal_sector_clients())-1]['c'])/float(self.temp_hhi_temporal_sector_clients()[len(self.temp_hhi_temporal_sector_clients())-1]['c'])
-        hhi_temporal_clients_deviation = float(self.hhi_temporal_clients()-self.hhi_temporal_sector_clients())/float(self.hhi_temporal_sector_clients())     
+        #hhi_temporal_clients_deviation = float(self.hhi_temporal_clients()[len(self.hhi_temporal_clients())-1]['c']-self.temp_hhi_temporal_sector_clients()[len(self.temp_hhi_temporal_sector_clients())-1]['c'])/abs(float(self.temp_hhi_temporal_sector_clients()[len(self.temp_hhi_temporal_sector_clients())-1]['c']))
+        hhi_temporal_clients_deviation = float(self.hhi_temporal_clients()-self.hhi_temporal_sector_clients())/abs(float(self.hhi_temporal_sector_clients())     )
         if hhi_temporal_clients_deviation > 0.50:
             return "Atención! Parece una buena estrategia realizar disminuir el riesgo de estacionalidad implícito en tu cartera de clientes. Puedes buscar nuevas oportunidades comerciales utilizando nuestro motor de recomendaciones."
         elif hhi_temporal_clients_deviation > -0.50:
@@ -359,8 +359,8 @@ class Recommendations_clients:
     
     def respuesta_clientes_penetracion_interpretation(self):
         if len(self.balance_clients_ebitda())>0:
-            #my_penetration_client_deviation = float(self.my_penetration_client()[len(self.my_penetration_client())-1]['c']-self.my_sector_penetration_client()[len(self.my_sector_penetration_client())-1]['c'])/float(self.my_sector_penetration_client()[len(self.my_sector_penetration_client())-1]['c'])
-            #my_penetration_client_deviation = float(self.my_penetration_client()-self.my_sector_penetration_client())/float(self.my_sector_penetration_client())
+            #my_penetration_client_deviation = float(self.my_penetration_client()[len(self.my_penetration_client())-1]['c']-self.my_sector_penetration_client()[len(self.my_sector_penetration_client())-1]['c'])/abs(float(self.my_sector_penetration_client()[len(self.my_sector_penetration_client())-1]['c']))
+            #my_penetration_client_deviation = float(self.my_penetration_client()-self.my_sector_penetration_client())/abs(float(self.my_sector_penetration_client()))
             my_penetration_client_deviation = 0.79
             if my_penetration_client_deviation > 0.50:
                 return "En promedio, eres un proveedor muy relevante para tus clientes."
@@ -373,8 +373,8 @@ class Recommendations_clients:
 
     def respuesta_clientes_penetracion_hint(self):
         if len(self.balance_clients_ebitda())>0:
-            #my_penetration_client_deviation = float(self.my_penetration_client()[len(self.my_penetration_client())-1]['c']-self.my_sector_penetration_client()[len(self.my_sector_penetration_client())-1]['c'])/float(self.my_sector_penetration_client()[len(self.my_sector_penetration_client())-1]['c'])
-            #my_penetration_client_deviation = float(self.my_penetration_client()-self.my_sector_penetration_client())/float(self.my_sector_penetration_client())
+            #my_penetration_client_deviation = float(self.my_penetration_client()[len(self.my_penetration_client())-1]['c']-self.my_sector_penetration_client()[len(self.my_sector_penetration_client())-1]['c'])/abs(float(self.my_sector_penetration_client()[len(self.my_sector_penetration_client())-1]['c']))
+            #my_penetration_client_deviation = float(self.my_penetration_client()-self.my_sector_penetration_client())/abs(float(self.my_sector_penetration_client()))
             my_penetration_client_deviation = 0.79
             if my_penetration_client_deviation > 0.50:
                 return "Atención! Es importante mantener la alta fidelización de tus clientes, pero tienes menos posibilidades de crecer con ellos. Puedes buscar nuevas oportunidades comerciales utilizando nuestro motor de recomendaciones."
@@ -392,10 +392,10 @@ class Recommendations_clients:
         return "Los índices de concentración miden, en una escala 0-1, la concentración de tu facturación según criterio de clientes, geográfico, sectorial o temporal. Normalmente, un elevado índicie de concentración representa un mayor riesgo para el negocio."
     
     def respuesta_clientes_concentracion_interpretation(self):
-        hhi_clients_clients_deviation = float(self.hhi_clients_clients()-self.hhi_clients_sector_clients())/float(self.hhi_clients_sector_clients())
-        hhi_geografical_clients_deviation = float(self.hhi_geografical_clients()-self.hhi_geografical_sector_clients())/float(self.hhi_geografical_sector_clients())
-        hhi_cnae_clients_deviation = float(self.hhi_cnae_clients()-self.hhi_cnae_sector_clients())/float(self.hhi_cnae_sector_clients())
-        hhi_temporal_clients_deviation = float(self.hhi_temporal_clients()-self.hhi_temporal_sector_clients())/float(self.hhi_temporal_sector_clients())
+        hhi_clients_clients_deviation = float(self.hhi_clients_clients()-self.hhi_clients_sector_clients())/abs(float(self.hhi_clients_sector_clients()))
+        hhi_geografical_clients_deviation = float(self.hhi_geografical_clients()-self.hhi_geografical_sector_clients())/abs(float(self.hhi_geografical_sector_clients()))
+        hhi_cnae_clients_deviation = float(self.hhi_cnae_clients()-self.hhi_cnae_sector_clients())/abs(float(self.hhi_cnae_sector_clients()))
+        hhi_temporal_clients_deviation = float(self.hhi_temporal_clients()-self.hhi_temporal_sector_clients())/abs(float(self.hhi_temporal_sector_clients()))
         hhi_critic_deviation_high = max(hhi_clients_clients_deviation,hhi_geografical_clients_deviation,hhi_cnae_clients_deviation,hhi_temporal_clients_deviation)
         hhi_critic_deviation_low = min(hhi_clients_clients_deviation,hhi_geografical_clients_deviation,hhi_cnae_clients_deviation,hhi_temporal_clients_deviation)
         #Solamente interpreto el hhi con desviación más elevada (donde tu como empresa peor estas)
@@ -432,10 +432,10 @@ class Recommendations_clients:
         #         return "Tu facturación está bien diversificada a lo largo del año."
 
     def respuesta_clientes_concentracion_hint(self):
-        hhi_clients_clients_deviation = float(self.hhi_clients_clients()-self.hhi_clients_sector_clients())/float(self.hhi_clients_sector_clients())
-        hhi_geografical_clients_deviation = float(self.hhi_geografical_clients()-self.hhi_geografical_sector_clients())/float(self.hhi_geografical_sector_clients())
-        hhi_cnae_clients_deviation = float(self.hhi_cnae_clients()-self.hhi_cnae_sector_clients())/float(self.hhi_cnae_sector_clients())
-        hhi_temporal_clients_deviation = float(self.hhi_temporal_clients()-self.hhi_temporal_sector_clients())/float(self.hhi_temporal_sector_clients())
+        hhi_clients_clients_deviation = float(self.hhi_clients_clients()-self.hhi_clients_sector_clients())/abs(float(self.hhi_clients_sector_clients()))
+        hhi_geografical_clients_deviation = float(self.hhi_geografical_clients()-self.hhi_geografical_sector_clients())/abs(float(self.hhi_geografical_sector_clients()))
+        hhi_cnae_clients_deviation = float(self.hhi_cnae_clients()-self.hhi_cnae_sector_clients())/abs(float(self.hhi_cnae_sector_clients()))
+        hhi_temporal_clients_deviation = float(self.hhi_temporal_clients()-self.hhi_temporal_sector_clients())/abs(float(self.hhi_temporal_sector_clients()))
         hhi_critic_deviation_high = max(hhi_clients_clients_deviation,hhi_geografical_clients_deviation,hhi_cnae_clients_deviation,hhi_temporal_clients_deviation)
         hhi_critic_deviation_low = min(hhi_clients_clients_deviation,hhi_geografical_clients_deviation,hhi_cnae_clients_deviation,hhi_temporal_clients_deviation)
         #Solamente interpreto el hhi con desviación más positiva y con desviación más negativa respecto la competencia
@@ -453,7 +453,7 @@ class Recommendations_clients:
     
     def respuesta_clientes_margen_interpretation(self):
         if len(self.balance_clients_ebitda())>0:
-            margen_comercial_clientes_deviation = float(self.margen_comercial_clientes()-self.margen_comercial_sector_clientes())/float(self.margen_comercial_sector_clientes())
+            margen_comercial_clientes_deviation = float(self.margen_comercial_clientes()-self.margen_comercial_sector_clientes())/abs(float(self.margen_comercial_sector_clientes()))
             if margen_comercial_clientes_deviation > 0.50:
                 return "Tus clientes tiene un margen comercial elevado y un buen ratio de eficiencia."
             elif margen_comercial_clientes_deviation > -0.50:
@@ -465,7 +465,7 @@ class Recommendations_clients:
 
     def respuesta_clientes_margen_hint(self):
         if len(self.balance_clients_ebitda())>0:
-            margen_comercial_clientes_deviation = float(self.margen_comercial_clientes()-self.margen_comercial_sector_clientes())/float(self.margen_comercial_sector_clientes())
+            margen_comercial_clientes_deviation = float(self.margen_comercial_clientes()-self.margen_comercial_sector_clientes())/abs(float(self.margen_comercial_sector_clientes()))
             if margen_comercial_clientes_deviation > 0.50:
                 return "Sigue así! Los márgenes elevados de tus clientes mitigan posibles riesgos de disminución del negocio. Podrías considerar subir precios."
             elif margen_comercial_clientes_deviation > -0.50:

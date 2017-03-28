@@ -418,6 +418,31 @@ Riesgo Financiero - {{ company.name }}
 			    	
 			    	</div>
 
+
+			    	<div class="row title_conf">
+			    		<div class="col m6 s12">
+			    			<div class="card grey lighten-4">
+					            <div class="card-content grey-text darken-4">
+					            	<span class="card-title">Gastos e ingressos detectados</span>
+					              <canvas id="ingresos_gastos_caja" width="300" height="140"></canvas>
+					            </div>
+					        </div>
+			    		</div>
+			    		<div class="col m6 s12">
+			    			<div class="card grey lighten-4">
+					            <div class="card-content grey-text darken-4">
+					            	<span class="card-title">Evolución de la caja</span>
+					              <canvas id="ingresos_gastos_caja_2" width="300" height="140"></canvas>
+					            </div>
+					        </div>
+					        <p class="light"><small>La evolución del flujo de caja se realiza con 50.000€ iniciales, los pagos de cuotas planificados y el volúmen de transferencias del año anterior</small></p>
+			    		</div>
+			    		<div class="row">
+			    			<p class="light"><i class="tiny material-icons grey-text text-darken-3">live_help</i> Nuestra métrica de riesgo de impago clasifica tus clientes según su probabilidad de impago en los próximos meses. Una alta concentración de clientes en estado rojo debería ser preocupante para la evolución de tu negocio</p>
+			    		</div>
+			    	</div>
+			    	
+
 			    <!-- /////////////////////////////////////////////////////////////
 				 ////// ¿Debería buscar nuevas oportunidades?
 				 ///////////////////////////////////////////////////////////// -->
@@ -608,6 +633,8 @@ Riesgo Financiero - {{ company.name }}
   	var ratio_corto_largo_graph = document.getElementById("ratio_corto_largo_graph");
   	var ratio_endeudamiento_graph = document.getElementById("ratio_endeudamiento_graph");
   	// var calendario_de_pagos = document.getElementById("calendario_de_pagos");
+  	var ingresos_gastos_caja = document.getElementById("ingresos_gastos_caja");
+  	var ingresos_gastos_caja_2 = document.getElementById("ingresos_gastos_caja_2");
   	var volumen_por_divisa_graph = document.getElementById("volumen_por_divisa_graph");
   	var gasto_financiero_graph = document.getElementById("gasto_financiero_graph");
   	
@@ -618,66 +645,129 @@ Riesgo Financiero - {{ company.name }}
   	// stackedbarchart(gasto_financiero_graph, 'hola_2', 'hola_2', {{company.costes_financiacion}}, {{company.costes_financiacion_sector}}, 'Gasto financiero')
   	stackedbarchart(ratio_endeudamiento_graph, 'hola_2', 'hola_2', {{company.ratio_endeudamiento}}, {{company.ratio_endeudamiento_sector}}, 'Ratio de endeudamiento')
   	pie(volumen_por_divisa_graph, [{{company.get_total_sells|mul:0.01}},{{company.get_total_sells|mul:0.8}}], ['Dollar', 'Euro'])
+  	HatsBarGraph(ingresos_gastos_caja, ingresos_gastos_caja_2, {{buys_amount|safe}}, {{sells_amount|safe}}, {{productos|safe}} )
   	// prepare data...
-  	function BarGraph(div, data) {//, data_sector, data_you) {
-  		// var labels_1 = [];
-  		// var labels_2 = []; 
-  		// var data_1=[];
-  		// var data_2=[];
-  		// var sector = data_sector
-  		// var you = data_you
-  		// sector.forEach(function(packet, i) {
-	   //    labels_1.push(packet.month);
-	   //    data_1.push(packet.c);
-	   //  });
-	   //  you.forEach(function(packet, i) {
-	   //  	console.log('Bar Graphs')
-	   //  	console.log(labels_1)
-	   //  	console.log(packet.month)
-	   //  	console.log(labels_1.includes(packet.month))
-	   //  	if (labels_1.includes(packet.month)==true) {
-	   //  		labels_2.push(packet.month);
-	   //    		data_2.push(packet.c);
-	   //  	} else {
-	   //  		labels_2.push(labels_1[i]);
-	   //    		data_2.push(0);
-	   //  	}
-	   //  });
-	    barchart(div, ["Jan-16","Feb-16","Mar-16","Apr-16","May-16","Jun-16","Jul-16","Aug-16","Sep-16","Oct-16","Nov-16","Dec-16"], ["Jan-16","Feb-16","Mar-16","Apr-16","May-16","Jun-16","Jul-16","Aug-16","Sep-16","Oct-16","Nov-16","Dec-16"], [328,328,328,328,328,328,328,328,328,328,328,328], [658,658,658,658,658,658,658,658,658,658,658,658], [849,849,849,849,849,849,849,849,849,849,849,849], 'Pagos mensuales') //barchart(div, labels_1, labels_2, data_1, data_2, '# Transferencias / mes')
+
+  	function zeros(dimensions) {
+	    var array = [];
+
+	    for (var i = 0; i < dimensions[0]; ++i) {
+	        array.push(dimensions.length == 1 ? 0 : zeros(dimensions.slice(1)));
+	    }
+
+	    return array;
+	}
+
+  	function HatsBarGraph(div, div2, costs, income, productos) {//, data_sector, data_you) {
+  		var labels = [];
+  		var caja = [];
+  		caja[0] = 50000;
+  		var data_income=[];
+  		var data_costs=[];
+  		suma_productos = 0
+  		for (var j = 0; j < productos.length; j = j + 1) {
+	      	suma_productos = suma_productos + productos[j]
+	    }
+  		var productos_array = [];
+  		var net = [[]];
+  		net = zeros([1, income.length]);
+  		income.forEach(function(packet, i) {
+	      data_income.push(packet.c*1.7);
+	      labels.push(packet.month);
+	      productos_array.push(-suma_productos)
+	    });
+	    costs.forEach(function(packet, i) {
+	      data_costs.push(-packet.c);
+	      net[i] = data_income[i] + data_costs[i] + productos_array[i]
+	      if (i!=0) {
+	      	caja.push(caja[i-1]+net[i]);
+	      }
+	    });
+	    hats_barchart(div, data_income, data_costs, productos_array, net, labels, "Riesgo de impago");
+	    caja_graph(div2, labels, caja, "Riesgo de impago");
   	}
 
-  	// prepare data...
-  	function LineGraph(div, data_sector, data_you) {
-  		var labels_1 = [];
-  		var labels_2 = []; 
-  		var data_1=[];
-  		var data_2=[];
-  		var sector = data_sector
-  		var you = data_you
-  		sector.forEach(function(packet, i) {
-	      labels_1.push(packet.ejercicio);
-	      data_1.push(packet.c);
-	    });
-	    you.forEach(function(packet, i) {
-	    	console.log('Line Graphs')
-	    	console.log(labels_1)
-	    	console.log(packet.ejercicio)
-	    	console.log(labels_1.includes(packet.ejercicio))
-	      	if (labels_1.includes(packet.ejercicio)==true) {
-	    		labels_2.push(packet.ejercicio);
-	      		data_2.push(packet.c);
-	    	} else {
-	    		labels_2.push(labels_1[i]);
-	      		data_2.push(0);
-	    	}
-	    });
-	    // console.log(facturacion_graph)
-	    // console.log(labels_1)
-	    // console.log(labels_2)
-	    // console.log(data_1)
-	    // console.log(data_2)
-	    line(div, labels_1, labels_2, data_1, data_2)
-  	}
+  	function caja_graph(div, labels, data1, otro) {
+    	var scatterChart = new Chart(div, {
+        type: 'line',
+        data: {
+            labels: labels,
+            datasets: [{
+            label: "Caja",
+            backgroundColor: "rgba(47,79,79,0.5)",
+            borderColor: "rgba(47,79,79,0.8)",
+            highlightFill: "rgba(47,79,79,0.75)",
+            pointHoverBackgroundColor: "rgba(47,79,79,1)",
+            showTooltip: false, //NEW OPTION DON"T NEED TO INCLUDE IT IF YOU WANT TO DISPLAY BUT WON"T HURT IF YOU DO
+            data: data1
+        }]},
+        options: {
+          responsive: true,
+          pointDotRadius: 10,
+          bezierCurve: false,
+          scaleShowVerticalLines: false,
+          scaleGridLineColor: 'black'
+        }
+    	});
+    }
+
+  	function hats_barchart(div, data_income, data_costs, productos, net, labels, title)
+        {
+        	var myChart = new Chart(div, {
+		        type: 'bar',
+		        data: {
+		            labels: labels,
+		            datasets: [{
+		            	type: 'line',
+		                label: "Net",
+		                data: net,
+		                borderColor: 'rgba(47,79,79, 1)',
+		                borderWidth: 2
+		            },{
+		            	type: 'bar',
+		                label: "Ingresos",
+		                data: data_income,
+		                backgroundColor: 'rgba(20,203,20,0.2)',
+		                borderColor: 'rgba(47,79,79, 1)',
+		                borderWidth: 1
+		            },{
+		            	type: 'bar',
+		                label: "Gastos",
+		                data: data_costs,
+		                backgroundColor: 'rgba(200,20,20,0.2)',
+		                borderColor: 'rgba(47,79,79, 1)',
+		                borderWidth: 1
+		            },{
+		            	type: 'bar',
+		                label: "Cuotas productos",
+		                data: productos,
+		                backgroundColor: 'rgba(100,20,20,0.2)',
+		                borderColor: 'rgba(47,79,79, 1)',
+		                borderWidth: 1
+		            }
+		            ]
+		        },
+		        options: {
+		            legend: {
+		                display: false,
+		                labels: {
+		                    fontColor: 'rgb(255, 99, 132)'
+		                }
+		            },
+		            scales: {
+		                yAxes: [{
+						    stacked: true,
+						    ticks: {
+				                beginAtZero: true
+				            }
+		                }],
+		                xAxes: [{
+					        stacked: true
+					    }]
+		            }
+		        }
+		    });
+    	}
 
   	function barchart(div, labels_1, labels_2, data_1, data_2, data_3, title)
         {
@@ -810,72 +900,6 @@ Riesgo Financiero - {{ company.name }}
         });
         }
 
-  	function donut(div, data, labels)
-        {
-           var myDoughnutChart = new Chart(div, {
-            type: 'doughnut',
-            data: {
-                labels: labels,
-                datasets: [
-                    {
-                        data: data,
-                        backgroundColor: [
-                            'rgba(128,128,128, 0.5)',
-                            'rgba(47,79,79, 0.5)',
-                            'rgba(119,136,153, 0.5)',
-                            'rgba(192,192,192, 0.5)',
-		                    'rgba(169,180,169, 0.5)',
-		                    'rgba(128,128,128, 0.5)',
-                    		'rgba(220,220,220, 0.5)',
-                        ],
-                        hoverBackgroundColor: [
-                            'rgba(128,128,128, 1)',
-                            'rgba(47,79,79, 1)',
-                            'rgba(119,136,153, 1)',
-                            'rgba(192,192,192, 1)',
-		                    'rgba(169,180,169, 1)',
-		                    'rgba(128,128,128, 1)',
-                    		'rgba(220,220,220, 1)',
-                        ]
-                    }]
-            },
-            animation:{
-                animateScale:true
-            }
-        });
-        }
-
-    function line(div, labels, labels2, data1, data2) {
-    	var scatterChart = new Chart(div, {
-        type: 'line',
-        data: {
-            labels: labels,
-            datasets: [{
-            label: "Comparables",
-            backgroundColor: "rgba(220,220,220,0.5)",
-            borderColor: "rgba(220,220,220,0.8)",
-            highlightFill: "rgba(220,220,220,0.75)",
-            pointHoverBackgroundColor: "rgba(220,220,220,1)",
-            showTooltip: false, //NEW OPTION DON"T NEED TO INCLUDE IT IF YOU WANT TO DISPLAY BUT WON"T HURT IF YOU DO
-            data: data1
-        }, {
-            label: "{{company.name|safe}}",
-            backgroundColor: "rgba(47,79,79,0.5)",
-            borderColor: "rgba(47,79,79,0.8)",
-            highlightFill: "rgba(47,79,79,0.75)",
-            pointHoverBackgroundColor: "rgba(47,79,79,1)",
-            showTooltip: false, //NEW OPTION DON"T NEED TO INCLUDE IT IF YOU WANT TO DISPLAY BUT WON"T HURT IF YOU DO
-            data: data2
-        }]},
-        options: {
-          responsive: true,
-          pointDotRadius: 10,
-          bezierCurve: false,
-          scaleShowVerticalLines: false,
-          scaleGridLineColor: 'black'
-        }
-    });
-    }
 </script>
 {% endblock %}
 

@@ -12,7 +12,7 @@ class Recommendations_clients_risk:
     
     def respuesta_riskcliente_fidelizacion_interacciones_interpretation(self):
         if float(self.get_monthly_sector_avg_sells()[len(self.get_monthly_sector_avg_sells())-1].get('c',0)) != 0:
-            monthly_sells_deviation = float(self.get_monthly_sells()[len(self.get_monthly_sells())-1].get('c',0)-self.get_monthly_sector_avg_sells()[len(self.get_monthly_sector_avg_sells())-1].get('c',0))/float(self.get_monthly_sector_avg_sells()[len(self.get_monthly_sector_avg_sells())-1].get('c',0))
+            monthly_sells_deviation = float(self.get_monthly_sells()[len(self.get_monthly_sells())-1].get('c',0)-self.get_monthly_sector_avg_sells()[len(self.get_monthly_sector_avg_sells())-1].get('c',0))/abs(float(self.get_monthly_sector_avg_sells()[len(self.get_monthly_sector_avg_sells())-1].get('c',0)))
             if monthly_sells_deviation > 0.20:
                 return "En promedio, interactúas más veces con tus clientes que la competencia con los suyos."
             elif monthly_sells_deviation > -0.20:
@@ -24,7 +24,7 @@ class Recommendations_clients_risk:
 
     def respuesta_riskcliente_fidelizacion_interacciones_hint(self):
         if self.get_monthly_sector_avg_sells()[len(self.get_monthly_sector_avg_sells())-1].get('c',0) != 0 or self.get_monthly_sector_avg_sells()[len(self.get_monthly_sector_avg_sells())-1].get('c',0) is None:
-            monthly_sells_deviation = float(self.get_monthly_sells()[len(self.get_monthly_sells())-1].get('c',0)-self.get_monthly_sector_avg_sells()[len(self.get_monthly_sector_avg_sells())-1].get('c',0))/float(self.get_monthly_sector_avg_sells()[len(self.get_monthly_sector_avg_sells())-1].get('c',0))
+            monthly_sells_deviation = float(self.get_monthly_sells()[len(self.get_monthly_sells())-1].get('c',0)-self.get_monthly_sector_avg_sells()[len(self.get_monthly_sector_avg_sells())-1].get('c',0))/abs(float(self.get_monthly_sector_avg_sells()[len(self.get_monthly_sector_avg_sells())-1].get('c',0)))
             if monthly_sells_deviation > 0.20:
                 return "Sigue así! Interactuar a menudo con los clientes es una buena métrica de fidelización, aunque tal vez implique mayor carga administrativa para tu empresa."
             elif monthly_sells_deviation > -0.20:
@@ -41,8 +41,8 @@ class Recommendations_clients_risk:
         return "El histograma muestra el volumen de compras de tus clientes y los de tu competencia mes a mes, permitiendo identificar fortalezas y/o oportunidades comerciales en distintos momentos del año."
     
     def respuesta_riskcliente_frecuencia_interpretation(self):
-        #hhi_temporal_clients_deviation = float(self.hhi_temporal_clients()[len(self.hhi_temporal_clients())-1]['c']-self.temp_hhi_temporal_sector_clients()[len(self.temp_hhi_temporal_sector_clients())-1]['c'])/float(self.temp_hhi_temporal_sector_clients()[len(self.temp_hhi_temporal_sector_clients())-1]['c'])
-        hhi_temporal_clients_deviation = float(self.hhi_temporal_clients()-self.hhi_temporal_sector_clients())/float(self.hhi_temporal_sector_clients())
+        #hhi_temporal_clients_deviation = float(self.hhi_temporal_clients()[len(self.hhi_temporal_clients())-1]['c']-self.temp_hhi_temporal_sector_clients()[len(self.temp_hhi_temporal_sector_clients())-1]['c'])/abs(float(self.temp_hhi_temporal_sector_clients()[len(self.temp_hhi_temporal_sector_clients())-1]['c']))
+        hhi_temporal_clients_deviation = float(self.hhi_temporal_clients()-self.hhi_temporal_sector_clients())/abs(float(self.hhi_temporal_sector_clients()))
         if hhi_temporal_clients_deviation > 0.50:
             return "Tus clientes tienen una mayor estacionalidad en su ciclo de compras que los clientes de tu competencia."
         elif hhi_temporal_clients_deviation > -0.50:
@@ -51,8 +51,8 @@ class Recommendations_clients_risk:
             return "Tus clientes tienen una menor estacionalidad en su ciclo de compras que los clientes de tu competencia."
 
     def respuesta_riskcliente_frecuencia_hint(self):
-        #hhi_temporal_clients_deviation = float(self.hhi_temporal_clients()[len(self.hhi_temporal_clients())-1]['c']-self.temp_hhi_temporal_sector_clients()[len(self.temp_hhi_temporal_sector_clients())-1]['c'])/float(self.temp_hhi_temporal_sector_clients()[len(self.temp_hhi_temporal_sector_clients())-1]['c'])
-        hhi_temporal_clients_deviation = float(self.hhi_temporal_clients()-self.hhi_temporal_sector_clients())/float(self.hhi_temporal_sector_clients())     
+        #hhi_temporal_clients_deviation = float(self.hhi_temporal_clients()[len(self.hhi_temporal_clients())-1]['c']-self.temp_hhi_temporal_sector_clients()[len(self.temp_hhi_temporal_sector_clients())-1]['c'])/abs(float(self.temp_hhi_temporal_sector_clients()[len(self.temp_hhi_temporal_sector_clients())-1]['c']))
+        hhi_temporal_clients_deviation = float(self.hhi_temporal_clients()-self.hhi_temporal_sector_clients())/abs(float(self.hhi_temporal_sector_clients())     )
         if hhi_temporal_clients_deviation > 0.50:
             return "Atención! Parece una buena estrategia realizar disminuir el riesgo de estacionalidad implícito en tu cartera de clientes. Puedes buscar nuevas oportunidades comerciales utilizando nuestro motor de recomendaciones."
         elif hhi_temporal_clients_deviation > -0.50:
@@ -67,8 +67,8 @@ class Recommendations_clients_risk:
     
     def respuesta_riskcliente_penetracion_interpretation(self):
         if len(self.balance_clients_ebitda())>0:
-            #my_penetration_client_deviation = float(self.my_penetration_client()[len(self.my_penetration_client())-1]['c']-self.my_sector_penetration_client()[len(self.my_sector_penetration_client())-1]['c'])/float(self.my_sector_penetration_client()[len(self.my_sector_penetration_client())-1]['c'])
-            #my_penetration_client_deviation = float(self.my_penetration_client()-self.my_sector_penetration_client())/float(self.my_sector_penetration_client())
+            #my_penetration_client_deviation = float(self.my_penetration_client()[len(self.my_penetration_client())-1]['c']-self.my_sector_penetration_client()[len(self.my_sector_penetration_client())-1]['c'])/abs(float(self.my_sector_penetration_client()[len(self.my_sector_penetration_client())-1]['c']))
+            #my_penetration_client_deviation = float(self.my_penetration_client()-self.my_sector_penetration_client())/abs(float(self.my_sector_penetration_client()))
             my_penetration_client_deviation = 0.79
             if my_penetration_client_deviation > 0.50:
                 return "En promedio, eres un proveedor muy relevante para tus clientes."
@@ -81,8 +81,8 @@ class Recommendations_clients_risk:
 
     def respuesta_riskcliente_penetracion_hint(self):
         if len(self.balance_clients_ebitda())>0:
-            #my_penetration_client_deviation = float(self.my_penetration_client()[len(self.my_penetration_client())-1]['c']-self.my_sector_penetration_client()[len(self.my_sector_penetration_client())-1]['c'])/float(self.my_sector_penetration_client()[len(self.my_sector_penetration_client())-1]['c'])
-            #my_penetration_client_deviation = float(self.my_penetration_client()-self.my_sector_penetration_client())/float(self.my_sector_penetration_client())
+            #my_penetration_client_deviation = float(self.my_penetration_client()[len(self.my_penetration_client())-1]['c']-self.my_sector_penetration_client()[len(self.my_sector_penetration_client())-1]['c'])/abs(float(self.my_sector_penetration_client()[len(self.my_sector_penetration_client())-1]['c']))
+            #my_penetration_client_deviation = float(self.my_penetration_client()-self.my_sector_penetration_client())/abs(float(self.my_sector_penetration_client()))
             my_penetration_client_deviation = 0.79
             if my_penetration_client_deviation > 0.50:
                 return "Sigue así! Es importante mantener la alta fidelización de tus clientes, pero tienes menos posibilidades de crecer con ellos. Puedes buscar nuevas oportunidades comerciales utilizando nuestro motor de recomendaciones."
@@ -97,10 +97,10 @@ class Recommendations_clients_risk:
 # Riesgo de concentración - Índices de concentración
 
     def respuesta_riskcliente_concentracion_clientes_hint(self):
-        hhi_clients_clients_deviation = float(self.hhi_clients_clients()-self.hhi_clients_sector_clients())/float(self.hhi_clients_sector_clients())
-        # hhi_geografical_clients_deviation = float(self.hhi_geografical_clients()-self.hhi_geografical_sector_clients())/float(self.hhi_geografical_sector_clients())
-        # hhi_cnae_clients_deviation = float(self.hhi_cnae_clients()-self.hhi_cnae_sector_clients())/float(self.hhi_cnae_sector_clients())
-        # hhi_temporal_clients_deviation = float(self.hhi_temporal_clients()-self.hhi_temporal_sector_clients())/float(self.hhi_temporal_sector_clients())
+        hhi_clients_clients_deviation = float(self.hhi_clients_clients()-self.hhi_clients_sector_clients())/abs(float(self.hhi_clients_sector_clients()))
+        # hhi_geografical_clients_deviation = float(self.hhi_geografical_clients()-self.hhi_geografical_sector_clients())/abs(float(self.hhi_geografical_sector_clients()))
+        # hhi_cnae_clients_deviation = float(self.hhi_cnae_clients()-self.hhi_cnae_sector_clients())/abs(float(self.hhi_cnae_sector_clients()))
+        # hhi_temporal_clients_deviation = float(self.hhi_temporal_clients()-self.hhi_temporal_sector_clients())/abs(float(self.hhi_temporal_sector_clients()))
         # hhi_critic_deviation_high = Max(hhi_clients_clients_deviation,hhi_geografical_clients_deviation,hhi_cnae_clients_deviation,hhi_temporal_clients_deviation)
         # hhi_critic_deviation_low = Min(hhi_clients_clients_deviation,hhi_geografical_clients_deviation,hhi_cnae_clients_deviation,hhi_temporal_clients_deviation)
         #Solamente interpreto el hhi con desviación más positiva y con desviación más negativa respecto la competencia
@@ -112,10 +112,10 @@ class Recommendations_clients_risk:
             return "Sigue así! Es recomendable mantener unos índices de concentración bajos, pero podrías analizar si tienes oportunidades de crecimiento específicas. Puedes buscar nuevas oportunidades comerciales utilizando nuestro motor de recomendaciones, filtrando por tus prioridades de diversificación"
 
     def respuesta_riskcliente_concentracion_geografical_hint(self):
-        # hhi_clients_clients_deviation = float(self.hhi_clients_clients()-self.hhi_clients_sector_clients())/float(self.hhi_clients_sector_clients())
-        hhi_geografical_clients_deviation = float(self.hhi_geografical_clients()-self.hhi_geografical_sector_clients())/float(self.hhi_geografical_sector_clients())
-        # hhi_cnae_clients_deviation = float(self.hhi_cnae_clients()-self.hhi_cnae_sector_clients())/float(self.hhi_cnae_sector_clients())
-        # hhi_temporal_clients_deviation = float(self.hhi_temporal_clients()-self.hhi_temporal_sector_clients())/float(self.hhi_temporal_sector_clients())
+        # hhi_clients_clients_deviation = float(self.hhi_clients_clients()-self.hhi_clients_sector_clients())/abs(float(self.hhi_clients_sector_clients()))
+        hhi_geografical_clients_deviation = float(self.hhi_geografical_clients()-self.hhi_geografical_sector_clients())/abs(float(self.hhi_geografical_sector_clients()))
+        # hhi_cnae_clients_deviation = float(self.hhi_cnae_clients()-self.hhi_cnae_sector_clients())/abs(float(self.hhi_cnae_sector_clients()))
+        # hhi_temporal_clients_deviation = float(self.hhi_temporal_clients()-self.hhi_temporal_sector_clients())/abs(float(self.hhi_temporal_sector_clients()))
         # hhi_critic_deviation_high = Max(hhi_clients_clients_deviation,hhi_geografical_clients_deviation,hhi_cnae_clients_deviation,hhi_temporal_clients_deviation)
         # hhi_critic_deviation_low = Min(hhi_clients_clients_deviation,hhi_geografical_clients_deviation,hhi_cnae_clients_deviation,hhi_temporal_clients_deviation)
         #Solamente interpreto el hhi con desviación más positiva y con desviación más negativa respecto la competencia
@@ -127,10 +127,10 @@ class Recommendations_clients_risk:
             return "Sigue así! Es recomendable mantener unos índices de concentración bajos, pero podrías analizar si tienes oportunidades de crecimiento específicas. Puedes buscar nuevas oportunidades comerciales utilizando nuestro motor de recomendaciones, filtrando por tus prioridades de diversificación."
 
     def respuesta_riskcliente_concentracion_cnae_hint(self):
-        # hhi_clients_clients_deviation = float(self.hhi_clients_clients()-self.hhi_clients_sector_clients())/float(self.hhi_clients_sector_clients())
-        # hhi_geografical_clients_deviation = float(self.hhi_geografical_clients()-self.hhi_geografical_sector_clients())/float(self.hhi_geografical_sector_clients())
-        hhi_cnae_clients_deviation = float(self.hhi_cnae_clients()-self.hhi_cnae_sector_clients())/float(self.hhi_cnae_sector_clients())
-        # hhi_temporal_clients_deviation = float(self.hhi_temporal_clients()-self.hhi_temporal_sector_clients())/float(self.hhi_temporal_sector_clients())
+        # hhi_clients_clients_deviation = float(self.hhi_clients_clients()-self.hhi_clients_sector_clients())/abs(float(self.hhi_clients_sector_clients()))
+        # hhi_geografical_clients_deviation = float(self.hhi_geografical_clients()-self.hhi_geografical_sector_clients())/abs(float(self.hhi_geografical_sector_clients()))
+        hhi_cnae_clients_deviation = float(self.hhi_cnae_clients()-self.hhi_cnae_sector_clients())/abs(float(self.hhi_cnae_sector_clients()))
+        # hhi_temporal_clients_deviation = float(self.hhi_temporal_clients()-self.hhi_temporal_sector_clients())/abs(float(self.hhi_temporal_sector_clients()))
         # hhi_critic_deviation_high = Max(hhi_clients_clients_deviation,hhi_geografical_clients_deviation,hhi_cnae_clients_deviation,hhi_temporal_clients_deviation)
         # hhi_critic_deviation_low = Min(hhi_clients_clients_deviation,hhi_geografical_clients_deviation,hhi_cnae_clients_deviation,hhi_temporal_clients_deviation)
         #Solamente interpreto el hhi con desviación más positiva y con desviación más negativa respecto la competencia
@@ -142,10 +142,10 @@ class Recommendations_clients_risk:
             return "Sigue así! Es recomendable mantener unos índices de concentración bajos, pero podrías analizar si tienes oportunidades de crecimiento específicas. Puedes buscar nuevas oportunidades comerciales utilizando nuestro motor de recomendaciones, filtrando por tus prioridades de diversificación."
 
     def respuesta_riskcliente_concentracion_temporal_hint(self):
-        # hhi_clients_clients_deviation = float(self.hhi_clients_clients()-self.hhi_clients_sector_clients())/float(self.hhi_clients_sector_clients())
-        # hhi_geografical_clients_deviation = float(self.hhi_geografical_clients()-self.hhi_geografical_sector_clients())/float(self.hhi_geografical_sector_clients())
-        # hhi_cnae_clients_deviation = float(self.hhi_cnae_clients()-self.hhi_cnae_sector_clients())/float(self.hhi_cnae_sector_clients())
-        hhi_temporal_clients_deviation = float(self.hhi_temporal_clients()-self.hhi_temporal_sector_clients())/float(self.hhi_temporal_sector_clients())
+        # hhi_clients_clients_deviation = float(self.hhi_clients_clients()-self.hhi_clients_sector_clients())/abs(float(self.hhi_clients_sector_clients()))
+        # hhi_geografical_clients_deviation = float(self.hhi_geografical_clients()-self.hhi_geografical_sector_clients())/abs(float(self.hhi_geografical_sector_clients()))
+        # hhi_cnae_clients_deviation = float(self.hhi_cnae_clients()-self.hhi_cnae_sector_clients())/abs(float(self.hhi_cnae_sector_clients()))
+        hhi_temporal_clients_deviation = float(self.hhi_temporal_clients()-self.hhi_temporal_sector_clients())/abs(float(self.hhi_temporal_sector_clients()))
         # hhi_critic_deviation_high = Max(hhi_clients_clients_deviation,hhi_geografical_clients_deviation,hhi_cnae_clients_deviation,hhi_temporal_clients_deviation)
         # hhi_critic_deviation_low = Min(hhi_clients_clients_deviation,hhi_geografical_clients_deviation,hhi_cnae_clients_deviation,hhi_temporal_clients_deviation)
         #Solamente interpreto el hhi con desviación más positiva y con desviación más negativa respecto la competencia

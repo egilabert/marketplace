@@ -785,6 +785,11 @@ def FinancialRiskRecommendationsView(request):
 			ultimos_eeff = company.estados_financieros.reverse()[0]
 		except:
 			ultimos_eeff = Empresa()
+
+		cuotas_productos = []
+		for producto in company.productos.all():
+			cuotas_productos.append(producto.cuota_mensual())
+
 		context = {
 			'company':company,
 			'dias_a_pagar_sector': dias_a_pagar_sector,
@@ -796,6 +801,11 @@ def FinancialRiskRecommendationsView(request):
 			'deuda_largo': deuda_largo,
 			'ratio_corto_largo': ratio_corto_largo,
 			'deuda_corto': deuda_corto,
+			'productos': json.dumps(cuotas_productos, cls=DjangoJSONEncoder),
+			'buys_amount': json.dumps(list(company.get_monthly_buys_amount()), cls=DjangoJSONEncoder),
+			'buys_count': json.dumps(list(company.get_monthly_buys()), cls=DjangoJSONEncoder),
+			'sells_amount': json.dumps(list(company.get_monthly_sells_amount()), cls=DjangoJSONEncoder),
+			'sells_count': json.dumps(list(company.get_monthly_sells()), cls=DjangoJSONEncoder),
 			'productos_variable': company.productos_con_tipo_variable().all(),
 			'ultimos_eeff': ultimos_eeff,
 			'journey': request.session.get('journey'),
