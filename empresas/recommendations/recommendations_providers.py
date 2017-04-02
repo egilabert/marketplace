@@ -312,7 +312,7 @@ class Recommendations_providers:
 # Debería buscar nuevas ooportunidades? - Índices de concentración
 
     def respuesta_providers_concentracion_info(self):
-        return "Los índices de concentración miden, en una escala 0-1, la concentración de tus pagos según criterio de proveedores, geográfico, sectorial o temporal. Normalmente, un elevado índicie de concentración representa un mayor riesgo para el negocio"
+        return "Los índices de concentración miden, la concentración de tus pagos según criterio de proveedores, geográfico, sectorial o temporal. Normalmente, un elevado índicie de concentración representa un mayor riesgo para el negocio"
     
     def respuesta_providers_concentracion_interpretation(self):
         hhi_clients_providers_deviation = float(self.hhi_providers()-self.hhi_providers_sector())/abs(float(self.hhi_providers_sector()))

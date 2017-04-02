@@ -389,7 +389,7 @@ class Recommendations_clients:
 # Debería buscar nuevas ooportunidades? - Índices de concentración
 
     def respuesta_clientes_concentracion_info(self):
-        return "Los índices de concentración miden, en una escala 0-1, la concentración de tu facturación según criterio de clientes, geográfico, sectorial o temporal. Normalmente, un elevado índicie de concentración representa un mayor riesgo para el negocio."
+        return "Los índices de concentración miden, la concentración de tu facturación según criterio de clientes, geográfico, sectorial o temporal. Normalmente, un elevado índicie de concentración representa un mayor riesgo para el negocio."
     
     def respuesta_clientes_concentracion_interpretation(self):
         hhi_clients_clients_deviation = float(self.hhi_clients_clients()-self.hhi_clients_sector_clients())/abs(float(self.hhi_clients_sector_clients()))
