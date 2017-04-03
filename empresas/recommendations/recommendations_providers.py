@@ -324,7 +324,7 @@ class Recommendations_providers:
         #Solamente interpreto el hhi con desviación más elevada (donde tu como empresa peor estas)
         if hhi_clients_providers_deviation == hhi_critic_deviation_high:
             if hhi_clients_providers_deviation > 0.50:
-                return "Tus pagos están muy concentrados en unos pocos proveedores."
+                return "Baja diversificación de tus compras a proveedores, efectuadas en muy pocas provincias"
             elif hhi_clients_providers_deviation > -0.50:
                 return "Tus pagos están razonablemente distribuidos entre tus proveedores."
             else:
