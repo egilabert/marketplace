@@ -13,14 +13,14 @@
 
 
 
-<div class="parallax-container">
+	<div class="parallax-container">
 		<!-- <h3 class="center-align grey-text text-darken-3 light">Rocky clients are not all the same</h3> -->
 		<h3 class="center-align grey-text text-darken-3 light">No todos los clientes son iguales</h3>
 	    <div class="parallax"><img src="{% static 'images/rocks.jpg' %}"></div>
 	</div>
 
 	{% if journey %}
-<div class="mdl-card mdl-shadow--2dp">
+	<div class="mdl-card mdl-shadow--2dp">
 
       <div class="mdl-card__supporting-text">
 
@@ -110,7 +110,6 @@
 
       	  </div>
 
-
 	      <div class="col s9 l9">
 			<!-- Page Layout here -->
 		    	<div id="cards_container">
@@ -118,15 +117,14 @@
 		    		<div class="col s12 m4 cards-container">
 
 					{% for obj in recommended_clients %}
-						{% if  obj.similarity > -1000 %}
-							{% if  forloop.counter|add:"-1"|divisibleby:3 %}
+							{% if forloop.counter|add:"-1"|divisibleby:3 %}
 							<div class="card blue-grey lighten-4 hoverable">
 							    <div class="card-image waves-effect waves-block waves-light">
-							      <img class="activator" src="{{ obj.clientes_recomendados.image}}">
+							      <img class="activator" src="{{obj.image}}">
 							    </div>
 							    <div class="card-content">
 							    	<div class="row">
-							      		<span class="activator center-align grey-text text-darken-4"> {{ obj.clientes_recomendados.name}}</span>
+							      		<span class="activator center-align grey-text text-darken-4"> {{obj.name}}</span>
 							      	</div>
 							      	<div class="divider"></div>
 							      	<br>
@@ -155,29 +153,28 @@
 							      			<i class="fa fa-user left-align" aria-hidden="true"></i><span class="grey-text light text-darken-4"> Cliente propio: 
 							      		</div>
 							      		<div class="col l4 s4">
-							      			<span class="right-align black-text "> {{ obj.clientes_recomendados.own_client}} </span>
+							      			<span class="right-align black-text "> {{ obj.own_client}} </span>
 							      		</div>
 							      	</div>
 								    <div class="card-action">
-								    	<a class="blue-grey-text text-darken-3" href="{{ obj.clientes_recomendados.get_absolute_url }}">Ver detalle</a>
+								    	<a class="blue-grey-text text-darken-3" href="{{ obj.get_absolute_url }}">Ver detalle</a>
 								      	<span ><i class="material-icons right activator center">more_vert</i></span>
 								    </div>
 							    </div>
 							    <div class="card-reveal">
 							    	<span class="card-title">Actividad:<i class="material-icons right">close</i></span>
 							    	<div class="row">
-							      		<p class="grey-text text-darken-4">{{ obj.clientes_recomendados.cnae_2 }}</p>
-							      		<p class="grey-text text-darken-4">{{ obj.clientes_recomendados.cnae }}</p>
+							      		<p class="grey-text text-darken-4">{{ obj.cnae_2 }}</p>
+							      		<p class="grey-text text-darken-4">{{ obj.cnae }}</p>
 							      	</div>
 							      	<span class="card-title">Localización:</span>
 							      	<div class="row">
-							      		<p class="grey-text text-darken-4">{{ obj.clientes_recomendados.territorial }}</p>
+							      		<p class="grey-text text-darken-4">{{ obj.territorial }}</p>
 							      	</div>
 							    </div>
 							</div>
 
 							{% endif %}
-					    {% endif %}
 					{% endfor %}
 					</div>
 
@@ -185,18 +182,15 @@
 
 					<div class="col s12 m4 cards-container">
 						{% for obj in recommended_clients %}
-						
-							{% if  obj.similarity > -1000 %}
-
 							{% if forloop.counter|add:"-2"|divisibleby:3 %}
 
 							<div class="card blue-grey lighten-4 hoverable">
 							    <div class="card-image waves-effect waves-block waves-light">
-							      <img class="activator" src='{{ obj.clientes_recomendados.image}}'>
+							      <img class="activator" src='{{ obj.image}}'>
 							    </div>
 							    <div class="card-content">
 							    	<div class="row">
-							      		<span class="activator center-align grey-text text-darken-4"> {{ obj.clientes_recomendados.name}}</span>
+							      		<span class="activator center-align grey-text text-darken-4"> {{ obj.name}}</span>
 							      	</div>
 							      	<div class="divider"></div>
 							      	<br>
@@ -225,46 +219,42 @@
 							      			<i class="fa fa-user left-align" aria-hidden="true"></i><span class="grey-text light text-darken-4"> Cliente propio: 
 							      		</div>
 							      		<div class="col l4 s4">
-							      			<span class="right-align black-text ">  {{ obj.clientes_recomendados.own_client}} </span>
+							      			<span class="right-align black-text ">  {{ obj.own_client}} </span>
 							      		</div>
 							      	</div>
 								    <div class="card-action">
-								    	<a class="blue-grey-text text-darken-3" href="{{ obj.clientes_recomendados.get_absolute_url }}">Ver detalle</a>
+								    	<a class="blue-grey-text text-darken-3" href="{{ obj.get_absolute_url }}">Ver detalle</a>
 								      	<span ><i class="material-icons right activator center">more_vert</i></span>
 								    </div>
 							    </div>
 							    <div class="card-reveal">
 							    	<span class="card-title">Actividad:<i class="material-icons right">close</i></span>
 							    	<div class="row">
-							      		<p class="grey-text text-darken-4">{{ obj.clientes_recomendados.cnae_2 }}</p>
-							      		<p class="grey-text text-darken-4">{{ obj.clientes_recomendados.cnae }}</p>
+							      		<p class="grey-text text-darken-4">{{ obj.cnae_2 }}</p>
+							      		<p class="grey-text text-darken-4">{{ obj.cnae }}</p>
 							      	</div>
 							      	<span class="card-title">Localización:</span>
 							      	<div class="row">
-							      		<p class="grey-text text-darken-4">{{ obj.clientes_recomendados.territorial }}</p>
+							      		<p class="grey-text text-darken-4">{{ obj.territorial }}</p>
 							      	</div>
 							    </div>
 							</div>
 
 							{% endif %}
-					    {% endif %}
 					{% endfor %}
 					</div>
 
 					<div class="col s12 m4 cards-container">
 						{% for obj in recommended_clients %}
-
-							{% if  obj.similarity > -1000 %}
-						
 							{% if forloop.counter|add:"-3"|divisibleby:3 %}
 
 							<div class="card blue-grey lighten-4 hoverable">
 							    <div class="card-image waves-effect waves-block waves-light">
-							      <img class="activator" src='{{ obj.clientes_recomendados.image}}'>
+							      <img class="activator" src='{{ obj.image}}'>
 							    </div>
 							    <div class="card-content">
 							    	<div class="row">
-							      		<span class="activator center-align grey-text text-darken-4"> {{ obj.clientes_recomendados.name}}</span>
+							      		<span class="activator center-align grey-text text-darken-4"> {{ obj.name}}</span>
 							      	</div>
 							      	<div class="divider"></div>
 							      	<br>
@@ -293,31 +283,28 @@
 							      			<i class="fa fa-user left-align" aria-hidden="true"></i><span class="grey-text light text-darken-4"> Cliente propio: 
 							      		</div>
 							      		<div class="col l4 s4">
-							      			<span class="right-align black-text ">  {{ obj.clientes_recomendados.own_client}} </span>
+							      			<span class="right-align black-text ">  {{ obj.own_client}} </span>
 							      		</div>
 							      	</div>
 								    <div class="card-action">
-								    	<a class="blue-grey-text text-darken-3" href="{{ obj.clientes_recomendados.get_absolute_url }}">Ver detalle</a>
+								    	<a class="blue-grey-text text-darken-3" href="{{ obj.get_absolute_url }}">Ver detalle</a>
 								      	<span ><i class="material-icons right activator center">more_vert</i></span>
 								    </div>
 							    </div>
 							    <div class="card-reveal">
 							    	<span class="card-title">Actividad:<i class="material-icons right">close</i></span>
 							    	<div class="row">
-							      		<p class="grey-text text-darken-4">{{ obj.clientes_recomendados.cnae_2 }}</p>
-							      		<p class="grey-text text-darken-4">{{ obj.clientes_recomendados.cnae }}</p>
+							      		<p class="grey-text text-darken-4">{{ obj.cnae_2 }}</p>
+							      		<p class="grey-text text-darken-4">{{ obj.cnae }}</p>
 							      	</div>
 							      	<span class="card-title">Localización:</span>
 							      	<div class="row">
-							      		<p class="grey-text text-darken-4">{{ obj.clientes_recomendados.territorial }}</p>
+							      		<p class="grey-text text-darken-4">{{ obj.territorial }}</p>
 							      	</div>
 							    </div>
 							</div>
 
 					    {% endif %}
-
-				    {% endif %}
-
 				{% endfor %}
 				</div>
 

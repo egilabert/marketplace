@@ -995,12 +995,17 @@ class Empresa(models.Model, r_clients.Recommendations_clients,
     
     # General Helpers
     # ------------------------------------------------------------------
+    def get_recommended_clients_v2(self):
+        return self.clients_of_sector_companies().exclude(name__in=self.get_clients())[:50]
+
+    def get_recommended_providers_v2(self):
+        return self.providers_of_sector_companies().exclude(name__in=self.get_providers())[:50]
 
     def get_recommended_clients(self):
         return RecommendedClients.objects.filter(empresa__in=self.clients_of_sector_companies()).exclude(empresa__in=self.get_clients()).annotate(Count('clientes_recomendados', distinct=True)).order_by('-similarity')
 
     def get_recommended_providers(self):
-        return RecommendedClients.objects.filter(empresa__in=self.providers_of_sector_companies()).exclude(empresa__in=self.get_clients()).annotate(Count('clientes_recomendados', distinct=True)).order_by('-similarity')
+        return RecommendedClients.objects.filter(empresa__in=self.providers_of_sector_companies()).exclude(empresa__in=self.get_providers()).annotate(Count('clientes_recomendados', distinct=True)).order_by('-similarity')
 
     def get_sectors(self, qs):
         group_by = qs.values("cnae_2").annotate(count=Count('id', distinct=True)).order_by('-count')
@@ -1017,7 +1022,7 @@ class Empresa(models.Model, r_clients.Recommendations_clients,
     def get_sector_companies(self):
         if self.temp_get_sector_companies is None:
             self.temp_get_sector_companies = Empresa.objects.filter(cnae=self.cnae).exclude(fiscal_id=self.fiscal_id)
-            #self.temp_get_sector_companies = Empresa.objects.filter(clientes_recomendados__empresa=self).filter(recommended__similarity__gt=0.95).annotate(Count('name', distinct=True))
+            #self.temp_get_sector_companies = Empresa.objects.filter(clientes_recomendados__empresa=self).filter(recommended__similarity__gt=0.5).annotate(Count('name', distinct=True))
         return self.temp_get_sector_companies
 
     # Helpers de CIRBE
@@ -1178,6 +1183,23 @@ class Empresa(models.Model, r_clients.Recommendations_clients,
 
     def get_sector_providers(self):
         return self.providers_of_sector_companies().count()
+
+    temp_factoring_preaprobado = None
+
+    def factoring_preaprobado(self):
+        if self.temp_factoring_preaprobado is None:
+            if self.estados_financieros.last():
+                if int(self.estados_financieros.last().ebitda * 0.15) > 5000:
+                    self.temp_factoring_preaprobado = int(self.estados_financieros.last().ebitda * 0.15 / 1000)*1000
+                    return self.temp_factoring_preaprobado
+                else:
+                    self.temp_factoring_preaprobado = 5000
+                    return self.temp_factoring_preaprobado
+            else:
+                self.temp_factoring_preaprobado = 5000
+                return self.temp_factoring_preaprobado
+        else:
+            return self.temp_factoring_preaprobado
 
     # Helpers de Django
     # ------------------------------------------------------------------
@@ -1358,22 +1380,7 @@ class RecommendedClients(models.Model):
     empresa = models.ForeignKey(Empresa, related_name='recommended', on_delete=models.CASCADE)
     similarity = models.FloatField()
     clientes_recomendados = models.ForeignKey(Empresa, related_name='clientes_recomendados', on_delete=models.CASCADE)
-    temp_factoring_preaprobado = None
-
-    def factoring_preaprobado(self):
-        if self.temp_factoring_preaprobado is None:
-            if self.clientes_recomendados.estados_financieros.last():
-                if int(self.clientes_recomendados.estados_financieros.last().ebitda * 0.15) > 5000:
-                    self.temp_factoring_preaprobado = int(self.clientes_recomendados.estados_financieros.last().ebitda * 0.15 / 1000)*1000
-                    return self.temp_factoring_preaprobado
-                else:
-                    self.temp_factoring_preaprobado = 5000
-                    return self.temp_factoring_preaprobado
-            else:
-                self.temp_factoring_preaprobado = 5000
-                return self.temp_factoring_preaprobado
-        else:
-            return self.temp_factoring_preaprobado
+    
 
     def __unicode__(self):
         return str(self.similarity)

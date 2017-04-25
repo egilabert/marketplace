@@ -32,7 +32,7 @@
 		<svg width="960" height="600"></svg>
 		<h4>{{company.name}} - {{company.cnae}}</h4>
 		
-		<div class="row">
+		<div class="row container">
 			<div class="col m6">
 			<h4>Clientes</h4>
 			<div class="divider"></div>
@@ -42,29 +42,59 @@
 			{% endfor %}
 			</div>
 			<div class="col m6">
-			<h4>Recommended clients</h4>
+			<h4>Proveedores</h4>
 			<div class="divider"></div>
-			{% for c in rec %}
+			{% for c in company.get_providers %}
+				<p>{{c.name}} - {{c.id}}</p><p>{{c.cnae}}</p>
+				<div class="divider"></div>
+			{% endfor %}
+			</div>
+
+			<div class="col m12">
+			<h4>Competencia</h4>
+			<div class="divider"></div>
+			{% for c in company.get_sector_companies %}
 				<p>{{c.name}}</p><p>{{c.cnae}}</p>
 				<div class="divider"></div>
 			{% endfor %}
 			</div>
 		</div>
 
+		{{ company.get_sector_clients }}
+		{{ company.get_sector_providers }}
 
-		<div class="row">
+		<div class="row container">
 			<div class="col m6">
-			<h4>Competencia</h4>
+			<h4>Clients of sector companies</h4>
 			<div class="divider"></div>
-			{% for c in company.get_sector_companies %}
+			{% for c in company.clients_of_sector_companies %}
 				<p>{{c.name}} - {{c.recommended.similarity}}</p><p>{{c.cnae}}</p>
 				<div class="divider"></div>
 			{% endfor %}
 			</div>
 			<div class="col m6">
-			<h4>Clientes competencia</h4>
+			<h4>Providers of sector companies</h4>
 			<div class="divider"></div>
-			{% for c in company.clients_of_sector_companies %}
+			{% for c in company.providers_of_sector_companies %}
+				<p>{{c.name}}</p><p>{{c.cnae}}</p>
+				<div class="divider"></div>
+			{% endfor %}
+			</div>
+		</div>
+
+		<div class="row container">
+			<div class="col m6">
+			<h4>Clients recomendados</h4>
+			<div class="divider"></div>
+			{% for c in company.get_recommended_clients_v2 %}
+				<p>{{c.name}} </p><p>{{c.cnae}}</p>
+				<div class="divider"></div>
+			{% endfor %}
+			</div>
+			<div class="col m6">
+			<h4>Providers of sector companies</h4>
+			<div class="divider"></div>
+			{% for c in company.get_recommended_providers_v2 %}
 				<p>{{c.name}}</p><p>{{c.cnae}}</p>
 				<div class="divider"></div>
 			{% endfor %}
