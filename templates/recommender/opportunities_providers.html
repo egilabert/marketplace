@@ -16,7 +16,7 @@ Proveedores guardados
 	    <div class="parallax"><img src="{% static 'images/supplier.jpg' %}"></div>
 	</div>
     <h4 class="center title light padding_title">New clients found for <a href="{% url 'recommender:detail' pk=company.pk %}">{{company.name}}</a></h4>
-    <h5 class="light center">CNAE: {{ company.cnae }}</h5>
+    <h5 class="light center">CNAE: {{ company.cnae_2 }}</h5>
     <!-- <h6 class="light center">{{ company.transfers.count }} transfers ({{ company.average_transfer | floatformat }}€ average transfer amount)</h6> -->
     <h6 class="light center">{{ saved_providers.count }} Recomendaciones</h6>
 
@@ -69,7 +69,6 @@ Proveedores guardados
 		    		<div class="col s12 m4 cards-container">
 
 					{% for obj in saved_providers %}
-						{% if  obj.similarity > -1000 %}
 							{% if  forloop.counter|add:"-1"|divisibleby:3 %}
 							<div class="card brown lighten-5 hoverable">
 							    <div class="card-image waves-effect waves-block waves-light">
@@ -86,7 +85,7 @@ Proveedores guardados
 							      			<i class="fa fa-bullseye left-align" aria-hidden="true"></i><span class="grey-text light text-darken-4"> Match: 
 							      		</div>
 							      		<div class="col s6">
-							      			<span class="right-align flow-text" style="color: {% if obj.similarity > 0.7 %}green{% elif obj.similarity > 0.3 %} orange{% else %}red{% endif %}"> {{ obj.similarity|mul:10|floatformat }}</span></span>
+							      			<span class="right-align flow-text" style="color: {% if obj.spec_similarity > 0.7 %}green{% elif obj.spec_similarity > 0.3 %} orange{% else %}red{% endif %}"> {{ obj.spec_similarity|mul:10|floatformat }}</span></span>
 							      		</div>
 							      	</div>
 							      	<div class="row">
@@ -118,7 +117,6 @@ Proveedores guardados
 							</div>
 
 							{% endif %}
-					    {% endif %}
 					{% endfor %}
 					</div>
 
@@ -126,9 +124,6 @@ Proveedores guardados
 
 					<div class="col s12 m4 cards-container">
 						{% for obj in saved_providers %}
-						
-							{% if  obj.similarity > -1000 %}
-
 							{% if forloop.counter|add:"-2"|divisibleby:3 %}
 
 							<div class="card brown lighten-5 hoverable">
@@ -146,7 +141,7 @@ Proveedores guardados
 							      			<i class="fa fa-bullseye left-align" aria-hidden="true"></i><span class="grey-text light text-darken-4"> Match: 
 							      		</div>
 							      		<div class="col s6">
-							      			<span class="right-align flow-text" style="color: {% if obj.similarity > 0.7 %}green{% elif obj.similarity > 0.3 %} orange{% else %}red{% endif %}"> {{ obj.similarity|mul:10|floatformat }}</span></span>
+							      			<span class="right-align flow-text" style="color: {% if obj.spec_similarity > 0.7 %}green{% elif obj.spec_similarity > 0.3 %} orange{% else %}red{% endif %}"> {{ obj.spec_similarity|mul:10|floatformat }}</span></span>
 							      		</div>
 							      	</div>
 							      	<div class="row">
@@ -178,15 +173,11 @@ Proveedores guardados
 							</div>
 
 							{% endif %}
-					    {% endif %}
 					{% endfor %}
 					</div>
 
 					<div class="col s12 m4 cards-container">
 						{% for obj in saved_providers %}
-
-							{% if  obj.similarity > -1000 %}
-						
 							{% if forloop.counter|add:"-3"|divisibleby:3 %}
 
 							<div class="card brown lighten-5 hoverable">
@@ -204,7 +195,7 @@ Proveedores guardados
 							      			<i class="fa fa-bullseye left-align" aria-hidden="true"></i><span class="grey-text light text-darken-4"> Match: 
 							      		</div>
 							      		<div class="col s6">
-							      			<span class="right-align flow-text" style="color: {% if obj.similarity > 0.7 %}green{% elif obj.similarity > 0.3 %} orange{% else %}red{% endif %}"> {{ obj.similarity|mul:10|floatformat }}</span></span>
+							      			<span class="right-align flow-text" style="color: {% if obj.spec_similarity > 0.7 %}green{% elif obj.spec_similarity > 0.3 %} orange{% else %}red{% endif %}"> {{ obj.spec_similarity|mul:10|floatformat }}</span></span>
 							      		</div>
 							      	</div>
 							      	<div class="row">
@@ -236,9 +227,6 @@ Proveedores guardados
 							</div>
 
 					    {% endif %}
-
-				    {% endif %}
-
 				{% endfor %}
 				</div>
 
