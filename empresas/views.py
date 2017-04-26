@@ -552,8 +552,6 @@ def EmpresaDetailView(request, pk=None):
 	except:
 		key = 'none'
 
-	print(request.session.get('journey'))
-
 	empresa = Empresa.objects.filter(pk=pk)
 	company_id = request.session.get('company')
 	company = Empresa.objects.filter(pk=company_id)[0]
@@ -751,18 +749,6 @@ def EmpresaDetailView(request, pk=None):
 		}
 
 	return render(request, 'empresas/empresa_detail.html', context)
-
-@login_required
-def OpportunityClientsView(request):
-	
-	company_id = request.session.get('company')
-	company = Empresa.objects.filter(pk=company_id).first()
-	saved_clients = RecommendedClients.objects.filter(empresa=company).filter(clientes_recomendados__in=company.recommended_clients.all())
-	context = {
-		'company':company,
-		'saved_clients': saved_clients
-		}
-	return render(request, 'empresas/opportunities_clients.html', context)
 
 @login_required
 def FinancialRiskRecommendationsView(request):
@@ -1058,10 +1044,24 @@ def ProviderRiskRecommendationsView(request):
 	return render(request, 'empresas/risk_providers.html', context)
 
 @login_required
+def OpportunityClientsView(request):
+	
+	company_id = request.session.get('company')
+	company = Empresa.objects.filter(pk=company_id).first()
+	saved_clients = company.recommended_clients.all()
+	print(saved_clients)
+	print(company.recommended_clients.all())
+	context = {
+		'company':company,
+		'saved_clients': saved_clients
+		}
+	return render(request, 'empresas/opportunities_clients.html', context)
+
+@login_required
 def OpportunityProviderView(request):
 	company_id = request.session.get('company')
 	company = Empresa.objects.filter(pk=company_id).first()
-	saved_providers = RecommendedProviders.objects.filter(empresa=company).filter(clientes_recomendados__in=company.recommended_providers.all())
+	saved_providers = company.recommended_providers.all()
 	context = {
 		'company':company,
 		'saved_providers': saved_providers
@@ -1586,6 +1586,7 @@ def ClientView(request):
 	# recommended_clients = recommended_clients.filter(similarity__gt=0)
 
 	if sector is not None or region is not None or min_bill is not None:
+		recommended_clients = company.get_recommended_clients_v2()
 		if region=="true" or sector!="": 
 			if region=="true":
 				recommended_clients = recommended_clients.exclude(
@@ -1613,12 +1614,14 @@ def ClientView(request):
 			}
 			return render(request, "empresas/cards_layout.html", context)
 
-	maybe = 0
-	random_init = random.uniform(0.9, 1)
-	for i, client in enumerate(recommended_clients):
-		if random.uniform(0, 1) > 0.5:
-			maybe += 1
-		client.similarity = random_init-(maybe*0.01)
+	if not recommended_clients.first().spec_similarity:
+		maybe = 0
+		random_init = random.uniform(0.9, 1)
+		for i, client in enumerate(recommended_clients):
+			if random.uniform(0, 1) > 0.5:
+				maybe += 1
+			client.spec_similarity = random_init-(maybe*0.01)
+			client.save()
 
 	context = {
 		"company": company, 
@@ -1660,6 +1663,7 @@ def ProviderView(request):
 		request.session['recommended_providers_page'] = request.session.get('recommended_providers_page') + 1
 
 	if sector is not None or region is not None or min_bill is not None:
+		recommended_providers = company.get_recommended_providers_v2() #company.providers_recommended.all()
 		if region=="true" or sector!="": 
 			if region=="true":
 				recommended_providers = company.recommended.filter(
@@ -1683,12 +1687,14 @@ def ProviderView(request):
 			}
 			return render(request, "empresas/cards_layout.html", context)
 
-	maybe = 0
-	random_init = random.uniform(0.9, 1)
-	for i, provider in enumerate(recommended_providers):
-		if random.uniform(0, 1) > 0.5:
-			maybe += 1
-		provider.similarity = random_init-(maybe*0.01)
+	if not recommended_providers.first().spec_similarity:
+		maybe = 0
+		random_init = random.uniform(0.9, 1)
+		for i, provider in enumerate(recommended_providers):
+			if random.uniform(0, 1) > 0.5:
+				maybe += 1
+			provider.spec_similarity = random_init-(maybe*0.01)
+			provider.save()
 
 	context = {
 		"company": company, 

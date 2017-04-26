@@ -594,89 +594,86 @@ Perfil - {{ empresa.name }}
     }).addTo(map);
 
     var bar = document.getElementById("barChart");
-    var line = document.getElementById("lineChart");
-    var ctx = document.getElementById("ctxChart");
-    var spider = document.getElementById("spiderChart");
 
-    var scatterChart = new Chart(line, {
-        type: 'line',
-        data: {
-            labels: {{ fechas|safe }},
-            datasets: [{
-            label: "EBITDA",
-            backgroundColor: "rgba(220,220,220,0.5)",
-            borderColor: "rgba(220,220,220,0.8)",
-            highlightFill: "rgba(220,220,220,0.75)",
-            pointHoverBackgroundColor: "rgba(220,220,220,1)",
-            showTooltip: false, //NEW OPTION DON"T NEED TO INCLUDE IT IF YOU WANT TO DISPLAY BUT WON"T HURT IF YOU DO
-            data: {{ ebitda }}
-        }, {
-            label: "Resultados de explotación",
-            backgroundColor: "rgba(47,79,79,0.5)",
-            borderColor: "rgba(47,79,79,0.8)",
-            highlightFill: "rgba(47,79,79,0.75)",
-            pointHoverBackgroundColor: "rgba(47,79,79,1)",
-            showTooltip: false, //NEW OPTION DON"T NEED TO INCLUDE IT IF YOU WANT TO DISPLAY BUT WON"T HURT IF YOU DO
-            data: {{ resultado_explotacion }}
-        }]},
-        options: {
-          responsive: true,
-          pointDotRadius: 10,
-          bezierCurve: false,
-          scaleShowVerticalLines: false,
-          scaleGridLineColor: 'black'
-        }
-    });
+    // var scatterChart = new Chart(line, {
+    //     type: 'line',
+    //     data: {
+    //         labels: {{ fechas|safe }},
+    //         datasets: [{
+    //         label: "EBITDA",
+    //         backgroundColor: "rgba(220,220,220,0.5)",
+    //         borderColor: "rgba(220,220,220,0.8)",
+    //         highlightFill: "rgba(220,220,220,0.75)",
+    //         pointHoverBackgroundColor: "rgba(220,220,220,1)",
+    //         showTooltip: false, //NEW OPTION DON"T NEED TO INCLUDE IT IF YOU WANT TO DISPLAY BUT WON"T HURT IF YOU DO
+    //         data: {{ ebitda }}
+    //     }, {
+    //         label: "Resultados de explotación",
+    //         backgroundColor: "rgba(47,79,79,0.5)",
+    //         borderColor: "rgba(47,79,79,0.8)",
+    //         highlightFill: "rgba(47,79,79,0.75)",
+    //         pointHoverBackgroundColor: "rgba(47,79,79,1)",
+    //         showTooltip: false, //NEW OPTION DON"T NEED TO INCLUDE IT IF YOU WANT TO DISPLAY BUT WON"T HURT IF YOU DO
+    //         data: {{ resultado_explotacion }}
+    //     }]},
+    //     options: {
+    //       responsive: true,
+    //       pointDotRadius: 10,
+    //       bezierCurve: false,
+    //       scaleShowVerticalLines: false,
+    //       scaleGridLineColor: 'black'
+    //     }
+    // });
 
-    var myChart = new Chart(bar, {
-        type: 'bar',
-        data: {
-            labels: {{ fechas|safe }},
-            datasets: [{
-                label: "Ventas",
-                data: JSON.parse( "{{ ventas }}" ),
-                backgroundColor: [
+    // var myChart = new Chart(bar, {
+    //     type: 'bar',
+    //     data: {
+    //         labels: {{ fechas|safe }},
+    //         datasets: [{
+    //             label: "Ventas",
+    //             data: JSON.parse( "{{ ventas }}" ),
+    //             backgroundColor: [
                     
-                    'rgba(192,192,192, 0.2)',
-                    'rgba(169,169,169, 0.2)',
-                    'rgba(119,136,153, 0.2)',
-                    'rgba(47,79,79, 0.2)',
-                    'rgba(128,128,128, 0.2)',
-                    'rgba(220,220,220, 0.2)'
-                ],
-                borderColor: [
+    //                 'rgba(192,192,192, 0.2)',
+    //                 'rgba(169,169,169, 0.2)',
+    //                 'rgba(119,136,153, 0.2)',
+    //                 'rgba(47,79,79, 0.2)',
+    //                 'rgba(128,128,128, 0.2)',
+    //                 'rgba(220,220,220, 0.2)'
+    //             ],
+    //             borderColor: [
                     
-                    'rgba(192,192,192, 1)',
-                    'rgba(169,169,169, 1)',
-                    'rgba(119,136,153, 1)',
-                    'rgba(47,79,79, 1)',
-                    'rgba(128,128,128, 1)',
-                    'rgba(220,220,220, 1)',
-                ],
-                borderWidth: 2
-            }]
-        },
-        options: {
-            legend: {
-                display: false,
-                labels: {
-                    fontColor: 'rgb(255, 99, 132)'
-                }
-            },
-            title: {
-                display: true,
-                text: 'Ventas en los últimos ejercicios'
-            },
-            responsive: true,
-            scales: {
-                yAxes: [{
-                    ticks: {
-                        beginAtZero:true
-                    }
-                }]
-            }
-        }
-    });
+    //                 'rgba(192,192,192, 1)',
+    //                 'rgba(169,169,169, 1)',
+    //                 'rgba(119,136,153, 1)',
+    //                 'rgba(47,79,79, 1)',
+    //                 'rgba(128,128,128, 1)',
+    //                 'rgba(220,220,220, 1)',
+    //             ],
+    //             borderWidth: 2
+    //         }]
+    //     },
+    //     options: {
+    //         legend: {
+    //             display: false,
+    //             labels: {
+    //                 fontColor: 'rgb(255, 99, 132)'
+    //             }
+    //         },
+    //         title: {
+    //             display: true,
+    //             text: 'Ventas en los últimos ejercicios'
+    //         },
+    //         responsive: true,
+    //         scales: {
+    //             yAxes: [{
+    //                 ticks: {
+    //                     beginAtZero:true
+    //                 }
+    //             }]
+    //         }
+    //     }
+    // });
 
 </script>
 
@@ -696,17 +693,19 @@ Perfil - {{ empresa.name }}
     var eficiencia_graph = document.getElementById("eficiencia_graph");
 
     stackedbarchart(eficiencia_graph, {{balance_sells_avg_sector|safe}}, {{balance_sells|safe}}, {{balance_ebitda_avg_sector|safe}}, {{balance_ebitda|safe}}, 'Ratio de eficiencia')
+    
     LineGraph(facturacion_graph, {{balance_sells_avg_sector|safe}}, {{balance_sells|safe}}, "Ventas");
     LineGraph(ebitda_graph, {{balance_ebitda_avg_sector|safe}}, {{balance_ebitda|safe}}, "EBITDA");
     LineGraph(resultados_graph, {{balance_resultado_avg_sector|safe}}, {{balance_resultado|safe}}, "Resultado");
+
     BarGraph(buys_amount_graph, {{buys_amount|safe}}, "Compras mensuales €");
     BarGraph(buys_count_graph, {{buys_count|safe}}, "Compras mensuales #");
     BarGraph(sells_amount_graph, {{sells_amount|safe}}, "Ventas mensuales €");
     BarGraph(sells_count_graph, {{sells_count|safe}}, "Ventas mensuales #");
-    DonutGraph(geo_graph, {{clients_by_region|safe}} );
-    DonutGraph(geo_graph_sec, {{clients_sector_by_region|safe}} );
-    DonutGraphSector(sector_graph, {{clients_by_sector|safe}});
-    DonutGraphSector(sector_graph_sec, {{clients_sector_by_sector|safe}});
+    // DonutGraph(geo_graph, {{clients_by_region|safe}} );
+    // DonutGraph(geo_graph_sec, {{clients_sector_by_region|safe}} );
+    // DonutGraphSector(sector_graph, {{clients_by_sector|safe}});
+    // DonutGraphSector(sector_graph_sec, {{clients_sector_by_sector|safe}});
 
     function stackedbarchart(div, ventas_sec, ventas_me, ebitda_sec, ebitda_me, title)
         {

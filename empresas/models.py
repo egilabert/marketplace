@@ -62,6 +62,7 @@ class Empresa(models.Model, r_clients.Recommendations_clients,
     created_at = models.DateTimeField(auto_now=False, auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True, auto_now_add=False)
     own_client = models.CharField(max_length=16)
+    spec_similarity = models.FloatField(null=True, blank=True)
     
     clients = models.ManyToManyField("self", blank=True)
     providers = models.ManyToManyField("self", blank=True)
@@ -996,10 +997,10 @@ class Empresa(models.Model, r_clients.Recommendations_clients,
     # General Helpers
     # ------------------------------------------------------------------
     def get_recommended_clients_v2(self):
-        return self.clients_of_sector_companies().exclude(name__in=self.get_clients())[:50]
+        return self.clients_of_sector_companies().exclude(name__in=self.get_clients())
 
     def get_recommended_providers_v2(self):
-        return self.providers_of_sector_companies().exclude(name__in=self.get_providers())[:50]
+        return self.providers_of_sector_companies().exclude(name__in=self.get_providers())
 
     def get_recommended_clients(self):
         return RecommendedClients.objects.filter(empresa__in=self.clients_of_sector_companies()).exclude(empresa__in=self.get_clients()).annotate(Count('clientes_recomendados', distinct=True)).order_by('-similarity')
