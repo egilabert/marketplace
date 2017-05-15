@@ -177,7 +177,7 @@ def SearchView(request):
 	elif has_sabadell_permission(request.user):
 		BANCO_PRESENTACION = 1
 	else:
-		BANCO_PRESENTACION = 1
+		BANCO_PRESENTACION = 0
 		
 	if has_l0d_permission(request.user):
 		if request.user.is_staff:
@@ -1945,6 +1945,7 @@ def RecommendationsCreate(request):
                           exact=False, trees=20,
                           use_native=True,
                           dtype=numpy.float64)
+	
 	return HttpResponse("Recommendations loaded")
 
 @staff_member_required
@@ -1966,7 +1967,7 @@ def CompaniesCleanning(request):
 # =====================================================================================
 
 @method_decorator(staff_member_required, name='dispatch')
-class DataGenerator(View):
+class DataGenerxator(View):
 
 	def get(self, request, *args, **kwargs):
   		return render(request, "empresas/dataset_generator.html", {})

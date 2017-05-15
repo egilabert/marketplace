@@ -33,7 +33,7 @@
 							      			<small>¿Necesitarás financiar tus facturas?</small>	
 							      		</div>
 							      		<div class="col s6">
-							      			<span class="right-align" style="color: {% if obj.factoring_preaprobado > 0 %}green{% else %}red{% endif %}"> {% if obj.factoring_preaprobado > 0 %} Te financiamos hasta  <a href={% if banco == 1 %} "https://www.bancsabadell.com/cs/Satellite/SabAtl/Factoring/1191332201741/es/" {% elif banco == 2 %} "https://www.bancosantander.es/es/empresas-advance/productos-y-servicios/cobros/factoring" {% endif %}  id="download-button" target="_blank" class="btn waves-effect waves-light transparent grey-text text-darken-4 border-grey"> {{ obj.factoring_preaprobado|floatformat|intcomma }}€ </a>  {% else %} Sin preaprobación {% endif %}</span>
+							      			<span class="right-align" style="color: {% if obj.factoring_preaprobado > 0 %}green{% else %}red{% endif %}"> {% if obj.factoring_preaprobado > 0 %} Te financiamos hasta  <a href={% if banco == 1 %} "https://www.bancsabadell.com/cs/Satellite/SabAtl/Factoring/1191332201741/es/" {% elif banco == 2 %} "https://www.bancosantander.es/es/empresas-advance/productos-y-servicios/cobros/factoring" {% elif banco == 0 %} "" {% endif %}  id="download-button" target="_blank" class="btn waves-effect waves-light transparent grey-text text-darken-4 border-grey"> {{ obj.factoring_preaprobado|floatformat|intcomma }}€ </a>  {% else %} Sin preaprobación {% endif %}</span>
 							      			<!-- https://www.bancsabadell.com/cs/Satellite/SabAtl/Factoring/1191332201741/es/-->
 							      		</div>
 							      	</div>
@@ -99,7 +99,7 @@
 							      			<small>¿Necesitarás financiar tus facturas?</small>	
 							      		</div>
 							      		<div class="col s6">
-							      			<span class="right-align" style="color: {% if obj.factoring_preaprobado > 0 %}green{% else %}red{% endif %}"> {% if obj.factoring_preaprobado > 0 %} Te financiamos hasta  <a href={% if banco == 1 %} "https://www.bancsabadell.com/cs/Satellite/SabAtl/Factoring/1191332201741/es/" {% elif banco == 2 %} "https://www.bancosantander.es/es/empresas-advance/productos-y-servicios/cobros/factoring" {% endif %} id="download-button" target="_blank" class="btn waves-effect waves-light transparent grey-text text-darken-4 border-grey"> {{ obj.factoring_preaprobado|floatformat|intcomma }}€ </a>  {% else %} Sin preaprobación {% endif %}</span>
+							      			<span class="right-align" style="color: {% if obj.factoring_preaprobado > 0 %}green{% else %}red{% endif %}"> {% if obj.factoring_preaprobado > 0 %} Te financiamos hasta  <a href={% if banco == 1 %} "https://www.bancsabadell.com/cs/Satellite/SabAtl/Factoring/1191332201741/es/" {% elif banco == 2 %} "https://www.bancosantander.es/es/empresas-advance/productos-y-servicios/cobros/factoring" {% elif banco == 0 %} "" {% endif %} id="download-button" target="_blank" class="btn waves-effect waves-light transparent grey-text text-darken-4 border-grey"> {{ obj.factoring_preaprobado|floatformat|intcomma }}€ </a>  {% else %} Sin preaprobación {% endif %}</span>
 							      			<!-- https://www.bancsabadell.com/cs/Satellite/SabAtl/Factoring/1191332201741/es/ -->
 							      		</div>
 							      	</div>
@@ -163,7 +163,7 @@
 							      			<small>¿Necesitarás financiar tus facturas?</small>	
 							      		</div>
 							      		<div class="col s6">
-							      			<span class="right-align" style="color: {% if obj.factoring_preaprobado > 0 %}green{% else %}red{% endif %}"> {% if obj.factoring_preaprobado > 0 %} Te financiamos hasta  <a href={% if banco == 1 %} "https://www.bancsabadell.com/cs/Satellite/SabAtl/Factoring/1191332201741/es/" {% elif banco == 2 %} "https://www.bancosantander.es/es/empresas-advance/productos-y-servicios/cobros/factoring" {% endif %} id="download-button" target="_blank" class="btn waves-effect waves-light transparent grey-text text-darken-4 border-grey"> {{ obj.factoring_preaprobado|floatformat|intcomma }}€ </a>  {% else %} Sin preaprobación {% endif %}</span>
+							      			<span class="right-align" style="color: {% if obj.factoring_preaprobado > 0 %}green{% else %}red{% endif %}"> {% if obj.factoring_preaprobado > 0 %} Te financiamos hasta  <a href={% if banco == 1 %} "https://www.bancsabadell.com/cs/Satellite/SabAtl/Factoring/1191332201741/es/" {% elif banco == 2 %} "https://www.bancosantander.es/es/empresas-advance/productos-y-servicios/cobros/factoring" {% elif banco == 0 %} "" {% endif %} id="download-button" target="_blank" class="btn waves-effect waves-light transparent grey-text text-darken-4 border-grey"> {{ obj.factoring_preaprobado|floatformat|intcomma }}€ </a>  {% else %} Sin preaprobación {% endif %}</span>
 							      			<!-- https://www.bancsabadell.com/cs/Satellite/SabAtl/Factoring/1191332201741/es/ -->
 							      		</div>
 							      	</div>

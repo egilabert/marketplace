@@ -205,7 +205,7 @@ Riesgo financiero - {{ company.name }}
 					              				<p class="light"><i class="tiny material-icons grey-text text-darken-3">chat_bubble_outline</i> {{company.respuesta_finrisk_ratiodeuda_hint}}</p>
 						              		</div>
 					    					<div class="col m12 s12 center-align">
-					    						<a href={% if banco == 1 %} "https://www.bancsabadell.com/cs/Satellite/SabAtl/Cuentas-de-empresa/1191357312542/es/" {% elif banco == 2 %} "https://www.bancosantander.es/es/empresas-advance/financiacion" {% endif %} id="download-button" target="_blank" class="btn waves-effect waves-light transparent grey-text text-darken-4 border-grey"> Contrata un préstamo </a>
+					    						<a href={% if banco == 1 %} "https://www.bancsabadell.com/cs/Satellite/SabAtl/Cuentas-de-empresa/1191357312542/es/" {% elif banco == 2 %} "https://www.bancosantander.es/es/empresas-advance/financiacion" {% elif banco == 0 %} "" {% endif %} id="download-button" target="_blank" class="btn waves-effect waves-light transparent grey-text text-darken-4 border-grey"> Contrata un préstamo </a>
 					    					</div>
 					              		</div>
 					            </div>
@@ -236,7 +236,7 @@ Riesgo financiero - {{ company.name }}
 					              				<p class="light"><i class="tiny material-icons grey-text text-darken-3">chat_bubble_outline</i> {{company.respuesta_finrisk_deudatotal_hint}}</p>
 						              		</div>
 					    					<div class="col m12 s12 center-align">
-					    						<a href={% if banco == 1 %} "https://www.bancsabadell.com/cs/Satellite/SabAtl/Cuentas-de-empresa/1191357312542/es/" {% elif banco == 2 %} "https://www.bancosantander.es/es/empresas-advance/financiacion" {% endif %} id="download-button" target="_blank" class="btn waves-effect waves-light transparent grey-text text-darken-4 border-grey"> Contrata un préstamo </a>
+					    						<a href={% if banco == 1 %} "https://www.bancsabadell.com/cs/Satellite/SabAtl/Cuentas-de-empresa/1191357312542/es/" {% elif banco == 2 %} "https://www.bancosantander.es/es/empresas-advance/financiacion" {% elif banco == 0 %} "" {% endif %} id="download-button" target="_blank" class="btn waves-effect waves-light transparent grey-text text-darken-4 border-grey"> Contrata un préstamo </a>
 					    					</div>
 					              		</div>
 					            </div>
@@ -266,7 +266,7 @@ Riesgo financiero - {{ company.name }}
 					              				<p class="light"><i class="tiny material-icons grey-text text-darken-3">chat_bubble_outline</i> {{company.respuesta_finrisk_cortolargo_hint}}</p>
 						              		</div>
 					    					<div class="col m12 s12 center-align">
-					    						<span class="right-align"><a href={% if banco == 1 %} "https://www.bancsabadell.com/cs/Satellite/SabAtl/Lineas-de-credito/1191332198814/es/" {% elif banco == 2 %} "https://www.bancosantander.es/es/empresas-advance/financiacion/financiacion-a-corto-plazo/credito-advance" {% endif %} id="download-button" target="_blank" class="btn waves-effect waves-light transparent grey-text text-darken-4 border-grey"> Contrata nuestra línea de crédito </a> </span>
+					    						<span class="right-align"><a href={% if banco == 1 %} "https://www.bancsabadell.com/cs/Satellite/SabAtl/Lineas-de-credito/1191332198814/es/" {% elif banco == 2 %} "https://www.bancosantander.es/es/empresas-advance/financiacion/financiacion-a-corto-plazo/credito-advance" {% elif banco == 0 %} "" {% endif %} id="download-button" target="_blank" class="btn waves-effect waves-light transparent grey-text text-darken-4 border-grey"> Contrata nuestra línea de crédito </a> </span>
 					    					</div>
 					              		</div>
 					            </div>
@@ -307,7 +307,7 @@ Riesgo financiero - {{ company.name }}
 						              		</div>
 					    					<div class="row">
 					    					<div class="col m12 s12 center-align">
-					    						<span class="right-align"><a href={% if banco == 1 %} "https://www.bancsabadell.com/cs/Satellite/SabAtl/Lineas-de-credito/1191332198814/es/" {% elif banco == 2 %} "https://www.bancosantander.es/es/empresas-advance/financiacion/financiacion-a-corto-plazo/financiacion-a-corto-plazo" {% endif %} id="download-button" target="_blank" class="btn waves-effect waves-light transparent grey-text text-darken-4 border-grey"> Financiación circulante</a> </span>
+					    						<span class="right-align"><a href={% if banco == 1 %} "https://www.bancsabadell.com/cs/Satellite/SabAtl/Lineas-de-credito/1191332198814/es/" {% elif banco == 2 %} "https://www.bancosantander.es/es/empresas-advance/financiacion/financiacion-a-corto-plazo/financiacion-a-corto-plazo" {% elif banco == 0 %} "" {% endif %} id="download-button" target="_blank" class="btn waves-effect waves-light transparent grey-text text-darken-4 border-grey"> Financiación circulante</a> </span>
 					    					</div>
 					    				</div>
 					              		</div>
@@ -405,7 +405,7 @@ Riesgo financiero - {{ company.name }}
 						              		</div>
 					    					<div class="row">
 					    					<div class="col m12 s12 center-align">
-					    						<span class="right-align"><a href={% if banco == 1 %} "https://www.bancsabadell.com/cs/Satellite/SabAtl/Lineas-de-credito/1191332198814/es/" {% elif banco == 2 %} "https://www.bancosantander.es/es/empresas-advance/financiacion/financiacion-a-corto-plazo/financiacion-a-corto-plazo" {% endif %} id="download-button" target="_blank" class="btn waves-effect waves-light transparent grey-text text-darken-4 border-grey"> Productos para circulante </a> </span>
+					    						<span class="right-align"><a href={% if banco == 1 %} "https://www.bancsabadell.com/cs/Satellite/SabAtl/Lineas-de-credito/1191332198814/es/" {% elif banco == 2 %} "https://www.bancosantander.es/es/empresas-advance/financiacion/financiacion-a-corto-plazo/financiacion-a-corto-plazo" {% elif banco == 0 %} "" {% endif %} id="download-button" target="_blank" class="btn waves-effect waves-light transparent grey-text text-darken-4 border-grey"> Productos para circulante </a> </span>
 					    					</div>
 					    				</div>
 					              		</div>
@@ -485,7 +485,7 @@ Riesgo financiero - {{ company.name }}
 						              		</div>
 					    					<div class="row">
 					    					<div class="col m12 s12 center-align">
-					    						<span class="right-align"><a href={% if banco == 1 %}"https://www.bancsabadell.com/cs/Satellite/SabAtl/Coberturas-de-riesgo/1191332203628/es/" {% elif banco == 2 %} "https://www.bancosantander.es/es/empresas-advance/productos-y-servicios/proteccion/coberturas-de-tipo-de-cambio" {% endif %} id="download-button" target="_blank" class="btn waves-effect waves-light transparent grey-text text-darken-4 border-grey"> Coberturas de divisas</a> </span>
+					    						<span class="right-align"><a href={% if banco == 1 %}"https://www.bancsabadell.com/cs/Satellite/SabAtl/Coberturas-de-riesgo/1191332203628/es/" {% elif banco == 2 %} "https://www.bancosantander.es/es/empresas-advance/productos-y-servicios/proteccion/coberturas-de-tipo-de-cambio" {% elif banco == 0 %} "" {% endif %} id="download-button" target="_blank" class="btn waves-effect waves-light transparent grey-text text-darken-4 border-grey"> Coberturas de divisas</a> </span>
 					    					</div>
 					    				</div>
 					              		</div>
@@ -581,7 +581,7 @@ Riesgo financiero - {{ company.name }}
 						              		</div>
 					    					<div class="row">
 					    					<div class="col m12 s12 center-align">
-					    						<span class="right-align"><a href={% if banco == 1 %} "https://www.bancsabadell.com/cs/Satellite/SabAtl/Coberturas-de-riesgo/1191332203628/es/" {% elif banco == 2 %} "https://www.bancosantander.es/es/empresas-advance/productos-y-servicios/proteccion/coberturas-de-tipo-de-interes" {% endif %} id="download-button" target="_blank" class="btn waves-effect waves-light transparent grey-text text-darken-4 border-grey"> Coberturas de tipo de interés</a> </span>
+					    						<span class="right-align"><a href={% if banco == 1 %} "https://www.bancsabadell.com/cs/Satellite/SabAtl/Coberturas-de-riesgo/1191332203628/es/" {% elif banco == 2 %} "https://www.bancosantander.es/es/empresas-advance/productos-y-servicios/proteccion/coberturas-de-tipo-de-interes" {% elif banco == 0 %} "" {% endif %} id="download-button" target="_blank" class="btn waves-effect waves-light transparent grey-text text-darken-4 border-grey"> Coberturas de tipo de interés</a> </span>
 					    						<!--  -->
 					    					</div>
 					    				</div>
