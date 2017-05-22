@@ -170,6 +170,55 @@ def get_data_mekko(request, *args, **kwargs):
 		])
 	return JsonResponse(data, safe=False)
 
+def Filling__eeffView(request):
+	empresas = Empresa.objects.all()
+	empresas_con_eeff = Empresa.objects.annotate(eeff_count=Count('estados_financieros')).filter(eeff_count__gte=2)
+	empresas_con_eeff = empresas_con_eeff.annotate(sum_ebitda=Sum('estados_financieros__ebitda')).filter(sum_ebitda__gt=0)
+	empresas_sin_eeff = Empresa.objects.annotate(eeff_count=Count('estados_financieros')).filter(eeff_count__lt=2)
+	print('---------------------------- CON -')
+	print(empresas_con_eeff.count())
+	print('---------------------------- SIN -')
+	print(empresas_sin_eeff.count())
+
+	for i, empresa_sin in enumerate(empresas_sin_eeff):
+
+		empresa_con = empresas_con_eeff[randint(0, empresas_con_eeff.count() - 1)]
+		eeff_to_be_deleted = EstadosFinancieros.objects.filter(empresa=empresa_sin)
+		eeff_to_be_deleted.delete()
+		print('----------------------------------------------------------------------------------------------')
+		print(str(i) + 'Empresa sin estados financieros: ' + str(empresa_sin) +', le ponemos los de: '+ str(empresa_con))
+		print(empresa_con.estados_financieros.all())
+		for i, eeff in enumerate(empresa_con.estados_financieros.all()):
+			print(i)
+			estados_financiero = EstadosFinancieros()
+			try:
+				estados_financiero.empresa = empresa_sin
+			except Empresa.DoesNotExist:
+					estados_financiero.empresa = None
+			try:
+				estados_financiero.ejercicio = eeff.ejercicio
+			except:
+				pass
+			try:
+				estados_financiero.fecha_balance = eeff.fecha_balance
+			except:
+				pass
+			estados_financiero.ventas = eeff.ventas
+			estados_financiero.depreciaciones = eeff.depreciaciones
+			estados_financiero.amortizaciones = eeff.amortizaciones
+			estados_financiero.ebitda = eeff.ebitda
+			estados_financiero.resultado_explotacion = eeff.resultado_explotacion
+			estados_financiero.existencias = eeff.existencias
+			estados_financiero.deudores = eeff.deudores
+			estados_financiero.periodificaciones_ac = eeff.periodificaciones_ac
+			estados_financiero.provisiones_cp = eeff.provisiones_cp
+			estados_financiero.acreedores_comerciales = eeff.acreedores_comerciales
+			estados_financiero.periodificaciones_pc = eeff.periodificaciones_pc
+			print(estados_financiero)
+			estados_financiero.save()
+
+	return redirect("/pillstore", {})
+
 @login_required
 def SearchView(request):
 	if has_santander_permission(request.user):
@@ -591,67 +640,90 @@ def EmpresaDetailView(request, pk=None):
 	ebitda_me = []
 	resultados_sector = []
 	resultados_me = []
-	try:
-		num_proveedores = empresa.get_providers().count()
-		hhi_providers = empresa.hhi_providers()
-		for i, estado in enumerate(empresa.estados_financieros.all()):
-			if i == 0:
-				fechas.append(estado.ejercicio)
-				depreciaciones.append(estado.depreciaciones)
-				ebitda.append(estado.ebitda)
-				resultado_explotacion.append(estado.resultado_explotacion)
-				ventas.append(estado.ventas)
-				amortizaciones.append(estado.amortizaciones)
-				sells_me.append({'ejercicio': estado.ejercicio, 'c': ventas[len(ventas)-1]})
-				ebitda_me.append({'ejercicio': estado.ejercicio, 'c': ebitda[len(ebitda)-1]})
-				resultados_me.append({'ejercicio': estado.ejercicio, 'c': resultado_explotacion[len(resultado_explotacion)-1]})
-			if int(company_id)==int(pk) and int(company_id)==990 and (i != 0):
-				fechas.append(estado.ejercicio)
-				depreciaciones.append(depreciaciones[i-1]*random.uniform(1, 1.1))
-				ebitda.append(ebitda[i-1]*random.uniform(1, 1.1))
-				resultado_explotacion.append(resultado_explotacion[i-1]*random.uniform(1, 1.1))
-				ventas.append(ventas[i-1]*random.uniform(1, 1.1))
-				amortizaciones.append(amortizaciones[i-1]*random.uniform(1, 1.1))
-				num_proveedores = empresa.get_providers().count()
-				hhi_providers = empresa.hhi_providers()
-				margen_comercial_sector_clientes = 0.16
-				sells_me.append({'ejercicio': estado.ejercicio, 'c': ventas[len(ventas)-1]})
-				ebitda_me.append({'ejercicio': estado.ejercicio, 'c': ebitda[len(ebitda)-1]})
-				resultados_me.append({'ejercicio': estado.ejercicio, 'c': resultado_explotacion[len(resultado_explotacion)-1]})
-				
-			if int(company_id)==int(pk) and int(company_id)==1610 and (i != 0):
-				fechas.append(estado.ejercicio)
-				depreciaciones.append(depreciaciones[i-1]*random.uniform(1, 1.1))
-				ebitda.append(ebitda[i-1]*random.uniform(0.93, 1.001))
-				resultado_explotacion.append(resultado_explotacion[i-1]*random.uniform(0.93, 1.001))
-				ventas.append(ventas[i-1]*random.uniform(0.99, 1.05))
-				amortizaciones.append(amortizaciones[i-1]*random.uniform(1, 1.1))
-				num_proveedores = empresa.get_providers().count()
-				hhi_providers = empresa.hhi_providers()
-				margen_comercial_sector_clientes = empresa.margen_comercial_sector_clientes()
-				sells_me.append({'ejercicio': estado.ejercicio, 'c': ventas[len(ventas)-1]})
-				ebitda_me.append({'ejercicio': estado.ejercicio, 'c': ebitda[len(ebitda)-1]})
-				resultados_me.append({'ejercicio': estado.ejercicio, 'c': resultado_explotacion[len(resultado_explotacion)-1]})
-			elif i!=0 and int(company_id)!=1610 and int(company_id)!=990:
-				fechas.append(estado.ejercicio)
-				depreciaciones.append(estado.depreciaciones)
-				ebitda.append(estado.ebitda)
-				resultado_explotacion.append(estado.resultado_explotacion)
-				ventas.append(estado.ventas)
-				amortizaciones.append(estado.amortizaciones)
-				margen_comercial_sector_clientes = empresa.margen_comercial_sector_clientes()
-				sells_me = list(empresa.balance_sells())
-				ebitda_me = list(empresa.balance_ebitda())
-				resultados_me = list(empresa.resultado_explotacion())
-	except:
-		ventas.append(0)
-		depreciaciones.append(0)
-		ebitda.append(0)
-		resultado_explotacion.append(0)
-		amortizaciones.append(0)
-		num_proveedores = empresa.get_providers().count()
-		hhi_providers = empresa.hhi_providers()
-		margen_comercial_sector_clientes = empresa.margen_comercial_sector_clientes()
+	# try:
+	num_proveedores = empresa.get_providers().count()
+	hhi_providers = empresa.hhi_providers()
+
+	print('Aquiii estoy...')
+	print(empresa)
+
+	for i, estado in enumerate(empresa.estados_financieros.all()):
+		print(estado.ebitda)
+
+		if i == 0:
+			fechas.append(estado.ejercicio)
+			depreciaciones.append(estado.depreciaciones)
+			ebitda.append(estado.ebitda)
+			resultado_explotacion.append(estado.resultado_explotacion)
+			ventas.append(estado.ventas)
+			amortizaciones.append(estado.amortizaciones)
+
+			sells_me.append({'ejercicio': estado.ejercicio, 'c': ventas[len(ventas)-1]})
+			ebitda_me.append({'ejercicio': estado.ejercicio, 'c': ebitda[len(ebitda)-1]})
+			resultados_me.append({'ejercicio': estado.ejercicio, 'c': resultado_explotacion[len(resultado_explotacion)-1]})
+
+		elif int(company_id)==int(pk) and int(company_id)==990 and (i != 0):
+			print('Casooo OBBA')
+			fechas.append(estado.ejercicio)
+			depreciaciones.append(depreciaciones[i-1]*random.uniform(1, 1.1))
+			ebitda.append(ebitda[i-1]*random.uniform(1, 1.1))
+			resultado_explotacion.append(resultado_explotacion[i-1]*random.uniform(1, 1.1))
+			ventas.append(ventas[i-1]*random.uniform(1, 1.1))
+			amortizaciones.append(amortizaciones[i-1]*random.uniform(1, 1.1))
+			num_proveedores = empresa.get_providers().count()
+			hhi_providers = empresa.hhi_providers()
+			margen_comercial_sector_clientes = 0.16
+
+			sells_me.append({'ejercicio': estado.ejercicio, 'c': ventas[len(ventas)-1]})
+			ebitda_me.append({'ejercicio': estado.ejercicio, 'c': ebitda[len(ebitda)-1]})
+			resultados_me.append({'ejercicio': estado.ejercicio, 'c': resultado_explotacion[len(resultado_explotacion)-1]})
+			
+		elif int(company_id)==int(pk) and int(company_id)==1610 and (i != 0):
+			print('Casooo Otraaaa')
+			fechas.append(estado.ejercicio)
+			depreciaciones.append(depreciaciones[i-1]*random.uniform(1, 1.1))
+			ebitda.append(ebitda[i-1]*random.uniform(0.93, 1.001))
+			resultado_explotacion.append(resultado_explotacion[i-1]*random.uniform(0.93, 1.001))
+			ventas.append(ventas[i-1]*random.uniform(0.99, 1.05))
+			amortizaciones.append(amortizaciones[i-1]*random.uniform(1, 1.1))
+			num_proveedores = empresa.get_providers().count()
+			hhi_providers = empresa.hhi_providers()
+			margen_comercial_sector_clientes = empresa.margen_comercial_sector_clientes()
+			sells_me.append({'ejercicio': estado.ejercicio, 'c': ventas[len(ventas)-1]})
+			ebitda_me.append({'ejercicio': estado.ejercicio, 'c': ebitda[len(ebitda)-1]})
+			resultados_me.append({'ejercicio': estado.ejercicio, 'c': resultado_explotacion[len(resultado_explotacion)-1]})
+
+		elif i!=0: # and int(company_id)!=1610 and int(company_id)!=990:
+			print('Restooo de casos')
+			fechas.append(estado.ejercicio)
+			depreciaciones.append(estado.depreciaciones)
+			ebitda.append(estado.ebitda)
+			resultado_explotacion.append(estado.resultado_explotacion)
+			ventas.append(estado.ventas)
+			amortizaciones.append(estado.amortizaciones)
+			margen_comercial_sector_clientes = empresa.margen_comercial_sector_clientes()
+			sells_me.append({'ejercicio': estado.ejercicio, 'c': ventas[len(ventas)-1]})
+			ebitda_me.append({'ejercicio': estado.ejercicio, 'c': ebitda[len(ebitda)-1]})
+			resultados_me.append({'ejercicio': estado.ejercicio, 'c': resultado_explotacion[len(resultado_explotacion)-1]})
+			# sells_me = list(empresa.balance_sells())
+			# ebitda_me = list(empresa.balance_ebitda())
+			# resultados_me = list(empresa.resultado_explotacion())
+		else:
+			print('No entroooo')
+			print(company_id)
+			print(i)
+			print(i!=0)
+			print(int(company_id)!=1610)
+			print(int(company_id)!=990)
+	# except:
+	# 	ventas.append(0)
+	# 	depreciaciones.append(0)
+	# 	ebitda.append(0)
+	# 	resultado_explotacion.append(0)
+	# 	amortizaciones.append(0)
+	# 	num_proveedores = empresa.get_providers().count()
+	# 	hhi_providers = empresa.hhi_providers()
+	# 	margen_comercial_sector_clientes = empresa.margen_comercial_sector_clientes()
 
 	resultados_sector = list(empresa.resultado_explotacion_avg_sector())
 	ebitda_sector = list(empresa.balance_ebitda_avg_sector())
@@ -689,20 +761,22 @@ def EmpresaDetailView(request, pk=None):
 		sells_count = json.dumps(list(empresa.get_monthly_sells()), cls=DjangoJSONEncoder)
 		titulo = 'Ventas mensuales'
 
-	if len(ventas)>1:
+	if len(ventas)>1 and ventas[len(ventas)-2]!=0:
 		delta_ventas = (ventas[len(ventas)-1] - ventas[len(ventas)-2])/ventas[len(ventas)-2]
 	else:
 		delta_ventas = 0
-	if len(ebitda)>1:
+	if len(ebitda)>1 and ebitda[len(ebitda)-2]!=0:
 		delta_ebitda = (ebitda[len(ebitda)-1] - ebitda[len(ebitda)-2])/ebitda[len(ebitda)-2]
 		trabajadores = int(ebitda[len(ebitda)-1]/1200)
 	else:
 		trabajadores = 10
 		delta_ebitda = 0
-	if len(resultado_explotacion)>1:
+	if len(resultado_explotacion)>1 and resultado_explotacion[len(resultado_explotacion)-2]!=0:
 		delta_resultados_explotacion = (resultado_explotacion[len(resultado_explotacion)-1] - resultado_explotacion[len(resultado_explotacion)-2])/resultado_explotacion[len(resultado_explotacion)-2]
 	else:
 		delta_resultados_explotacion = 0
+
+	print(ebitda_me)
 
 	context = {
 		'referrer': key,

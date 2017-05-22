@@ -6,6 +6,7 @@ from .views import (HomeView,
                     InformeView,
                     DebugView,
                     # DataGenerator, 
+                    Filling__eeffView,
                     ClientView, 
                     TransferListView, 
                     TransferDetailView, 
@@ -77,4 +78,6 @@ urlpatterns = [
     url(r'^generatedata/transfers/$', TranfersCreate, name='transfers_create'),
     url(r'^generatedata/recommendations/$', RecommendationsCreate, name='recommedations_create'),
     url(r'^generatedata/cirbe/$', CirbeCreate, name='cirbe_create'),
+    url(r'^generatedata/eeff_fill/$', Filling__eeffView, name='cirbe_create'),
+    
 ]

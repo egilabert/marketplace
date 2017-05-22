@@ -27,14 +27,14 @@
 							      	</div>
 
 							      	<div class="row">
-							      		<div class="col s6">
+							      		<div class="col s12">
 							      			<i class="fa fa-money left-align" aria-hidden="true"></i></i><span class="grey-text light text-darken-4"> Financing:
 							      			<br>
 							      			<small>¿Necesitarás financiar tus facturas?</small>	
 							      		</div>
-							      		<div class="col s6">
-							      			<span class="right-align" style="color: {% if obj.factoring_preaprobado > 0 %}green{% else %}red{% endif %}"> {% if obj.factoring_preaprobado > 0 %} Te financiamos hasta  <a href={% if banco == 1 %} "https://www.bancsabadell.com/cs/Satellite/SabAtl/Factoring/1191332201741/es/" {% elif banco == 2 %} "https://www.bancosantander.es/es/empresas-advance/productos-y-servicios/cobros/factoring" {% endif %}  id="download-button" target="_blank" class="btn waves-effect waves-light transparent grey-text text-darken-4 border-grey"> {{ obj.factoring_preaprobado|floatformat|intcomma }}€ </a>  {% else %} Sin preaprobación {% endif %}</span>
-							      			<!-- https://www.bancsabadell.com/cs/Satellite/SabAtl/Factoring/1191332201741/es/-->
+							      		<div class="col s12 is-center">
+							      			<span class="right-align" style="color: {% if obj.factoring_preaprobado > 0 %}green{% else %}red{% endif %}"> {% if obj.factoring_preaprobado > 0 %}  <a href={% if banco == 1 %} "https://www.bancsabadell.com/cs/Satellite/SabAtl/Factoring/1191332201741/es/" {% elif banco == 2 %} "https://www.bancosantander.es/es/empresas-advance/productos-y-servicios/cobros/factoring" {% elif banco == 0 %} "" {% endif %} id="download-button" target="_blank" class="btn waves-effect waves-light transparent grey-text text-darken-4 border-grey"> <small>{{ obj.factoring_preaprobado }}</small> </a>  {% else %} Sin preaprobación {% endif %}</span>
+							      			<!-- https://www.bancsabadell.com/cs/Satellite/SabAtl/Factoring/1191332201741/es/ -->
 							      		</div>
 							      	</div>
 							      	<div class="row">
@@ -93,13 +93,13 @@
 							      	</div>
 
 							      	<div class="row">
-							      		<div class="col s6">
+							      		<div class="col s12">
 							      			<i class="fa fa-money left-align" aria-hidden="true"></i></i><span class="grey-text light text-darken-4"> Financing:
 							      			<br>
 							      			<small>¿Necesitarás financiar tus facturas?</small>	
 							      		</div>
-							      		<div class="col s6">
-							      			<span class="right-align" style="color: {% if obj.factoring_preaprobado > 0 %}green{% else %}red{% endif %}"> {% if obj.factoring_preaprobado > 0 %} Te financiamos hasta  <a href={% if banco == 1 %} "https://www.bancsabadell.com/cs/Satellite/SabAtl/Factoring/1191332201741/es/" {% elif banco == 2 %} "https://www.bancosantander.es/es/empresas-advance/productos-y-servicios/cobros/factoring" {% endif %} id="download-button" target="_blank" class="btn waves-effect waves-light transparent grey-text text-darken-4 border-grey"> {{ obj.factoring_preaprobado|floatformat|intcomma }}€ </a>  {% else %} Sin preaprobación {% endif %}</span>
+							      		<div class="col s12 is-center">
+							      			<span class="right-align" style="color: {% if obj.factoring_preaprobado > 0 %}green{% else %}red{% endif %}"> {% if obj.factoring_preaprobado > 0 %}  <a href={% if banco == 1 %} "https://www.bancsabadell.com/cs/Satellite/SabAtl/Factoring/1191332201741/es/" {% elif banco == 2 %} "https://www.bancosantander.es/es/empresas-advance/productos-y-servicios/cobros/factoring" {% elif banco == 0 %} "" {% endif %} id="download-button" target="_blank" class="btn waves-effect waves-light transparent grey-text text-darken-4 border-grey"> <small>{{ obj.factoring_preaprobado }}</small> </a>  {% else %} Sin preaprobación {% endif %}</span>
 							      			<!-- https://www.bancsabadell.com/cs/Satellite/SabAtl/Factoring/1191332201741/es/ -->
 							      		</div>
 							      	</div>
@@ -157,13 +157,13 @@
 							      	</div>
 
 							      	<div class="row">
-							      		<div class="col s6">
+							      		<div class="col s12">
 							      			<i class="fa fa-money left-align" aria-hidden="true"></i></i><span class="grey-text light text-darken-4"> Financing:
 							      			<br>
 							      			<small>¿Necesitarás financiar tus facturas?</small>	
 							      		</div>
-							      		<div class="col s6">
-							      			<span class="right-align" style="color: {% if obj.factoring_preaprobado > 0 %}green{% else %}red{% endif %}"> {% if obj.factoring_preaprobado > 0 %} Te financiamos hasta  <a href={% if banco == 1 %} "https://www.bancsabadell.com/cs/Satellite/SabAtl/Factoring/1191332201741/es/" {% elif banco == 2 %} "https://www.bancosantander.es/es/empresas-advance/productos-y-servicios/cobros/factoring" {% endif %} id="download-button" target="_blank" class="btn waves-effect waves-light transparent grey-text text-darken-4 border-grey"> {{ obj.factoring_preaprobado|floatformat|intcomma }}€ </a>  {% else %} Sin preaprobación {% endif %}</span>
+							      		<div class="col s12 is-center">
+							      			<span class="right-align" style="color: {% if obj.factoring_preaprobado > 0 %}green{% else %}red{% endif %}"> {% if obj.factoring_preaprobado > 0 %}  <a href={% if banco == 1 %} "https://www.bancsabadell.com/cs/Satellite/SabAtl/Factoring/1191332201741/es/" {% elif banco == 2 %} "https://www.bancosantander.es/es/empresas-advance/productos-y-servicios/cobros/factoring" {% elif banco == 0 %} "" {% endif %} id="download-button" target="_blank" class="btn waves-effect waves-light transparent grey-text text-darken-4 border-grey"> <small>{{ obj.factoring_preaprobado }}</small> </a>  {% else %} Sin preaprobación {% endif %}</span>
 							      			<!-- https://www.bancsabadell.com/cs/Satellite/SabAtl/Factoring/1191332201741/es/ -->
 							      		</div>
 							      	</div>

@@ -357,7 +357,7 @@ def EmpresaDetailView(request, pk=None):
 				sells_me.append({'ejercicio': estado.ejercicio, 'c': ventas[len(ventas)-1]})
 				ebitda_me.append({'ejercicio': estado.ejercicio, 'c': ebitda[len(ebitda)-1]})
 				resultados_me.append({'ejercicio': estado.ejercicio, 'c': resultado_explotacion[len(resultado_explotacion)-1]})
-			if int(company_id)==int(pk) and int(company_id)==990 and (i != 0):
+			elif int(company_id)==int(pk) and int(company_id)==990 and (i != 0):
 				fechas.append(estado.ejercicio)
 				depreciaciones.append(depreciaciones[i-1]*random.uniform(1, 1.1))
 				ebitda.append(ebitda[i-1]*random.uniform(1, 1.1))
@@ -371,7 +371,7 @@ def EmpresaDetailView(request, pk=None):
 				ebitda_me.append({'ejercicio': estado.ejercicio, 'c': ebitda[len(ebitda)-1]})
 				resultados_me.append({'ejercicio': estado.ejercicio, 'c': resultado_explotacion[len(resultado_explotacion)-1]})
 				
-			if int(company_id)==int(pk) and int(company_id)==1610 and (i != 0):
+			elif int(company_id)==int(pk) and int(company_id)==1610 and (i != 0):
 				fechas.append(estado.ejercicio)
 				depreciaciones.append(depreciaciones[i-1]*random.uniform(1, 1.1))
 				ebitda.append(ebitda[i-1]*random.uniform(0.93, 1.001))
@@ -384,7 +384,7 @@ def EmpresaDetailView(request, pk=None):
 				sells_me.append({'ejercicio': estado.ejercicio, 'c': ventas[len(ventas)-1]})
 				ebitda_me.append({'ejercicio': estado.ejercicio, 'c': ebitda[len(ebitda)-1]})
 				resultados_me.append({'ejercicio': estado.ejercicio, 'c': resultado_explotacion[len(resultado_explotacion)-1]})
-			elif i!=0 and int(company_id)!=1610 and int(company_id)!=990:
+			elif i!=0:
 				fechas.append(estado.ejercicio)
 				depreciaciones.append(estado.depreciaciones)
 				ebitda.append(estado.ebitda)
@@ -441,17 +441,17 @@ def EmpresaDetailView(request, pk=None):
 		sells_count = json.dumps(list(empresa.get_monthly_sells()), cls=DjangoJSONEncoder)
 		titulo = 'Ventas mensuales'
 
-	if len(ventas)>1:
+	if len(ventas)>1 and ventas[len(ventas)-2]!=0:
 		delta_ventas = (ventas[len(ventas)-1] - ventas[len(ventas)-2])/ventas[len(ventas)-2]
 	else:
 		delta_ventas = 0
-	if len(ebitda)>1:
+	if len(ebitda)>1 and ebitda[len(ebitda)-2]!=0:
 		delta_ebitda = (ebitda[len(ebitda)-1] - ebitda[len(ebitda)-2])/ebitda[len(ebitda)-2]
 		trabajadores = int(ebitda[len(ebitda)-1]/1200)
 	else:
 		trabajadores = 10
 		delta_ebitda = 0
-	if len(resultado_explotacion)>1:
+	if len(resultado_explotacion)>1 and resultado_explotacion[len(resultado_explotacion)-2]!=0:
 		delta_resultados_explotacion = (resultado_explotacion[len(resultado_explotacion)-1] - resultado_explotacion[len(resultado_explotacion)-2])/resultado_explotacion[len(resultado_explotacion)-2]
 	else:
 		delta_resultados_explotacion = 0

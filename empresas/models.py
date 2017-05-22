@@ -1189,16 +1189,18 @@ class Empresa(models.Model, r_clients.Recommendations_clients,
 
     def factoring_preaprobado(self):
         if self.temp_factoring_preaprobado is None:
-            if self.estados_financieros.last():
-                if int(self.estados_financieros.last().ebitda * 0.15) > 5000:
-                    self.temp_factoring_preaprobado = int(self.estados_financieros.last().ebitda * 0.15 / 1000)*1000
-                    return self.temp_factoring_preaprobado
-                else:
-                    self.temp_factoring_preaprobado = 5000
-                    return self.temp_factoring_preaprobado
-            else:
-                self.temp_factoring_preaprobado = 5000
-                return self.temp_factoring_preaprobado
+            self.temp_factoring_preaprobado = "Te financiamos"
+            return "Te financiamos"
+            # if self.estados_financieros.last():
+            #     if int(self.estados_financieros.last().ebitda * 0.15) > 5000:
+            #         self.temp_factoring_preaprobado = int(self.estados_financieros.last().ebitda * 0.15 / 1000)*1000
+            #         return self.temp_factoring_preaprobado
+            #     else:
+            #         self.temp_factoring_preaprobado = 5000
+            #         return self.temp_factoring_preaprobado
+            # else:
+            #     self.temp_factoring_preaprobado = 5000
+            #     return self.temp_factoring_preaprobado
         else:
             return self.temp_factoring_preaprobado
 
