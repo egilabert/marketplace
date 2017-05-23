@@ -173,12 +173,19 @@ def get_data_mekko(request, *args, **kwargs):
 def Filling__eeffView(request):
 	empresas = Empresa.objects.all()
 	empresas_con_eeff = Empresa.objects.annotate(eeff_count=Count('estados_financieros')).filter(eeff_count__gte=2)
-	empresas_con_eeff = empresas_con_eeff.annotate(sum_ebitda=Sum('estados_financieros__ebitda')).filter(sum_ebitda__gt=0)
-	empresas_sin_eeff = Empresa.objects.annotate(eeff_count=Count('estados_financieros')).filter(eeff_count__lt=2)
+	print(empresas_con_eeff.count())
+	empresas_con_eeff = empresas_con_eeff.annotate(sum_ebitda=Sum('estados_financieros__ebitda')).exclude(sum_ebitda=0)
+	empresas_con_eeff = empresas_con_eeff.annotate(sum_ventas=Sum('estados_financieros__ventas')).exclude(sum_ventas=0)
+	empresas_con_eeff = empresas_con_eeff.annotate(sum_resultado_explotacion=Sum('estados_financieros__resultado_explotacion')).exclude(sum_resultado_explotacion=0)
+	print(empresas_con_eeff.count())
+	empresas_sin_eeff = Empresa.objects.all().exclude(id__in=empresas_con_eeff)
+
 	print('---------------------------- CON -')
 	print(empresas_con_eeff.count())
+	print(empresas_con_eeff.filter(pk=7))
 	print('---------------------------- SIN -')
 	print(empresas_sin_eeff.count())
+	print(empresas_sin_eeff.filter(pk=7))
 
 	for i, empresa_sin in enumerate(empresas_sin_eeff):
 
@@ -189,7 +196,6 @@ def Filling__eeffView(request):
 		print(str(i) + 'Empresa sin estados financieros: ' + str(empresa_sin) +', le ponemos los de: '+ str(empresa_con))
 		print(empresa_con.estados_financieros.all())
 		for i, eeff in enumerate(empresa_con.estados_financieros.all()):
-			print(i)
 			estados_financiero = EstadosFinancieros()
 			try:
 				estados_financiero.empresa = empresa_sin
@@ -214,10 +220,9 @@ def Filling__eeffView(request):
 			estados_financiero.provisiones_cp = eeff.provisiones_cp
 			estados_financiero.acreedores_comerciales = eeff.acreedores_comerciales
 			estados_financiero.periodificaciones_pc = eeff.periodificaciones_pc
-			print(estados_financiero)
 			estados_financiero.save()
 
-	return redirect("/pillstore", {})
+	return HttpResponse("EEFF completados loaded")
 
 @login_required
 def SearchView(request):
@@ -644,8 +649,9 @@ def EmpresaDetailView(request, pk=None):
 	num_proveedores = empresa.get_providers().count()
 	hhi_providers = empresa.hhi_providers()
 
-	print('Aquiii estoy...')
 	print(empresa)
+	print(empresa.pk)
+	print(empresa.estados_financieros.all())
 
 	for i, estado in enumerate(empresa.estados_financieros.all()):
 		print(estado.ebitda)
@@ -1929,7 +1935,7 @@ def EstadosCreate(request):
 		estados_financiero.periodificaciones_ac = float(row['PERIODIFICACIONES_AC'] or 0)
 		estados_financiero.provisiones_cp = float(row['PROVISIONES_CP'] or 0)
 		estados_financiero.acreedores_comerciales = float(row['ACREEDORES_COMERCIALES'] or 0)
-		estados_financiero.PERIODIFICACIONES_PC = float(row['PERIODIFICACIONES_PC'] or 0)
+		estados_financiero.periodificaciones_pc = float(row['PERIODIFICACIONES_PC'] or 0)
 		estados_financiero.save()
 	return HttpResponse("Estados financieros loaded")
 

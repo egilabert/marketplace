@@ -1,5 +1,6 @@
 from django.conf.urls import url
 from django.contrib import admin
+from django.views.generic import TemplateView
 
 from .views import (HomeView, 
                     EmpresaDetailView,
@@ -38,7 +39,8 @@ from .views import (HomeView,
                     MarketRiskRecommendationsView)
 
 urlpatterns = [
-
+    
+    
     url(r'^intro/$', IntroView, name='empresas_intro'),
     url(r'^summary/$', SummaryView, name='summary'),
     url(r'^recommendations/clients$', CommercialClientsRecommendationsView2, name='recommendations_clients2'),
@@ -53,7 +55,7 @@ urlpatterns = [
     url(r'^empresas/provider_opportunities/$', OpportunityProviderView, name='provider_opportunities'),
     #url(r'^update/$', EmpresaDetailView, name='empresa_update'),
     #url(r'^delete/$', EmpresaDetailView, name='empresa_delete'),
-    url(r'^empresa/(?P<empresa_id>[0-9]+)/transfer_create/$', TrasferCreateView, name='transfer_create'),
+    # url(r'^empresa/(?P<empresa_id>[0-9]+)/transfer_create/$', TrasferCreateView, name='transfer_create'),
     url(r'^faq/$', FAQView, name='faq'),
     
     url(r'^debug_recomendaciones/$', DebugView, name='debug'),
@@ -70,7 +72,7 @@ urlpatterns = [
     url(r'^transfers/$', TransferListView, name='transfer_list'),
     url(r'^transfers/(?P<transfer_id>[0-9]+)/$', TransferDetailView, name='transfer_detail'),
 
-    # url(r'^generatedata/$', DataGenerator.as_view(), name='generate_empreses'),
+    url(r'^generatedata/$', TemplateView.as_view(template_name="empresas/dataset_generator.html"), name='generate_empreses'),
     url(r'^generatedata/empresas/$', EmpresasCreate, name='empresas_create'),
     url(r'^generatedata/content_based/$', ContentBasedCreate, name='content_based_create'),
     url(r'^generatedata/productos/$', ProductosCreate, name='productos_create'),

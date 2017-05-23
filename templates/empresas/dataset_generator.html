@@ -6,8 +6,6 @@ Generación de datos
 
 {% block body_class %}background_grey{% endblock %}
 
-{% block side-nav %}{% include "side-nav.html" %}{% endblock %}
-
 {% block content %}
 
 <div class="row padding_full">
@@ -28,6 +26,7 @@ Generación de datos
 			<a class="waves-effect waves-light btn" id="estados_button">Estados Financieros</a>
 			<div id="estados_response"></div>
   		</div>
+  		
 		<div class="col s2 center">
 			<a class="waves-effect waves-light btn" id="transfers_button">Transferencias</a>
 			<div id="transfers_response"></div>
@@ -36,9 +35,14 @@ Generación de datos
 			<a class="waves-effect waves-light btn" id="recommedations_button">Recommedations</a>
 			<div id="recommedations_response"></div>
   		</div>
+
 </div>
 
 <div class="row padding_full">
+		<div class="col s2 center">
+			<a class="waves-effect waves-light btn" id="eeff_button">Completar EEFF</a>
+			<div id="eeff_response"></div>
+  		</div>
 		<div class="col s2 center">
 			<a class="waves-effect waves-light btn" id="content_based_button">Content Based</a>
 			<div id="content_based_response"></div>
@@ -158,6 +162,27 @@ Generación de datos
 		         });
 
 	});
+
+	$( "#eeff_button" ).click(function() {
+		$.ajax({
+			url: '/empresas/generatedata/eeff_fill/',
+			type: 'get'})
+				.done( function (responseText) {
+		            // Triggered if response status code is 200 (OK)
+		            $('#eeff_response').html(responseText);
+		         })
+		         .fail( function (jqXHR, status, error) {
+		            // Triggered if response status code is NOT 200 (OK)
+		            alert(jqXHR.responseText);
+		         })
+		         .always( function() {
+		            // Always run after .done() or .fail()
+		            $('p:first').after('<p>Thank you.</p>');
+		         });
+
+	});
+
+	
 
 	$( "#transfers_button" ).click(function() {
 		$.ajax({

@@ -294,7 +294,7 @@ Perfil - {{ empresa.name }}
                   <div class="card-content white-text">
                     <span class="card-title">Ventas</span>
                     {% if last_ventas > 0 %}
-                    <h5 class="align-right orange-text darken-1">{{last_ventas|floatformat|intcomma}}€</h5>
+                    <h5 class="align-right orange-text darken-1">{{last_ventas|floatformat:0|intcomma}}€</h5>
                     {% else %}
                     <h5 class="align-right orange-text darken-1">-</h5>
                     {% endif %}
@@ -306,7 +306,7 @@ Perfil - {{ empresa.name }}
                   <div class="card-content white-text">
                     <span class="card-title">EBITDA</span>
                     {% if last_ebitda > 0 %}
-                    <h5 class="align-right orange-text darken-1">{{last_ebitda|floatformat|intcomma}}€</h5>
+                    <h5 class="align-right orange-text darken-1">{{last_ebitda|floatformat:0|intcomma}}€</h5>
                     {% else %}
                     <h5 class="align-right orange-text darken-1">-</h5>
                     {% endif %}
