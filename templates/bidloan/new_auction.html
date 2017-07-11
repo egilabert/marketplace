@@ -1,0 +1,117 @@
+{% extends "base.html" %}
+{% load staticfiles %}
+{% load rest_framework %}
+
+
+{% block image_bg %} {% static 'images/sea-black-and-white-water-ocean.jpg' %} {% endblock %}
+
+{% block content %}
+  
+  {% include "partials/navbar.html" %}
+  
+  <section class="container" id="app" style="margin-top: 20px">
+    <form @submit.prevent="onSubmit" @keydown="form.errors.clear($event.target.name)">
+      <div class="columns">
+        <div class="column has-text-centered">
+          <h1 class="title bidloan_font title_numbers">1</h1>
+          <p class="subtitle">Selecciona para qué quieres un préstamo</p>
+          
+          <figure class="image is-96x96" style="margin: auto;">
+            <img class="has-text-centered" style="margin: auto;" src={% static 'images/944908-200.png' %} alt="Image">
+          </figure>
+          <div class="card" style="margin-left: 30px; margin-right: 30px;">
+            <div class="card-content no_padding">
+              <figure class="image is-4by3">
+                <img src={% static 'images/pexels-photo-366368.jpeg' %} alt="Image">
+              </figure>
+            </div>
+            <footer class="card-footer">
+
+              <p class="card-footer-item">
+                
+              </p>
+            </footer>
+          </div>
+        </div>
+        <div class="column has-text-centered">
+          <h1 class="title bidloan_font title_numbers">2</h1>
+          <p class="subtitle">Indica el importe total del préstamo</p>
+          <figure class="image is-96x96"  style="margin: auto;">
+            <img class="" src={% static 'images/887958-200.png' %} alt="Image">
+          </figure>
+          <div class="card" style="margin-left: 30px; margin-right: 30px;">
+            <div class="card-content no_padding">
+              <figure class="image is-4by3">
+                <img src={% static 'images/pexels-photo-366368.jpeg' %} alt="Image">
+              </figure>
+            </div>
+            <footer class="card-footer">
+              <p class="card-footer-item">
+                <span>
+                  View on <a href="https://twitter.com/codinghorror/status/506010907021828096">Twitter</a>
+                </span>
+              </p>
+            </footer>
+          </div>
+        </div>
+        <div class="column has-text-centered">
+          <h1 class="title bidloan_font title_numbers">3</h1>
+          <p class="subtitle">Selecciona el rango de tiempo en el que deseas pagarlo</p>
+          <figure class="image is-96x96"  style="margin: auto;">
+            <img class="" src={% static 'images/1048489-200.png' %} alt="Image">
+          </figure>
+          <div class="card" style="margin-left: 30px; margin-right: 30px;">
+            <div class="card-content no_padding">
+              <figure class="image is-4by3">
+                <img src={% static 'images/pexels-photo-366368.jpeg' %} alt="Image">
+              </figure>
+            </div>
+            <footer class="card-footer">
+              <p class="card-footer-item">
+                <span>
+                  View on <a href="https://twitter.com/codinghorror/status/506010907021828096">Twitter</a>
+                </span>
+              </p>
+            </footer>
+          </div>
+        </div>
+        <div class="column has-text-centered">
+          <h1 class="title bidloan_font title_numbers">4</h1>
+          <p class="subtitle">Indicanos tus ingressos aproximados</p>
+          <figure class="image is-96x96"  style="margin: auto;">
+            <img class="" src={% static 'images/1129396-200.png' %} alt="Image">
+          </figure>
+          <div class="card" style="margin-left: 30px; margin-right: 30px;">
+            <div class="card-content no_padding">
+              <figure class="image is-4by3">
+                <img src={% static 'images/pexels-photo-366368.jpeg' %} alt="Image">
+              </figure>
+            </div>
+            <footer class="card-footer">
+              <p class="card-footer-item">
+                <span>
+                  View on <a href="https://twitter.com/codinghorror/status/506010907021828096">Twitter</a>
+                </span>
+              </p>
+            </footer>
+          </div>
+        </div>
+      </div>
+      <div class="container has-text-centered">
+        <a class="button is-success">Outlined</a>
+      </div>
+    </form>
+  </section>
+  <div id="app" class="">
+        <auctions></auctions>
+        <auctionForm @auction_created="AddAuction"></auctionForm>
+        
+  </div>
+  
+
+{% endblock %}
+
+<script type="text/javascript">
+    let user = {{ request.user }}
+    var avatar = "{{ request.user.profile.image }}"
+  </script>

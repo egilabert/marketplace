@@ -1,0 +1,102 @@
+{% load compress %}
+{% load static %}
+{% load mathfilters %}
+
+<!doctype html>
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en"> <!--<![endif]-->
+<head>
+  <link rel="icon" href="{% static 'images/C--fakepath-pillango_logo.png' %}" type="image/png">
+  <meta charset="utf-8">
+  <!-- Use the .htaccess and remove these lines to avoid edge case issues.
+       More info: h5bp.com/i/378 -->
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <title>{% block page_title %}{{ _("Your Site") }}{% endblock %}</title>
+  <meta name="description" content="{% block meta_description %}{% endblock %}">
+  <meta name="author" content="{% block meta_author %}{% endblock %}">
+  <!--Let browser know website is optimized for mobile-->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+
+  {% block meta %}{% endblock %}
+
+  {# use the CDN to get bootstrap css. can not be inside compress css block #}
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css?family=Pacifico" rel="stylesheet">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.4.1/css/bulma.min.css">
+  {% block cdn_css %}{% endblock cdn_css %}
+
+  {% compress css %}
+  <!-- <link href="{% static 'dist/vendor.css' %}" type="text/css" rel="stylesheet" media="screen,projection"/> -->
+  <link href="{% static 'css/main.css' %}" type="text/css" rel="stylesheet" media="screen,projection"/>
+  {% block css %}{% endblock %}
+  {% endcompress %}
+
+  <!-- More ideas for your <head> here: h5bp.com/d/head-Tips -->
+  <!-- All JavaScript at the bottom, except this Modernizr build. -->
+  {% compress js %}
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/modernizr/2.8.3/modernizr.min.js"></script>
+  {% endcompress %}
+</head>
+
+<body class="{% block body_class %}{% endblock %}" {% block body_attributes %}{% endblock %}>
+  {% block body %}
+  <!-- Prompt IE 6 users to install Chrome Frame. Remove this if you support IE 6.
+       chromium.org/developers/how-tos/chrome-frame-getting-started -->
+  <!--[if lt IE 7]>
+    <p class="chromeframe">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> or <a href="http://www.google.com/chromeframe/?redirect=true">activate Google Chrome Frame</a> to improve your experience.</p>
+  <![endif]-->
+  <header>
+    {% load i18n %}
+  </header>
+    <img src="{% block image_bg %}{% endblock %}" id="bg" alt="background">
+    {% if messages %}
+        {% for message in messages %}
+            <div class="chip {% if message.tags %}{{ message.tags }}{% endif %}" style="position: fixed; z-index: 10000; top: {{40|mul:forloop.counter}}px; left: 40px;">
+              {{message}}
+              <i class="close material-icons">close</i>
+           </div>
+        {% endfor %}
+    {% endif %}
+
+  <div role="main">
+        {% block content %}{% endblock %}
+  </div>
+
+  {% block side-nav %}{% endblock %}
+
+  <!-- JavaScript at the bottom for fast page loading -->
+  <!-- Grab Google CDN's jQuery, with a protocol relative URL; fall back to local if offline -->
+  {% block cdn_js %}
+  
+  <!-- <script src="https://d3js.org/d3.v4.min.js"></script> -->
+  {% endblock cdn_js %}
+  <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+  <!-- <script src="https://unpkg.com/vue"></script> -->
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/marked/0.3.6/marked.min.js"></script>
+  <!-- scripts concatenated and minified via django-compressor -->
+  {% compress js %}
+  {% block js %}
+    <!-- <script src="{% static 'js/accounting.min.js' %}"></script> -->
+    <script src="{% static 'js/main.js' %}"></script>
+  {% endblock js %}
+  
+  {% block alt_js %}
+  {% endblock alt_js %}
+
+  {% endcompress %}
+  <!-- end scripts -->
+
+  <!-- Asynchronous Google Analytics snippet. Change UA-XXXXX-X to be your site's ID.
+       mathiasbynens.be/notes/async-analytics-snippet -->
+  <script type="text/javascript">
+    var _gaq=[['_setAccount','UA-XXXXX-X'],['_trackPageview']];
+    (function(d,t){var g=d.createElement(t),s=d.getElementsByTagName(t)[0];
+    g.src=('https:'==location.protocol?'//ssl':'//www')+'.google-analytics.com/ga.js';
+    s.parentNode.insertBefore(g,s)}(document,'script'));
+  </script>
+{% endblock %}
+</body>
+</html>

@@ -1,0 +1,79 @@
+{% extends "bidloan/base.html" %}
+{% load staticfiles %}
+{% load rest_framework %}
+
+{% block image_bg %} {% static 'images/pexels-photo-116246.jpeg' %} {% endblock %}
+
+{% block content %}
+  
+
+  <section class="container-fluid" style="margin-top: 60px">
+
+    <div id="app" class="">
+
+        <div class="row-fluid">
+        	<div class="has-text-centered">
+          		<h1 class="title bidloan_font" style="font-size: 70px;">Bidloan</h1>
+          		<h2 class="subtitle">Unlock the power of markets</h2>
+          	</div>
+          	<div class="columns">
+          		
+				<div class="column">
+					<a href="{% url 'bidloan:new_auction' %}">
+						<div class="card" style="margin-left: 15px;">
+						  <div class="card-image">
+						    <figure class="image is-4by3">
+						      <img src={% static 'images/rubber-duck-bath-duck-toys-costume-106144.jpeg' %} alt="Image">
+						    </figure>
+						  </div>
+						  <div class="card-content">
+						    <div class="media">
+						      <div class="media-left">
+						        <figure class="image is-48x48">
+						          <img src={% static 'images/898754-200.png' %} alt="Image">
+						        </figure>
+						      </div>
+						      <div class="media-content">
+						        <p class="title is-4">Clients</p>
+						        <p class="subtitle is-6">Ask for a loan</p>
+						      </div>
+						    </div>
+						  </div>
+						</div>
+					</a>
+				</div>
+				<div class="column">
+					
+				</div>
+                <div class="column">
+                	<a href="{% url 'bidloan:dashboard' %}">
+	                	<div class="card" style="margin-right: 15px;">
+						  <div class="card-image">
+						    <figure class="image is-4by3">
+						      <img src={% static 'images/pexels-photo-40120.jpeg' %} alt="Image">
+						    </figure>
+						  </div>
+						  <div class="card-content">
+						    <div class="media">
+						      <div class="media-left">
+						        <figure class="image is-48x48">
+						          <img src={% static 'images/289097-200.png' %} alt="Image">
+						        </figure>
+						      </div>
+						      <div class="media-content">
+						        <p class="title is-4">Managers</p>
+						        <p class="subtitle is-6">Control dashboard</p>
+						      </div>
+						    </div>
+						  </div>
+						</div>
+					</a>
+                </div><!-- /.row-fluid -->
+            </div><!--/.well-->
+        </div><!-- /.row-fluid -->
+
+    </div>
+
+  </section>
+
+{% endblock %}

@@ -176,10 +176,6 @@ def calculate_similar_artists(input_filename, output_filename,
         artist = artists[artistid]
         for other, score in calc.get_related(artistid):
             if (artist!=artists[other]):
-                recommendedProviders = RecommendedProviders()
-                recommendedProviders.empresa = Empresa.objects.get(fiscal_id=artist)
-                recommendedProviders.clientes_recomendados = Empresa.objects.get(fiscal_id=artists[other])
-                recommendedProviders.similarity = score
                 list_of_recommended_providers.append(recommendedProviders)
     
     print('All providers recommendations have been stored in a list, saving them to DB')

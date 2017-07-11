@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load rest_framework %}
+
+	{% block content %}
+
+	{% include 'partials/hero.html' %}
+
+	<!-- {% include 'partials/counts.html' %} -->
+
+	<section class="">
+		<div id="app" class="">
+
+				<auctions></auctions>
+				
+			</div>
+		</div>
+	</section>
+
+	{% include 'partials/footer.html' %}
+
+	<script type="text/javascript">
+		let user = {{ request.user }}
+		var avatar = "{{ request.user.profile.image }}"
+	</script>
+
+	{% endblock %}

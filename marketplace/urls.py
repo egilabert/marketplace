@@ -33,6 +33,9 @@ urlpatterns = [
     url(r'^cro/', include('risk_cro.urls', namespace='risk_cro')),
     url(r'^recommender/', include('recommender.urls', namespace='recommender')),
     url(r'^lcx/', include('LCX.urls', namespace='lcx')),
+    url(r'^bidloan/', include('bidloan.urls', namespace='bidloan')),
+
+    url(r'^api-auth/', include('rest_framework.urls', namespace='rest_framework')),
 ]
 
 if settings.DEBUG:
