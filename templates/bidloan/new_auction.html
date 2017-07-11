@@ -1,4 +1,4 @@
-{% extends "base.html" %}
+{% extends "bidloan/base.html" %}
 {% load staticfiles %}
 {% load rest_framework %}
 
@@ -7,7 +7,7 @@
 
 {% block content %}
   
-  {% include "partials/navbar.html" %}
+  {% include "bidloan/partials/navbar.html" %}
   
   <section class="container" id="app" style="margin-top: 20px">
     <form @submit.prevent="onSubmit" @keydown="form.errors.clear($event.target.name)">

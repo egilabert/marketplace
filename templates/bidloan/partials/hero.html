@@ -1,0 +1,73 @@
+<section class="hero is-warning is-bold">
+	<!-- Hero header: will stick at the top -->
+	<div class="hero-head">
+		<header class="nav">
+			<div class="container">
+				<div class="nav-left">
+				  <a class="nav-item">
+				  	<span class="icon">
+		                <i class="fa fa-venus-mars"></i> 
+		            </span>
+				  	BidLoan
+				    <!-- <img src="images/bulma-type-white.png" alt="Logo"> -->
+				  </a>
+				</div>
+			<span class="nav-toggle">
+			  <span></span>
+			  <span></span>
+			  <span></span>
+			</span>
+			<div class="nav-right nav-menu">
+			  <a class="nav-item is-active" href="{% url 'dashboard' %}">
+			  	<span class="icon">
+	                <i class="fa fa-bar-chart"></i> 
+	            </span>
+	            <span> Dashboard</span>
+			  </a>
+			  <a class="nav-item"  href="{% url 'auctions' %}">
+			  	<span class="icon">
+	                <i class="fa fa-magic"></i>
+	            </span>
+			    Auctions
+			  </a>
+			  <a class="nav-item"  href="{% url 'parameters' %}">
+			  	<span class="icon">
+	                <i class="fa fa-sliders"></i>
+	            </span>
+			    Parameters
+			  </a>
+			  <a class="nav-item" href="{% url 'profile' pk=request.user.pk %}">
+			  	<span class="icon">
+	                <i class="fa fa-user"></i>
+	            </span>
+			    {{request.user.first_name}}: Profile
+			  </a>
+			</div>
+		</div>
+		</header>
+	</div>
+
+	<!-- Hero content: will be in the middle -->
+	<div class="hero-body">
+		<div class="container has-text-centered">
+			<h1 class="title">
+				Getting a loan is not your work...
+			</h1>
+			<h2 class="subtitle">
+				it's auctions time!
+			</h2>
+		</div>
+	</div>
+
+	<!-- Hero footer: will stick at the bottom -->
+	<div class="hero-foot">
+		<div class="tabs is-boxed is-centered">
+			<ul>
+				<li class="is-active"><a>Pictures</a></li>
+				<li><a>Music</a></li>
+				<li><a>Videos</a></li>
+				<li><a>Documents</a></li>
+			</ul>
+			</div>
+		</div>
+</section>
