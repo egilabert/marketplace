@@ -3,12 +3,10 @@
 /************************
  ---     Fonts        ---
 /***********************/
-/*@font-face {
-  font-family: 'Pacifico-Regular';
-  src: url('../fonts/Pacifico-Regular.ttf');
-  src: local('../fonts/Pacifico-Regular.ttf')
+.title_numbers {
+  font-size: 48px;
 }
-*/
+
 .bidloan_font {
   font-family: "Pacifico", serif;
 }
